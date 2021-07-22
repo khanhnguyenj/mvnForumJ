@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!DOCTYPE book
+  PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN" "http://docbook.org/xml/4.3/docbookx.dtd"
+  [
+    <!ENTITY % global.entities SYSTEM "./include/global.xml">
+    %global.entities;
+    <!ENTITY install1 SYSTEM "install_chap1.xml">
+
+    <!ENTITY % entities SYSTEM "./include/entities.xml">
+    %entities;
+  ]
+>
+
+<book lang="en">
+
+  <bookinfo>
+
+   <title>mvnForum User Documentation</title>
+   <pubdate>8 June 2003</pubdate>
+
+   <author>
+     <firstname>Cord</firstname>
+     <surname>Thomas</surname>
+     <affiliation>
+        <jobtitle>Software Architect</jobtitle>
+        <orgname>Lupine Information Systems</orgname>
+        <address><email>cord_sw (at) lupinex.com</email></address>
+     </affiliation>
+   </author>
+
+  <revhistory>
+   <revision>
+    <revnumber>v0.0.10</revnumber>
+    <date>8 June 2003</date>
+    <authorinitials>cat</authorinitials>
+    <revremark>
+     Prepared documentation for RC1 with installation and user instructions.</revremark>
+   </revision>
+   <revision>
+    <revnumber>v0.0.20</revnumber>
+    <date>27 Dec 2003</date>
+    <authorinitials>cat</authorinitials>
+    <revremark>
+     Prepared installation documentation updates for RC2.</revremark>
+   </revision>
+   <revision>
+    <revnumber>v0.0.30</revnumber>
+    <date>18 April 2004</date>
+    <authorinitials>cat</authorinitials>
+    <revremark>Updated for new features in RC3.</revremark>
+   </revision>
+
+  </revhistory>
+
+  </bookinfo>
+  <preface>
+    <title>Foreward</title>
+          <para>Online documentation provides a HowTo approach to installing, administering and
+          using <emphasis>mvnForum</emphasis> successfully.  If you do not see what you are looking for
+          here, take a look at the <ulink url="mvnFaq.html">FAQ section</ulink>,
+          carefully compiled for your edification.</para>
+  </preface>
+
+   &install1;
+
+</book>
+                             

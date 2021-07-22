@@ -1,0 +1,1281 @@
+******************************************************************
+* $Id: TODO.txt,v 1.1039 2010/07/09 02:46:52 minhnn Exp $
+******************************************************************
+
+                   mvnForum Todo List
+-------------------------------------------------------
+
+Author: Minh Nguyen - minhnn at MyVietnam net
+Last update on: $Date: 2010/07/09 02:46:52 $
+
+NOTE: All feature suggestions should be discussed at
+      http://www.mvnForum.com/mvnforum/index . Make sure
+      that your feature suggestions are not in this TODO list
+
+
+TODO List: things must be done for version 1.3 final release
+------------------------------------------------------
+
+  Discussion : After 6 years of development, the 1.2 GA is considered
+               of having needed features for a complete forum software.
+
+               The next release 1.3 will have major refactor and require JDK 1.4
+
+               The high priority is the documentation, which will be fully
+               reviewed and more topic will be added.
+
+
+- Add small icon for mvnForum
+
+
+TODO List: things must be done for version 1.3
+------------------------------------------------------
+
+Suggest:
+- Pager supports jump to page
+- Release war built version
+- link to latest post in list forum page
+- support adding table in add post
+- user credit feature (thread=3808)
+- implement Watch Management (thread=3887)
+- implement Album Moderator function (Enterprise edition)
+- Added Email Notification for Private Messages (thread=3762)
+- implement forum password
+- update INSTALL.html
+- support dynamic smilies
+- should show moderator of forums in index page
+- and note to bother the system admin for adding and removing members 
+  from different groups the group owner can do it for his group him self (thread=989)
+- support [hide] BBCode
+- research OpenID
+
+
+Bug:
+- check permission for split in viewthread.
+- post a thread begin with a image in mvncode then list the thread in the recent threads. 
+    The mvncode will show on the page.(thread=3783)
+- review these keys: &lt;&lt; or << ??
+mvnforum.user.addpost.js.message.enhanconlytext = &lt;&lt; This is only available in Enhanced Mode >>
+mvnforum.user.addpost.js.message.notagstext = &lt;&lt; No open mvnCode tags detected. >>
+mvnforum.user.addpost.js.message.alreadyopentext = &lt;&lt; You already have an open tag of this type >>
+
+Release:
+- Readme for 
+     mvnforum enterprise source package
+     mvnforum enterprise and mvnad enterprise source package
+
+
+Support:
+- Phuong: 4122
+          3654 (Realm not working a second time)
+          3659 attachment download issue
+          3662 connection pool
+          3686 Hide non-activated members
+          3684 how to code SSO(single sign on) with mvnforum system
+          3093 Why is PostgreSQL treated as case insensitive (sometimes)? -> OK (Fix, not response)
+          3752 admin logon after installation
+          3776 error after using phpBB2mvn
+          3777 Error executing SQL in PostDAOImplJDBC.getBeans_inThread_limit_mysql
+          3772 Implementing custom password encryption
+          3790 Current state = FLUSHED, new state = CODING_END
+          3803
+          3845 CAS config for MVNFORUM
+          2142 Does custom authentication work between two diff web app?
+          984  Authenticator Implementation
+          2217 authentication with login, curious about the code 
+          3971 Is mvnforum support clustering?
+          3981 Logout externally (SSO)
+          4003 OC4J - Errors compiling (???)
+          4023 How to define a "local" admin who can view the groups/forums he created?!?
+
+- Trung : 
+          3835 mvnForum Assessment -> minhnn
+
+
+
+ThoNH:
+- test /mvnforumadmin/configindex (all configuration pages)    [test] 
+- test: pager of listalbumitemtags: [test] 
+- Test post method of 
+    user.PostWebHandler.processUpdate()[test] 
+    user.PostWebHandler.processModeratePendingPosts()[test] 
+    MessageWebHandler.processSendMessage()[test] 
+    MemberWebHandler.processEdit()[test] 
+
+0000009: bugs AddBannerZoneChannel [test]
+0000017: Improve class ConfigCMS.java by using XMLUtil [test]
+0000021: Cannot View Result of Poll in portlet [test]
+0000026: loi trang quan ly quyen thong tin trong ngay [test] 
+0000027: Add a hidden comment in viewcontent page so that we can know ContentID [test] 
+0000112- Search all project for 
+    /mvnplugin/mvnforum/images/icon/button_
+  This will make the change for localized button       [test] 
+
+
+
+[Release]
+0000028: Bug show null in processreportmembers if run in hsqldb [test] 
+0000048: The viewpublicalbumitem and viewalbumitem does not show rate stars correctly on IE 
+
+
+TrampHTP:
+- Make CSS for eXo2 forum
+- In listpolls, should have icon to show the status of the poll
+- icon for expand and collapse, as in eXo2
+- Change some icons in viewthread (vi locale):
+ + Split Thread -> Tach Luong
+- some icons is blur
+
+NhanLD
+- ActionInMobileModule: there are many redundant if else
+- MobileModuleProcessor: mobile module does not support sendactivationcode
+- Think more about online user action when running in mobile
+- onlineUser should support CSS for mobile
+- Should we include meta.jsp in the mobile version ?
+- What is the correct content type, in google mobile, it is application/xhtml+xml (research more)
+
+
+VoDA
+- code convention in processguestsetting and localized key
+        } else if (requestURI.equals("/guestsetting")) {
+            url = "guestsetting";
+            localeKey = "mvnforum.srcweb.mvnplugin.mvnforum.user.guestting";
+        } else if (requestURI.equals("/processguestsetting")) {
+            url = "processguestsetting";
+            localeKey = "mvnforum.srcweb.mvnplugin.mvnforum.user.guesttingsuccess";
+- mvnforum.common.savecookie  ==>> mvnforum.user.guestsetting.savecookie
+- consider change class OnlineUserImpl back to default instead of public
+
+
+TrungTH
+- Check to make sure MailUtil.getEmails() is called with locale if it is possible (check in all projects)
+- MVNCmsConfig : the variable name should be in lower case (finished)
+- check key enable_member_group in mvnforum.xml (deleted this key)
+- Synch the sql file and create update file because we add column ExpireDate in table mvnforumMemberGroup (finish)
+- MemberGroupWebHandler.java should not have 
+    private BinaryStorageService binaryStorageService = MvnCoreServiceFactory.getMvnCoreService().getBinaryStorageService(); (deleted)
+- MemberGroupWebHandler.java should not have wrong key (copy-paste issue)
+   mvncore.exception.BadInputException.cannot_ban.expire_date_not_valid (finish)
+- MemberGroupWebHandler.java: review method processUpdate, also check code convention
+- MemberGroupWebHandler.java: review method deleteOrphanMemberGroup (should we really need it?) (need)
+- MemberGroupBean should not define constant in it (finish)
+- MemberGroupDAO.java 
+    - update: should update only the needed column (finish)
+    - getMember ==>> getMemberGroup (finish)
+    - remove comment out code in the bottom of the file (finish)
+- MemberGroupDAOImplJDBC.java
+    deleteOrphan  ==>> deleteExpiredMembers (finish)
+- Review why inc_date_option.jsp is different between user and admin folder
+    different between user and admin folder is <select name="<%=m_dateYearName%>"> tab
+- review new file editmembergroup.jsp (finish)
+- review method MemberGroupDAOImplJDBC.update, getMemberGroup, getMemberGroup (finish)
+ + column name should be capitalized first character: "SET modifiedDate = ?, expireDate = ?" (finish)
+ + check the error string       (finish)
+                throw new ObjectNotFoundException("Cannot update table Forum where primary key = (" + memberID + ").");        
+   it should be
+                throw new ObjectNotFoundException("Cannot update table MemberGroup where primary key = (" + groupID + ", " + memberID + ").");
+- Synch the sql file in sql/upgrade/1_0_ga_to_1_1_ga
+- AdminModuleURLMapHandler.java: review the position of /editmembergroup and /editmembergroupprocess (finish)
+  + they should follow /updategrouppermission (finish)
+  + the same order with AdminModuleProcessor (finish)
+- addmembergroup.jsp: (finish)
+  + Use another key insteads "mvnforum.admin.listbannedipsx.expire_date" (finish)
+- MemberGroupDAO and MemberGroupDAOImplJDBC should have the methods with the same order (create, edit, delete, list,...) (finish)
+- Check key if it is still used: (finish)
+    mvncore.exception.BadInputException.cannot_ban.expire_date_not_valid
+    mvncore.exception.BadInputException.cannot_ban.expired_period_not_valid
+- Review i18n key of file mvnfatalerror.jsp (finish)
+- editmembergroup.jsp: (finish)
+ + check password on browser (finish)
+ + <fmt:message key="mvnforum.common.group" />: ... <%=groupBean.getMemberName()%> .... (should show GroupName) (finish)
+- refactor class ThreadIconUtil ==>> ImageButtonUtil
+
+
+NguyenDNC
+- viewtoppostx.jsp, viewtopthreadx.jsp: should not get parameters directly here, instead, should get from Java code
+- review editperiodforumsuccess.jsp
+- EnterpriseUserProcessor: why there are a lot of process and load data here ???                                            => deleted prepareListVotePeriod() as it's already loaded along with thread
+               } else if (requestURI.equals("/loadPostContent")) {                                                      
+                viewThreadTreeHandler.preparePostContent(genericRequest, genericResponse, requestURI); 
+                votePeriodWebHandler.prepareListVotePeriod(genericRequest, genericResponse, requestURI); 
+                if (MVNForumConfig.getEnablePoll()) {
+                    pollWebHandler.prepareVotePoll(genericRequest, PollBean.THREAD); 
+                }
+- ActionInUserModule: why have the enterprise feature here?                                                                 => moved
+        } else if (requestURI.equals("/loadPostContent")) {
+            localeKey = "mvnforum.user.action.desc.validate";
+- EnterpriseUserURLMapHandler.java                                                                                          => done
+    loadPostContent   ==>> loadpostcontent
+- in check for referer and method post, use the new exception class BadHttpRefererException, BadHttpMethodException
+- .portlet-tree-view-selected  ==>> .viewthread-tree-view-selected                                                          => done
+- put images of treeview into subfolder "treeview"                                                                          => done with subfolder named "tree"    
+- consider remove these methods:                                                                                            => done (removed)
+    public Collection getEnablePosts_inThread(int threadID)
+    public Collection getPostChildsFromParent(int postID)
+- Compare new user.PostWebHandler with the revision 1.196                                                                   => done, restored user.PostWebHandler to original version
+- configmvncore.jsp : why add a new header for allow_http_referer_prefix_list ?                                             //
+- check jsp file convention, file in enterprise must end with x (check source AdminModuleURLMapHandler.java)                => done
+- MemberDAO : should not have method getMemberByName(), instead, call method MemberCache.getMemberNameFromMemberID          => done
+- VotePeriodForumWebHandler.java : should check permission                                                                  => done
+- Review this class VotePeriodWebHandler.java                                                                               => done
+- VotePeriodWebHandler.java: do not use class variables                                                                     => done
+     Timestamp creationdate = null;
+- improve code convention: VotePeriodDAOImplJDBC.java                                                                       => done
+- ActionInEnterpriseUserModule.java: add key i18n                                                                           //    
+- mvnforum_enterprise.xml                                                                                                   => done
+    <enable_view_vote_result> should in different place
+- ListPeriodWebHandler.prepareResultPeriods() ==>> review how to handle exception                                           => done
+- VotePeriodWebHandler.prepareListVotePeriod() ==>> check also wherever use Vote Period Status, Vote Period Type (exp: editperiodx.jsp) //
+    do not use magic number 
+     if (votePeriodBean.getVotePeriodType()!=2) {
+- addstatisticperiodx.jsp (and other jsp file): should use rssrows taglib                                                   => done
+- VoteDAOImplJDBC ==> also check in other files                                                                             => done
+    SELECT Sum(VoteValue) AS Sum
+    Sum is keyword, so it will not work on other DBMS, such as hsqldb
+    ==> SELECT Sum(VoteValue) AS TotalVoteValues
+- header.jsp: localize "Vote Result"                                                                                        //
+- addstatisticperiodx.jsp: should use <span class="requiredfield">*</span> instead of                                       => done
+ <td width="25%">Period Name <font color="red">*</font></td>
+editperiodsuccessx.jsp, editperiodgroupsuccessx.jsp, addvoteperiodsuccessx.jsp: add navigation link
+- deleteperiodx.jsp: preview this tag <center>                                                                              => done
+- editperiodgroupx.jsp: should use tag lib instead of <tr class="trow<%=(rowIndex++) % 2%>">                                => done
+- VoteThreadDAOImplJDBC.java:                                                                                               => done
+ + should use table name from xxxDAO
+ + case-sensitive
+- generate again Bean, DAO,... for tables: mvnforumxVotePeriod, mvnforumxVotePeriodForum, mvnforumxVotePeriodGroup          => done
+- VotePeriodForumDAO.java, VotePostDAO.java, VoteThreadDAO.java: remove PERIOD_TABLE, should use VotePeriodDAO.TABLE_NAME   => done
+- VotePeriodGroupDAO.java:                                                                                                  => done
+ + table name should equal to table name in script sql
+ + deleteVotePeriodGroupByPeriod() method should follow delete() method                                                     
+- VotePostDAOImplJDBC.java: copy-paste issue in getTopUser(), deleteVotePostByPeriod(), getVoters(), getBeanByMemberPost()  => done
+  throw new DatabaseException("Error executing SQL in xvotepostDAOImplJDBC.getVotedPosts.");                                => done
+==>> check also in other xxxDAOImplJDBC.java
+- VoteThreadBean.java: code convention                                                                                      => done
+- getBeans() method in xxxDAOImplJDBC.java should be ordered by name, or date...                                            => done
+- let it auto generate URL in <form>, <a> using <%=urlResolver.encodeURL(request, response, "index")%>                      => done
+- viewvoteresultx.jsp: should use colspan instead of                                                                        => done
+  <tr class="portlet-section-header">
+    <td>Search for</td>
+    <td></td>
+    <td></td>
+  </tr>
+- review VotePeriodGroupDAOImplJDBC.getMemberLevel(String memberName), getLevelOfDefaultMember()                            => done
+- VoteThreadDAOImplJDBC.java: should delete getMemberScores() method?                                                       => done (deleted)
+- VotexxxDAO and VotexxxImplJDBC): the methods order should be create, edit, delete, list, then other special methods
+- VotePeriodDAOImplJDBC.java: update only needed columns                                                                    => done
+- VotexxxDAOImplJDBC.java:
+ + copy-paste issue, check the message when throws exception
+ + getBeans() method in xxxDAOImplJDBC.java should be ordered by name, or date...
+- addvoteperiodx.jsp:
+ + review javascript
+<mvn:body onunload="document.submitform.submitbutton.disabled=false;document.submitform.previewbutton.disabled=false;">     => done
+init();
+ + review "colspan" attribute                                                                                               
+ + add <mvn:servlet></mvn:servlet> tag to function SubmitForm() (refer to another .jsp page for example)
+- Should not hard code the table name in                                                                                    => already deleted this method
+    VoteThreadDAOImplJDBC.getMemberScores()
+- We should not have this method VotePostDAOImplJDBC.create(VotePostBean bean)                                              => done, same for VoteThreadDAOImplJDBC.create(VoteThreadBean bean)  
+- VoteSearcher: do not use the magic number
+- Sometimes we do not need to use tag <center>, instead, should use attribute align="center"                                => done
+- listperiodx.jsp : we might not need variable rowIndex                                                                     => done        
+- votethreadsuccessx.jsp: should we need "offset" variable?
+- viewtoppostx.jsp: check 
+<a href="<%=urlResolver.encodeURL(request, response, "viewthread_thread,")%>...                                             => done
+- should rename viewmemberresultx.jsp?
+- VoteThreadWebHandler.java: review try-catch                                                                               => done
+            try {
+                groupLevel = DAOFactoryEnterprise.getVotePeriodGroupDAO().getGroupLevel(voteeMemberName);
+                if (groupLevel == 0) {
+                    groupLevel = periodBean.getPeriodGroupLevel();
+                }
+            } catch (ObjectNotFoundException e) {
+                //TODO: implement later
+            }
+
+- link mvnforumadmin/listperiod  ==>> mvnforumadmin/votemanagement
+- addvoteperiodx.jsp: should not define this method isBlank() , instead, just include the correct file                      => done
+- Begin localize the properties of period
+- in edit page, the button should be Update                                                                                 => done
+- After add period, the success page is not nice (need navigation)                                                          => done
+- listperiod: if there is no period, should show message (as in forummanagement)                                            => done
+- The parameter in the address bar should be short : VotePeriodID ==>> period                                               => done
+- When edit period, we should not include parameter to know the current status                                              => done
+    mvnforumadmin/editperiod?type=statistic&VotePeriodID=2  
+- admin/header.jsp: only show period management if run in enterprise edition                                                => done
+- editperiodforum : group forum by category
+- ActionInEnterpriseUserModule: should use equals()                                                                         => done
+           } else if (requestURI.startsWith("/viewthreadtree")) {
+- getPostChildsFromParent() is functionally duplicated with PostUtil.getChildrenPosts(int postID)                           => done (duplicated method deleted)
+- public void deleteVotePeriodGroupByPeriod(int periodID) this method is not properly implemented                           => done, same for deleteVotePeriodForumByPeriod()
+-       <input type="hidden" name="period" value="<%=id%>"/>  
+    ==> <input type="hidden" name="VotePeriodID" value="<%=id%>"/>  
+- <input name="voteperiodname" type="text" size="50"
+  ==>> 
+  <input name="VotePeriodName" type="text" size="50"
+  
+- SecurityUtil: update checkPostMethod cause some old forms without security token field (cms4 for examples) cannot be submited
+- Register page: check goodname before check availability in database                                                       => done
+   
+[TreeView]
+- Improve stylesheet                                                                                                        => done
+- Remove BBCode                                                                                                             => done
+- Switch thread mode (Tree and Flat)                                                                                        => done 
+- Move "Author This topic has been viewed 676 times and has 10 replies " to below table                                     => done
+
+ThaiLX:
+- AbstractPermission.java
+    viewchart  ==>> viewChart
+    
+                case PERMISSION_CMS_VIEW_CHART:
+                desc = "Go to View Chart";  ==>>  View Chart in mvnPublish
+                break;
+- Review change in user\PollWebHandler.java (between revision 1.90 and 1.91)
+    why comment out the source code?
+
+
+HaHTD
+- Review key mvnforum.user.action.desc.HelpKnow   => done
+- there are some icons not be localized, some icons is duplicated   => done
+- mvnforum.admin.listmembergroup.expire_date
+    could be a generic key such as mvnforum.common.date.expire_date   => done
+- mvnforum.admin.editmembergroup.title = Edit Member in this Group 
+    this key should be in the correct alphabet order        => done
+- mvnforum.common.member : this key is duplicate
+- java.lang.IllegalStateException.cannot_download.albums_function_is_disabled = Cannot download because album feature is not active now.
+  java.lang.IllegalStateException.cannot_slideshow.albums_function_is_disabled = Cannot view slideshow because album feature is not active now.
+  java.lang.IllegalStateException.cannot_search.albums_function_is_disabled = Cannot search because album feature is not active now.
+  java.lang.IllegalStateException.cannot_search.private_albums_function_is_disabled = Cannot search because private album feature is not active now.
+  java.lang.IllegalStateException.cannot_search.public_albums_function_is_disabled = Cannot search because public album feature is not active now.
+    should combine   => done
+- mvncore.exception.DuplicateKeyException.account_exists = Our system already have an account ({0}) . If you register this account, you could use it. Otherwise, please register with a different login name.
+    should be BadInputExeption                                                                                                                                                          => done          
+- should remove redundant images after localize   => done
+-           if (ex.getMessage().contains("MemberEmail")) {
+                String localizedMessage = MVNForumResourceBundle.getString(locale, "mvncore.exception.DuplicateKeyException.email_exists", new Object[] {memberName, memberEmail});
+                throw new ObjectNotFoundException(localizedMessage);
+            } else {                
+                String localizedMessage = MVNForumResourceBundle.getString(locale, "mvncore.exception.DuplicateKeyException.account_exists", new Object[] {memberName});
+                throw new ObjectNotFoundException(localizedMessage);
+            }
+
+=> done
+
+XuanTL
+- editperiodforumx.jsp, viewvoteresultx.jsp : id for label is constant in a loop
+- hotnews.jsp and latestnews.jsp : should include the reference to fatalerror.jsp
+- Domain Resolver should not use common-logging, also test again if remove jar file of common-logging, it still work or not
+- Synch file /srcweb/WEB-INF/mvnplugin/mvnforum/portlet/fatalerror.jsp
+   with file /srcweb/mvnforum/user/fatalerror.jsp
+- OpenID: Vietnamse locale: does not have this key mvncore.exception.ObjectNotFoundException.openid_not_exists
+- OpenID: refactor associateopenidtoforumx.jsp to associateopenidtoforumaccountx.jsp 
+- OpenID: My OpenID page should support sort by and order by
+- [OK] OpenID: myopenidx.jsp : should localize the guide
+- [OK] OpenID: when delete an OpenID, should have additional option to return to My Profile
+- [OK] OpenID: deletemyopenid : should show description and creation date
+- OpenID: Top right area should have a way to support login with OpenID
+- [OK] OpenID: in the welcome Admin : should have icon "I" (information) to know what method of login
+- [OK] There are 2 myvietnam.js in mvnforum and mvncms, compare them, and we should keep only one file
+- [OK] getGroupPermissionsInForums : this method might not work correctly if no record in table MemberGroup
+- [OK] Review the parameter check in the album feature 
+- AlbumWebHandler.prepareViewPublicAlbum()
+    the approach to update viewcount seem not good, need to review this carefully
+- [OK] Some page, such as viewpublicalbumitemx still use method showDialog or showWindow
+    we should use the same method in myvietnam.js
+- ImageIO.read() could return null: check on what condition it is null, and what error should we show to user
+- [OK] Currently many page does not support Enter key when entering current password
+    Guide: search for name="MemberCurrentMatkhau"
+    Add checkEnter
+    make sure the form has  onsubmit="return false;"
+    Test on IE (ask ThoNH for testing)
+- [OK] ContentAlbumUtil should be a util class (final class and have private constructor)
+- When delete member, also delete all album of that member
+- Review code AlbumWebHandler.prepareDeleteAlbum()
+    see my comment in this method
+- Implement CAS check current password on into enterprise edition 
+- When enable activation, if user change email, we should show a message as when he register for an account
+- listpendingusers: when click Do Action, we should disable the button
+- listattachments: support viewpost to view the post that contain the attachment
+- change the photoleft.gif to no_album_avatar.gif
+- in user area, when send email, should check for captcha
+- Search ALL project for jsp file that have table with border="0", change to class="noborder"
+- condition in jsp file to show priority icon should be put into MyUtil
+- Implement thread rating
+- Implement social book mark (as in liferay)
+- Test this forum: http://sourceforge.net/projects/nemesis-forum/
+- meta.jsp 
+    should have a different meta.jsp for enterprise version
+    update the build.xml file
+    
+- Add method: OnlineUser.getShortcutIconPath();
+- Filter subject with \r\n and %0a and %0d
+    Test%0a%0dFrom: <root@somewhere.com>
+- Test jspwiki with https
+- Register with existed username, show error:
+  Alternate key already exists. Cannot create new Member with the same [MemberName] (ckkampy).
+  should check username first, if exists, show a friendly message (also do the same for email)  
+- Alternate key already exists. Cannot create new Member with the same [MemberEmail] (tranthanh0302@yahoo.com).
+   ==> we should tell a more friendly message when email and username is already existed
+- Add event log when delete post or thread (the desc should have info of threadid, author of the thread, title of thread)
+- viewpublicalbumitem : should have option to select the size of the photo (Original, max width, max height)
+- Watch email does not work now
+- Review code: processUploadAlbumAvatar()
+- upload small album avatar, it zoom the picture to 160x160
+- Not consistent behaviour:
+    http://localhost:8080/mvnforum_enterprise/mvnforum/viewalbum?albumid=5&check=true
+    http://localhost:8080/mvnforum_enterprise/mvnforum/myprofile
+    ==>> NotLoginException should have a error that say "Sorry, you must login first."
+- slideshow does not jump if the image in disk is missing
+- should only have 1 whirly cache xml file in we should put it in the module myvietnam/properties
+- Consider config module pattern in the web.xml (as a param of Servlet)
+- Chay che do activation, sau khi change email hoan toan khong thong bao cho user biet can phai kich hoat lai
+- "Hien tai ban khong xem luong nay"  =>> Hien tai ban khong dang ky nhan mail luong nay
+- consider "luong" ==> chu de (for Vietnamese)
+- Add in the header near Moderation, show the number of posts that need to moderate 
+    (consider cache for better performance)
+- View Event Log: should have a combo box to filter by username (MemberName)
+- listthreads?forum=3 : title should include the forum name
+- mvncore.xml check this key <default_mail_from>: what code use this key ?
+- MVNForumConfig.getDefaultCateogryID() <default_category_id> : should review this method, 
+    and should we create a new key default_category_id_for_private_forums in mvnforum_enterprise.xml ?
+- fix bug when listonlineusers
+    Cannot get description because action is null
+- searchalbumitem : missing vietnamse keyboard 
+    (think about the place to put the VN keyboard, currently cannot enter VNese into search textbox)
+
+- save album item caption: when click Save, should disable the button -> OK
+- Album: implement album view count, album item view count, show album item rate (image from youtube.com) -> OK
+- AlbumItemDAO.java     public int getTagCount(String itemTag) --> OK (use "LIKE %____%" ??)
+- When delete album, we should write a new method to delete album in Lucene index (similar to delete thread, we delete all the posts in it) --> OK
+- Cannot upload. Detailed reason: the request was rejected because its size (5496003) exceeds the configured maximum (1048576)  -> OK
+- Cannot upload album item(s) because the width or height of this item is so big.  -> OK
+    should show the size if picture and the maximum size
+    NOTE: common upload only check for size of total, not each size, therefore, we should re-write code as follow:
+    - maxSize is the remained size
+    - when for each FileItem, check for maxAlbumItemSize
+    
+net.myvietnam.mvncore.exception.DatabaseException: Error executing SQL in ContentAlbumUtil.getContentID_fromAlbumID.
+        at com.mvnforum.enterprise.user.ContentAlbumUtil.getContentID_fromAlbumID(ContentAlbumUtil.java:182)
+        at com.mvnforum.enterprise.user.AlbumWebHandler.processUploadPhotos(AlbumWebHandler.java:750)
+        at com.mvnforum.enterprise.service.impl.EnterpriseUserProcessor.process(EnterpriseUserProcessor.java:215)
+        at com.mvnforum.user.ForumUserServlet.process(ForumUserServlet.java:168)
+        at com.mvnforum.user.ForumUserServlet.doPost(ForumUserServlet.java:97)  --> OK
+
+- Automatically deleting threads by age. (viewthread_thread,4167)
+- RankDAO still use m_dirty
+- Support Guest enable/disable, setting time zone, signature, name, option, ...
+- It would be nice if mvnForum would check the browser for people who were not
+  logged in and then use the preference if people set one in their profile.
+  thread=1947
+
+
+
+TrungTB
+- 0000015: Error in built-in Email Server 
+- When preview when add post, then click emoticon, it is dupplicated mutiplely
+- add eventlog when:
+    * edit member in admin area
+- after split thread, the index page is not updated
+- after split thread, the post topic is not updated 
+- page to config permission should check for current password
+- resolve the referer after login                                               -> ok
+- update how to send with gmail in 
+    http://www.mvnforum.com/mvnforumwiki/Wiki.jsp?page=Mvnforum_knowledgebase
+- http://www.acunetix.com/ : try our system with this tool
+- Write service to check in mvnAd and mvnCMS if member can be deleted
+- search does not remember result per page
+- viewmemberpermissions: should show permission for mvnCMS, mvnAd
+- update mvnforum information on http://www.iterating.com/products/mvnForum
+- submit mvnforum to www.forummatrix.org
+- when edit forum, and press enter in the password textbox, it does not work (have to use mouse)
+- in the forum management, if user does not have permission to move up/down form, then do not show the icon up/down (both opensource and enterprise)
+- Content-Disposition encoding: http://www.mhonarc.org/~ehood/MIME/2047/rfc2047.html
+    Should create a new method StringUtil.getContentDispositionString(String filename);
+    use google code search
+- Thread summaries display formatting tags.
+- EventLog: review all action
+- viewpost : should consider use viewthread or write new viewpost.jsp
+- Test update timezone (because in LDAP, timezone is not stored)
+- Add support for flood checking when sending email to user or admin
+- Edit template: should show gateway template when run in enterprise and enable gateway
+- [41] [Trung] Should have an idea of Mark member as delete, so we will not show link to view that member
+- user/header.jsp : seem to have many duplicated code 
+- Check to make sure all data when create new thread when split thread is correct                 -> ok
+- After split, the Lucene search index is not correct                                             -> ok
+- Search by thread priority                                                                       -> delay
+- Search by thread status
+- "You can use BBCode format" should also support [s], [font=times new roman]aaa[/font], [url=mailto:aaa@sampledomain.com]aaa[/url] , [code]
+    also note that the [quote] has beeen changed from <table> to <div>
+- viewmemberpermissions: add more missing permissions
+- Lucene Search: highlight search key in result (refer JSPWiki)                                   -> delay                  
+- Add album cache info into the admin index page
+- When rate albumitem, should clear cache for that albumitem (also add this reason why we clear cache)
+- http://localhost:8080/mvnforum/mvnforumadmin/searchmember
+    cannot search member by first name or last name
+    also check this case: last name is "Tang Bao" then enter "Tang" should show result
+    
+
+
+
+[MinhNN]
+<%-- not localized yet --%>
+- Review  EnableMVNCodeFilter.checkValidation(String input)
+- Review  StringUtil.getCloseTag()
+          StringUtil.getTagNames()
+          StringUtil.countChar()
+- inc_timezone_option.jsp : should check the "id" attribute
+- When add new category or edit category, the parent category is not required (enterprise only)
+- Refactor ModuleProcessor  ==>> ForumModuleProcessor
+- Refactor EnterpriseAdminProcessor  ==>> EnterpriseForumAdminModuleProcessor
+- Refactor EnterpriseUserProcessor  ==>> EnterpriseForumUserModuleProcessor
+- not use token: admin/viewmember.jsp admin/viewlogsystem.jsp 
+                 user/listattachments.jsp user/rsssummary.jsp user/search.jsp user/searchattachment.jsp
+- review ImageUtil.removeImage(): 
+    is it based on URLFilter?
+    Should we put in different class
+- review forumenterprisemanagement.ftl 
+    <td colspan="13" align="center">${row.no_category}</td>
+- Review public void mergeThreads(int threadID, int destThreadID)
+- Test file mvnfatalerror.jsp
+- Review editmembergroup.jsp
+- Review the Vietnamese translation of feature related to easy watching (xem ==> dang ky nhan mail)
+    You are NOT watching this forum  (even vietnamese does not translation this key)
+- Review method processDeleteAlbumItem()
+- permission.ensureCanManageAlbumItemPoll();// minhnn: what is this check ?
+    what is the purpose of this permission ?
+- Search for <p> in i18n key and change to <br /><br />
+- AttachmentUtil.getAlbumItemDirOnDisk()
+   this method should be renamed as AttachmentUtil.getAlbumDirOnDisk() 
+   opps, there are already method AttachmentUtil.getAlbumDirOnDisk(), something wrong here !
+- Test this 
+    select count(DISTINCT MemberName) from mvnforumxPollVote
+    if all database work, then we should use it in getTotalVotesByPollID
+- Review My Private Forum, PrivateForumWebHandler, especially processUpdate
+- Private Forum: why user aaa can view the forum of user bbb (owned by bbb) (if have permission)
+- Private Forum: should owner can change the owner of private forum
+
+- Add Post: should use radio button for these 3 options
+            I would like to attach a file
+            I would like to attach a screenshot
+            Add Poll
+
+- implement delete thread also delete poll
+
+- review i18n key of viewmemberpermissions.jsp
+
+
+- when edit member: should show the current status, and add into combox "select a member status"
+
+- ant dist fail because cannot find folder myvietnam/sql 
+
+[Release]
+Test noborder [OK]
+viewpublicalbumitemx.jsp
+viewalbumx.jsp
+viewalbumitemx.jsp
+
+
+
+
+PhuongPDD
+- Change the way deletePoll: should write deleteByPollID and deleteByAlbumItemID : call it in PollUtil
+- friendly url: 
+    also support for Watch email [OK]
+    also support email to report threadten message [link does not show correctly in portlet]
+    also support censored content email (when add or edit a post with banned word) PostUtil.sendEmailToAdminBecauseCensoredPost
+- Poll: when press a button, all other button should be disabled [OK]
+    also: now we did not enable it when user press back button
+- listpolls (has overlib to show the title of the thread)
+
+- wiki about SSO: 
+    discuss about external User sql must have id, should login via loginid and not email
+    discuss when should we enable option external_database
+    discuss about check current password, because MyUtil requires if use 
+      <enable_login_info_in_customization>false</enable_login_info_in_customization>
+    then
+      <enable_encrypt_password_on_browser> must be false
+- Put Use Case of Poll to wiki      
+- Improve the addcategory page: user be able to select the root category, but the desc is "Select a category"
+- friendly url: should support some public page in album
+- after upload photo, or after delete a photo, the link auto jump is not consistent [preview]
+- bug: when logout in pluto, it is not removed from online user
+- Review Poll System (www.objectplanet.com/opinio/)
+- [15] [Phuong]: easy watching for category: if watch parent category, will we watch child category
+- [important] check to make sure delete an object, also delete rows in related tables
+- When vote for poll and it < max_vote_again, then choose an exception so it can be ignored in Processor 
+    (that is, no need to write to log file) [OK]
+- add new permission: Can Add Poll (Anonymous Vote)
+- combine ContentInterceptorImplEntByInCaseSensitive into ContentInterceptorImplEnt (introduce the BannedWordOption)
+- Localize PasswordInterceptorImplDefault
+- If disable poll, the viewthread page also access to the table ThreadPoll -> wrong [OK]
+- use radio option in addpost
+- Does not show and remember password in case of clear password
+- Check the forum status (also add new method parameter: checkDisabledForum 
+  private int getNumberOfBeans(boolean enable, boolean onlyNoReply)
+  private Collection getBeans_withSortSupport_limit_mysql(int offset, int rowsToReturn, String sort, String order, boolean enable, boolean onlyNoReply)
+  private Collection getBeans_withSortSupport_limit_noscroll(int offset, int rowsToReturn, String sort, String order, boolean enable, boolean onlyNoReply)
+  private Collection getBeans_withSortSupport_limit_general(int offset, int rowsToReturn, String sort, String order, boolean enable, boolean onlyNoReply)
+- Create a Poll Portlet
+- cache poll
+- Support SHA1 or SHA 256 (research what digest method each JDK support)
+- resolve bug in Websphere related to database in a thread
+    http://www.mvnforum.com/mvnforum/viewthread?thread=3060
+    http://coding.derkeiler.com/Archive/Java/comp.lang.java.databases/2004-01/0015.html
+    http://www-1.ibm.com/support/docview.wss?rs=180&uid=swg21231761
+
+- WatchUtil.isWatch() : should we cache this method to improve the performance ?
+
+
+- Ant can create input (please refer JspWiki ant file) 
+- When disable gateway, also disable the option in /mvnforum/mvnforumadmin/edittemplate
+- What if somebody change the forum owner ? improve the logic here ! 
+          (Only Admin can change, and nobody else can do it)
+
+
+- [MinhNN] Review: uploadalbumavatarx.jsp
+- [MinhNN] Review: AlbumWebHandler.processUploadAlbumAvatar
+- [MinhNN] Review: ThreadWebHandler.prepareListUnansweredThreads
+- [MinhNN] Refactor the package name of class WatchReceiveTask
+- [MinhNN] Review the css of tag tr in file moderatependingposts.jsp
+- [MinhNN] Review these below methods
+    public Collection getForums_withSortSupport_limit(int offset, int rowsToReturn, String sort, String order)
+        throws IllegalArgumentException, DatabaseException;
+    public Collection getForums_withSortSupport_limit_ViewCount(int offset, int rowsToReturn, String sort, String order)
+        throws IllegalArgumentException, DatabaseException;
+- [MinhNN] Review these below methods CAREFULLY
+    public Collection getEnableThreads_withSortSupport_limit(int offset, int rowsToReturn, String sort, String order, Timestamp from, Timestamp to)
+    throws IllegalArgumentException, DatabaseException;
+- [MinhNN] Review Split thread
+- [MinhNN] Review listpendingusers.jsp and configstepthree.jsp
+- [MinhNN] Review 2 new method when support increamental search indexing
+- [MinhNN] Review the action to event in the resource file
+- [MinhNN] Review the new key:
+        <enable_email_threatening_content>true</enable_email_threatening_content>
+- [MinhNN] Watch merge with RWC: WatchReceiveTask
+- [MinhNN] review: support new forum icons
+- [MinhNN] Review Event Log
+- [MinhNN] Review: We need an email sent to system admin when somebody is censored
+- [MinhNN] Only admin can assign group to forum
+- [MinhNN] Review database code for BinaryStorage
+- [MinhNN] Review: also make sure check enable of request private forum in WebHandler
+- [MinhNN] Review: change the Assertion of disable/enable to IllegalStateException, also change i18n
+- [MinhNN] Review: Add upload icon to the upload button
+- [MinhNN] Review: Only show "Online Users" if there is at least one visible member in index.jsp and listforums.jsp
+- [MinhNN] Review: legend for moderation
+- [MinhNN] Review: Change text in icon
+- [MinhNN] Review: viewmember.jsp: change the i18n to use key with parameter (HauNT supports Dung)
+- [MinhNN] Review: add new key in mvnforum.xml <enable_guest_view_listusers>
+         Also check in Handler source code and check in header.jsp
+- [MinhNN] Review: Send email when censor: use template
+- [MinhNN] public static StringBuffer getIndivialPermission(int combinePers, boolean type) throws BadInputException {
+- [MinhNN] MVNForumConfig.setEnableAutoWatching(true);
+- [MinhNN] test permissionsummary.jsp
+- [MinhNN] viewthread and listthreads have the same key new_thread
+- [MinhNN] merge limit and scroll and general
+- [MinhNN] review new array definition in MVNForumPermission
+- [MinhNN] review update member feature by LA
+ Review:
+     public int getNumberOfAttachments(int category, int forum) 
+     public Collection getAttachments_withSortSupport_limit_mysql(int offset, int rowsToReturn, int category, int forum)
+     public int getMaxAttachmentID() throws DatabaseException {
+     public Collection getAttachments_fromIDRange(int fromID, int toID)
+ 
+    private int getNumberOfBeans(boolean enable, boolean onlyNoReply, boolean checkForumStatus, int status, int category, int forum)
+    private Collection getBeans_withSortSupport_limit_mysql(int offset, int rowsToReturn, String sort, String order, boolean enable, boolean onlyNoReply, boolean checkForumStatus, int status, int category, int forum)
+
+    public static void sendEmailToAdminBecauseCensoredPost(int postID, int forumID, int threadID, int memberID, Log log) 
+
+Review     PostWebHandler.prepareEdit(GenericRequest request, GenericResponse response)
+
+            String prePostTopic = GenericParamUtil.getParameter(request, "PostTopic");
+            request.setAttribute("prePostTopic", prePostTopic);
+            
+            String prePostBody = GenericParamUtil.getParameter(request, "message");
+            request.setAttribute("prePostBody", prePostBody);
+            
+            String prePostIcon = GenericParamUtil.getParameter(request, "PostIcon");
+            request.setAttribute("prePostIcon", prePostIcon);
+
+
+- [Dung] change the if for showing thread priority into the MyUtil
+- [Dung] Test attachment with method generic (no mysql)
+- [Dung] GroupForumWebHandler, MemberForumWebHandler : should prepareList check for PostMethod?
+- [Dung] admin.MemberWebHandler : should prepareViewPermisson check for PostMethod?
+- [Dung] overlib help: move array definition to MVNForumPermission, use filter (Phuong help: CMS), 
+         remove space before ':'
+- [Dung] vertical align icon in index and fix the red line
+- [Dung] Support edit thread priority
+- [Dung] move to java file of the below code
+     <% String typeImage = "";
+        switch (threadBean.getThreadType()) {
+          case ThreadBean.THREAD_TYPE_STICKY: typeImage = "sticky.gif"; hasSticky = true; break;
+          case ThreadBean.THREAD_TYPE_FORUM_ANNOUNCEMENT: typeImage = "announce.gif"; hasAnnouncement = true; break;
+          case ThreadBean.THREAD_TYPE_GLOBAL_ANNOUNCEMENT: typeImage = "global_announce.gif"; hasGlobalAnnouncement = true; break;
+          default:break;
+        } %>
+- [Dung] Test Watch, task 3, 2, 5
+- [Dung] implement listattachments : support filter and check permissions, (can be delayed) support noscroll and general
+- [Dung] Wrongly check the filter option in ThreadWebHandler
+- [Dung] check code convention of Interceptor classes
+- [Dung] check exception message to match the method name
+- [Dung] regenerate method update and BinaryStorage
+- [Dung] change button : button_new_thread (also change the image, the plus is too big) and icon_help
+- [Dung] filter of unansweredthreads: support noscroll and general
+- [Dung] Buttons in top right of viewthread
+- [Dung] What if admin reload the config, it might affect the default values
+- [Dung] move init code from ForumUserServlet to EnvironmentService and LifeCycleService
+- [Dung] Use DBGenerator to regenerate the BannedUsername and BannedWord, also test to make sure it run correctly
+- [Dung] Check moderatependingposts.jsp, moderatependingthreads.jsp, mymessage.jsp, mywatch.jsp
+- [Dung] Test : when create/edit post with censored word, also send email.
+- [Dung] OnlineUser : review waitinglist and participant
+
+- [] usermanagement.jsp : should align the new sort option
+- [Hau] Check foreign key when add new field to table mvnforumForum
+
+
+- Processor can have the null of OnlineUser
+
+
+- In MyWatch, if the user have watch, but not activated, then we will show a warning 
+- Major change for the external user database
+- method getBeanWatchMail() should return the bean ???
+- should activate if use LDAP
+java.lang.IllegalStateException
+        at com.mvnforum.db.common.MemberDAOExternalUserDatabaseAbstract.updateActivateCode(MemberDAOExternalUserDatabaseAbstract.java:208)
+        at com.mvnforum.common.SendMailUtil.getActivationCodeEmail(SendMailUtil.java:105)
+        at com.mvnforum.common.SendMailUtil.sendActivationCodeEmail(SendMailUtil.java:75)
+- the memberMapping email is not correct
+- Should support watch_option for each watch
+- refactor the watch constant in the MVNForumGlobal
+
+
+- [Phung`] When config mvnforum and mvncore, make sure the class is assignable to the correct interface
+           http://www.htmlhelp.com/tools/validator/problems.html
+           http://www.cs.tut.fi/~jkorpela/forms/javascript.html
+           http://www.codehouse.com/javascript/tips/xhtml/
+
+- Check Exception of MailUtil.receiveEmail()
+
+- fatalerror.jsp should be very simple, even should stop the application
+
+
+<enable_site_statistics_overview> should be false when externaluser is true
+
+- [Dung] viewmember.jsp: && or ||  <%if (MVNForumConfig.getEnableShowViewCount() && MVNForumConfig.getEnableShowPostCount()) {%>
+- Fix bug wrong classpath on websphere (thread=3725)
+- Add MemberFax to the viewmember, editmember, myprofile 
+        
+- DAOFactory.getMemberDAO().getMemberIDFromMemberName : cache this method    
+- [Phung`] http://localhost:8080/mvnforum/mvnforum/viewmember?memberid=12 : ICQ does not correct any more
+- [Phung`] viewmember: dont have MSN icon , yahoo, ... 
+- [Phung`] option: have_internet in mvnforum.xml
+- Fix issue of edit own post
+- [Minh] Review PostChecker
+- [Dung] : in MVNForumConfig, change the new variable (same as in mvnforum.xml)
+- [Dung] : mot so van de ve thumnail: tao ra option cho thumbnail trong file attachment, trong code
+           java thi lay thumbnail thong qua tham so tu web, va khi e lam thi bao dam ko anh huong den code
+           cu~
+- [Dung] : [thread=3523] test the chat
+
+AttachmentWebHandler: do not use class variable, use method variable
+
+            if (AttachmentWebHandler.isApplet){
+//                System.out.println("\n\n\n webwebwebwebwebwebwebwebwebwebwebwebweb  isApplet\n\n\n");
+                AttachmentWebHandler.isApplet = false;
+//                System.out.println("\n\n\n webwebwebwebwebwebwebwebwebwebwebwebweb  isApplet "+ AttachmentWebHandler.curApplet+" \n\n\n");
+                map.setResponse("/mvnplugin/mvnforum/user/uploadimagesuccessx.jsp");
+            }else
+            map.setResponse("/mvnplugin/mvnforum/user/addattachmentsuccess.jsp");
+
+
+
+[Phuong]:
+- Should support category tree for viewpermission.jsp ?
+- Login now depend on portlet !!
+- Add action option to rsssummary.jsp
+- Move the code to check permission in addforum to the webhandler
+- Remove new comment out code in UserModuleProcessor
+- Should not use variable name "Result"
+- [Phuong] : Analyze source code with http://pmd.sourceforge.net/
+- [Phuong] : - Update the test system in the Admin zone
+- [Phuong] : - Not run when use ODBC-JDBC
+- [Phuong] : - Test unicode on MySql 5.0.x
+- [Phuong] : - Support Derby and PointBase
+- [thread=3565] : test and confirm the cache issue
+- Fix MailUtil bug: [thread=3526]
+  if ((userName != null) && (userName.length() > 0)) {
+    transport.connect(server, userName, password);
+  } else {
+    transport.connect(server, port, null, null);
+  }
+- captcha: C and G are quite similar
+- Check if DB2 support FLOAT or not (it support DOUBLE) [thread=3547]
+  DB2 doesn't support altering a column from INT to FLOAT; [thread=3574]
+
+- [Lan Anh] Tai sao co su thay doi cua javascript (ma hoa pw) : tai sao lai return ?
+- [Lan Anh] ReplyURL (Email Gate way) should be the enterprise
+- [Lan Anh] localize the 2 page: editwatch and editwatchsuccess
+- Check the IP in the session
+- Check if the which is correct: (if incorrect, update the file mvnForum_hsqldb.sql to the correct value)
+  jdbc:hsqldb:file:c:\\mvnForumHome\\hsqldb\\mvnforum
+  or
+  jdbc:hsqldb:file:c:\mvnForumHome\hsqldb\mvnforum
+
+- Track total time when send email.
+- Consider to use Tile for layout (thread=3422)
+- Support Spell Checking http://jazzy.sourceforge.net/ and http://sourceforge.net/projects/jspspellcheck (thread=3547)
+- Debug why send a lot of email, the email is sent, however the error is displayed
+- Add admin note to this member
+- Fix: When show delete non-actived member, it does not show the pending member
+280842882 WARN  [TP-Processor32] admin.AdminModuleProcessor - Exception in AdminModuleProcessor e = The parameter "From" is not allowed to be empty! Please try again.
+net.myvietnam.mvncore.exception.BadInputException: The parameter "From" is not allowed to be empty! Please try again.
+        at net.myvietnam.mvncore.util.GenericParamUtil.getParameter(GenericParamUtil.java:74)
+        at net.myvietnam.mvncore.util.GenericParamUtil.getParameterSafe(GenericParamUtil.java:83)
+        at net.myvietnam.mvncore.util.GenericParamUtil.getParameterEmail(GenericParamUtil.java:268)
+        at com.mvnforum.admin.GeneralAdminTasksWebHandler.sendMail(GeneralAdminTasksWebHandler.java:369)
+        at com.mvnforum.admin.AdminModuleProcessor.process(AdminModuleProcessor.java:349)
+        at com.mvnforum.admin.ForumAdminServlet.process(ForumAdminServlet.java:106)
+        at com.mvnforum.admin.ForumAdminServlet.doGet(ForumAdminServlet.java:76)
+        at javax.servlet.http.HttpServlet.service(HttpServlet.java:689)
+        at javax.servlet.http.HttpServlet.service(HttpServlet.java:802)
+        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:252)
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:173)
+        at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:213)
+        at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:178)
+        at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:126)
+        at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:105)
+        at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:107)
+        at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:148)
+        at org.apache.jk.server.JkCoyoteHandler.invoke(JkCoyoteHandler.java:199)
+        at org.apache.jk.common.HandlerRequest.invoke(HandlerRequest.java:282)
+        at org.apache.jk.common.ChannelSocket.invoke(ChannelSocket.java:754)
+        at org.apache.jk.common.ChannelSocket.processConnection(ChannelSocket.java:684)
+        at org.apache.jk.common.ChannelSocket$SocketConnection.runIt(ChannelSocket.java:876)
+        at org.apache.tomcat.util.threads.ThreadPool$ControlRunnable.run(ThreadPool.java:684)
+        at java.lang.Thread.run(Thread.java:595)
+280986481 INFO  [TP-Processor11] util.MailUtil - sendMail: totalEmails = 2751 sent count = 2751
+
+
+- [TOP PRIORITY] : Update all documentation
+- Bug that cannot show action (action is null)
+[/Phuong]
+
+- thread 3681
+  2. No priviledges for high ranking user.(example: read special post)
+  3. No hidden post function (BB code) to force the members to reply.
+  4. No simulated Buy and Sell if member want to gain some point.
+  5. No point system and the ranking is only depend on how many post u gave.
+  6. The ranking not showing any real priviledges to members.(As mention above)
+- http://en.wikipedia.org/wiki/Bayesian_filtering (thread=3341)
+- Who is watching
+- OnlineUserManager should be mutual exclusive of Servlet and Portlet
+- If there is 1 category and no forum, the index display is not good
+- Last IP in viewmember in admin zone always null
+- When forum with no thread, the icon should be "no new post"
+- JDBC Lucence http://www.compassframework.org
+- Add regulation page before registration, consider load content file file system
+- Move jsp files to WEB-INF
+- trow0 still exist in viewthread.jsp
+- http://ha.ckers.org/xss.html
+  http://quickwired.com/kallahar/smallprojects/php_xss_filter_function.php
+  http://searchappsecurity.techtarget.com/featuredTopic/0,290042,sid92_gci1159317,00.html
+  http://searchappsecurity.techtarget.com/featuredTopic/0,290042,sid92_gci1164790,00.html
+  http://searchappsecurity.techtarget.com/originalContent/0,289142,sid92_gci1176445,00.html
+- Review and make improvements to the contrib daily mvnForum
+- processmessagesuccess.jsp : should split into 3 files? (also have dupplicated code)
+- In viewmessage, should have a link to mark as unread
+- Rewrite so that all code will depend on ContextListener and will not run if this class has not been called
+- Bug in addpost.jsp when swap characters in Danish language in IE
+- On portal on page viewmember, check if the first email is null or not
+- Set the language for Guest (thread=3455)
+
+- Bug when run getBeans_withSortSupport_limit_general on 90.000 rows (thread=3463)
+- http://joda-time.sourceforge.net/ : see anything interested here
+- Pager that support portlet
+- Tomcat Realm based on mvnforum user database (use the patch that already in mvnForum.com) (thread=2782)
+- Show log.info when wrong captcha (need to read private data 'response' from class Gympy)
+
+- WebTest: http://webtest.canoo.com/webtest/manual/WebTestHome.html
+- Security Framework: http://acegisecurity.org/
+- Write class or tag lib to generate the css link : new CSSRow.getNextRowCSS()
+- Add method isRootAdmin(request) to check for the root admin
+- Add parameter to disable confirm current password
+    (can be final variable, only change at compile time)
+- Publish the role "mvnforumadmin", if user has this role, then he will be come a root admin
+- Test context.xml to use JNDI datasource (thread=3252)
+- tuong [203.162.3.77] Mozilla/4.0 (compatible; MSIE 5.0; Windows NT)
+- Move Portal.java to mvncore-portlet
+- Fix new issue of javascript when Phong change addpost.jsp and addmessage.jsp
+- config a new folder for i18n properties files
+  i18n
+     mvncore
+     mvnforum
+     ...
+- Attachment moderation addon (Thanks Miranda) (thread=3090)
+- Maybe you could make a small enhancement that would not increment the
+  view count if it came from the same user (ip check or something?) for a
+  specified amount of time? (thread=3217)
+- How can I allow a Member to delete their own attachments? (thread=2509)
+- Wrong css in error.jsp
+- addmembersuccess.jsp : change : String defaultUrl = "login.jsp";
+- in viewmessage, the jump to folder is hard coded
+- Navigation in search member is not correct
+- Remove compression, the admin zone is not correct anymore
+- If not existed member, then editgroupowner.jsp?group=6 show bad error message
+- When submit send mail, the preview button is not disabled
+- In searchresult page, click reset hide the current VN type mode
+- This method could throw java.lang.InternalError when run on Linux
+    com.mvnforum.common.MVNCaptchaService.buildInitialFactories()
+- Search Private forum does not okie
+- Edit group -> Jump to view group
+- The Oracle script should have the query to delete trigger
+- Some helper method in DAOImpl should be private
+- The database code in package auth should change to DAO and DAOImpl
+- Thread is lock, but still change the thread type ???
+- When move to a moderated forum, what should we do?
+- Add member, result in wrong day, maybe the problem is timezone
+- Show warning in admin zone if the urlpattern is default (/mvnforumadmin/*)
+- Not run when enable captcha and server does not support image
+- Support new method getMemberPostCount in the interface OnlineUser
+- Problem with compression in admin zone in Websphere and Jetty
+- Change the dateformat, add to CHANGE.txt thread=3061
+- Translation error of Chinese taiwan (thread=3049)
+- watches for unmoderated posts for moderators (thread=3098)
+- The date format of Atom is not correct rome.dev.java.net
+- RSS2: <category>Installation & Upgrade</category> escape it, also check processAdd of cat and forum
+- Implementation of JNDI for mail sessions (Thanks Mat)
+    One more remark that has to be added to the documentation: if using JNDI for
+    mail then activation.jar and mail.jar must be removed from the WAR / EAR and
+    placed into the application server lib directory (Tomcat: common/lib).
+- Text change in message (swedish in IE) (thread=3256)
+- Remove the font color in tag <font>
+- Email notify the author of first post when move or delete a post/thread
+- admin/updatemembersuccess.jsp : redundant ???
+- Action in form does not work, ex: edittemplate
+- <a href="<%=urlResolver.encodeURL(request, response, "#")%>">
+- not encode Member_Html
+- RSS Summary auto refresh is not as other pages ???
+- Another closed ToDo: table prefix from mvncore.xml (Thanks Mat)
+- Support phpBB2mvnForum (thread=3030)
+- Show only forum for selected category on forum list page (thread=2934)
+- Fix : In Opera 7.5, when you reply to a post, then choose some formatting,
+  like bold or font, instead of launching a popup it will repeat the text in your post.
+  (thread=2645)
+- Update the Japanese too
+- Review WYSIWYG editor (patch from ghpayne) (thread=2790)
+- Test on App Server: Sun Java System Application Server Platform Edition 8.1 2005Q1
+  (thread=2918)
+  (thread=2790)
+- Cannot run on Websphere 6 (thread=2904): need to move taglib from inc_common.jsp to outside
+- If login as customization, the ensurePassword should be checked
+- Bookmark a page
+- Authentication for RSS: Magnus\BasicAuthenticationFilter.java
+  (thread=2572)
+- Review and add Realm contributor (thread=2782)
+- Review ClamAV mod (thread=2801)
+- Review http://pjl-comp-filter.sourceforge.net
+- About the upgrade script of SqlServer7 (thread=2814)
+- Fix bug in the upload file name (thread=2721)
+- Filter to remove the mvnCode
+- Write comment for important field in DB in the Bean
+- //if (!isUnsignedInteger(document.submitform.server_hour_offset, "server_hour_offset")) return false;
+- Problem with codepage (russian).
+  (thread=2739)
+- Fix bug
+  admin.ForumAdminServlet (ForumAdminServlet.java:117) - Error assertion
+  java.io.IOException: This output stream has already been closed
+  at net.myvietnam.mvncore.servlet.filter.CompressionResponseStream.close(CompressionResponseStream.java:188)
+  at com.caucho.server.webapp.RequestDispatcherImpl.forward(RequestDispatcherImpl.java:282)
+  at com.caucho.server.webapp.RequestDispatcherImpl.forward(RequestDispatcherImpl.java:111)
+  (thread=2716)
+- mvnforum.common.member.name_visible = Name Visible
+  in the language files may be misleading.
+  (thread=2691)
+- Also, i'm interested in a feature that would email users when a moderator denies their message.
+  Is this feature coming in any of your upcoming releases?
+  (thread=2788)
+- Update all language translation
+- Check CSS with http://jigsaw.w3.org/css-validator
+- Missing localization in front end OnlineUserAction.java (thread=2675)
+- In index page, add link to delete cookie
+- Upgrade tool to update hsqldb from SMALLINT to INT
+- Remove the null System.out. that output to the console
+- mvnforum.common.order is duplicated
+- Check ORDER BY issue of interbase as in firebird
+- Fix issue of caching of avatar (no change when new upload)
+- Change SMALLINT to INT to all databases
+- Test delete PmAttachment on DBMS: DB2, Sql Server
+- MVNForumPermissionFactory.java should change to interface and implementation
+- mvnforum.common.of -> need to review it
+- Think of a way to put more link to the menu in header
+- Image for each language
+Du`ng treeMap for caching
+localize : Cannot activate an already activated member.
+Trong khi rebuild 1 index thi` disable rebuildall link luon
+- Research error (thread=2867)
+java.lang.NoClassDefFoundError
+net.myvietnam.mvncore.info.DatabaseInfo.<init>(DatabaseInfo.java:71)
+com.mvnforum.MVNForumConfig.setMVNForumHome(MVNForumConfig.java:171)
+com.mvnforum.MVNForumConfig.reload(MVNForumConfig.java:768)
+com.mvnforum.MVNForumConfig.load(MVNForumConfig.java:757)
+
+MultipartStream multi = new MultipartStream(input, boundary);
+            multi.setHeaderEncoding("UTF-8");
+
+- Khi disable login thi` ko cho login qua cookie
+- Khi disable new post thi` ko cho hien thi link Add new Thread/Post
+ ja.properties improvements http://www.mvnforum.com/mvnforum/viewthread?thread=2769
+if enable portal_index, should have link all forums
+enable member_birthday
+enable member_gender
+Incidentally, I use realm authentication, and I've noticed in places where
+a user has insufficient rights to do something (in particular, if the user
+is not allowed to change an avatar) the user is directed to the STANDARD
+logon page instead of the realm logon page.
+(thread=2699)
+Adminpage tries to save "index" (thread=2779)
+Store avatars and attachments in database (thread=2772)
+- Consider to change MemberSignature from VARCHAR to TEXT
+
+DOC TODO:
+- Note about when doing integration, the username is a issue, which should be checked by checkGoodName,
+    and the Authenticator should ignore it.
+- What is the error message : "Invalid Session" ?
+- Note that can use mvnplugin\mvnforum\testdatabase.jsp.txt
+- Note lucene implementation for Chinese, Japanese
+- Update docs for the RC4 (with Cord's help)
+- Write guide how to config utf-8 in MySql 4.1
+- Question: do I need to setup transaction? (Answer: no, because mvnForum does not use transaction)
+- Question: I have a question about rank managment. How do I change specific users
+  rank to be a personal rank based on the users status within the forum as opposed to how many posts they've made.
+  (thread=2639)
+- Configuration guide
+- Update the docs of DEVELOPER.txt since it is quite outdated
+- I18N.txt : note that translator should review the daily mvnForum
+- RebuildIndexTask throws NullPointerException (thread=2658)
+- MySql 4.1.x create database mvnforum default character set utf8
+- How to customize the "mvnForum"
+- How to install on the same context
+- What's the difference b/w a Locked thread and a Closed thread? (thread=2864)
+- NOTE: how to get around the search encoding issue
+- NOTE this  URIEncoding="utf-8" in Tomcat
+- How to add new page (thread=3376)
+- difference between 'enabled' and 'activated' users
+- in INSTALL.txt, should mention testserver.jsp and testdatabase.jsp
+- why not show formatted text? (thread=3444)
+- Search problem with encoding (thread=3465)
+- Differences between Announcement, Global Announcement and Sticky (thread=3461)
+- Database parameter (thread=3462)
+- Note that if user dont have permission to edit own post, then he cannot add attachment
+
+TODO List: things must be done for version 1.2
+------------------------------------------------------
+- [TOP PRIORITY] [All] review guest and reimplement full Import/Export feature
+    These two are connected, since you need to handle situations
+    with anonymous posts and attachments
+- Use JMS for send mail
+- [Need Imanic's help] Move the package of import/export outside current admin package
+- Bug in Recent Threads Display (thread=3494)
+- Copy thread from one forum to other forum (thread=3493)
+- Add option to limit the extension of upload file (thread=3475)
+- Send PM to a group if he is the admin (thread=3507)
+- Good forum software http://mysql.lybbs.net/
+- Admin needs to specify which link makes error message on ListUserOnline page.
+- OnlineUser should have method to return collection of group and the user belong to (thread=3375)
+  SELECT groupName from mvnforumGroups, mvnforumMemberGroup
+  WHERE (mvnforumGroups.GroupID = mvnforumMemberGroup.GroupID)
+    AND (mvnforumMemberGroup.MemberName = 'admin')
+- Highlight new or unread messages (thread=2729)
+- Suggesting a feature: it would be nice if each individual user could choose his own invisibility/visibility
+  (for example, at the login stage; as I've observed from some other forum).
+  (thread=2865)
+- List thread that a user participate (provide as web and as RSS)
+    http://www.diendanlinux.org/diendanlinux/mvnforum/viewthread?thread=121
+- support mail resources through JNDI (Mat's idea)
+- Support link "file://"
+- [ Minh Review ] - Integrate the build.xml of the docs to the mail build.xml
+- Separate mvncore.exception.AssertionException.not_exist_or_not_file_to_be_downloaded into 2 exception
+- Add FileUtil.checkExitedFile() and FileUtil.checkExitedDirectory()
+- Check keys should support the encoding
+- Check orphan Post:
+  SELECT mvnforumPost.PostID , mvnforumThread.ThreadID, mvnforumPost.ThreadID
+  FROM mvnforumPost LEFT JOIN mvnforumThread
+  ON mvnforumPost.ThreadID = mvnforumThread.ThreadID
+  WHERE mvnforumThread.threadID IS NULL
+
+- Research the login mechanism of RSS and ATOM
+- Allow login for the first time with the login information in the request
+- Sort By in Favorite Threads
+- localize changepassword in Admin zone
+- Do not filter emoticon if enable_emoticon = false
+- The color of quota usage should be in the css
+- Currently, when update new message, only check in the INBOX
+- RSS: have option to get the rowsToReturn and bytesToReturn
+- Localize the Email content
+- Fix bug that in listthreads, the mvncode is is removed or processed correctly
+- MVNForumConfig.ENABLE_AUTO_FORUM_OWNER = false
+- New permission: can AdminUser: view online status, usermanagement
+- I dont like the ability to post pictures.. I hope it's optional.
+        Think the generic solution (limit some mime types)
+- Oracle cannot send mail to Tester
+- Change default behavior to search substring
+  (thread=2660)
+- mvnforumMember : MemberPassword VARCHAR(200) : need test on DB2, Firebird,
+                   database not support: postgreSql 7.x (8.x is okie), hsqldb
+
+
+
+TODO List: things must be done for version 1.3 and later
+------------------------------------------------------
+- [TOP PRIORITY] Fix all known bugs
+- [TOP PRIORITY] Add a web setup tool
+- [TOP PRIORITY] Need a XML/database schema to store all config
+- Email alert when have unanswered thread for more than x days (Forum Intecetor feature)
+- Preview attachment image, patch by Serobit (thread=3270)
+- Option to kick off user
+- Noisy thread/post option
+- a button on the register page to check the availability of the account name
+- Support enable PM_statistics
+- Option to run in Google like invitation mode
+- Allow/Deny list for moderation
+- Option to allow Admin to leave message when turn off forum
+- Watch management, allow admin can view, delete watch of any user
+- Max number of attachments (thread=2866)
+- Show user Level determination by provide parameter to config the class name
+- Since a user may have many posting in one thread, in the results being return,
+  should we collapse the all posting within one thread.
+  (http://www.mvnforum.com/mvnforum/viewthread?thread=1316)
+- I'd much prefer to use the standard java timezones (Australia/Sydney, America/Los Angeles -
+    see the java.util.TimeZone.getTimeZone() method). This is important for daylight saving issues
+    (thread=2646)
+- 1) A list of related threads together with each thread, so it is possible to add
+  the references mentioned above and they can be displayed in a structured way that
+  does not cost the "on-screen overhead"
+  (thread=2303)
+  2) for each thread, there could be a list (similar to the one of similar threads)
+  repeating all hyperlinks used in the posts.
+  3) 3. similar to 1. and 2.: list of attachments for each thread
+
+- Point and Level, like a RPG game (thread=2626)
+- Improve the issue of nest of mvnCode
+- Parse [..] and [/...] to lowercase when saving the post to the database
+  (regular expression with option ig). The actual parsing off the UBB codes
+  can than still be done before displaying the post. In this case all the
+  UBB-codes are saved in lowercase in the database.
+  (thread=893)
+
+- Can't use arrays in a code block? (thread=824)
+
+- Database update:
+  * mvnforumForum  : forumModerationEmails
+
+- Send mail to original author when move the thread
+
+- this feature will be very userfull when a user doesn't set a watch for a thread and a moderator
+    move the thread in another forum. If the user found a link from the original forum it's easy looking for the thread.
+    (thread=1832)
+
+- new Config param: LoginMode: Normal/NoLoginWithSameID/KickoutSameID
+- Scan the attachment
+- Delete users even there are posts from this user
+- Escape string in xml
+
+- Add a JSTL tag to escape the email (and begin to build MyVietnam JSTL lib)
+
+- It would be nice if the tag could be interpreted in the list as well,
+  but if this is difficult (because the close tag isn't there) perhaps
+  it could just be stripped out of the list text.
+  (thread=1518)
+
+- Email thread to friend
+
+- I would suggest looking at securityfilter on sourceforge.
+  It is a portable implementation of web container security with
+  specific support for Tomcat. It also contains an easily extendable realm mechanism.
+  (thread=899)
+
+- Total review of the css (style sheet)
+- Fix memory problem in attachment download
+  Problem: currently load attach file to memory, may cause OutOfMemoryException
+  Reason: I don't know what to do if some user are download attachment
+          and the Moderator delete the attachment
+  Sollution: make some test about concurrent read and delete
+             Tomcat has a servlet called DefaultServlet, which serve the static file
+             so we could refer and learn how to solve our problem
+  Igor suggestion: see methods in ExportWebHandler getExportXmlZip() and sendToUser()
+- Search : show the relevance value
+- Have a link to send Watch Mail immediately in Admin Zone
+- Search : stop word all mvnCode
+- Migration from Jive version 2.6 and later
+
+- Being able to collapse threads/sections could simplify navigation in certain cases,
+  at least from my standpoint. This whether it was only the thread with subsequent replies,
+  or hierarchically, that is level by level in the thread.
+  (thread=2145)
+
+
+Features after final 1.4 release
+------------------------------------------------------
+- [TOP PRIORITY] Change to DAO + Hibernate
+- Localize the description of the permission
+- support LaTEX : http://www.hj-gym.dk/~hj/writer2latex http://www.edaboard.com/
+- [ Phong ] - Interceptor to enforce password policy (min chars, alpha and numeric, not same as old pass,...)
+- [ Phong ] - Email notifications for topics on private messages (thread=3157)
+- Support sorting in online user
+- About attachment picture auto resize display feature (thread=3270)
+- Who has me on their buddy list
+- Email address for individual forums (thread=3099)
+- URL Rewriting (thread=3094)
+- Mail gateway, refer to http://m2f.sourceforge.net
+- My buddy List/Ignore List
+- In public profile, add "Add to My buddy list" and "Add to My Ignore list"
+- Remove CategoryCache.getInstance() and ForumCache.getInstance() in Jsp file
+- SequencedHashMap is deprecated in Common Collection, should we upgrade the common config?
+- Captcha in the login form (should only enable if login in cookie is disabled)
+- Localize alt text in <img> (forum status, avatar, ...)
+- I think of class PostListener with methods: preAdd, postAdd, preDelete, postDelete,
+  preEdit, postEdit. The params of these method could be: request and response (is it enough?).
+  (thread=2003) (Please read the thread for the REAL detail)
+- When send email, allow more FreeMarker variables for Member table
+- Update the memberEmailVisable to include : accept email from webmaster
+- In addpost.jsp add check Post length (So far, you have used 5 characters)
+- Check userAgent filter at http://www.psychedelix.com/agents.html (google: offline browser)
+- restore the configuration files
+
+- Change the combined permission from hard code to a array of individual permission
+- Ability for users to ignore other users posts
+- Track who banned a user and reporting on number of people a moderator banned, number of posts deleted
+- Delete all messages by username (across all forums or just a selected forum)
+- Define some standard key in freemarker such as url, server, context,...
+- Able to prevent everyone on the boards apart from the gagged member from seing their posts
+- Related threads
+- Add information in Online users such as member post count, country
+- Check upload attachment in first post of thread (enable)
+- The attachment in moderation forum should be moderated.
+- Automatical delete the post based on time valid range (thread=1607)
+- Finding the first unread post in a thread (thread=1596)
+- Support Private Category.
+- Active users in thread/forum
+- Who moderate what forum
+- User Vote, Post Vote, Thread Vote (Rating)
+- 4. admin-interface for smile-management
+   thread 1945
+- It is simple, good, but lack possibility to add picture to each rank - for example, more postings - more stars.
+   thread 1945
+- Draft mode (thread=2126)
+  We've used IBM Workplace and notes databases for among other things discussions/forums.
+  Workplace (Former Quickplace) supports draft mode besides of several other smart features.
+- Support Chatting (GujChat) www.jabber.org or opensource Jive
+    Chat client: ajax
+                 http://www.eclipsezone.com/eclipse/forums/t60332.html
+                 http://j2s.sourceforge.net/demo/
+                 (thread=29)
+- Support Extended property ???
+- Support Calendar
+- Customize forum: each picture for each forum (wassup's suggestion)
+- Log the post modifications
+- Have option to turn member's Post Count off for individual forum (such as Test forum)
+- Option to filter html tag or not
+- Admin can change the Member Login ID
+- Support thread/flat modes
+- Popular dicussion in each forum
+

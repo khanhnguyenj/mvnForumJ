@@ -1,0 +1,669 @@
+<!--
+     This build script assumes that the source code of your web application
+     is organized into the following subdirectories underneath the source
+     code directory from which you execute the build script:
+
+        docs                 Static documentation files to be copied to
+                             the "docs" subdirectory of your distribution.
+
+        src                  Java source code (and associated resource files)
+                             to be compiled to the "WEB-INF/classes"
+                             subdirectory of your web applicaiton.
+
+        srcweb               Static HTML, JSP, and other content (such as
+                             image files), including the WEB-INF subdirectory
+                             and its configuration file contents.
+
+     $Id: build.xml,v 1.113 2009/12/21 07:58:12 minhnn Exp $
+-->
+<project name="mvnForum" default="compile" basedir=".">
+    <!-- ===================== Property Definitions =========================== -->
+    <property file="build.properties" />
+    <property file="${user.home}/build.properties" />
+
+    <!-- ==================== File and Directory Names ======================== -->
+    <property name="build-root.home" value="${basedir}/../build" />
+    <property name="build.home" value="${build-root.home}/build-${mvnforum.app.name}" />
+    <property name="dist.home" value="${build.home}/dist" />
+    <property name="release.home" value="${build.home}/release" />
+    <property name="war.home" value="${build.home}/war" />
+    <property name="prepare-extension.home" value="${build.home}/prepare-extension" />
+    <property name="webapp.home" value="${build.home}/webapp" />
+    <property name="webapp" value="${webapp.home}/${mvnforum.app.name}" />
+    <property name="javadoc.home" value="${build.home}/javadoc" />
+
+    <property name="docs.home" value="${basedir}/docs" />
+    <property name="src.home" value="${basedir}/src" />
+    <property name="lib.home" value="${basedir}/lib" />
+    <property name="template.home" value="${basedir}/template" />
+    <property name="sql.home" value="${basedir}/sql" />
+    <property name="driver.home" value="${basedir}/driver" />
+    <property name="properties.home" value="${basedir}/properties" />
+    <property name="web.home" value="${basedir}/srcweb" />
+    <property name="extension.home" value="${basedir}/extension" />
+    <property name="i18n.home" value="${basedir}/i18n" />
+    <property name="docbook.home" value="${basedir}/docbook" />
+
+    <property name="myvietnam.home" value="${basedir}/../myvietnam" />
+    <property name="myvietnam.lib" value="${myvietnam.home}/lib" />
+    <property name="myvietnam.build" value="${myvietnam.home}/../build/build-myvietnam" />
+    <property name="myvietnam.build.i18n" value="${myvietnam.build}/i18n" />
+
+    <!-- Required libs for the servlet container. These will be copied into the WEB-INF/lib directory -->
+    <property name="myvietnam.jar" value="${myvietnam.build}/lib/myvietnam.jar" />
+    <property name="mvnforum.jar" value="${build.home}/lib/mvnforum.jar" />
+
+    <property environment="env" />
+
+    <!--  ==================== Compilation Control Options ==================== -->
+    <!--
+    These properties control option settings on the Javac compiler when it
+    is invoked using the <javac> task.
+
+    compile.debug        Should compilation include the debug option?
+
+    compile.deprecation  Should compilation include the deprecation option?
+
+    compile.optimize     Should compilation include the optimize option?
+    -->
+    <property name="compile.debug" value="true" />
+    <property name="compile.deprecation" value="false" />
+    <property name="compile.optimize" value="true" />
+
+    <!-- ==================== Compilation Classpath =========================== -->
+    <!--
+    Rather than relying on the CLASSPATH environment variable, Ant includes
+    features that makes it easy to dynamically construct the classpath you
+    need for each compilation.
+    -->
+    <path id="compile.classpath">
+        <pathelement location="${myvietnam.jar}" />
+        <fileset dir="${myvietnam.lib}">
+            <include name="*.jar" />
+        </fileset>
+        <fileset dir="${lib.home}">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+    
+    <path id="web-inf.classpath">
+        <fileset dir="${webapp}/WEB-INF/lib">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+
+    <path id="jspc.classpath">
+        <!--
+        <pathelement location="${env.JAVA_HOME}/lib/tools.jar" />
+        <fileset dir="${myvietnam.home}/ant/lib">
+            <include name="*.jar" />
+        </fileset>
+        -->
+        <fileset dir="${tomcat.home}/bin">
+            <include name="*.jar" />
+        </fileset>
+        <fileset dir="${tomcat.home}/server/lib">
+            <include name="*.jar" />
+        </fileset>
+        <fileset dir="${tomcat.home}/common/lib">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+
+    <taskdef classname="org.apache.jasper.JspC" name="jasper2">
+        <classpath refid="jspc.classpath" />
+    </taskdef>
+
+    <taskdef name="mvnforumfinder" classpath="${i18n.home}/tool/mvntools.jar" classname="LocalizingKeyFinder" />
+
+    <!-- ==================== All Target ====================================== -->
+    <!--
+    The "all" target is a shortcut for running the "clean" target followed
+    by the "compile" target, to force a complete recompile.
+    -->
+    <target name="all" depends="clean,compile" description="Clean build and dist directories, then compile" />
+
+    <!-- ==================== Clean Target ==================================== -->
+    <!--
+    The "clean" target deletes any previous "build" and "dist" directory,
+    so that you can be ensured the application can be built from scratch.
+    -->
+    <target name="clean" description="Delete old build and dist directories">
+        <delete dir="${build.home}" />
+        <delete dir="${dist.home}" />
+        <delete dir="${release.home}" />
+        <delete dir="${webapp.home}" />
+    </target>
+
+    <target name="clean-all" depends="clean" description="Delete root of build and dist directories">
+        <delete dir="${myvietnam.build}" />
+    </target>
+
+    <!-- ==================== Build MyVietnam Target ========================== -->
+    <!--
+    Build the MyVietnam module
+    -->
+    <target name="build-myvietnam">
+        <echo>Building the MyVietnam module</echo>
+        <ant dir="${myvietnam.home}" inheritAll="false" />
+        <echo>MyVietnam module has been built.</echo>
+    </target>
+
+    <!-- ==================== Prepare Extension Target ======================== -->
+    <!--
+    -->
+    <target name="prepare-extension" depends="build-myvietnam">
+        <echo>Building the mvnForum module</echo>
+
+        <!-- Create build directories as needed -->
+        <mkdir dir="${build.home}" />
+        <mkdir dir="${prepare-extension.home}" />
+ 
+        <!-- Copy static content of this web application -->
+        <copy todir="${prepare-extension.home}">
+            <fileset dir="${web.home}" />
+        </copy>
+
+        <!-- Copy tld from myvietnam -->
+        <copy todir="${prepare-extension.home}/WEB-INF">
+            <fileset dir="${myvietnam.home}/tld" />
+        </copy>
+
+        <!-- Copy application properties files -->
+        <copy todir="${prepare-extension.home}/WEB-INF/classes">
+            <fileset dir="${properties.home}" />
+            <fileset dir="${myvietnam.home}/properties" />
+        </copy>
+        
+        <replace file="${prepare-extension.home}/WEB-INF/classes/mvncore.xml" token="/mvnforum_context_path" value="/${mvnforum.app.name}" />
+
+        <copy todir="${prepare-extension.home}/WEB-INF/classes/i18n">
+            <fileset dir="${myvietnam.build.i18n}" />
+        </copy>
+        
+        <copy file="${i18n.home}/mvnForum_i18n.properties" tofile="${prepare-extension.home}/WEB-INF/classes/i18n/mvnforum/mvnForum_i18n_en.properties" />
+        <!--
+        <native2ascii encoding="Cp1252" src="${i18n.home}" dest="${prepare-extension.home}/WEB-INF/classes" includes="mvnForum_i18n.properties" />
+        -->
+        <native2ascii encoding="Cp1256" src="${i18n.home}" dest="${prepare-extension.home}/WEB-INF/classes/i18n/mvnforum" includes="mvnForum_i18n_ar.properties" />
+        <native2ascii encoding="Cp1251" src="${i18n.home}" dest="${prepare-extension.home}/WEB-INF/classes/i18n/mvnforum" includes="mvnForum_i18n_bg.properties" />
+        <native2ascii encoding="ISO8859_1" src="${i18n.home}" dest="${prepare-extension.home}/WEB-INF/classes/i18n/mvnforum" includes="mvnForum_i18n_da.properties" />
+        <native2ascii encoding="ISO8859_1" src="${i18n.home}" dest="${prepare-extension.home}/WEB-INF/classes/i18n/mvnforum" includes="mvnForum_i18n_de.properties" />
+        <native2ascii encoding="ISO8859_7" src="${i18n.home}" dest="${prepare-extension.home}/WEB-INF/classes/i18n/mvnforum" includes="mvnForum_i18n_el.properties" />
+        <native2ascii encoding="Cp1252" src="${i18n.home}" dest="${prepare-extension.home}/WEB-INF/classes/i18n/mvnforum" includes="mvnForum_i18n_es.properties" />
+        <native2ascii encoding="Cp1252" src="${i18n.home}" dest="${prepare-extension.home}/WEB-INF/classes/i18n/mvnforum" includes="mvnForum_i18n_fr.properties" />
+        <native2ascii encoding="UTF-8" src="${i18n.home}" dest="${prepare-extension.home}/WEB-INF/classes/i18n/mvnforum" includes="mvnForum_i18n_hu.properties" />
+        <native2ascii encoding="ISO8859_1" src="${i18n.home}" dest="${prepare-extension.home}/WEB-INF/classes/i18n/mvnforum" includes="mvnForum_i18n_it.properties" />
+        <native2ascii encoding="MS932" src="${i18n.home}" dest="${prepare-extension.home}/WEB-INF/classes/i18n/mvnforum" includes="mvnForum_i18n_ja.properties" />
+        <native2ascii encoding="UTF-8" src="${i18n.home}" dest="${prepare-extension.home}/WEB-INF/classes/i18n/mvnforum" includes="mvnForum_i18n_ko.properties" />
+        <native2ascii encoding="Cp1257" src="${i18n.home}" dest="${prepare-extension.home}/WEB-INF/classes/i18n/mvnforum" includes="mvnForum_i18n_lv.properties" />
+        <native2ascii encoding="ISO8859_1" src="${i18n.home}" dest="${prepare-extension.home}/WEB-INF/classes/i18n/mvnforum" includes="mvnForum_i18n_nl.properties" />
+        <native2ascii encoding="ISO8859_1" src="${i18n.home}" dest="${prepare-extension.home}/WEB-INF/classes/i18n/mvnforum" includes="mvnForum_i18n_no.properties" />
+        <native2ascii encoding="ISO8859_1" src="${i18n.home}" dest="${prepare-extension.home}/WEB-INF/classes/i18n/mvnforum" includes="mvnForum_i18n_pt_BR.properties" />
+        <native2ascii encoding="Cp1251" src="${i18n.home}" dest="${prepare-extension.home}/WEB-INF/classes/i18n/mvnforum" includes="mvnForum_i18n_ru.properties" />
+        <native2ascii encoding="Cp1250" src="${i18n.home}" dest="${prepare-extension.home}/WEB-INF/classes/i18n/mvnforum" includes="mvnForum_i18n_sh.properties" />
+        <native2ascii encoding="ISO8859_2" src="${i18n.home}" dest="${prepare-extension.home}/WEB-INF/classes/i18n/mvnforum" includes="mvnForum_i18n_si.properties" />
+        <native2ascii encoding="Cp1251" src="${i18n.home}" dest="${prepare-extension.home}/WEB-INF/classes/i18n/mvnforum" includes="mvnForum_i18n_sr.properties" />
+        <native2ascii encoding="Cp1254" src="${i18n.home}" dest="${prepare-extension.home}/WEB-INF/classes/i18n/mvnforum" includes="mvnForum_i18n_tr.properties" />
+        <native2ascii encoding="UTF-8" src="${i18n.home}" dest="${prepare-extension.home}/WEB-INF/classes/i18n/mvnforum" includes="mvnForum_i18n_vi.properties" />
+        <native2ascii encoding="GB2312" src="${i18n.home}" dest="${prepare-extension.home}/WEB-INF/classes/i18n/mvnforum" includes="mvnForum_i18n_zh_CN.properties" />
+        <native2ascii encoding="UTF-8" src="${i18n.home}" dest="${prepare-extension.home}/WEB-INF/classes/i18n/mvnforum" includes="mvnForum_i18n_zh_TW.properties" />
+
+        <copy file="${i18n.home}/guide_mvnForum_i18n.properties" tofile="${prepare-extension.home}/WEB-INF/classes/i18n/mvnforum/guide_mvnForum_i18n.properties" />
+        <copy file="${i18n.home}/guide_mvnForum_i18n.properties" tofile="${prepare-extension.home}/WEB-INF/classes/i18n/mvnforum/guide_mvnForum_i18n_en.properties" />
+
+        <!-- Copy template files -->
+        <copy todir="${prepare-extension.home}/WEB-INF/mvnForumHome/template">
+            <fileset dir="${template.home}/" />
+        </copy>
+    </target>
+
+    <!-- ==================== Extention Target ================================== -->
+    <!--
+    -->
+    <target name="extension" depends="prepare-extension">
+        <copy todir="${prepare-extension.home}" overwrite="true">
+            <fileset dir="${extension.home}/" excludes="README.txt" />
+        </copy>
+    </target>
+
+    <!-- ==================== Prepare Target ================================== -->
+    <!--
+    The "prepare" target is used to create the "build" destination directory,
+    and copy the static contents of your web application to it.  If you need
+    to copy static files from external dependencies, you can customize the
+    contents of this task.
+
+    Normally, this task is executed indirectly when needed.
+    -->
+    <target name="prepare" depends="extension">
+        <!-- Create build directories as needed -->
+        <mkdir dir="${build.home}/classes" />
+ 
+        <!-- Copy static content of this web application -->
+        <mkdir dir="${webapp}" />
+        <copy todir="${webapp}">
+            <fileset dir="${prepare-extension.home}" />
+        </copy>
+    </target>
+
+    <!-- ==================== Compile Target ================================== -->
+    <!--
+    The "compile" target transforms source files (from your "src" directory)
+    into object files in the appropriate location in the build directory.
+    -->
+    <target name="compile" depends="prepare" description="Compile Java sources">
+        <!-- Compile Java classes as necessary -->
+        <javac srcdir="${src.home}" destdir="${build.home}/classes" source="1.4" target="1.4" debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}">
+            <classpath refid="compile.classpath" />
+        </javac>
+        
+        <mkdir dir="${build.home}/lib" />
+        <copy todir="${build.home}/classes">
+            <fileset dir="${src.home}" excludes="**/*.java" />
+        </copy>
+        <jar destfile="${mvnforum.jar}" basedir="${build.home}/classes" />
+
+        <!-- Copy application libraries -->
+        <copy todir="${webapp}/WEB-INF/lib">
+           <fileset dir="${lib.home}" excludes="servlet.jar" />
+           <fileset dir="${myvietnam.home}/lib" excludes="servlet.jar" />
+        <!-- minhnn: I comment this because my Ant 1.5 does not support this, not sure the Ant requirement this
+           <fileset file="${sqldriver}" />
+           <fileset file="${myvietnam.jar}" />
+           <fileset file="${mvnforum.jar}" />
+        -->
+        </copy>
+        <copy file="${sqldriver}" todir="${webapp}/WEB-INF/lib" />
+        <copy file="${myvietnam.jar}" todir="${webapp}/WEB-INF/lib" />
+        <copy file="${mvnforum.jar}" todir="${webapp}/WEB-INF/lib" />
+    </target>
+
+    <!-- ==================== JspC Target ================================== -->
+
+    <target name="jspc" depends="compile" description="Compile with JSP Jasper compiler">
+        <echo message = "Generate JSP files" />
+        <jasper2 webxml="${webapp}/WEB-INF/web.xml"
+                 validateXml="false" 
+                 uriroot="${webapp}/" 
+                 webXmlFragment="${build.home}/generated_web.xml" 
+                 outputDir="${build.home}/generated_jsp_java" /> 
+        <echo message = "Compile JSP code" />
+        <mkdir dir="${build.home}/generated_jsp_classes" />
+        <javac fork="true" memoryInitialSize="256m" memoryMaximumSize="512m" 
+               srcdir="${build.home}/generated_jsp_java" destdir="${build.home}/generated_jsp_classes" 
+               source="1.4" target="1.4"
+               debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}">
+            <classpath refid="web-inf.classpath" />
+            <classpath refid="jspc.classpath" />
+            <exclude name="org/apache/jsp/mvnplugin/mvnforum/meta_jsp.java" />
+            <exclude name="org/apache/jsp/mvnplugin/mvnforum/admin/footer_jsp.java" />
+            <exclude name="org/apache/jsp/mvnplugin/mvnforum/admin/header_jsp.java" />
+            <exclude name="org/apache/jsp/mvnplugin/mvnforum/admin/inc_005fdoctype_jsp.java" />
+            <exclude name="org/apache/jsp/mvnplugin/mvnforum/admin/inc_005fjs_005fcheckvalid_005fmyvietnamlib_jsp.java" />
+            <exclude name="org/apache/jsp/mvnplugin/mvnforum/admin/inc_005fpager_jsp.java" />
+            <exclude name="org/apache/jsp/mvnplugin/mvnforum/admin/inc_005ftimezone_005foption_jsp.java" />
+            <exclude name="org/apache/jsp/WEB_002dINF/mvnplugin/mvnforum/mobile/footer_jsp.java" />
+            <exclude name="org/apache/jsp/WEB_002dINF/mvnplugin/mvnforum/mobile/header_jsp.java" />
+            <exclude name="org/apache/jsp/mvnplugin/mvnforum/user/ad_jsp.java" />
+            <exclude name="org/apache/jsp/mvnplugin/mvnforum/user/adfooter_jsp.java" />
+            <exclude name="org/apache/jsp/mvnplugin/mvnforum/user/adheart_jsp.java" />
+            <exclude name="org/apache/jsp/mvnplugin/mvnforum/user/footer_jsp.java" />
+            <exclude name="org/apache/jsp/mvnplugin/mvnforum/user/header_jsp.java" />
+            <exclude name="org/apache/jsp/mvnplugin/mvnforum/user/header_005fpoll_jsp.java" />
+            <exclude name="org/apache/jsp/mvnplugin/mvnforum/user/header_005falbum_jsp.java" />
+            <exclude name="org/apache/jsp/mvnplugin/mvnforum/user/inc_005fdoctype_jsp.java" />
+            <exclude name="org/apache/jsp/mvnplugin/mvnforum/user/inc_005fjs_005fcheckvalid_005fmyvietnamlib_jsp.java" />
+            <exclude name="org/apache/jsp/mvnplugin/mvnforum/user/inc_005fpager_jsp.java" />
+            <exclude name="org/apache/jsp/mvnplugin/mvnforum/user/inc_005fpager_005fportlet_jsp.java" />
+            <exclude name="org/apache/jsp/mvnplugin/mvnforum/user/inc_005fpages_jsp.java" />
+            <exclude name="org/apache/jsp/mvnplugin/mvnforum/user/inc_005ftimezone_005foption_jsp.java" />
+            <exclude name="org/apache/jsp/mvnplugin/mvnforum/user/login_005fmeta_jsp.java" />
+            <exclude name="org/apache/jsp/mvnplugin/mvnforum/user/news_jsp.java" />
+        </javac>
+    </target> 
+
+    <!-- ==================== Javadoc Target ================================== -->
+    <!--
+    The "javadoc" target creates Javadoc API documentation for the Java
+    classes included in your application.  Normally, this is only required
+    when preparing a distribution release, but is available as a separate
+    target in case the developer wants to create Javadocs independently.
+    -->
+    <target name="javadoc" depends="compile" description="Create Javadoc API documentation">
+        <mkdir dir="${javadoc.home}" />
+        <javadoc sourcepath="${src.home}" destdir="${javadoc.home}" packagenames="*">
+            <classpath refid="compile.classpath" />
+        </javadoc>
+    </target>
+
+    <!-- ==================== WAR Target ===================================== -->
+    <target name="war" depends="compile" description="Create a WAR file for deployment">
+        <echo>Building mvnForum war file...</echo>
+        <mkdir dir="${war.home}" />
+        <war warfile="${war.home}/${mvnforum.app.name}.war" webxml="${webapp}/WEB-INF/web.xml">
+            <fileset dir="${webapp}" excludes="WEB-INF/web.xml" />
+        </war>
+    </target>
+    
+    <!-- ==================== Deploy Localhost Target ================================== -->
+    <target name="deploy-localhost" depends="compile" description="Deploy mvnForum to localhost">
+        <copy todir="${deploy.localhost}">
+            <fileset dir="${webapp.home}" excludes="*.war" />
+        </copy>
+    </target>
+
+    <!-- ==================== Remove mvnforum from Server ================================== -->
+    <target name="undeploy" description="Remove mvnForum from web server">
+        <delete dir="${deploy.localhost}/${mvnforum.app.name}" />
+        <delete file="${deploy.localhost}/${mvnforum.app.name}.war" />
+    </target>
+
+    <!-- ==================== Deploy Localhost WAR Target ================================== -->
+    <target name="deploy-war" depends="war" description="Deploy mvnForum to localhost using a war file">
+        <copy todir="${deploy.localhost}" file="${war.home}/${mvnforum.app.name}.war" />
+    </target>
+
+    <!-- ==================== Dist Target ===================================== -->
+    <!--
+    The "dist" target creates a binary distribution of your application
+    in a directory structure ready to be archived in a tar.gz or zip file.
+    Note that this target depends on two others:
+
+    * "compile" so that the entire web application (including external
+      dependencies) will have been assembled
+
+    * "javadoc" so that the application Javadocs will have been created
+    -->
+    <target name="dist" depends="compile, find-java-wrong-keys, find-jsp-wrong-keys, jspc" description="Create binary distribution">
+        <!-- Copy documentation subdirectories -->
+        <mkdir dir="${dist.home}/docs" />
+        <copy todir="${dist.home}/docs">
+            <fileset dir="${docs.home}" />
+        </copy>
+        <mkdir dir="${dist.home}/sql" />
+        <copy todir="${dist.home}/sql">
+            <fileset dir="${sql.home}" />
+        </copy>
+        <mkdir dir="${dist.home}/driver" />
+        <copy todir="${dist.home}/driver">
+            <fileset dir="${driver.home}" />
+        </copy>
+        <mkdir dir="${dist.home}/webapp" />
+        <copy todir="${dist.home}/webapp">
+            <fileset dir="${webapp}" excludes="WEB-INF/lib/${sqldriver.jar}" />
+        </copy>
+
+        <!-- Create application JAR file -->
+        <mkdir dir="${release.home}" />
+        <jar destfile="${release.home}/mvnforum-${mvnforum.app.version}-bin.zip" basedir="${dist.home}" />
+    </target>
+
+    <target name="docbook">
+        <echo>Building the docbook</echo>
+        <ant dir="${docbook.home}" inheritAll="false" />
+        <echo>docbook has been built.</echo>
+    </target>
+
+    <!-- ==================== CVS Target ===================================== -->
+    <target name="cvs">
+        <echo>Updating module mvnforum</echo>
+        <cvs command="update" dest="${basedir}" />
+    </target>
+
+    <target name="maketools" description="build mvntools.jar file">
+        <!-- Compile Java classes as necessary -->
+        <mkdir dir="${i18n.home}/tool/classes" />
+        <javac srcdir="${i18n.home}/tool" destdir="${i18n.home}/tool/classes" source="1.4" target="1.4" debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}">
+            <classpath refid="compile.classpath" />
+        </javac>
+        
+        <jar destfile="${i18n.home}/tool/mvntools.jar" basedir="${i18n.home}/tool/classes">
+           <!--include name="*.class"/-->
+        </jar>
+        
+        <delete dir="${i18n.home}/tool/classes" />
+    </target>
+
+    <target name="find-java-wrong-keys" depends="prepare" description="Find wrong keys in JAVA source files">
+        <mvnforumfinder starttoken="MVNForumResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvnForum_i18n">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNForumResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvnForum_i18n_vi">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNForumResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvnForum_i18n_ar">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNForumResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvnForum_i18n_bg">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNForumResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvnForum_i18n_da">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNForumResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvnForum_i18n_de">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNForumResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvnForum_i18n_el">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNForumResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvnForum_i18n_es">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNForumResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvnForum_i18n_fr">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNForumResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvnForum_i18n_hu">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNForumResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvnForum_i18n_it">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNForumResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvnForum_i18n_ja">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNForumResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvnForum_i18n_ko">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNForumResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvnForum_i18n_lv">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNForumResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvnForum_i18n_nl">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNForumResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvnForum_i18n_no">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNForumResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvnForum_i18n_pt_BR">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNForumResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvnForum_i18n_ru">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNForumResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvnForum_i18n_sh">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNForumResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvnForum_i18n_si">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNForumResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvnForum_i18n_sr">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNForumResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvnForum_i18n_tr">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNForumResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvnForum_i18n_zh_CN">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNForumResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvnForum_i18n_zh_TW">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+    </target>
+
+    <target name="find-jsp-wrong-keys" depends="prepare" description="Find wrong keys in JSP source files">
+        <mvnforumfinder starttoken="fmt:message key=" endtoken="/>" bundle="${i18n.home}/mvnForum_i18n">
+            <fileset dir="${web.home}">
+                <include name="**/*.jsp" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="fmt:message key=" endtoken="/>" bundle="${i18n.home}/mvnForum_i18n_vi">
+            <fileset dir="${web.home}">
+                <include name="**/*.jsp" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="fmt:message key=" endtoken="/>" bundle="${i18n.home}/mvnForum_i18n_ar">
+            <fileset dir="${web.home}">
+                <include name="**/*.jsp" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="fmt:message key=" endtoken="/>" bundle="${i18n.home}/mvnForum_i18n_bg">
+            <fileset dir="${web.home}">
+                <include name="**/*.jsp" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="fmt:message key=" endtoken="/>" bundle="${i18n.home}/mvnForum_i18n_da">
+            <fileset dir="${web.home}">
+                <include name="**/*.jsp" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="fmt:message key=" endtoken="/>" bundle="${i18n.home}/mvnForum_i18n_de">
+            <fileset dir="${web.home}">
+                <include name="**/*.jsp" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="fmt:message key=" endtoken="/>" bundle="${i18n.home}/mvnForum_i18n_el">
+            <fileset dir="${web.home}">
+                <include name="**/*.jsp" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="fmt:message key=" endtoken="/>" bundle="${i18n.home}/mvnForum_i18n_es">
+            <fileset dir="${web.home}">
+                <include name="**/*.jsp" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="fmt:message key=" endtoken="/>" bundle="${i18n.home}/mvnForum_i18n_fr">
+            <fileset dir="${web.home}">
+                <include name="**/*.jsp" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="fmt:message key=" endtoken="/>" bundle="${i18n.home}/mvnForum_i18n_it">
+            <fileset dir="${web.home}">
+                <include name="**/*.jsp" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="fmt:message key=" endtoken="/>" bundle="${i18n.home}/mvnForum_i18n_ja">
+            <fileset dir="${web.home}">
+                <include name="**/*.jsp" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="fmt:message key=" endtoken="/>" bundle="${i18n.home}/mvnForum_i18n_ko">
+            <fileset dir="${web.home}">
+                <include name="**/*.jsp" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="fmt:message key=" endtoken="/>" bundle="${i18n.home}/mvnForum_i18n_lv">
+            <fileset dir="${web.home}">
+                <include name="**/*.jsp" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="fmt:message key=" endtoken="/>" bundle="${i18n.home}/mvnForum_i18n_nl">
+            <fileset dir="${web.home}">
+                <include name="**/*.jsp" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="fmt:message key=" endtoken="/>" bundle="${i18n.home}/mvnForum_i18n_no">
+            <fileset dir="${web.home}">
+                <include name="**/*.jsp" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="fmt:message key=" endtoken="/>" bundle="${i18n.home}/mvnForum_i18n_pt_BR">
+            <fileset dir="${web.home}">
+                <include name="**/*.jsp" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="fmt:message key=" endtoken="/>" bundle="${i18n.home}/mvnForum_i18n_ru">
+            <fileset dir="${web.home}">
+                <include name="**/*.jsp" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="fmt:message key=" endtoken="/>" bundle="${i18n.home}/mvnForum_i18n_sh">
+            <fileset dir="${web.home}">
+                <include name="**/*.jsp" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="fmt:message key=" endtoken="/>" bundle="${i18n.home}/mvnForum_i18n_si">
+            <fileset dir="${web.home}">
+                <include name="**/*.jsp" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="fmt:message key=" endtoken="/>" bundle="${i18n.home}/mvnForum_i18n_sr">
+            <fileset dir="${web.home}">
+                <include name="**/*.jsp" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="fmt:message key=" endtoken="/>" bundle="${i18n.home}/mvnForum_i18n_tr">
+            <fileset dir="${web.home}">
+                <include name="**/*.jsp" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="fmt:message key=" endtoken="/>" bundle="${i18n.home}/mvnForum_i18n_zh_CN">
+            <fileset dir="${web.home}">
+                <include name="**/*.jsp" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="fmt:message key=" endtoken="/>" bundle="${i18n.home}/mvnForum_i18n_zh_TW" bundleEncoding="Big5">
+            <fileset dir="${web.home}">
+                <include name="**/*.jsp" />
+            </fileset>
+        </mvnforumfinder>
+    </target>
+
+ </project>

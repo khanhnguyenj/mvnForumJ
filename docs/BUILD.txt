@@ -1,0 +1,49 @@
+******************************************************************
+* $Id: BUILD.txt,v 1.9 2006/04/12 18:11:28 minhnn Exp $
+******************************************************************
+
+BUILD INSTRUCTION
+---------------------------------------------
+
+
+To build mvnForum, either from the source package or from CVS, follow
+the following steps:
+Note: after building mvnForum, see the INSTALL.txt for the instruction
+      to setup mvnForum on your Servlet Container.
+
+1. Get the source code, if you have the source package, just extract
+   it to a folder. If you don't have the source package or you would
+   like to build the latest development source code, check out from
+   CVS. See the CVS.txt for detailed information.
+
+2. Download ant build tool from http://jakarta.apache.org, then config it
+   (please see the document from the ant package)
+
+3. Edit file mvnforum\build.properties to suit your need and/or environment
+
+4. cd to folder mvnforum, then type ant:
+   cd mvnforum
+   ant
+
+5. the mvnForum webapp is created in folder mvnforum/build/webapp
+
+
+NOTE: If you are a developer, then config the build.properties
+      and set the proper value for deploy.localhost . Then you could
+      deploy to your servlet container with this command:
+
+      ant deploy-localhost
+
+NOTE: If you are a developer and want to extent mvnForum
+      by replacing default mvnForum's files (such as your
+      own mvnforum.xml, *.jsp files), please put these files
+      in folder extension. See extension/README.txt for more
+      information on how to extend mvnForum
+
+
+The build process should be easy and without any error. If there is
+not any error, Ant should print out BUILD SUCCESSFUL message.
+
+We hope you will enjoy mvnForum :)
+
+

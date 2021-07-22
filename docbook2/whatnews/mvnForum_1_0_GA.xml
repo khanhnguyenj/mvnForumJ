@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN" "http://docbook.org/xml/4.3/docbookx.dtd"
+  [
+  ]
+>
+
+<article>
+    <articleinfo>
+        <title> New features improvement and changes in mvnForum 1.0 GA </title>
+        <author>
+            <firstname>Tran </firstname>
+            <surname> Van Hung </surname>
+        </author>
+    </articleinfo>
+    
+    <itemizedlist>
+            <title> 9 new Features:  </title>
+            <listitem>
+                <para> Add WhirlyCache cache system to mvnforum 1.0 GA [cool]  </para>
+                <para>
+                    Whirlycache is a fast, configurable in-memory object cache for Java.
+                    It can be used, for example, to speed up a website or an application by caching objects that would 
+                    otherwise have to be created by querying a database or by another expensive procedure.
+                      From the testing that we have done, 
+                    it appears to be faster than any other Java cache that we have been able to inspect.
+                    WhirlyCache is integrated in mvnforum 1.0 GA, it support MemberCache, PostCache, ThreadCache, ForumCache, CategoryCache (much better performance)
+                    </para>
+            </listitem>
+            
+            <listitem>
+                <para> User can change forum locale in mvnforum [cool] </para>
+                <para>
+                Locale is a set of parameters that defines the user's language, 
+                country and any special variant preferences that the user wants to see in their user interface.
+                Usually a locale identifier consists of at least a language identifier and a region identifier.
+                Now We can change forum locale on the fly by adding a parameter "lang" to url,
+                ex: /mvnforum/mvnforum/index?lang=vi 
+                </para>
+            </listitem>
+
+            <listitem>
+                <para> Add config parameter enable_encode_url [cool]  </para>
+                <para> 
+               [MVNCore] : add config parameter enable_encode_url to enable/disable reponse.encodeURL
+               for all link (when enable, session can be tracked by url re-writing)
+               </para>
+            </listitem>
+
+            <listitem>
+                <para> Add RSS to mvnforum 1.0 GA  </para>
+                <para> 
+                RSS is a family of web feed formats, specified in XML and used for Web syndication.
+                RSS is used by (among other things) news websites, weblogs and podcasting
+                Add RSS &lt;link rel="alternate" type="application/rss+xml" /&gt; 
+                to header so that Firefox can know that the page supports Live Bookmark 
+                
+                    <mediaobject>
+                        <imageobject>
+                         <imagedata fileref="figure/.png" format="PNG"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>  </phrase>
+                      </textobject>
+                      <caption>
+                         <para>
+                           Live bookmark in browser 
+                        </para>
+                      </caption>
+                      </mediaobject>
+                
+                </para>
+            </listitem>
+            
+            <listitem>
+                <para> Add contribtion for integration with openLDAP  </para>
+                <para> 
+                Lightweight Directory Access Protocol, or LDAP, is a networking protocol for querying and modifying directory services running over TCP/IP.
+                An LDAP directory usually follows the X.500 model: It is a tree of entries, each of which consists of a set of named attributes with values.
+                While some services use a more complicated "forest" model, the vast majority use a simple starting point for their database organization.
+                Mvnforum 1.0 GA add contribtion for integration with openLDAP (please look in folder 'contrib'). With this feature, you can 
+                sign on through LDAP directory service.
+                </para>
+            </listitem>
+            
+            <listitem>
+                <para> Add contribtion phpbb2mvnforum to migrate from phpBB to mvnForum  </para>
+                <para> 
+                Add contribtion phpbb2mvnforum to migrate from phpBB to mvnForum (thread=3030) (Thanks anandh).
+                With this function, you can migrate data in phpBB database system to mvnForum's database
+                </para>
+            </listitem>
+            
+            <listitem>
+                <para> Add contribtion MVNTomcatJDBCRealm to load realm from mvnForum's database  </para>
+                <para> Add contribtion MVNTomcatJDBCRealm to load realm from mvnForum's database (thread=2782) (Thanks truk) </para>
+            </listitem>
+            
+            <listitem>
+                <para> Support new configuration parameter, user can config the login page  </para>
+                <para> Support new configuration parameter , user can config the login page </para>
+            </listitem>
+            
+            <listitem>
+                <para> support parameter "url" in login page, so that mvnForum can return after login successfully </para>
+                <para> support parameter "url" in login page, so that mvnForum can return after login successfully </para>
+            </listitem>
+         </itemizedlist>
+         
+        <itemizedlist>
+            <title> 31 Improvements: </title>
+            <listitem>
+                <para> Remote and customized Authenticator user now can logout if it is logged out externally [cool] </para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> Support double value timezone (sql script change, from INT to FLOAT) [cool] </para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> Change the stategy of rebuild Lucene Index, now can handle big database [cool] </para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> Implement JNDI for mail sessions (Thanks Mat) </para>
+                <para> In the past, we config mail in mvncore.xml. We config server, username ,password for mail </para>
+            </listitem>
+            <listitem>
+                <para> When we config the step 1, if the mvnForumHome or the log file path are already correct, then mvnForum does not show suggestion</para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> Update the Rusian translation (thanks Serobit) </para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> Use Lucene's IndexWriter.setUseCompoundFile(true) only on disk's Directory </para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> Now use Directory instead of String for Lucene search index </para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> Now attachment is implemented with new interface BinaryStorage </para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> Add sample log config for loging to database in file log4j.properties </para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> Change the cache of forum and category to use Whirly cache </para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> Add new permission "Edit Own Post", now user must have this permission to be able to edit his own post and add attachment </para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> Add help docs for setup unicode in MySql 4.1.x and later (in file mvnForum_mysql.sql) </para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> Change and improve the configuration files in Admin zone</para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> Rewrite freeMarkerConfiguration in MVNForumConfig (thread=3170) (Thanks xmvigour) </para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> Now does not init mvnForum if use driver ODBC/JDBC because the limitation of this driver </para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> CSS now support portlet JSR 168 </para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> The logger in fatalerror.jsp now start with "com.mvnforum."</para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> ContentInterceptor now allow modification of content instead of just throw exception (Change from void method to return String of new content)</para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> Change the behaviour of attachment: not allow to add when closed or locked </para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> Change the behaviour of attachment: allow to download when locked</para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> Update the English language for better English usage (Thanks ghpayne) (thread=2789) </para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> Some update to the Intro and Admin documentation</para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> Add link to mvnForum Professional Services in the index page of Admin zone</para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> URLEncode all the MemberName in link in all jsp files (support Chinese LoginName)</para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> Encode and decode cookie so if use Chinese username, it will work fine</para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> Change the default guest timezone with config parameter instead of hardcode (in file addmember.jsp) (Thanks huxiaonan)</para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> Localized hard coded strings in com.mvnforum.OnlineUserAction.getTimeString()</para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> Add link to viewpermision in permisionsummary</para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> Improve the delete non activated members, add link to the user in that page</para>
+                <para> </para>
+            </listitem>
+            <listitem>
+                <para> Log the full path of config file if there is an error to load it</para>
+                <para> </para>
+            </listitem>
+       </itemizedlist>
+</article>

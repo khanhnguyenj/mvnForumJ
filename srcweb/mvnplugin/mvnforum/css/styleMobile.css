@@ -1,0 +1,120 @@
+html, body, div, span, ul, li, fieldset, img, form, label, legend, table, h1, h2, a {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font: x-small sans-serif;
+  vertical-align: baseline;
+  background: transparent;
+  color: #333;   
+}
+body {
+  line-height: 1;
+}
+
+a:link, a:visited, a:active { color: #023a9b; text-decoration: none }
+a:hover { color: #333; text-decoration: underline}
+.log_name {
+  color:#990000;
+  font-weight:bold;
+  font-size:xx-small;
+}
+.topmenu { 
+  clear:left;
+  background-color:#e3ebee;
+  padding:2px;
+}
+.leftpad {
+  padding-left:5px;
+}
+.section_header, a.section_header:link, a.section_header:active, a.section_header:visited {
+  color:#cc6633;
+  font-weight:bold;
+  text-decoration:none;
+}
+a.section_header:hover {
+  color:#333;
+}
+hr.hrfooter {
+  color: #ccc;
+  background: #ccc;
+  border: 0;
+  height: 1px;
+}
+#bullet ul {
+  list-style: none;
+  margin: 0.1em 0 0.1em 0;
+  padding-left: 5px;
+}
+#bullet ul li {
+  padding: 0 0 0 7px;
+  line-height: 1.5em;
+  background: url(../images/mobile/bullet.gif) no-repeat 0 4px;
+}
+.login {
+  size: 20;
+  height: 16px;
+  border: 1px solid #999999;
+  color: #666;
+  font-size: 1em;
+  text-indent: 2px;
+  background-color: #f6f6f6;
+}
+.padding1px {
+  padding: 1px;
+}
+.but_log {
+  font: xx-small sans-serif;
+  border-top: 1px solid #e7eff2; 
+  border-left: 1px solid #e7eff2; 
+  border-bottom: 1px solid #cfd8dc;
+  border-right: 1px solid #cfd8dc;
+  background-color: #d7e1e5;
+  color: #617c87;
+}
+.section_title {
+  background-color: #eff7fd;
+  padding:1 px;
+  margin: 2px 0 2px 0;
+}
+.page {
+  background-color: #f0f0f0;
+  padding: 1px;
+  margin: 2px 0 2px 0;
+}
+.hightlighttitle {
+  margin: 2px 0 2px 0;
+  color: #0033cc;
+}
+.user_account {
+  color: #339900;
+  font-size: x-small;  
+}
+.input_tx {
+  border: 1px solid #ccc;
+  height: 14px;  
+}
+.text_area {
+  border: 1px solid #efeeee;
+  width: 99%;
+  color: #666;
+  font-size: 1em;
+  text-indent: 2px;
+  background-color: #f6f6f6;
+}
+#header {
+  width: 100%;
+  height: 18px;
+}
+#header h1 {
+  width:30px;
+  float:left;
+}
+#header h2 {
+  float:right;
+  margin-top:3px;
+  padding-right:2px;
+}
+div.center {
+  text-align: center;
+}

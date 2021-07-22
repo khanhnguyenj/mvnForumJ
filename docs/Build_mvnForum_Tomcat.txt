@@ -1,0 +1,286 @@
+******************************************************************
+* $Id: Build_mvnForum_Tomcat.txt,v 1.23 2009/04/08 12:21:46 minhnn Exp $
+******************************************************************
+
+
+
+How to build mvnForum bundled with Tomcat
+=========================================================
+
+- NOTE: before building mvnForum, make sure set JAVA_HOME to JDK 1.4
+
+- We should remove folder CVS before we build
+
+- TODO: should we create the Lucene index in the bundle ???
+
+- Extract a new Tomcat 5.0.28, and change folder name to, say, mvnforum-1.1-dev-jakarta-tomcat-5.0.28-20070919
+    edit tomcat_home/conf/server.xml, then in tag Connector for port 8080, add this attribute:
+     URIEncoding="UTF-8"
+
+- Edit startup.sh, change "start" to "run" (no need to change startup.bat)
+
+- Delete 4 text file in the root folder of Tomcat, then copy 
+  mvnforum\docs\docs_for_builds\mvnforum_mvnad_bundle\README.txt
+  and MVN_Profile_standard_20080630.pdf
+  into this folder
+
+- Copy context mvnforum to tomcat_home/webapps
+
+- Remove tomcat_home/webapps/mvnforum/WEB-INF/lib/mysql-connector-java-3.1.14-bin.jar
+
+- Copy mvnforum/sql/hsqldb to tomcat_home
+    NOTE: make sure hsqldb is match with the latest SQL file
+
+- Copy hsqldb.jar to tomcat_home/common/lib (note that we need folder common because 
+    it is in the same class loader that Tomcat can read, for realm authentication in pluto)
+
+- Edit file mvncore.xml
+        <driver_class_name>org.hsqldb.jdbcDriver</driver_class_name>
+        <database_url>jdbc:hsqldb:file:../hsqldb/mvnforum</database_url>
+        <database_user>sa</database_user>
+        
+- Edit file mvnforum.xml (just need to confirm)
+  <mvnforum_home>../webapps/mvnforum/WEB-INF/mvnForumHome</mvnforum_home>
+  <mvnforum_log>../webapps/mvnforum/WEB-INF/mvnForumHome/log/mvnforum.log</mvnforum_log>
+
+- log4j.properties (just need to confirm)
+  log4j.appender.A2.File=../webapps/mvnforum/WEB-INF/mvnForumHome/log/mvnforum.log
+  
+- Copy file index_mvnforum.jsp to tomcat_home/ROOT
+  check the true/false condition to show mvnForum enterprise/CMS
+
+- Change Tomcat ROOT web.xml, add these lines:
+    <welcome-file-list>
+        <welcome-file>index_mvnforum.jsp</welcome-file>
+    </welcome-file-list>
+
+- We can copy the lucene index now
+
+- Now zip the whole folder
+
+- You can copy this folder to a new folder and test before releasing
+
+- If build with mvnAd, then need to change mvncore.xml
+        <mvncoreservice_implementation>com.mvnforum.service.impl.MvnCoreServiceImplMvnForumAds</mvncoreservice_implementation> 
+
+- For bulid with mvnAd, we will build mvnforum first, then change 
+  mvnad/properties 
+  so the key deploy.localhost could be something link this:
+  deploy.localhost=H:/mvnforum-build/mvnforum_enterprise-1.2-mvnad_enterprise-1.0-src-20080627/build/build-mvnforum_enterprise/webapp/mvnforum_enterprise
+  then call on console
+  ant deploy-localhost
+  
+
+If bundle with mvnForum enterprise
+=========================================================
+- NOTE: before release mvnForum enterprise source package, remember to delete folder 
+    mvnforum_enterprise/internal_docs
+
+- Same as above, but the folder name should be, say, mvnforum_enterprise-1.1-dev-jakarta-tomcat-5.0.28-20070919
+
+- But do not copy mvnforum/sql/hsqldb to tomcat_home, instead, copy mvnforum_enterprise/sql/hsqldb to tomcat_home
+    NOTE: make sure hsqldb is match with the latest SQL file
+
+- Copy file index_mvnforum.jsp to tomcat_home/ROOT
+  NOTE: remember to enable the condition to show mvnforum_enterprise
+  
+- Copy context mvnforum_enterprise to tomcat_home/webapps
+    NOTE: in the above section, we already copy context mvnforum, because we want 2 context at the same time
+
+- Remove tomcat_home/webapps/mvnforum_enterprise/WEB-INF/lib/mysql-connector-java-3.1.14-bin.jar
+
+- Edit file mvncore.xml
+        <driver_class_name>org.hsqldb.jdbcDriver</driver_class_name>
+        <database_url>jdbc:hsqldb:file:../hsqldb/mvnforum</database_url>
+        <database_user>sa</database_user>
+        
+- Edit file mvnforum.xml (just need to confirm)
+  <mvnforum_home>../webapps/mvnforum_enterprise/WEB-INF/mvnForumHome</mvnforum_home>
+  <mvnforum_log>../webapps/mvnforum_enterprise/WEB-INF/mvnForumHome/log/mvnforum.log</mvnforum_log>
+
+- We can copy the lucene index now
+
+- Now zip the whole folder
+
+- You can copy this folder to a new folder and test before releasing
+
+- If build with mvnAd, then need to change mvncore.xml
+        <mvncoreservice_implementation>com.mvnforum.enterprise.service.impl.MvnCoreServiceImplEntMvnForumEntAdsEnt</mvncoreservice_implementation> 
+
+If bundle with mvnForum portlet
+=========================================================
+- NOTE: before release mvnForum portlet source package, remember to delete folder 
+    mvnforum_enterprise/internal_docs
+
+- We should bundle with the enterprise edition
+
+- Copy content of pluto_1_1-for-tomcat5 to tomcat_home
+
+- Remove tomcat_home/common/lib/mysql-connector-java-3.1.14-bin.jar 
+
+- Add to webapps/pluto/WEB-INF/pluto-portal-driver-config.xml
+  <render-config default="mvnForum">
+    <page name="mvnForum" uri="/WEB-INF/themes/pluto-mvn-theme.jsp">
+      <portlet context="/mvnforum_portlet" name="UserForumPortlet"/>
+    </page>
+    <page name="mvnForumAdmin" uri="/WEB-INF/themes/pluto-mvn-theme.jsp">
+      <portlet context="/mvnforum_portlet" name="AdminForumPortlet"/>
+    </page>
+    <page name="mvnForumThreads" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/mvnforum_portlet" name="RecentThreadsPortlet"/>
+      <portlet context="/mvnforum_portlet" name="HotThreadsPortlet"/>
+    </page>
+    <page name="UserManagement" uri="/WEB-INF/themes/pluto-mvn-theme.jsp">
+      <portlet context="/mvnforum_portlet" name="UserManagementPortlet"/>
+    </page>
+    <page name="About Pluto" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/pluto" name="AboutPortlet"/>
+      <portlet context="/testsuite" name="TestPortlet1"/>
+    </page>
+    <page name="Test Page" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/testsuite" name="TestPortlet1"/>
+      <portlet context="/testsuite" name="TestPortlet2"/>
+    </page>
+    <page name="Pluto Admin" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/pluto" name="PlutoPageAdmin"/>
+      <portlet context="/pluto" name="AboutPortlet"/>
+    </page>
+  </render-config>
+
+- To build mvnforum-portlet, run 
+    ant compile-for-pluto-1_1
+
+- copy build/build-mvnforum_portlet/webapp-pluto_1_1/mvnforum_portlet/ to tomcat_home/webapps
+
+- Remove tomcat_home/webapps/mvnforum-portlet/WEB-INF/lib/mysql-connector-java-3.1.14-bin.jar
+
+- enable the condition to show mvnforum_portlet in file index_mvnforum.jsp of tomcat_home/ROOT
+
+- Add to webapps/pluto/WEB-INF/pluto-portal-driver-config.xml
+    <page name="mvnAd" uri="/WEB-INF/themes/pluto-mvn-theme.jsp">
+      <portlet context="/mvnad_portlet" name="UserAdPortlet"/>
+    </page>
+    <page name="mvnAdAdmin" uri="/WEB-INF/themes/pluto-mvn-theme.jsp">
+      <portlet context="/mvnad_portlet" name="AdminAdPortlet"/>
+    </page>
+
+
+- Edit file mvncore.xml
+        <driver_class_name>org.hsqldb.jdbcDriver</driver_class_name>
+        <database_url>jdbc:hsqldb:file:../hsqldb/mvnforum</database_url>
+        <database_user>sa</database_user>
+        
+- Edit secondary-database.xml
+        <driver_class_name>org.hsqldb.jdbcDriver</driver_class_name>
+        <database_url>jdbc:hsqldb:file:../hsqldb/mvnforum</database_url>
+        <database_user>sa</database_user>
+        
+- Change conf/Catalina/localhost/pluto.xml
+    <Realm className="com.mvnsoft.auth.realm.MVNTomcatJDBCRealm" debug="99"
+        driverName="org.hsqldb.jdbcDriver" connectionURL="jdbc:hsqldb:file:../hsqldb/mvnforum"
+        connectionName="sa" connectionPassword="" 
+        userTable="mvnforumMember" userNameCol="MemberName" userCredCol="MemberPassword"
+        userRoleTable="mvnforumMember" roleNameCol="MemberStatus" />
+
+- We can copy the lucene index now
+
+- Now zip the whole folder
+
+- You can copy this folder to a new folder and test before releasing
+        
+
+If bundle with mvnAd portlet
+=========================================================
+- We should bundle with the enterprise edition
+
+- Copy content of pluto_1_1-for-tomcat5 to tomcat_home
+
+- Remove tomcat_home/common/lib/mysql-connector-java-3.1.14-bin.jar 
+
+- To build mvnad-portlet, run 
+    ant war-for-pluto-1_1
+
+- copy build/build-mvnad_portlet/webapp-pluto_1_1/mvnad_portlet/ to tomcat_home/webapps
+
+- Remove tomcat_home/webapps/mvnad-portlet/WEB-INF/lib/mysql-connector-java-3.1.14-bin.jar
+
+- enable the condition to show mvnad_portlet in file index_mvnforum.jsp of tomcat_home/ROOT
+
+- Edit file mvncore.xml
+        <driver_class_name>org.hsqldb.jdbcDriver</driver_class_name>
+        <database_url>jdbc:hsqldb:file:../hsqldb/mvnforum</database_url>
+        <database_user>sa</database_user>
+        
+- Edit secondary-database.xml
+        <driver_class_name>org.hsqldb.jdbcDriver</driver_class_name>
+        <database_url>jdbc:hsqldb:file:../hsqldb/mvnforum</database_url>
+        <database_user>sa</database_user>
+        
+- Change conf/Catalina/localhost/pluto.xml
+    <Realm className="com.mvnsoft.auth.realm.MVNTomcatJDBCRealm" debug="99"
+        driverName="org.hsqldb.jdbcDriver" connectionURL="jdbc:hsqldb:file:../hsqldb/mvnforum"
+        connectionName="sa" connectionPassword="" 
+        userTable="mvnforumMember" userNameCol="MemberName" userCredCol="MemberPassword"
+        userRoleTable="mvnforumMember" roleNameCol="MemberStatus"/>
+
+- Now zip the whole folder
+
+- You can copy this folder to a new folder and test before releasing
+        
+
+If Build mvnCMS:
+=========================================================
+- Change catalina.sh and catalina.bat and add (please update this for Windows and Linux)
+    JAVA_OPTS='-Dorg.apache.tapestry.disable-caching=true -Xms256M -Xmx768M -XX:PermSize=512M -XX:MaxPermSize=768M'
+
+- Delete all template except (also remove web-handlers@xxx.xml file)
+   template1
+   jvn2
+   khxhnv
+
+- Remove mvncms\contrib\tram
+
+- Check if we should remove file in mvncms/extension
+
+- Remove the driver file (mysql files)
+
+- log4j.properties
+  log4j.appender.A2.File=../webapps/mvncms/WEB-INF/mvnForumHome/log/mvnforum.log
+
+- mvncore.xml
+        <driver_class_name>org.hsqldb.jdbcDriver</driver_class_name>
+        <database_url>jdbc:hsqldb:file:../hsqldb/mvnforum</database_url>
+        <database_user>sa</database_user>
+
+        <context_path>/mvncms</context_path>
+
+
+- mvnforum.xml:
+        <mvnforum_home>../webapps/mvncms/WEB-INF/mvnForumHome</mvnforum_home>
+        <mvnforum_log>../webapps/mvncms/WEB-INF/mvnForumHome/log/mvnforum.log</mvnforum_log>
+  
+- mvncms.xml
+        <mvncms_home>../webapps/mvncms/WEB-INF/mvnCmsHome</mvncms_home>
+        <processor_impl>com.mvnsoft.mvncms.cds.standard.CDSDefaultModuleProcessor</processor_impl>
+
+        <template>template1</template>
+        <handler_config_file>web-handlers@template1.xml</handler_config_file>
+        <url_pattern>/cms</url_pattern>
+        
+        Also we should delete reference to cnms
+        
+- mvnad.xml
+        <mvnad_home>../webapps/mvncms/WEB-INF/mvnAdHome</mvnad_home>
+
+- workflows.xml
+        <workflow name="osworkflow-content" type="file" location="../webapps/mvncms/WEB-INF/classes/osworkflow-content.xml" />
+        <workflow name="osworkflow-contentfeedback" type="file" location="../webapps/mvncms/WEB-INF/classes/osworkflow-contentfeedback.xml" />
+        <workflow name="osworkflow-interview" type="file" location="../webapps/mvncms/WEB-INF/classes/osworkflow-interview.xml" />
+
+- change index_mvnforum.jsp  
+
+- Delete unneeded handler files in WEB-INF/classes
+
+- Finally, we can update the Lucene index if we want    
+        
+       

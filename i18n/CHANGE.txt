@@ -1,0 +1,76 @@
+******************************************************************
+* $Id: CHANGE.txt,v 1.1 2006/04/14 18:54:18 minhnn Exp $
+******************************************************************
+
+
+Changes from RC4 to 1.0 GA
+
+
+Added keys
+------------------------------------
+mvnforum.common.member.show_useWysiwyg = Fancy Editor (wysiwyg)
+mvnforum.common.date.1_hour = hour
+mvnforum.common.date.X_hour = hours
+mvnforum.common.date.hhmm_and = and
+mvnforum.common.date.1_minute = minute
+mvnforum.common.date.X_minutes = minutes
+mvnforum.user.header.my_control_panel = My Control Panel
+mvncore.exception.BadInputException.cannot_edit_your_post.which_is_disabled = You cannot edit your own post which is disabled.
+
+
+
+
+Deleted key
+------------------------------------
+
+
+
+
+Changed keys
+------------------------------------
+mvnforum.common.success.prompt = Please choose one of the following links to continue:
+mvnforum.common.captcha.desc = This CAPTCHA image is used to prevent automated (robot) signups. Your captcha response must match captcha challenge.
+mvnforum.common.legend.forum.no_new = No new posts since your last login
+mvnforum.common.legend.thread.hot_no_new = This is a hot thread and has no new posts since your last login
+mvnforum.common.legend.thread.hot_new = This is a hot thread and has new posts since your last login
+mvnforum.common.legend.thread.has_attachment = This thread contains one or more attachments
+mvnforum.common.legend.message.read_already = This message has already been read
+mvnforum.common.legend.message.unread = This is an unread message or is marked as an unread message
+mvnforum.common.legend.message.has_attachment = This message has one or more attachments
+However there was a problem when sending activation mail to you. Please request a new activation email or report this error to the web site Administrator.
+mvnforum.user.addattachment.attach_more = I would like to attach a file
+mvnforum.user.addpostsuccess.moderation_waiting = Your post has been created successfully--please do not submit again. 
+mvnforum.user.changeavatar.guide = This page will give you powerful tools to change your avatar. You can choose one of the two methods below. <br>Note: it may take a little time to upload your avatar, so please be patient.
+mvnforum.user.changeavatar.upload.guide = 2. Upload your avatar here (only Jpg/Gif/Png files are allowed, maximum file size = 60,000 bytes, width and height should be less than or equal 150 pixels):
+mvnforum.user.deleteattachment.guide = You are about to delete this attachment. \
+     Please review the attachment information below. \
+     If you are sure you want to delete this attachment, please enter your current password to confirm.
+mvnforum.user.editattachment.guide = You are about to edit this attachment. \
+     If you are sure you want to edit this attachment then enter a new attachment \
+     description and your current password to confirm.
+mvnforum.user.deletepost.guide = You are about to delete this post.  \
+     Please review the post information below before you delete it. \
+mvnforum.user.deletethread.guide = You are about to delete this thread. \
+     Please review the thread information below before you delete it. 
+mvnforum.user.movethread.guide = You are about to move this thread. \
+     Please review the thread information below before you move it.
+mvnforum.user.modcp.guide = This is the Control Panel for all the moderation tasks. In mvnForum's moderation setup, \
+     you have the option to view current pending threads and to view threads with pending posts. \
+     To moderate threads and posts in a specific forum, look at the table below. \
+mvnforum.user.editthreadstatus.guide = You are about to change this thread status. \
+     Please review the thread information below before you change its status. \
+     If you do want to change the thread's status, please enter your current password to confirm.
+mvnforum.user.editthreadtype.button.edit_thread_type = Yes, I want to change this thread's type
+mvnforum.user.viewmessage.unreadmessagesuccess = Mark as unread message successfully
+mvnforum.user.mymessage.title = My Private Messages
+mvnforum.user.mymessage.guide = My Private Messages is a place to manage all of your private messages.
+mvnforum.user.deletemessagefolder.guide = You are about to delete this folder. \
+     Please review the folder information below before you delete it. \
+mvnforum.user.addmessagesuccess.success_message_with_warning = Your message has been sent successfully. However, there are warnings associated with its delivery:
+mvnforum.user.addmessagesuccess.over_quota_list = These members cannot receive your message because they are over quota:
+mvnforum.user.sendactivationcode.prompt = Please type your user name and email to get your account activation instructions
+mvnforum.user.sendactivationcode.button.send_activation_code = Send account activation instruction to my email address
+mvnforum.user.sendactivationcodesuccess.title = Your account activation instructions have been sent to your email      
+mvnforum.user.viewthread.link.print_thread = Show Printable Version of Thread
+mvnforum.user.viewthread.link.print_post = Show Printable Version of Post
+mvnforum.user.viewthread.report_need_login = Report threatening or abusive post: please login first

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+    version="2.4">
+
+    <!-- filters -->
+    <filter>
+        <filter-name>CompressionFilter</filter-name>
+        <filter-class>net.myvietnam.mvncore.servlet.filter.CompressionFilter</filter-class>
+        <init-param>
+            <param-name>compressionThreshold</param-name>
+            <param-value>128</param-value>
+        </init-param>
+    </filter>
+    <!-- /filters -->
+
+    <!-- filter-mappings -->
+    <filter-mapping>
+        <filter-name>CompressionFilter</filter-name>
+        <url-pattern>/mvnforum/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>CompressionFilter</filter-name>
+        <url-pattern>/mvnforumadmin/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>CompressionFilter</filter-name>
+        <url-pattern>/m/*</url-pattern>
+    </filter-mapping>
+    <!-- /filter-mappings -->
+
+    <!-- listeners -->
+    <listener>
+        <listener-class>com.mvnforum.MVNForumContextListener</listener-class>
+    </listener>
+    <!-- /listeners -->
+
+    <!-- servlets -->
+    <servlet>
+        <servlet-name>ForumAdminServlet</servlet-name>
+        <servlet-class>com.mvnforum.admin.ForumAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ForumUserServlet</servlet-name>
+        <servlet-class>com.mvnforum.user.ForumUserServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ForumMobileServlet</servlet-name>
+        <servlet-class>com.mvnforum.mobile.ForumMobileServlet</servlet-class>
+    </servlet>
+    <!-- /servlets -->
+
+    <!-- servlet-mappings -->
+    <servlet-mapping>
+        <servlet-name>ForumAdminServlet</servlet-name>
+        <url-pattern>/mvnforumadmin/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ForumUserServlet</servlet-name>
+        <url-pattern>/mvnforum/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ForumMobileServlet</servlet-name>
+        <url-pattern>/m/*</url-pattern>
+    </servlet-mapping>
+    <!-- /servlet-mappings -->
+
+    <session-config>
+        <session-timeout>120</session-timeout>
+    </session-config>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <taglib>
+        <taglib-uri>http://jsptags.com/tags/navigation/pager</taglib-uri>
+        <taglib-location>/WEB-INF/pager-taglib.tld</taglib-location>
+    </taglib>
+    <taglib>
+        <taglib-uri>mvntaglib</taglib-uri>
+        <taglib-location>/WEB-INF/mvntaglib.tld</taglib-location>
+    </taglib>
+    <!-- Deactive EL -->
+    <jsp-config>
+        <jsp-property-group>
+            <display-name>Ignore EL</display-name>
+            <url-pattern>*.jsp</url-pattern>
+            <el-ignored>true</el-ignored>
+        </jsp-property-group>
+    </jsp-config>
+</web-app>

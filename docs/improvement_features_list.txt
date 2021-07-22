@@ -1,0 +1,70 @@
+// convenient features for exploring forum
+- implement tag for thread
+- display rate result at list thread page
+- implement quick search
+    in category
+    in forum
+    in thread
+- go to thread / last post in thread in list forum
+- show number of member / guest viewing this forum/category/thread
+- show moderator of forum in list forum, thread
+- wrap quick reply to 1 wrapper table (with show/hide option ?)
+- implement wysiwgy for quick reply
+- implement [hide] code so that only authenticated user can see the content inside
+- provide [music], [youtube] bb code or even provide bb code tool for user to customize bb code to match their needs
+- provide option to nail first post of thread (show this post in every pages of thread)
+- provide option to nail sticky thread (show sticky thread in every pages of list thread of forum)
+- implement forum permission features
+- social bookmark
+
+
+// moderation features
+- quick edit thread title by double click
+- quick edit post
+- quick close topic by double click
+- Support hide thread (unapprove), unhide thread (approve)
+- Support hide post (unapprove, the administrator/moderator can view post only), unhide post (approve)
+- support soft delete thread (delete with reason left for the users, can undelete later)
+- infraction warning for each member with some default infractions and customizable infraction
+- submit product feedback at page footer
+- perform action in multiple selected posts:
+    merge  post
+    move post
+    copy post
+    delete post as spam
+    delete post
+    undelete post
+    approve post
+    unapprove post
+    approve attachment
+    unapprove attachment
+- perform action in multiple selected threads
+    delete thread
+    undelete thread
+    delete thread as spam
+    open thread
+    close thread
+    approve thread
+    unapprove thread
+    sticky thread
+    unstick thread
+    move thread
+    merge thread
+
+
+// user function features
+Member profile:
+- export pm to csv
+- visitor message
+- member statistic
+    total post
+    post per date
+    most active forum
+- implement tab view 
+
+
+// admin control features
+- Implement sitemap for admin
+- database backup tool
+- Database migration
+- merge user

@@ -1,0 +1,52 @@
+******************************************************************
+* $Id: ReleaseCheckList.txt,v 1.10 2008/11/20 10:10:07 minhnn Exp $
+******************************************************************
+
+
+- run: 
+  ant jspc 
+  ant find-java-wrong-keys
+  ant find-jsp-wrong-keys
+     
+- Change the Build Date to today for these below files:
+  [todo: add list of files here]
+
+- Synchronize style_backup.css to style.css 
+    in mvnforum
+       mvnforum_enterprise
+       portlet-mvnforum
+       mvnad-portlet
+
+- search for "requiredfield" and make sure there is ONE space before or after the text
+
+- Synchronize 
+    mvncore.xml 
+    mvnforum.xml
+    secondary_database.xml
+    log4j.properties
+    schemaMapping.xml
+    mvncore-portlet.xml
+    mvnforum-portlet.xml
+    portal-database.xml
+    mvnad.xml
+
+- Check the year of copyright
+
+- Remove Internal Docs
+
+- Update INSTALL.txt
+  - Change the version
+  - Change the link to release note
+  - Total review this file
+
+- Update CVS.txt
+  * Update the tag/branch
+
+- XHML:
+  * <br /> is better than <br>
+  * search all the link, change & to &amp;
+  * attribute need " , ex: type=radio 
+  * some attribute with upper case : onClick, onKeyUp, accessKey, onMouseOver, onChange, onKeyPress, onSubmit, type="Reset"
+  * search attributes in all jsp files : checked, nowrap, selected, disabled, noshade and change to, say, checked="checked"
+
+- Check javascript with YSlow

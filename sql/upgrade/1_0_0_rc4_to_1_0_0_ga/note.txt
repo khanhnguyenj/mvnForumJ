@@ -1,0 +1,6 @@
+Upgrade script from RC4 to 1.0 GA Note
+
+Tested on: 
+- MySql
+- hsqldb 1.8.0.2
+- Sql Server 2000

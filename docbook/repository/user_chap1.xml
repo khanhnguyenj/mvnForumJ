@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+  <chapter>
+    <title>User Guidelines</title>
+    <sect1>
+      <title>Account Management</title>
+      <para>Account management involves creating accounts, managing your profile, and watching
+        threads</para>
+      <sect2>
+        <title>Adding a new User Account (member registration)</title>
+        <para>To actively participate in a forum, users will want to establish accounts
+          with the forum so that they can be notified of updates to a forum or a thread;
+          so that they can customize their profile; and so that they can be credited
+          with their participation.  To create a new user account, click on the
+          New User link in the navigation bar near the top of the forum page.  Once you have
+          clicked on this link, the forum loads a template for creating a new user account.</para>
+        <para>Complete the fields on this form and click the Register button at the bottom.
+          The fields with the star icon (*) are required for successfully creating a
+          new user account.  See the <xref linkend="user_profile"/> for further
+          explanation of the fields on this form.</para>
+      </sect2>
+      <sect2>
+        <title>Account access to forums and threads</title>
+        <para>
+          Users have access to forums based on the group they belong to.  The following permission-based forum
+            groups are provided by mvnForum as a framework for enabling certain users as moderators and forum
+            administrators
+            <itemizedlist>
+               <listitem><para>Normal user - can use avatar; send messages; add and read posts/threads; get attachments</para></listitem>
+               <listitem><para>Forum Moderator - adds to Normal user - can edit Forum/Category; delete post; manage polls (to be added); and use attachments</para></listitem>
+               <listitem><para>Forum Admin - adds to Moderator - can delete Forum/Category</para></listitem>
+            </itemizedlist>
+        </para>
+      </sect2>
+    </sect1>
+    <sect1 id="user_profile">
+      <title>Profile Settings</title>
+      <para>User accounts can be customized by changing the user profile settings.  The settings are stored
+        by the forum and tied to each user account. Following are the profile settings available and
+        an explanation for each
+        <itemizedlist>
+          <title>User Profile Settings</title>
+          <listitem><para>Member ID - Shows this profile user's member id.  The member ID is a unique identifier used to create posts, participate in watches and moderate forums.</para></listitem>
+          <listitem><para>First Name - Shows this profile user's first name</para></listitem>
+          <listitem><para>Last Name - Shows this profile user's last name</para></listitem>
+          <listitem><para>Email - Shows the email this profile is associated with.  To receive watch notifications and allow other users to contact you offline, enter a valid email account address you have access to.</para></listitem>
+          <listitem><para>Show Email - Shows whether this profile's email will be shown on posts and in the user lists.  To disable the display of your email address, uncheck this option.</para></listitem>
+          <listitem><para>Name Visible - Shows whether this profile's name is visible in posts.  To post anonymously using your profile, uncheck this option.</para></listitem>
+          <listitem><para>Address - Shows this user's address</para></listitem>
+          <listitem><para>City - Shows this user's city</para></listitem>
+          <listitem><para>State - Shows this user's state</para></listitem>
+          <listitem><para>Country - Shows this user's country</para></listitem>
+          <listitem><para>Gender - Shows this user's gender</para></listitem>
+          <listitem><para>Birthday - Shows this user's date of birth</para></listitem>
+          <listitem><para>Career - Shows this user's profession or avocation</para></listitem>
+          <listitem><para>Home page - Shows this user's home page or a link this user considers to be particularly intersting</para></listitem>
+          <listitem><para>Cool Link 1 - Shows a link this user considers to be particularly cool</para></listitem>
+          <listitem><para>Cool Link 2 - Shows a second link this user considers to be particularly cool</para></listitem>
+          <listitem><para>Yahoo ID - Shows the Yahoo ID for this profile.  mvnForum shows this icon and a link to access the user's messenger ID on each post.</para></listitem>
+          <listitem><para>AOL ID - Shows the AOL ID for this profile.  mvnForum shows this icon and a link to access the user's messenger ID on each post.</para></listitem>
+          <listitem><para>ICQ ID - Shows the ICQ ('I seek you') or client for IRC ('Internet Relay Chat') ID for this profile. mvnForum shows this icon and a link to access the user's messenger ID on each post.</para></listitem>
+          <listitem><para>MSN ID - Shows the Microsoft Messenger ID for this profile.  mvnForum shows this icon and a link to access the user's messenger ID on each post.</para></listitem>
+          <listitem><para>Signature - Shows the signature this profile uses.  Signatures are statements that are appended to the end of each profile. </para></listitem>
+          <listitem><para>Join Date - Shows the date this user created this profile</para></listitem>
+          <listitem><para>Last Login - Shows the date the user logged in last</para></listitem>
+          <listitem><para>Last profile update - Shows the last time this profile was updated</para></listitem>
+          <listitem><para>Posts - Shows the number of posts this user has made</para></listitem>
+          <listitem><para>Views - Shows the number of times this profile has been viewed</para></listitem>
+        </itemizedlist>
+      </para>
+      <sect2>
+        <title>Change Profile Information</title>
+        <para>Once an account has been created, you can change your profile settings. The changes might reflect a new email address,
+          a changed name, or an update to a signature.
+        </para>
+        <para>To make a change, log in to the forum site and click on the <guimenuitem>My Profile</guimenuitem> link in the
+           forum navigation bar (usually located near to top of the page).  Click on the <guimenuitem>Change my Information</guimenuitem>
+           link to access the profile editing form.
+        </para>
+        <para>Make changes to your profile settings and click on the <guibutton>Edit My Information</guibutton> button
+          at the bottom of the form.
+        </para>
+      </sect2>
+      <sect2>
+        <title>Change Email Address</title>
+        <para>The email address is an important part of your profile.  mvnForum uses the email address to notify you
+          of changes to forums and threads you are watching.  Make sure to keep this address up to date.
+        </para>
+        <para>To make a change, log in to the forum site and click on the <guimenuitem>My Profile</guimenuitem> link in the
+           forum navigation bar (usually located near to top of the page).  Click on the <guimenuitem>Change my Email</guimenuitem>
+           link to access the email editing form.
+        </para>
+        <para>Update your email address, confirm the change, and click on the <guibutton>Change Email</guibutton> button
+          at the bottom of the form.
+        </para>
+      </sect2>
+      <sect2>
+        <title>Change password</title>
+        <para>Your password is how you protect your account from being used by others to create and change forum posts under
+          your member ID.<note><para>mvnForum stores the passwords in a database, encrypted through a common algorithm that
+            can be comprimised by anyone with access to the database, therefor, it is advised to use a password that
+            you are confortable with at least the administrator of the forum having access to (don't use your bank account
+            password).</para></note>.
+        </para>
+        <para>To make a change, log in to the forum site and click on the <guimenuitem>My Profile</guimenuitem> link in the
+           forum navigation bar (usually located near to top of the page).  Click on the <guimenuitem>Change my Password</guimenuitem>
+           link to access the password editing form.
+        </para>
+        <para>Enter your original password, enter a new password, confirm the change, and click on the <guibutton>Change Password</guibutton> button
+          at the bottom of the form.
+        </para>
+      </sect2>
+      <sect2>
+        <title>Change Avatar</title>
+        <para>Avatars are the icons that will be displayed along with your posts, a nice way to customize your posts. You can either use
+          an avatar provided by the forum, or provide your own avatar icon.  Currently, mvnForum supports avatar images of the following
+          formats: Jpg, Gif, and Png with heights and widths no more than 150 pixels and a total compressed size of no more than 60,000 bytes.
+        </para>
+        <para>To change you avatar, either select from the list of predefined avatars or load you own avatar to the forum.
+           <itemizedlist>
+             <listitem><para>To use a predefined avatar image, select from the list of avatars in the list provided in section1.  Click
+               the <guibutton>Change Avatar</guibutton> button below the list</para></listitem>
+             <listitem><para>To use a your own avatar image, either click the <guibutton>Browse...</guibutton> botton or enter the path and file name in the text
+              box in section 2.  With the name of the file in the text box, click the <guibutton>Upload Avatar</guibutton> button to load
+              the image onto the forum site.</para></listitem>
+           </itemizedlist>
+        </para>
+      </sect2>
+      <sect2 id="user_signature">
+        <title>Change Signature</title>
+        <para>The signature is a statement, quote, or disclaimer the forum will attach to the bottom of each post you make.
+        </para>
+        <para>To make a change, log in to the forum site and click on the <guimenuitem>My Profile</guimenuitem> link in the
+           forum navigation bar (usually located near to top of the page).  Click on the <guimenuitem>Change my Signature</guimenuitem>
+           link to access the signature editing form.
+        </para>
+        <para>Update your signature and click the <guibutton>Change Signature</guibutton> button
+          at the bottom of the form.
+        </para>
+      </sect2>
+      <sect2 id="user_activate">
+        <title id="user_activate.title">Activate Account</title>
+        <para>To confirm that you have entered a valid email address, you must activate your account.  An activated account
+          can participate in the forum; see <ulink url="admin.html#admin_forum_members">Assign Member to Forum</ulink>.
+        </para>
+        <para>To activate your account, click on the <guimenuitem>activate your account</guimenuitem> link on the login page or
+           on the <guimenuitem>Activate My Account</guimenuitem> link on the My Profile page once you have logged in.
+        </para>
+        <para>Enter your member ID and your email address and click on the <guibutton>Send account activation instruction to my email</guibutton>
+          button at the bottom of the form.
+        </para>
+        <para>mvnForum will attempt to send this email account activation instructions.
+          Once you receive the activation code, return to mvnforum and use the link in your activation email
+          to activate your account.
+        </para>
+      </sect2>
+      <sect2 id="user_watches_change">
+        <title id="user_watches_change.title">Change Watches</title>
+        <para>mvnForum provides a common means to track updates to threads in a forum you have a particular interest or responses to posts you make.
+          This means is called a watch.  A watch is the request to receive notifications (currently by email) of updates to posts or threads in
+          a forum that you are interested in following.  Watches, also known as alerts, notifications and subscriptions, come in two common
+          flavors: immediate notification and digested or summary reports; mvnForum currently supports the digested format.
+          There are two ways to create watches; either in the Change Watches form
+          or when replying to posts <link linkend="user_watches_post" endterm="user_watches_post.title"/>.
+          To request watches, you must <link linkend="user_activate">activate your account</link> which ensure a valid email to send the
+          watch notifications to.
+        </para>
+        <para>To request a watch, log in to the forum site and click on the <guimenuitem>My Profile</guimenuitem> link in the
+           forum navigation bar (usually located near to top of the page).  Click on the <guimenuitem>My Watch</guimenuitem>
+           link to access the watch management form.
+        </para>
+        <para>In this form, review your currently active threads. The types of watches available are global watches, category watches, forum watches,
+           and thread watches.
+           <itemizedlist>
+             <title>Description of Watch Types</title>
+             <listitem><para>Global watch - watch all the posts in all the forums in all the categories - this could get quite busy</para></listitem>
+             <listitem><para>Category watch - watch all the posts in all the forums in in a particular category</para></listitem>
+             <listitem><para>Forum watch - watch all the posts in a particular forum</para></listitem>
+             <listitem><para>Thread watch - watch all the updates to a particular thread</para></listitem>
+           </itemizedlist>
+        </para>
+        <para>To create a watch, click on the <guimenuitem>Add Watch</guimenuitem> link in the My Watch header.  Select your watch type by clicking
+          on one of the bullets in the list.
+           <itemizedlist>
+             <title>Creating Watches by Type</title>
+             <listitem><para>Global watch - the form will inform you that you will be watching the whole system</para></listitem>
+             <listitem><para>Category watch - the form will load the list of categories currently available to watch.
+               To watch more than 1 category you must create one watch for each category.</para></listitem>
+             <listitem><para>Forum watch - the form will load the list of forums currently available to watch.  The list is
+               grouped by category with the forum names under the dashed lines.  To watch more than 1 forum you must
+               create one watch for each forum; to watch all the forums in a category, create a category watch.</para></listitem>
+             <listitem><para>Thread watch - the form will prompt you for a thread ID.  Thread IDs can be seen in the URL of the page
+               displaying the thread.  Alternatively, if the URL is not available (ie, if the forum is embedded in frames), then
+               the thread ID can be found my holding you mouse over many of the icon links on a post page.</para></listitem>
+           </itemizedlist>
+        </para>
+        <para>Either select the category/forum or enter the thread id and click on the <guibutton>Watch It</guibutton> button at
+          the bottom of the form.
+        </para>
+        <para>To delete a watch, navigate to the watch summary page and click on the <guibutton>Delete</guibutton> link to the
+          right of the watch you wish to terminate.
+        </para>
+      </sect2>
+    </sect1>
+    <sect1 id="user_posting">
+      <title id="user_posting.title">Posting</title>
+      <para>A post is a comment or question to post to a forum that should have some relationship to the topics represented
+        in the forum.  Posts that do not adhere to the theme of the forum are considered 'off topic' and quite often
+        posting off topic is considered taboo (and can be moderated, and may even result in being banned from the forum).
+      </para>
+      <sect2>
+        <title>Creating and Editing Posts</title>
+        <para>To start a discussion about a topic of interest or to respond to comments or questions posed in another thread,
+          you create a post.  The first post in a thread defines the name of the thread.  Therefore, the topic of the first
+          post in a thread should be descriptive enough to give participants in a forum enough of an idea what the question
+          is or what your opinion is that they can decide whether to participate without having to access the post's body.
+        </para>
+        <para>A post has the following basic elements
+          <itemizedlist>
+            <listitem><para>Topic - the title of the post, which is also the title of the thread if this is the first post in the thread.
+              Should be a concise declaration of your question or observation</para></listitem>
+            <listitem><para>Body - the full text of the post, including links to images and content on external web sites.</para></listitem>
+            <listitem><para>Post icon - an optional icon to associate with this post/thread</para></listitem>
+            <listitem><para>Signature - your <link linkend="user_signature">signature</link> to append to the end of the post.</para></listitem>
+            <listitem><para>Formatting - html formatting options for text and smilies icons in the post.</para></listitem>
+          </itemizedlist>
+        </para>
+        <para>To access the post editing form to create a new post, either
+          <itemizedlist>
+            <listitem><para>click on the <guimenuitem>Index</guimenuitem> link in the forum navigation menu to access the Category/Forum list.
+              Click on the name of the forum to access the thread link.  Click on the <guimenuitem>Post new Thread</guimenuitem> link near the
+              top right corner of the list of threads in the forum.</para></listitem>
+            <listitem><para>(with a post active) click on the <guimenuitem>Post new Thread</guimenuitem> link near the
+              top right corner of the list of threads in the forum or the bottom right corner of the list of threads.</para></listitem>
+            <listitem><para>(with a post active) click on the <guimenuitem>Reply to this Post</guimenuitem> link in the top
+              right corner of a particular post to reply to the post in question.</para></listitem>
+          </itemizedlist>
+        </para>
+        <para>With the post editing form loaded, enter the Topic, body, post icon and click the <guibutton>Post new Thread</guibutton> button
+          or the <guibutton>Preview</guibutton> button at the bottom of the form.
+        </para>
+      </sect2>
+      <sect2>
+        <title>Formatting Posts</title>
+        <para>By default, a new post will present the text the user typed into the body section as plain text without any formatting.  The one
+          exception to this is that carraige returns will be preserved and presented to readers as new lines.  To edit the format of posts,
+          use the basic formatting tools provided in the 'normal' mode or the enchanged mode which adds the ability to nest formatting tags.
+        </para>
+        <para>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="figure/post.png" format="PNG"/>
+            </imageobject>
+            <textobject>
+              <phrase>A sample post edit page</phrase>
+            </textobject>
+            <caption>
+               <para>A sample post page with some formatting and smilies
+               </para>
+            </caption>
+          </mediaobject>
+        </para>
+        <para>To format a section of text, such as to emphasis it with bold
+          lettering, or to include a link to an external image such as
+          an image on a website you wish to refer to in your post, use the
+          buttons in the Format section of the post edit page.  Using the
+          normal mode to use the formatting buttons to insert a formatting
+          instruction, click on the button and enter the text you want to
+          format in the given manner.  In other words, to format a section
+          of text to be bold, click on the <guibutton>B</guibutton> button,
+          enter the text to be made bold, and click the OK button on the
+          dialog.
+        </para>
+      </sect2>
+      <sect2 id="user_attaching">
+        <title id="user_attaching.title">Attaching Documents to a Post</title>
+        <para>mvnForum supports at several ways to attach files to a thread or post.  The first
+          is the ability to embed an image within the body of a post; the second is to attach
+          a file, such as supporting documentation, to a post.  The process is slightly different
+          for each method: including images make a reference to an image that must already be
+          on the internet and accessible via a URL; attached files are uploaded to the forum server which 
+          then relates the file(s) to the post.  Users can then access the files from within the post context.
+        </para>
+        <para>
+          <itemizedlist>
+             <listitem>Add an image - while creating/editing a post, click the <guibutton>Image</guibutton>
+             button in the top tool bar (scripting must be enabled for this to work - for most things
+             in the forum to work). Enter the complete URL for the image and the image will be placed
+             in the post when it is rendered.  The code you see is mvnforum code for storing the reference
+             in a database - it should not look like valid HTML.  
+             </listitem>
+             <listitem>Attach a file - while creating/editing a post, check the <guilabel>I would like to attach more files</guilabel>
+             check box and commit the post by clicking the submit button at the bottom of the form (the button
+             label depends on whether you are editing, creating or responding).  When the post has been submitted,
+             the forum provides a link to <guilabel>Go to file attachment</guilabel>.  Click this link to access
+             the file attachment form.   Either enter the path on the local or remote computer where the file
+             is stored or click the Browse button to search for the file and optionally enter a 
+             description for the file.  You can choose to attach more files by checking the
+             <guilabel>I would like to attach more files</guilabel> again at the bottom.</listitem>
+          </itemizedlist>
+          n.b. To attach files, you must have file attachment permissions; members of the Power User group 
+          and above have this permission and it can be set by selecting the Add Attach permission.
+        </para>
+      </sect2>
+      <sect2 id="user_watches_post">
+        <title id="user_watches_post.title">Following Posts (watches)</title>
+        <para>To follow the action in a thread, you create a watch for the thread.  Check the 
+          <guibutton>Watch this Thread</guibutton> box below the post in the Attach Options
+          section.  More on watches is found in the <link linkend="user_watches_change" endterm="user_watches_change.title"/>
+          section.
+        </para>
+      </sect2>
+    </sect1>
+    <sect1>
+      <title>Groups</title>
+      <para>mvnForum users are able to perform activities in the forum environment
+       based on the group(s) they belong to.  In addition to being able to manage
+       forums and create threads, mvnForum will support limiting read and/or edit individual
+       forums based on inclusion in a group.  Only site administrators can currently
+       manage group membership.  See the administrator <ulink url="faq.html#admin_groups">group</ulink>
+       management documentation for further information.</para>
+    </sect1>
+    <sect1 id="search">
+      <title id="search.title">Searching</title>
+      <para></para>
+      <sect2 id="search_basic">
+        <title id="search_basic.title">Basic Search</title>
+        <para>To search the entire site's forum content for a phrase or collection or words,
+          enter the search phrase in the search entry and click the search button.  The forum
+          will search post topics and content for the phrase.  The results of the search are
+          returned as links to the posts.  If more than one word is entered, the search will
+          match on posts containing one or more of the words.
+        </para>
+      </sect2>
+      <sect2 id="search_advanced">
+        <title id="search_advanced.title">Advanced Search</title>
+        <para>To search for more specific content or within a narrower frame, use the advanced 
+        search.  Access the advanced search by clicking on the Search link in the main 
+        forum menu header.</para>
+        <para>
+        In the Search Form, enter the text to search, member name, and/or select a category/forum
+        to limit the search further.  See <link linkend="search_basic" endterm="search_basic.title"/> for
+        more on the results to be expected by entering text in the search form.
+        </para>
+      </sect2>
+    </sect1>
+    <sect1 id="moderate">
+      <title id="moderate.title">Moderating</title>
+      <para>Moderation is the process of auditing, sensoring, or guiding the direction of a conversation.
+      Some forums have a very narrow purpose and want to make sure that all participants adhere to the 
+      principals of the forum.  Other forums are intended for a young audience or want to keep their language
+      clean.  These types of forums are good candidates for moderation.</para>
+      <para>The following basic things are necessary to know about moderating forums
+        <itemizedlist>
+          <listitem>Setup a forum to be either post, thread or post and thread moderated</listitem>
+          <listitem>Assign one or more moderators to the forum</listitem>
+          <listitem>Posts or threads are either accepted or rejected by moderators; until a post/thread has 
+            been accepted, it does not show up in the list of posts/threads.</listitem>
+          <listitem>When a forum is set to moderate, every single post or thread (depending on how the
+            forum was setup) must be accepted or rejected (called deleted in mvnForum).</listitem>
+          <listitem>As of RC3, moderation consists only of accept/reject.  Another form of moderation
+            allows for assigning various levels of appropriateness or rating threads and posts.  Also,
+            an extension to the simple accept/reject moderation includes explanations for rejection which
+            can be helpful to users trying to figure out why their posts are rejected.</listitem>
+        </itemizedlist>
+      </para>
+      <para>Users participating in a moderated forum make their posts just as they would in an unmoderated
+         forum.  The difference being that in a moderated forum, they they will not see their posts presented
+         on the site until they have been accepted by a moderator.</para>
+      <para>The basic process for a moderated forum is:
+        <itemizedlist>
+          <listitem>A user submits a post on the moderated forum</listitem>
+          <listitem>A moderator reviews the list of pending threads and accepts or rejects each post or thread</listitem>
+          <listitem>Once accepted, the post is presented on the forum</listitem>
+          <listitem>Rejected posts are deleted from the database (?? is this true)</listitem>
+        </itemizedlist>
+      </para>
+      <sect2 id="moderate_moderator">
+        <title id="moderate_moderator.title">Moderating a Forum</title>
+        <para>Following describes how a moderator accepts and rejects posts.</para>
+      </sect2>
+    </sect1>
+  </chapter>

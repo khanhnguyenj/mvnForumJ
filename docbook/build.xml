@@ -1,0 +1,199 @@
+<?xml version="1.0"?>
+<!-- 
+This is the ant build file for use with Norm Walsh website DTD and stylesheets
+for use with his resolver classes (found at sun site)
+Revision: 1.00
+Date    : 1 May 2002
+Author  : DaveP
+
+Adapted by cthomas for mvnForum documentation project
+I have created a separate task for each file processing - there must be a way in
+ant to automate the selection of files in a directory given an expression
+and iterate over these files...  but i don't see how.
+
+Author: $Author: minhnn $
+Date:   $Date: 2006/04/08 05:14:07 $
+Revision:  $Revision: 1.6 $
+-->
+
+<!-- Set the base directory to the location of the xml files -->
+<project name="generate" basedir="." default="output-all">
+    <description>mvnForum Documentation Build ant tasks</description>
+ 
+    <!-- ===================== Property Definitions =========================== -->
+    <property file="build.properties"/>
+    <property file="${user.home}/build.properties"/>
+
+    <!-- Main stylesheets -->
+    <property name="sSheetHome" value="${docbook.home}/stylesheet"/>
+
+    <property name="resource.home" value="${docbook.home}/resource"/>
+
+    <!-- Main Docbook stylesheet -->
+    <property name="main.stylesheet" value="${sSheetHome}/mvnforum.xsl"/>
+
+    <!-- Input properties:  -->                                      
+    <!-- all files should be in this directry-->
+    <property name="in.dir" value="${docbook.home}/repository"/>
+
+    <!-- input file for any docbook valid document -->
+    <property name="main.infile.admin" value="admin.xml"/>
+    <property name="main.infile.faq" value="faq.xml"/>
+    <property name="main.infile.install" value="install.xml"/>
+    <property name="main.infile.intro" value="intro.xml"/>
+    <property name="main.infile.user" value="user.xml"/>
+    <property name="main.infile.developer" value="develop.xml"/>
+ 
+    <!-- Output Properties: Output directory -->
+    <property name="out.dir" value="${build.home}/docbook/" />  <!-- all files --> 
+    
+    <!-- Main output file used for docbook transform -->
+    <property name="main.outfile.admin" value="admin.html"/>
+    <property name="main.outfile.faq" value="faq.html"/>
+    <property name="main.outfile.install" value="install.html"/>
+    <property name="main.outfile.intro" value="intro.html"/>
+    <property name="main.outfile.user" value="user.html"/>
+    <property name="main.outfile.developer" value="developer.html"/>
+    
+    <!-- Post XSLT transform parameter. Leave as is for Saxon -->
+    <property name="param.args.post" value="saxon.extensions=1"/>
+    
+    <!-- XSLT engine class -->
+    <property name="xslt.processor.class" value="com.icl.saxon.StyleSheet" />
+    
+    <!-- path for xslt processor. Includes resolver and extensions and catalogManager.properties file.  -->
+    <path id="xslt.processor.classpath">
+      <pathelement path="${docbook.home}/antlib/saxon.jar" />  <!-- Saxon jar -->
+      <pathelement path="${docbook.home}/antlib/resolver.jar"/> <!-- resolver jar -->
+      <pathelement path="${docbook.home}/antlib/saxon651.jar"/> <!-- docbook extensions -->
+      <pathelement path="${docbook.home}"/> <!-- for catalogManager.properties -->
+    </path>
+    
+    <!-- Use javac 1.3 -->
+    <property name="build.compiler" value="modern"/>
+
+    <!--  -->
+    <!--Initial processing: If any required.  -->
+    <!--  -->
+    <target name="init">
+      <echo message="Do initialisational things" />
+        <tstamp>
+          <format property="TODAY_US" pattern="MM-d-yyyy" locale="en"/>
+        </tstamp>
+      <echo>building on ${TODAY_US}</echo>
+
+      <mkdir dir="${out.dir}"/>
+      <!-- Copy static html content to the output dir -->
+      <copy todir="${out.dir}">
+          <fileset dir="${resource.home}"/>
+      </copy>
+    </target>
+
+    <!-- ================================================ -->
+    <!-- Generate output (select as needed)               -->
+    <!-- ================================================ -->
+    <target name="output-all" depends="init,doAdmin,doFaq,doInstall,doIntro,doUser,doDevelop">
+    <!-- -->
+    </target>
+    
+    <!-- ================================================ -->
+    <!-- Generic XSLT-processor call (main docbook transform) -->
+    <!-- ================================================ -->
+    <target name="doAdmin" depends="init">
+      <java classname="${xslt.processor.class}" 
+            fork="yes" 
+            dir="${in.dir}"
+            failonerror="true">
+        <classpath refid="xslt.processor.classpath" />
+  
+        <arg line="-o ${out.dir}/${main.outfile.admin}"/>
+        <arg line="-l"/>
+        <arg line="-x org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+        <arg line="-y org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+        <arg line="-r org.apache.xml.resolver.tools.CatalogResolver"/>
+        <arg line="${in.dir}/${main.infile.admin} ${main.stylesheet} ${param.args.post}" /> 
+      </java>
+    </target>
+    
+    <target name="doFaq" depends="init">
+      <java classname="${xslt.processor.class}" 
+            fork="yes" 
+            dir="${in.dir}"
+            failonerror="true">
+        <classpath refid="xslt.processor.classpath" />
+  
+        <arg line="-o ${out.dir}/${main.outfile.faq}"/>
+        <arg line="-l"/>
+        <arg line="-x org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+        <arg line="-y org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+        <arg line="-r org.apache.xml.resolver.tools.CatalogResolver"/>
+        <arg line="${in.dir}/${main.infile.faq} ${main.stylesheet} ${param.args.post}" /> 
+      </java>
+    </target>
+    
+    <target name="doInstall" depends="init">
+      <java classname="${xslt.processor.class}" 
+            fork="yes" 
+            dir="${in.dir}"
+            failonerror="true">
+        <classpath refid="xslt.processor.classpath" />
+    
+        <arg line="-o ${out.dir}/${main.outfile.install}"/>
+        <arg line="-l"/>
+        <arg line="-x org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+        <arg line="-y org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+        <arg line="-r org.apache.xml.resolver.tools.CatalogResolver"/>
+        <arg line="${in.dir}/${main.infile.install} ${main.stylesheet} ${param.args.post}" /> 
+      </java>
+    </target>
+    
+    <target name="doIntro" depends="init">
+      <java classname="${xslt.processor.class}" 
+            fork="yes" 
+            dir="${in.dir}"
+            failonerror="true">
+        <classpath refid="xslt.processor.classpath" />
+  
+        <arg line="-o ${out.dir}/${main.outfile.intro}"/>
+        <arg line="-l"/>
+        <arg line="-x org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+        <arg line="-y org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+        <arg line="-r org.apache.xml.resolver.tools.CatalogResolver"/>
+        <arg line="${in.dir}/${main.infile.intro} ${main.stylesheet} ${param.args.post}" /> 
+      </java>
+    </target>
+    
+    <target name="doUser" depends="init">
+      <java classname="${xslt.processor.class}" 
+            fork="yes" 
+            dir="${in.dir}"
+            failonerror="true">
+        <classpath refid="xslt.processor.classpath" />
+  
+        <arg line="-o ${out.dir}/${main.outfile.user}"/>
+        <arg line="-l"/>
+        <arg line="-x org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+        <arg line="-y org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+        <arg line="-r org.apache.xml.resolver.tools.CatalogResolver"/>
+        <arg line="${in.dir}/${main.infile.user} ${main.stylesheet} ${param.args.post}" /> 
+      </java>
+    </target>
+    
+    <target name="doDevelop" depends="init">
+      <java classname="${xslt.processor.class}" 
+            fork="yes" 
+            dir="${in.dir}"
+            failonerror="true">
+        <classpath refid="xslt.processor.classpath" />
+  
+        <arg line="-o ${out.dir}/${main.outfile.developer}"/>
+        <arg line="-l"/>
+        <arg line="-x org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+        <arg line="-y org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+        <arg line="-r org.apache.xml.resolver.tools.CatalogResolver"/>
+        <arg line="${in.dir}/${main.infile.developer} ${main.stylesheet} ${param.args.post}" /> 
+      </java>
+    </target>
+    
+</project>
+

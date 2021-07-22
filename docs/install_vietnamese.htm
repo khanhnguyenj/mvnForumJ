@@ -1,0 +1,126 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>New Page 1</title>
+</head>
+
+<body>
+<!-- 
+$Id: install_vietnamese.htm,v 1.5 2004/03/31 19:01:05 minhnn Exp $
+--!>
+<p>[INSTALLATION GUIDE- VIETNAMESE]<br>
+ Phi&#234;n b&#7843;n $Revision: 1.5 $ <br>
+ C&#7853;p nh&#7853;t ng&#224;y $Date: 2004/03/31 19:01:05 $</p>
+<h1 align="center">H&#432;&#7899;ng d&#7851;n cài &#273;&#7863;t mvnForum 1.0.0 RC2</h1>
+<h2>1. Gi&#7899;i thi&#7879;u chung:</h2>
+     <strong>&#272;&#7884;C K&#7928; H&#431;&#7898;NG D&#7850;N C&#192;I &#272;&#7862;T N&#192;Y.</strong><p>
+
+ - Tr&#432;&#7899;c khi b&#7855;t &#273;&#7847;u b&#7841;n h&#227;y v&#224;o &#273;&#226;y 
+ <a href="http://www.mvnforum.com/mvnforumweb/download.jsp">download mvnForum</a>
+   &#273;&#7875; ki&#7875;m tra phi&#234;n b&#7843;n m&#7899;i nh&#7845;t c&#7911;a mvnForum<br>
+ - &#272;&#7885;c Ghi ch&#250; v&#7873; RC2 tai <a href="http://www.mvnforum.com/mvnforum/viewthread?thread=1289">RC2 Release Note</a><p>
+ - B&#7841;n n&#234;n xem th&#234;m b&#7843;n h&#432;&#7899;ng d&#7851;n b&#7857;ng ti&#7871;ng Anh: 
+ <a href="INSTALL.txt">INSTALL.txt</a>
+<p>
+
+<p>Vi&#7879;c cài &#273;&#7863;t mvnForum khá d&#7877; dàng, b&#7841;n ch&#7881; c&#7847;n th&#7921;c hi&#7879;n
+theo các b&#432;&#7899;c theo h&#432;&#7899;ng d&#7851;n n&#224;y</p>
+<p>Ghi chú: Hi&#7879;n nay mvnForum  h&#7893; tr&#7907; nh&#7919;ng c&#417; s&#7903; d&#7919; li&#7879;u 
+  MySQL, Oracle 8i/9i, Sql Server, DB2, postgreSQL, hsqldb and Interbase/Firebird, SAPDB, Sybase</p>
+<h2>2. Yêu c&#7847;u v&#7873; h&#7879; th&#7889;ng:</h2>
+<p>- B&#7845;t k&#7923; máy ph&#7909;c v&#7909; (App Server) nào có h&#7893; tr&#7907; Jsp 1.2 and Servlet 2.3<br>
+- JDK 1.3 ho&#7863;c phiên b&#7843;n m&#7899;i h&#417;n<br>
+- C&#417; s&#7903; d&#7919; li&#7879;u &#273;&#432;&#7907;c h&#7893; tr&#7907; + trình &#273;i&#7873;u ki&#7875;n (driver) JDBC 2.0&nbsp;<br>
+(b&#7843;n phân ph&#7889;i này &#273;ã kèm theo s&#7861;n 4 trình &#273;i&#7873;u ki&#7875;n: mm.mysql, Connector/J, postgreSQL v&#224; hsqldb)<br>
+</p>
+<h2>
+3. Cài &#273;&#7863;t máy ch&#7911; &#7913;ng d&#7909;ng</h2>
+<p>
+GHI CH&#218;: B&#7841;n kh&#244;ng &#273;&#432;&#7907;c c&#224;i &#273;&#7863;t m&#225;y ch&#7911; &#7913;ng d&#7909;ng 
+trong th&#432; m&#7909;c c&#243; ch&#7913;a kho&#7843;ng tr&#7855;ng nh&#432; "C:\Program Files"
+<p>
+- X&#7843; nén t&#7853;p tin zip mà b&#7841;n &#273;ã t&#7843;i xu&#7889;ng vào 1 th&#432; m&#7909;c<br>
+- T&#7841;o ra 1 context trong máy ch&#7911; &#7913;ng d&#7909;ng, n&#7871;u b&#7841;n cài &#273;&#7863;t
+trong Tomcat, b&#7841;n ch&#7881; c&#7847;n t&#7841;o ra m&#7897;t th&#432; m&#7909;c&nbsp;<br>
+(ví d&#7909; nh&#432; : mvnforum) trong th&#432; m&#7909;c tomcat/webapps. Th&#432; m&#7909;c này ph&#7843;i
+là ch&#7919; vi&#7871;t th&#432;&#7901;ng<br>
+(ví d&#7909; nh&#432; mvnforum). Xem c&#7845;u tr&#250;c th&#432; m&#7909;c trong h&#236;nh sau:<br>
+<img src="images/webapp_structure.gif" alt="" width="233" height="459" border="0">
+<p>
+- T&#7841;o ra m&#7897;t th&#432; m&#7909;c nhà (home folder) cho mvnForum, th&#432; m&#7909;c này ph&#7843;i
+b&#7843;o &#273;&#7843;m không truy c&#7853;p &#273;&#432;&#7907;c t&#7915; trình duy&#7879;t. V&#237; d&#7909;: WEB-INF/mvnForumHome<br>
+- Trong th&#432; m&#7909;c b&#7841;n v&#7915;a x&#7843; nén &#7903; trên, tìm th&#432; muc webapp/WEB_INF/classes,
+trong &#273;ó b&#7841;n s&#7869; th&#7845;y c&#225;c t&#7853;p tin có ph&#7847;n m&#7903; r&#7897;ng là properties,
+b&#7841;n hãy m&#7903; nh&#7919;ng t&#7853;p tin này b&#7857;ng ch&#432;&#417;ng trình so&#7841;n th&#7843;o v&#259;n
+b&#7843;n (vi du nh&#432; Notepad) và thay &#273;&#7893;i nh&#7919;ng thông s&#7889; c&#7845;u hình sao
+cho phù h&#7907;p v&#7899;i h&#7879; th&#7889;ng c&#7911;a b&#7841;n (nh&#7919;ng thông tin h&#432;&#7899;ng d&#7851;n
+cài &#273;&#7863;t này có &#7903; trong các t&#7853;p tin properties). GHI CHÚ: B&#7841;n c&#7847;n
+c&#7845;u hình các thông s&#7889; c&#417; s&#7903; d&#7919; li&#7879;u cho &#273;úng v&#7899;i b&#432;&#7899;c 4 phía
+sau.<br>
+- Chép n&#7897;i dung c&#7911;a th&#432; m&#7909;c webapp (trong th&#432; m&#7909;c b&#7841;n &#273;ã x&#7843; nén)
+vào th&#432; m&#7909;c ng&#7919; c&#7843;nh (context) mà b&#7841;n v&#7915;a t&#7841;o &#7903; trên..<br>
+</p>
+<h2>4. Cài &#273;&#7863;t c&#417; s&#7903; d&#7919; li&#7879;u</h2>
+<p>
+GHI CH&#218;: N&#7871;u b&#7841;n n&#226;ng c&#7845;p t&#7915; phi&#234;n b&#7843;n tr&#432;&#7899;c, b&#7841;n h&#227;y
+ch&#7841;y c&#225;c sql script t&#7841;i mvnforum\sql\upgrade
+<p>
+GHI CHÚ: b&#7841;n nên sao l&#432;u d&#7921; phòng c&#417; s&#7903; d&#7919; liêu c&#7911;a b&#7841;n tr&#432;&#7899;c
+khi b&#7841;n ch&#7841;y t&#7853;p tin k&#7883;ch b&#7843;n (script).
+<p>
+N&#7871;u b&#7841;n c&#224;i &#273;&#7863;t m&#7899;i th&#236; h&#227;y theo c&#225;c b&#432;&#7899;c sau:<p>
+- Trong th&#432; m&#7909;c b&#7841;n v&#7915;a x&#7843; nén, b&#7841;n hãy tìm t&#7853;p tin sql cho c&#417; 
+ s&#7903; d&#7919; li&#7879;u c&#7911;a b&#7841;n<br>
+- T&#7841;o ra 1 c&#417; s&#7903; d&#7919; li&#7879;u và b&#7843;o &#273;&#7843;m r&#7857;ng nh&#7919;ng thông s&#7889; này
+&#273;úng v&#7899;i nh&#7919;ng thông s&#7889; b&#7841;n &#273;ã c&#7845;u hình &#7903; b&#432;&#7899;c th&#7913; 3 &#7903;
+trên<br>
+- Ch&#7841;y t&#7853;p tin k&#7883;ch b&#7843;n (script). B&#7841;n nên xem thêm thông tin giúp &#273;&#7905;
+trong ch&#432;&#417;ng trình H&#7879; qu&#7843;n tr&#7883; c&#417; s&#7903; d&#7919; li&#7879;u c&#7911;a b&#7841;n<br>
+</p>
+<h2>
+5. Cài &#273;&#7863;t Ch&#432;&#417;ng trình qu&#7843;n tr&#7883; (Admin Tool)</h2>
+<p>
+M&#7863;c &#273;&#7883;nh s&#7869; có 2 &#273;&#432;&#7901;ng d&#7851;n sau:<br>
+http://www.[yourserver].com/[yourcontext]/mvnforum/index : trang ch&#7911; cho mvnForum<br>
+http://www.[yourserver].com/[yourcontext]/mvnforumadmin/index : trang qu&#7843;n tr&#7883;
+mvnForum (Admin Zone)</p>
+<p>trong &#273;ó yourcontext là tên c&#7911;a ng&#7919; c&#7843;nh (context) b&#7841;n &#273;ã t&#7841;o
+&#7903; trên.<br>
+<br>
+- B&#7841;n hãy vào trình duy&#7879;t web và nh&#7853;p vào &#273;&#7883;a ch&#7881; trang qu&#7843;n
+tr&#7883; ( Admin Zone ) và nh&#7853;p vào username = admin&nbsp; -&nbsp; password = admin<br>
+- N&#7871;u b&#7841;n &#273;&#259;ng nh&#7853;p thành công, b&#7841;n hãy nh&#7845;n vào Test System Configuration
+&#273;&#7875; ki&#7875;m tra h&#7879; th&#7889;ng<br>
+- Trang ch&#7911; c&#7911;a ph&#7847;n qu&#7843;n tr&#7883; c&#361;ng cho b&#7841;n bi&#7871;t thêm thông tin
+v&#7873; mvnForum, c&#417; s&#7903; d&#7919; li&#7879;u và thông tin h&#7879; th&#7889;ng&nbsp;<br>
+- Thay &#273;&#7893;i m&#7853;t kh&#7849;u c&#7911;a b&#7841;n và thay &#273;&#7893;i thông tin cá nhân
+(Member Profile)<br>
+- Nh&#7845;n vào Forum Management &#273;&#7875; t&#7841;o ra các di&#7877;n &#273;àn th&#7843;o lu&#7853;n<br>
+- B&#7841;n có th&#7875; t&#7841;o ra nh&#7919;ng ng&#432;&#7901;i dùng (user) m&#7899;i thi&#7871;t l&#7853;p quy&#7873;n
+cho nh&#7919;ng ng&#432;&#7901;i dùng này<br>
+<br>
+<br>
+Chúc m&#7915;ng b&#7841;n, b&#7841;n &#273;ã cài &#273;&#7863;t thành công mvnForum :-)<br>
+<br>
+<br>
+N&#7871;u b&#7841;n có góp ý gì v&#7873; mvnForum, b&#7841;n hãy tham gia th&#7843;o lu&#7853;n t&#7841;i
+<a href="http://www.mvnForum.com/mvnforum/index">http://www.mvnForum.com/mvnforum/index</a>,
+v&#7899;i nh&#7919;ng giúp &#273;&#7905; này, b&#7841;n s&#7869; giúp chúng tôi phát tri&#7875;n ch&#432;&#417;ng
+trình ngày m&#7897;t t&#7889;t h&#417;n</p>
+<p>N&#7871;u b&#7841;n th&#7845;y h&#432;&#7899;ng d&#7851;n này còn thi&#7871;u sót hay c&#7847;n gi&#7843;i thích
+thêm, xin hãy email &#273;&#7871;n cho chúng tôi t&#7841;i opensource at MyVietnam.net<br>
+<br>
+C&#7843;m &#417;n b&#7841;n &#273;ã s&#7917; d&#7909;ng ch&#432;&#417;ng trình này,<br>
+<br>
+Nguy&#7877;n Ng&#7885;c Minh&nbsp;</p>
+<p>minhnn at MyVietnam.net<br>
+<br>
+</p>
+
+</body>
+
+</html>

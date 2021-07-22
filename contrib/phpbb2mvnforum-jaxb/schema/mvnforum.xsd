@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+  jaxb:version="1.0">
+  <xs:element name="mvnforum">
+    <xs:complexType>
+      <xs:sequence>
+
+        <xs:element name="MemberList" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Member" type="MemberType" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="GroupList" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Group" type="GroupType" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+            <!-- error hear, the XML parser can't Attempt to create a property having the same name as the reserved word "Class" -->
+            <!-- <xs:attribute name="class" /> -->
+            <!-- xs:attribute name="id" /> -->
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="CategoryList" type="CategoryListType" minOccurs="0" maxOccurs="1"></xs:element>
+
+        <xs:element name="RankList" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Rank" type="RankType" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="GroupType">
+    <xs:sequence>
+      <xs:element name="GroupOwnerName" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="GroupName" type="xs:string" />
+      <xs:element name="GroupDesc" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="GroupOption" type="xs:int" minOccurs="0" maxOccurs="1" />
+      <xs:element name="GroupCreationDate" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="GroupModifiedDate" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="GlobalPermissionList" type="GlobalPermissionList" minOccurs="0" maxOccurs="1" />
+      <xs:element name="GroupMemberList" type="GroupMemberList" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GlobalPermissionList">
+    <xs:sequence>
+      <xs:element name="GlobalPermission" type="xs:int" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GroupMemberList">
+    <xs:sequence>
+      <xs:element name="GroupMember" type="GroupMemberType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GroupMemberType">
+    <xs:sequence>
+      <xs:element name="MemberName" type="xs:string" />
+      <xs:element name="Privilege" type="xs:int" minOccurs="0" maxOccurs="1" />
+      <xs:element name="CreationDate" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="ModifiedDate" type="xs:string" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="RankType">
+    <xs:sequence>
+      <xs:element name="RankMinPosts" type="xs:int" />
+      <xs:element name="RankLevel" type="xs:int" minOccurs="0" maxOccurs="1" />
+      <xs:element name="RankTitle" type="xs:string" />
+      <xs:element name="RankImage" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="RankType" type="xs:int" minOccurs="0" maxOccurs="1" />
+      <xs:element name="RankOption" type="xs:int" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CategoryType">
+    <xs:sequence>
+      <xs:element name="CategoryName" type="xs:string" />
+      <xs:element name="CategoryDesc" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="CategoryCreationDate" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="CategoryModifiedDate" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="CategoryOrder" type="xs:int" minOccurs="0" maxOccurs="1" />
+      <xs:element name="CategoryOption" type="xs:int" minOccurs="0" maxOccurs="1" />
+      <xs:element name="CategoryStatus" type="xs:int" minOccurs="0" maxOccurs="1" />
+      <xs:element name="CategoryWatchList" type="CategoryWatchList" minOccurs="0" maxOccurs="1" />
+      <xs:element name="ForumList" type="ForumList" minOccurs="0" maxOccurs="1" />
+      <xs:element name="CategoryList" type="CategoryListType" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CategoryListType">
+    <xs:sequence>
+      <xs:element name="Category" type="CategoryType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CategoryWatchList">
+    <xs:sequence>
+      <xs:element name="CategoryWatch" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ForumList">
+    <xs:sequence>
+      <xs:element name="Forum" type="ForumType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ForumType">
+    <xs:sequence>
+      <xs:element name="ForumLastPostMemberName" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="ForumName" type="xs:string" />
+      <xs:element name="ForumDesc" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="ForumCreationDate" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="ForumModifiedDate" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="ForumLastPostDate" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="ForumOrder" type="xs:int" minOccurs="0" maxOccurs="1" />
+      <xs:element name="ForumType" type="xs:int" minOccurs="0" maxOccurs="1" />
+      <xs:element name="ForumFormatOption" type="xs:int" minOccurs="0" maxOccurs="1" />
+      <xs:element name="ForumOption" type="xs:int" minOccurs="0" maxOccurs="1" />
+      <xs:element name="ForumStatus" type="xs:int" minOccurs="0" maxOccurs="1" />
+      <xs:element name="ForumModerationMode" type="xs:int" minOccurs="0" maxOccurs="1" />
+      <xs:element name="ForumPassword" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="ForumThreadCount" type="xs:int" minOccurs="0" maxOccurs="1" />
+      <xs:element name="ForumPostCount" type="xs:int" minOccurs="0" maxOccurs="1" />
+      <xs:element name="MemberForumPermissionList" type="MemberForumPermissionList" minOccurs="0" maxOccurs="1" />
+      <xs:element name="GroupForumPermissionList" type="GroupForumPermissionList" minOccurs="0" maxOccurs="1" />
+      <xs:element name="ForumWatchList" type="ForumWatchList" minOccurs="0" maxOccurs="1" />
+      <xs:element name="ThreadList" type="ThreadList" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MemberForumPermissionList">
+    <xs:sequence>
+      <xs:element name="MemberForumPermission" type="MemberForumPermissionType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MemberForumPermissionType">
+    <xs:sequence>
+      <xs:element name="MemberName" type="xs:string" />
+      <xs:element name="ForumPermission" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GroupForumPermissionList">
+    <xs:sequence>
+      <xs:element name="GroupForumPermission" type="GroupForumPermissionType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GroupForumPermissionType">
+    <xs:sequence>
+      <xs:element name="GroupName" type="xs:string" />
+      <xs:element name="ForumPermission" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ForumWatchList">
+    <xs:sequence>
+      <xs:element name="ForumWatchList" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ThreadList">
+    <xs:sequence>
+      <xs:element name="Thread" type="ThreadType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ThreadType">
+    <xs:sequence>
+      <xs:element name="MemberName" type="xs:string" minOccurs="0" />
+      <xs:element name="ThreadLastPostMemberName" type="xs:string" minOccurs="0" />
+      <xs:element name="ThreadTopic" type="xs:string" />
+      <xs:element name="ThreadBody" type="xs:string" />
+      <xs:element name="ThreadVoteCount" type="xs:int" minOccurs="0" />
+      <xs:element name="ThreadVoteTotalStars" type="xs:int" minOccurs="0" />
+      <xs:element name="ThreadCreationDate" type="xs:string" minOccurs="0" />
+      <xs:element name="ThreadLastPostDate" type="xs:string" minOccurs="0" />
+      <xs:element name="ThreadType" type="xs:int" minOccurs="0" />
+      <xs:element name="ThreadOption" type="xs:int" minOccurs="0" />
+      <xs:element name="ThreadStatus" type="xs:int" minOccurs="0" />
+      <xs:element name="ThreadHasPoll" type="xs:int" minOccurs="0" />
+      <xs:element name="ThreadViewCount" type="xs:int" minOccurs="0" />
+      <xs:element name="ThreadReplyCount" type="xs:int" minOccurs="0" />
+      <xs:element name="ThreadIcon" type="xs:string" minOccurs="0" />
+      <xs:element name="ThreadDuration" type="xs:int" minOccurs="0" />
+      <xs:element name="ThreadWatchList" type="ThreadWatchList" minOccurs="0" />
+      <xs:element name="FavoriteThreadList" type="FavoriteThreadList" minOccurs="0" />
+      <xs:element name="PostList" type="PostList" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ThreadWatchList">
+    <xs:sequence>
+      <xs:element name="ThreadWatch" type="ThreadWatchType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ThreadWatchType">
+    <xs:sequence>
+      <xs:element name="MemberName" type="xs:string" minOccurs="0" />
+      <xs:element name="WatchType" type="xs:int" minOccurs="0" />
+      <xs:element name="WatchOption" type="xs:int" minOccurs="0" />
+      <xs:element name="WatchStatus" type="xs:int" minOccurs="0" />
+      <xs:element name="WatchCreationDate" type="xs:string" minOccurs="0" />
+      <xs:element name="WatchLastSentDate" type="xs:string" minOccurs="0" />
+      <xs:element name="WatchEndDate" type="xs:string" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="FavoriteThreadList">
+    <xs:sequence>
+      <xs:element name="FavoriteThread" type="FavoriteThreadType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="FavoriteThreadType">
+    <xs:sequence>
+      <xs:element name="MemberName" type="xs:string" />
+      <xs:element name="FavoriteCreationDate" type="xs:string" minOccurs="0" />
+      <xs:element name="FavoriteType" type="xs:int" minOccurs="0" />
+      <xs:element name="FavoriteOption" type="xs:int" minOccurs="0" />
+      <xs:element name="FavoriteStatus" type="xs:int" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="PostList">
+    <xs:sequence>
+      <xs:element name="Post" type="PostType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="PostType">
+    <xs:sequence>
+      <xs:element name="MemberName" type="xs:string" minOccurs="0" />
+      <xs:element name="LastEditMemberName" type="xs:string" minOccurs="0" />
+      <xs:element name="PostTopic" type="xs:string" />
+      <xs:element name="PostBody" type="xs:string" />
+      <xs:element name="PostCreationDate" type="xs:string" minOccurs="0" />
+      <xs:element name="PostLastEditDate" type="xs:string" minOccurs="0" />
+      <xs:element name="PostCreationIP" type="xs:string" minOccurs="0" />
+      <xs:element name="PostLastEditIP" type="xs:string" minOccurs="0" />
+      <xs:element name="PostEditCount" type="xs:int" minOccurs="0" />
+      <xs:element name="PostFormatOption" type="xs:int" minOccurs="0" />
+      <xs:element name="PostOption" type="xs:int" minOccurs="0" />
+      <xs:element name="PostStatus" type="xs:int" minOccurs="0" />
+      <xs:element name="PostIcon" type="xs:string" minOccurs="0" />
+      <xs:element name="PostAttachCount" type="xs:int" minOccurs="0" />
+      <xs:element name="AttachmentList" type="AttachmentList" minOccurs="0" />
+      <xs:element name="PostList" type="PostList" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AttachmentList">
+    <xs:sequence>
+      <xs:element name="Attachment" type="AttachmentType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AttachmentType">
+    <xs:sequence>
+      <xs:element name="MemberName" type="xs:string" minOccurs="0" />
+      <xs:element name="AttachFilename" type="xs:string" />
+      <xs:element name="AttachFileSize" type="xs:int" />
+      <xs:element name="AttachMimeType" type="xs:string" />
+      <xs:element name="AttachDesc" type="xs:string" minOccurs="0" />
+      <xs:element name="AttachCreationIP" type="xs:string" minOccurs="0" />
+      <xs:element name="AttachCreationDate" type="xs:string" minOccurs="0" />
+      <xs:element name="AttachModifiedDate" type="xs:string" minOccurs="0" />
+      <xs:element name="AttachDownloadCount" type="xs:int" minOccurs="0" />
+      <xs:element name="AttachOption" type="xs:int" minOccurs="0" />
+      <xs:element name="AttachStatus" type="xs:int" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MemberType">
+    <xs:sequence>
+      <xs:element name="MemberName" type="xs:string" />
+      <xs:element name="MemberPassword" type="xs:string" />
+      <xs:element name="MemberFirstEmail" type="xs:string" />
+      <xs:element name="MemberEmail" type="xs:string" />
+      <xs:element name="MemberEmailVisible" type="xs:int" minOccurs="0" />
+      <xs:element name="MemberNameVisible" type="xs:int" minOccurs="0" />
+      <xs:element name="MemberFirstIP" type="xs:string" minOccurs="0" />
+      <xs:element name="MemberLastIP" type="xs:string" minOccurs="0" />
+      <xs:element name="MemberViewCount" type="xs:int" minOccurs="0" />
+      <xs:element name="MemberPostCount" type="xs:int" minOccurs="0" />
+      <xs:element name="MemberCreationDate" type="xs:string" minOccurs="0" />
+      <xs:element name="MemberModifiedDate" type="xs:string" minOccurs="0" />
+      <xs:element name="MemberExpireDate" type="xs:string" minOccurs="0" />
+      <xs:element name="MemberLastLogon" type="xs:string" minOccurs="0" />
+      <xs:element name="MemberOption" type="xs:int" minOccurs="0" />
+      <xs:element name="MemberStatus" type="xs:int" minOccurs="0" />
+      <xs:element name="MemberActivateCode" type="xs:string" minOccurs="0" />
+      <xs:element name="MemberTempPassword" type="xs:string" minOccurs="0" />
+      <xs:element name="MemberMessageCount" type="xs:int" minOccurs="0" />
+      <xs:element name="MemberMessageOption" type="xs:int" minOccurs="0" />
+      <xs:element name="MemberPostsPerPage" type="xs:int" minOccurs="0" />
+      <xs:element name="MemberWarnCount" type="xs:int" minOccurs="0" />
+      <xs:element name="MemberVoteCount" type="xs:int" minOccurs="0" />
+      <xs:element name="MemberVoteTotalStars" type="xs:int" minOccurs="0" />
+      <xs:element name="MemberRewardPoints" type="xs:int" minOccurs="0" />
+      <xs:element name="MemberTitle" type="xs:string" />
+      <xs:element name="MemberTimeZone" type="xs:double" minOccurs="0" />
+      <xs:element name="MemberSignature" type="xs:string" minOccurs="0" />
+      <xs:element name="MemberAvatar" type="xs:string" minOccurs="0" />
+      <xs:element name="MemberSkin" type="xs:string" minOccurs="0" />
+      <xs:element name="MemberLanguage" type="xs:string" minOccurs="0" />
+      <xs:element name="MemberFirstname" type="xs:string" />
+      <xs:element name="MemberLastname" type="xs:string" />
+      <xs:element name="MemberGender" type="xs:int" minOccurs="0" />
+      <xs:element name="MemberBirthday" type="xs:string" minOccurs="0" />
+      <xs:element name="MemberAddress" type="xs:string" minOccurs="0" />
+      <xs:element name="MemberCity" type="xs:string" minOccurs="0" />
+      <xs:element name="MemberState" type="xs:string" minOccurs="0" />
+      <xs:element name="MemberCountry" type="xs:string" minOccurs="0" />
+      <xs:element name="MemberPhone" type="xs:string" minOccurs="0" />
+      <xs:element name="MemberMobile" type="xs:string" minOccurs="0" />
+      <xs:element name="MemberFax" type="xs:string" minOccurs="0" />
+      <xs:element name="MemberCareer" type="xs:string" minOccurs="0" />
+      <xs:element name="MemberHomepage" type="xs:string" minOccurs="0" />
+      <xs:element name="MemberYahoo" type="xs:string" minOccurs="0" />
+      <xs:element name="MemberAol" type="xs:string" minOccurs="0" />
+      <xs:element name="MemberIcq" type="xs:string" minOccurs="0" />
+      <xs:element name="MemberMsn" type="xs:string" minOccurs="0" />
+      <xs:element name="MemberCoolLink1" type="xs:string" minOccurs="0" />
+      <xs:element name="MemberCoolLink2" type="xs:string" minOccurs="0" />
+      <xs:element name="GlobalPermissionList" type="GlobalPermissionList" minOccurs="0" />
+      <xs:element name="MessageFolderList" type="MessageFolderList" minOccurs="0" />
+      <xs:element name="GlobalWatchList" type="GlobalWatchList" minOccurs="0" />
+      <xs:element name="MessageList" type="MessageList" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MessageList">
+    <xs:sequence>
+      <xs:element name="Message" type="MessageType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MessageType">
+    <xs:sequence>
+      <xs:element name="FolderName" type="xs:string" minOccurs="0" />
+      <xs:element name="MessageSenderName" type="xs:string" minOccurs="0" />
+      <xs:element name="MessageToList" type="xs:string" minOccurs="0" />
+      <xs:element name="MessageCcList" type="xs:string" minOccurs="0" />
+      <xs:element name="MessageBccList" type="xs:string" minOccurs="0" />
+      <xs:element name="MessageTopic" type="xs:string" minOccurs="0" />
+      <xs:element name="MessageBody" type="xs:string" minOccurs="0" />
+      <xs:element name="MessageType" type="xs:int" minOccurs="0" />
+      <xs:element name="MessageOption" type="xs:int" minOccurs="0" />
+      <xs:element name="MessageStatus" type="xs:int" minOccurs="0" />
+      <xs:element name="MessageReadStatus" type="xs:int" minOccurs="0" />
+      <xs:element name="MessageNotify" type="xs:int" minOccurs="0" />
+      <xs:element name="MessageIcon" type="xs:string" minOccurs="0" />
+      <xs:element name="MessageAttachCount" type="xs:int" minOccurs="0" />
+      <xs:element name="MessageIP" type="xs:string" minOccurs="0" />
+      <xs:element name="MessageCreationDate" type="xs:string" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MessageFolderList">
+    <xs:sequence>
+      <xs:element name="MessageFolder" type="MessageFolderType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MessageFolderType">
+    <xs:sequence>
+      <xs:element name="FolderName" type="xs:string" />
+      <xs:element name="FolderOrder" type="xs:int" minOccurs="0" />
+      <xs:element name="FolderCreationDate" type="xs:string" minOccurs="0" />
+      <xs:element name="FolderModifiedDate" type="xs:string" minOccurs="0" />
+      <xs:element name="MessageList" type="MessageList" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GlobalWatchList">
+    <xs:sequence>
+      <xs:element name="GlobalWatch" type="GlobalWatchType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GlobalWatchType">
+    <xs:sequence>
+      <xs:element name="WatchType" type="xs:int" minOccurs="0" />
+      <xs:element name="WatchOption" type="xs:int" minOccurs="0" />
+      <xs:element name="WatchStatus" type="xs:int" minOccurs="0" />
+      <xs:element name="WatchCreationDate" type="xs:string" minOccurs="0" />
+      <xs:element name="WatchLastSentDate" type="xs:string" minOccurs="0" />
+      <xs:element name="WatchEndDate" type="xs:string" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

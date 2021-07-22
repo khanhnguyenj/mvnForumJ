@@ -1,0 +1,92 @@
+<project name="create_hsqldb" default="run-sql-mvnforum" basedir=".">
+    
+    <!-- ===================== Property Definitions =========================== -->
+    <property file="build.properties" />
+    <property file="${user.home}/build.properties" />
+
+    <!-- ==================== File and Directory Names ======================== -->
+    <property name="hsqldb.home" value="${basedir}/hsqldb" />
+    <property name="ScriptTool.class" value="org.hsqldb.util.ScriptTool" />
+    <property name="database.mvnforum" value="hsqldb/mvnforum" />
+    
+    <!-- ==================== HSQL Classpath =========================== -->
+    <path id="hsql.classpath">
+        <pathelement location="${basedir}/../../driver/hsqldb.jar" />    
+    </path>
+
+    <!-- ==================== Clean Target ==================================== -->
+    <!--
+    The "clean" target deletes any previous "build" and "dist" directory,
+    so that you can be ensured the application can be built from scratch.
+    -->
+    <target name="clean" description="Delete old HSQLDB">
+        <delete dir="${hsqldb.home}" />
+    </target>
+    
+    <target name="run-sql-mvnforum" depends="clean" description="Run sql for mvnforum">
+        <echo>Run sql mvnForum_hsqldb.sql</echo>
+        <java classname="${ScriptTool.class}" fork="true" dir="${basedir}">
+            <arg value="-database" />
+            <arg value="${database.mvnforum}" />
+            <arg value="-script" />
+            <arg value="${basedir}/../../sql/mvnForum_hsqldb.sql" />
+            <classpath refid="hsql.classpath" />
+        </java>
+    </target>
+    
+    <target name="run-sql-myvietnam_enterprise" description="Run sql for myvietnam_enterprise">
+        <echo>Run sql mvncore_enterprise_hsqldb.sql</echo>
+        <java classname="${ScriptTool.class}" fork="true" dir="${basedir}">
+            <arg value="-database" />
+            <arg value="${database.mvnforum}" />
+            <arg value="-script" />
+            <arg value="${basedir}/../../../myvietnam_enterprise/sql/mvncore_enterprise_hsqldb.sql" />
+            <classpath refid="hsql.classpath" />
+        </java>
+    </target>
+    
+    <target name="run-sql-mvnforum_enterprise" depends="run-sql-mvnforum, run-sql-myvietnam_enterprise" description="Run sql for mvnforum_enterprise">
+        <echo>Run sql mvnforum_enterprise_hsqldb.sql</echo>
+        <java classname="${ScriptTool.class}" fork="true" dir="${basedir}">
+            <arg value="-database" />
+            <arg value="${database.mvnforum}" />
+            <arg value="-script" />
+            <arg value="${basedir}/../../../mvnforum_enterprise/sql/mvnforum_enterprise_hsqldb.sql" />
+            <classpath refid="hsql.classpath" />
+        </java>
+    </target>
+    
+    <target name="run-sql-mvnad" depends="run-sql-mvnforum" description="Run sql for mvnad">
+        <echo>Run sql mvnad_hsqldb.sql</echo>
+        <java classname="${ScriptTool.class}" fork="true" dir="${basedir}">
+            <arg value="-database" />
+            <arg value="${database.mvnforum}" />
+            <arg value="-script" />
+            <arg value="${basedir}/../../../mvnad/sql/mvnad_hsqldb.sql" />
+            <classpath refid="hsql.classpath" />
+        </java>
+    </target>
+    
+    <target name="run-sql-mvnad_enterprise" depends="run-sql-mvnad" description="Run sql for mvnad_enterprise">
+        <echo>Run sql mvnad_enterprise_hsqldb.sql</echo>
+        <java classname="${ScriptTool.class}" fork="true" dir="${basedir}">
+            <arg value="-database" />
+            <arg value="${database.mvnforum}" />
+            <arg value="-script" />
+            <arg value="${basedir}/../../../mvnad_enterprise/sql/mvnad_enterprise_hsqldb.sql" />
+            <classpath refid="hsql.classpath" />
+        </java>
+    </target>
+    
+    <target name="run-sql-mvncms" depends="run-sql-mvnforum_enterprise, run-sql-mvnad_enterprise" description="Run sql for mvncms">
+        <echo>Run sql mvnCMS_hsqldb.sql</echo>
+        <java classname="${ScriptTool.class}" fork="true" dir="${basedir}">
+            <arg value="-database" />
+            <arg value="${database.mvnforum}" />
+            <arg value="-script" />
+            <arg value="${basedir}/../../../mvncms/sql/mvnCMS_hsqldb.sql" />
+            <classpath refid="hsql.classpath" />
+        </java>
+    </target>
+      
+</project>

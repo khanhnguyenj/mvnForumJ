@@ -1,0 +1,17 @@
+******************************************************************
+* $Id: HowToReleaseToSourceforge.txt,v 1.1 2008/12/02 08:56:37 minhnn Exp $
+******************************************************************
+
+This documentation will guide on how to release packages to website sourceforge.net
+
+- You can read more at http://alexandria.wiki.sourceforge.net/File+Release+System+-+Offering+Files+for+Download
+
+- Login to sourceforge.net and go to 
+    https://sourceforge.net/projects/mvnforum/
+    Then choose menu Admin => File Releases
+  
+- Add a release into the correct package by click [Add Release] link.
+    A new page is open, enter the release name, such as "1.2.1-GA", then click Add
+  
+- Change the release date if it is not today. Then paste the note and change log
+    into the 2 text areas

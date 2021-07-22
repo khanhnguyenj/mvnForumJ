@@ -1,0 +1,583 @@
+<!--
+ - $Revision: 1.4 $
+ - $Date: 2006/04/15 04:49:05 $
+ -
+ - ====================================================================
+ -
+ - Copyright (C) 2002-2006 by MyVietnam.net
+ -
+ - All copyright notices regarding mvnForum MUST remain 
+ - intact in the scripts and in the outputted HTML.
+ - The "powered by" text/logo with a link back to
+ - http://www.mvnForum.com and http://www.MyVietnam.net in 
+ - the footer of the pages MUST remain visible when the pages
+ - are viewed on the internet or intranet.
+ -
+ - This program is free software; you can redistribute it and/or modify
+ - it under the terms of the GNU General Public License as published by
+ - the Free Software Foundation; either version 2 of the License, or
+ - any later version.
+ -
+ - This program is distributed in the hope that it will be useful,
+ - but WITHOUT ANY WARRANTY; without even the implied warranty of
+ - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ - GNU General Public License for more details.
+ -
+ - You should have received a copy of the GNU General Public License
+ - along with this program; if not, write to the Free Software
+ - Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ -
+ - Support can be obtained from support forums at:
+ - http://www.mvnForum.com/mvnforum/index
+ -
+ - Correspondence and Marketing Questions can be sent to:
+ - info at MyVietnam net
+-->
+<!--
+
+   =====================================================================
+   ===                 MVN Forum XML DTD definition                  ===
+   ===                                                               ===
+   ===    Made by Igor Manic, mailto:imanic@users.sourceforge.net    ===
+   ===                                                               ===
+   ===                   Donated to General Public                   ===
+   ===                                                               ===
+   ===                                                               ===
+   === this file can be obtained at:                                 ===
+   ===              http://www.mvnforum.com/dtd/mvnforum_1_0_rc2.dtd ===
+   =====================================================================
+
+
+ Used formats:
+  timestamp: use one of the following formats:
+               yyyy/MM/dd HH:mm:ss.nn
+               yyyy-MM-dd HH:mm:ss.nn
+               yyyyMMddHHmmssnn
+               EEE MMM dd HH:mm:ss z yyyy  (e.g.: "Fri Jan 16 18:48:25 CEST 2002")
+             In first three formats, last "nn" are hundreths and are optional
+             example: 2001/01/17 19:17:33
+             exception: MemberBirthday is not complete timestamp, it's only the date part (e.g. yyyy/MM/DD)
+  boolean: use values: 0, 1, true, false, yes, no
+
+ some info on mvnForum database:
+ - all ID fields in the database are auto_increment, and might not be exported to XML
+   (that is, they are optional), except for the AttachmentID, since it is important
+   because of attachment file name on the server
+ - MemberGroup allows (GroupID,MemberID)=(0,0) - that record should be ignored
+ - MemberForum allows (MemberID,ForumID)=(0,0) - that record should be ignored
+ - GroupForum allows (GroupID,ForumID)=(0,0) - that record should be ignored
+ - Watch allows (MemberID,CategoryID,ForumID,ThreadID)=(0,0,0,0) - that record should be ignored
+-->
+
+
+
+<!ELEMENT mvnforum (MemberList?, GroupList?,
+                    CategoryList?,
+                    RankList?)>
+<!ATTLIST mvnforum
+    version (1.0) #REQUIRED
+    exportDate CDATA #REQUIRED
+>
+
+
+<!-- ================================================= -->
+<!-- ==== MEMBERS, permissions and message folders === -->
+<!-- ================================================= -->
+<!ELEMENT MemberList (Member*)>
+<!ELEMENT Member (MemberName,
+                  MemberPassword,
+                  MemberFirstEmail,
+                  MemberEmail,
+                  MemberEmailVisible?,
+                  MemberNameVisible?,
+                  MemberFirstIP?,
+                  MemberLastIP?,
+                  MemberViewCount?,
+                  MemberPostCount?,
+                  MemberCreationDate?,
+                  MemberModifiedDate?,
+                  MemberLastLogon?,
+                  MemberOption?,
+                  MemberStatus?,
+                  MemberActivateCode?,
+                  MemberTempPassword?,
+                  MemberMessageCount?,
+                  MemberMessageOption?,
+                  MemberPostsPerPage?,
+                  MemberWarnCount?,
+                  MemberVoteCount?,
+                  MemberVoteTotalStars?,
+                  MemberRewardPoints?,
+                  MemberTitle,
+                  MemberTimeZone?,
+                  MemberSignature?,
+                  MemberAvatar?,
+                  MemberSkin?,
+                  MemberLanguage?,
+                  MemberFirstname,
+                  MemberLastname,
+                  MemberGender?,
+                  MemberBirthday?,
+                  MemberAddress?,
+                  MemberCity?,
+                  MemberState?,
+                  MemberCountry?,
+                  MemberPhone?,
+                  MemberMobile?,
+                  MemberFax?,
+                  MemberCareer?,
+                  MemberHomepage?,
+                  MemberYahoo?,
+                  MemberAol?,
+                  MemberIcq?,
+                  MemberMsn?,
+                  MemberCoolLink1?,
+                  MemberCoolLink2?,
+                  GlobalPermissionList?,
+                  MessageFolderList?,
+                  GlobalWatchList?)>
+<!ATTLIST Member class (Guest|Admin) #IMPLIED>
+
+<!ELEMENT MessageFolderList (MessageFolder*)>
+<!-- MessageFolder.MemberID is not here -->
+<!ELEMENT MessageFolder (FolderName,
+                         FolderOrder?,
+                         FolderCreationDate?,
+                         FolderModifiedDate?)>
+
+<!ELEMENT GlobalWatchList (GlobalWatch*)>
+
+
+<!-- ================================================= -->
+<!-- ============== GROUPS (of members) ============== -->
+<!-- ================================================= -->
+<!ELEMENT GroupList (Group*)>
+<!-- Group.GroupOwnerID is not here -->
+<!ELEMENT Group (GroupOwnerName?,
+                 GroupName,
+                 GroupDesc?,
+                 GroupOption?,
+                 GroupCreationDate?,
+                 GroupModifiedDate?,
+                 GlobalPermissionList?,
+                 GroupMemberList?)>
+<!ATTLIST Group class (RegisteredMembers) #IMPLIED>
+
+<!ELEMENT GroupMemberList (GroupMember*)>
+<!-- GroupMember.GroupID and GroupMember.MemberID are not here -->
+<!ELEMENT GroupMember (MemberName,
+                       Privilege?,
+                       CreationDate?,
+                       ModifiedDate?)>
+
+
+<!-- ================================================= -->
+<!-- ============== GLOBAL PERMISSIONS =============== -->
+<!-- ================================================= -->
+<!ELEMENT GlobalPermissionList (GlobalPermission*)>
+<!ELEMENT GlobalPermission (#PCDATA)>
+
+
+<!-- ================================================= -->
+<!-- ================== CATEGORIES =================== -->
+<!-- ================================================= -->
+<!ELEMENT CategoryList (Category*)>
+<!-- Category.CategoryID and Category.ParentCategoryID are not here -->
+<!-- each Category can have it's own subcategories -->
+<!ELEMENT Category (CategoryName,
+                    CategoryDesc?,
+                    CategoryCreationDate?,
+                    CategoryModifiedDate?,
+                    CategoryOrder?,
+                    CategoryOption?,
+                    CategoryStatus?,
+                    CategoryWatchList?,
+                    ForumList?,
+                    CategoryList?)>
+
+<!ELEMENT CategoryWatchList (CategoryWatch*)>
+
+
+<!-- ================================================= -->
+<!-- ==================== FORUMS ===================== -->
+<!-- ================================================= -->
+<!ELEMENT ForumList (Forum*)>
+<!-- Forum.ForumID and Forum.CategoryID are not here -->
+<!ELEMENT Forum (ForumLastPostMemberName?,
+                 ForumName,
+                 ForumDesc?,
+                 ForumCreationDate?,
+                 ForumModifiedDate?,
+                 ForumLastPostDate?,
+                 ForumOrder?,
+                 ForumType?,
+                 ForumFormatOption?,
+                 ForumOption?,
+                 ForumStatus?,
+                 ForumModerationMode?,
+                 ForumPassword,
+                 ForumThreadCount?,
+                 ForumPostCount?,
+                 MemberForumPermissionList?,
+                 GroupForumPermissionList?,
+                 ForumWatchList?,
+                 ThreadList?)>
+
+<!ELEMENT ForumWatchList (ForumWatch*)>
+
+
+<!-- ================================================= -->
+<!-- ========== FORUM-SPECIFIC PERMISSIONS =========== -->
+<!-- ================================================= -->
+<!ELEMENT MemberForumPermissionList (MemberForumPermission*)>
+<!ELEMENT MemberForumPermission (MemberName, ForumPermission)>
+
+<!ELEMENT GroupForumPermissionList (GroupForumPermission*)>
+<!ELEMENT GroupForumPermission (GroupName, ForumPermission)>
+
+<!ELEMENT ForumPermission (#PCDATA)>
+
+
+<!-- ================================================= -->
+<!-- ==================== THREADS ==================== -->
+<!-- ================================================= -->
+<!ELEMENT ThreadList (Thread*)>
+<!-- Thread.ThreadID and Thread.ForumID are not here -->
+<!ELEMENT Thread (MemberName?,
+                  ThreadLastPostMemberName?,
+                  ThreadTopic,
+                  ThreadBody,
+                  ThreadVoteCount?,
+                  ThreadVoteTotalStars?,
+                  ThreadCreationDate?,
+                  ThreadLastPostDate?,
+                  ThreadType?,
+                  ThreadOption?,
+                  ThreadStatus?,
+                  ThreadHasPoll?,
+                  ThreadViewCount?,
+                  ThreadReplyCount?,
+                  ThreadIcon?,
+                  ThreadDuration?,
+                  ThreadWatchList?,
+                  FavoriteThreadList?,
+                  PostList?)>
+
+<!ELEMENT ThreadWatchList (ThreadWatch*)>
+
+<!ELEMENT FavoriteThreadList (FavoriteThread*)>
+<!-- this is list of FavoriteThread records that refer to this particular thread -->
+<!-- FavoriteThread.MemberID is not here, but I added MemberName to identify the member -->
+<!ELEMENT FavoriteThread (MemberName,
+                          FavoriteCreationDate?,
+                          FavoriteType?,
+                          FavoriteOption?,
+                          FavoriteStatus?)>
+
+
+<!-- ================================================= -->
+<!-- ===================== POSTS ===================== -->
+<!-- ================================================= -->
+<!ELEMENT PostList (Post*)>
+<!-- Post.PostID, Post.ParentPostID, Post.ForumID, Post.ThreadID, Post.MemberID are not here -->
+<!-- each post can have it's own replies -->
+<!ELEMENT Post (MemberName?,
+                LastEditMemberName?,
+                PostTopic,
+                PostBody,
+                PostCreationDate?,
+                PostLastEditDate?,
+                PostCreationIP?,
+                PostLastEditIP?,
+                PostEditCount?,
+                PostFormatOption?,
+                PostOption?,
+                PostStatus?,
+                PostIcon?,
+                PostAttachCount?,
+                AttachmentList?,
+                PostList?)>
+
+
+<!-- ================================================= -->
+<!-- ================== ATTACHMENTS ================== -->
+<!-- ================================================= -->
+<!ELEMENT AttachmentList (Attachment*)>
+
+<!-- Attachment.AttachID is mandatory. Otherwise, we would lose connection between
+     this data (in database), and attachment files on server -->
+<!ATTLIST Attachment id CDATA #REQUIRED>
+
+<!-- Attachment.PostID, Attachment.MemberID are not here,
+     but I've added Attachment.MemberName (which is unique) to identify the member -->
+<!ELEMENT Attachment (MemberName?,
+                      AttachFilename,
+                      AttachFileSize,
+                      AttachMimeType,
+                      AttachDesc?,
+                      AttachCreationIP?,
+                      AttachCreationDate?,
+                      AttachModifiedDate?,
+                      AttachDownloadCount?,
+                      AttachOption?,
+                      AttachStatus?)>
+
+
+<!-- ================================================= -->
+<!-- ==================== WATCHES ==================== -->
+<!-- ================================================= -->
+<!-- WatchID and MemberID are not subelements in any of these watch elements
+
+     <GlobalWatch>: it doesn't need CategoryID, ForumID, ThreadID, and it corresponds to
+                    the parent <Member> element
+
+     <ThreadWatch>, <ForumWatch>, <CategoryWatch>:
+       They don't need CategoryID, ForumID, ThreadID, since these non-global watch elements
+       are under their corresponding <Category>, <Forum> or <Thread> elements.
+       These elements identify their MemberID through the MemberName subelement (MemberName is
+       unique in the database).
+
+     watches without MemberName are equivalent to watches with MemberID=0 in the database
+-->
+<!ELEMENT GlobalWatch (WatchType?,
+                       WatchOption?,
+                       WatchStatus?,
+                       WatchCreationDate?,
+                       WatchLastSentDate?,
+                       WatchEndDate?)>
+<!ELEMENT CategoryWatch (MemberName?,
+                         WatchType?,
+                         WatchOption?,
+                         WatchStatus?,
+                         WatchCreationDate?,
+                         WatchLastSentDate?,
+                         WatchEndDate?)>
+<!ELEMENT ForumWatch (MemberName?,
+                      WatchType?,
+                      WatchOption?,
+                      WatchStatus?,
+                      WatchCreationDate?,
+                      WatchLastSentDate?,
+                      WatchEndDate?)>
+<!ELEMENT ThreadWatch (MemberName?,
+                       WatchType?,
+                       WatchOption?,
+                       WatchStatus?,
+                       WatchCreationDate?,
+                       WatchLastSentDate?,
+                       WatchEndDate?)>
+
+
+<!-- ================================================= -->
+<!-- ===================== RANKS ===================== -->
+<!-- ================================================= -->
+<!ELEMENT RankList (Rank*)>
+<!-- Rank.RankID is not here -->
+<!ELEMENT Rank (RankMinPosts,
+                RankLevel?,
+                RankTitle,
+                RankImage?,
+                RankType?,
+                RankOption?)>
+
+
+
+
+
+
+
+
+
+
+<!-- ================================================= -->
+<!-- ==================== MEMBERS ==================== -->
+<!-- ================================================= -->
+<!ELEMENT MemberName (#PCDATA)>
+<!ELEMENT MemberPassword (#PCDATA)> <!-- MD5 + Base64 encrypted -->
+<!ELEMENT MemberFirstEmail (#PCDATA)>
+<!ELEMENT MemberEmail (#PCDATA)>
+<!ELEMENT MemberEmailVisible (#PCDATA)> <!-- boolean -->
+<!ELEMENT MemberNameVisible (#PCDATA)> <!-- boolean -->
+<!ELEMENT MemberFirstIP (#PCDATA)>
+<!ELEMENT MemberLastIP (#PCDATA)>
+<!ELEMENT MemberViewCount (#PCDATA)>
+<!ELEMENT MemberPostCount (#PCDATA)>
+<!ELEMENT MemberCreationDate (#PCDATA)>
+<!ELEMENT MemberModifiedDate (#PCDATA)>
+<!ELEMENT MemberLastLogon (#PCDATA)>
+<!ELEMENT MemberOption (#PCDATA)>
+<!ELEMENT MemberStatus (#PCDATA)> <!-- 0=Enabled, 1=Disabled -->
+<!ELEMENT MemberActivateCode (#PCDATA)>
+          <!-- Empty if activation hasn't been initiated -->
+          <!-- The actual code if activation pending -->
+          <!-- "activated" if activation completed -->
+<!ELEMENT MemberTempPassword (#PCDATA)>
+<!ELEMENT MemberMessageCount (#PCDATA)>
+<!ELEMENT MemberMessageOption (#PCDATA)>
+<!ELEMENT MemberPostsPerPage (#PCDATA)>
+<!ELEMENT MemberWarnCount (#PCDATA)>
+<!ELEMENT MemberVoteCount (#PCDATA)>
+<!ELEMENT MemberVoteTotalStars (#PCDATA)>
+<!ELEMENT MemberRewardPoints (#PCDATA)>
+<!ELEMENT MemberTitle (#PCDATA)>
+          <!-- The string that appears under the user's login name
+               (Stranger, Newbie, Member, Advanced Member, ...)
+               Empty means use default (forum-determined) -->
+<!ELEMENT MemberTimeZone (#PCDATA)>
+          <!-- Hours relative to Zero Meridian; integer only -->
+<!ELEMENT MemberSignature (#PCDATA)>
+<!ELEMENT MemberAvatar (#PCDATA)>
+<!ELEMENT MemberSkin (#PCDATA)>
+<!ELEMENT MemberLanguage (#PCDATA)>
+          <!-- two-letter code such as "sh" or "vi" -->
+          <!-- empty means use default -->
+<!ELEMENT MemberFirstname (#PCDATA)>
+<!ELEMENT MemberLastname (#PCDATA)>
+<!ELEMENT MemberGender (#PCDATA)> <!-- 0=Female, 1=Male -->
+<!ELEMENT MemberBirthday (#PCDATA)>
+<!ELEMENT MemberAddress (#PCDATA)>
+<!ELEMENT MemberCity (#PCDATA)>
+<!ELEMENT MemberState (#PCDATA)>
+<!ELEMENT MemberCountry (#PCDATA)>
+<!ELEMENT MemberPhone (#PCDATA)>
+<!ELEMENT MemberMobile (#PCDATA)>
+<!ELEMENT MemberFax (#PCDATA)>
+<!ELEMENT MemberCareer (#PCDATA)>
+<!ELEMENT MemberHomepage (#PCDATA)>
+<!ELEMENT MemberYahoo (#PCDATA)>
+<!ELEMENT MemberAol (#PCDATA)>
+<!ELEMENT MemberIcq (#PCDATA)>
+<!ELEMENT MemberMsn (#PCDATA)>
+<!ELEMENT MemberCoolLink1 (#PCDATA)>
+<!ELEMENT MemberCoolLink2 (#PCDATA)>
+
+<!-- ================================================= -->
+<!-- ===================== GROUPS ==================== -->
+<!-- ================================================= -->
+<!ELEMENT GroupOwnerName (#PCDATA)>
+<!ELEMENT GroupName (#PCDATA)>
+<!ELEMENT GroupDesc (#PCDATA)>
+<!ELEMENT GroupOption (#PCDATA)>
+<!ELEMENT GroupCreationDate (#PCDATA)>
+<!ELEMENT GroupModifiedDate (#PCDATA)>
+<!ELEMENT Privilege (#PCDATA)>
+<!ELEMENT CreationDate (#PCDATA)>
+<!ELEMENT ModifiedDate (#PCDATA)>
+
+<!-- ================================================= -->
+<!-- =================== CATEGORIES ================== -->
+<!-- ================================================= -->
+<!ELEMENT CategoryName (#PCDATA)>
+<!ELEMENT CategoryDesc (#PCDATA)>
+<!ELEMENT CategoryCreationDate (#PCDATA)>
+<!ELEMENT CategoryModifiedDate (#PCDATA)>
+<!ELEMENT CategoryOrder (#PCDATA)>
+<!ELEMENT CategoryOption (#PCDATA)>
+<!ELEMENT CategoryStatus (#PCDATA)> <!-- 0=enabled, 1=disabled -->
+
+<!-- ================================================= -->
+<!-- ==================== FORUMS ===================== -->
+<!-- ================================================= -->
+<!ELEMENT ForumLastPostMemberName (#PCDATA)>
+<!ELEMENT ForumName (#PCDATA)>
+<!ELEMENT ForumDesc (#PCDATA)>
+<!ELEMENT ForumCreationDate (#PCDATA)>
+<!ELEMENT ForumModifiedDate (#PCDATA)>
+<!ELEMENT ForumLastPostDate (#PCDATA)>
+<!ELEMENT ForumOrder (#PCDATA)>
+<!ELEMENT ForumType (#PCDATA)>
+<!ELEMENT ForumFormatOption (#PCDATA)>
+<!ELEMENT ForumOption (#PCDATA)>
+<!ELEMENT ForumStatus (#PCDATA)> <!-- 0=enabled, 1=disabled -->
+<!ELEMENT ForumModerationMode (#PCDATA)>
+<!ELEMENT ForumPassword (#PCDATA)> <!-- MD5 + Base64 encrypted -->
+<!ELEMENT ForumThreadCount (#PCDATA)>
+<!ELEMENT ForumPostCount (#PCDATA)>
+
+<!-- ================================================= -->
+<!-- ==================== THREADS ==================== -->
+<!-- ================================================= -->
+<!ELEMENT ThreadLastPostMemberName (#PCDATA)>
+<!ELEMENT ThreadTopic (#PCDATA)>
+<!ELEMENT ThreadBody (#PCDATA)>
+<!ELEMENT ThreadVoteCount (#PCDATA)>
+<!ELEMENT ThreadVoteTotalStars (#PCDATA)>
+<!ELEMENT ThreadCreationDate (#PCDATA)>
+<!ELEMENT ThreadLastPostDate (#PCDATA)>
+<!ELEMENT ThreadType (#PCDATA)>
+<!ELEMENT ThreadOption (#PCDATA)>
+<!ELEMENT ThreadStatus (#PCDATA)> <!-- 0=enabled, 1=disabled -->
+<!ELEMENT ThreadHasPoll (#PCDATA)>
+<!ELEMENT ThreadViewCount (#PCDATA)>
+<!ELEMENT ThreadReplyCount (#PCDATA)>
+<!ELEMENT ThreadIcon (#PCDATA)>
+<!ELEMENT ThreadDuration (#PCDATA)>
+
+<!-- ================================================= -->
+<!-- ============== FAVORITE-THREADS ================= -->
+<!-- ================================================= -->
+<!ELEMENT FavoriteCreationDate (#PCDATA)>
+<!ELEMENT FavoriteType (#PCDATA)>
+<!ELEMENT FavoriteOption (#PCDATA)>
+<!ELEMENT FavoriteStatus (#PCDATA)>
+
+<!-- ================================================= -->
+<!-- ====================== POSTS ==================== -->
+<!-- ================================================= -->
+<!ELEMENT LastEditMemberName (#PCDATA)>
+<!ELEMENT PostTopic (#PCDATA)>
+<!ELEMENT PostBody (#PCDATA)>
+<!ELEMENT PostCreationDate (#PCDATA)>
+<!ELEMENT PostLastEditDate (#PCDATA)>
+<!ELEMENT PostCreationIP (#PCDATA)>
+<!ELEMENT PostLastEditIP (#PCDATA)>
+<!ELEMENT PostEditCount (#PCDATA)>
+<!ELEMENT PostFormatOption (#PCDATA)>
+<!ELEMENT PostOption (#PCDATA)>
+<!ELEMENT PostStatus (#PCDATA)>
+<!ELEMENT PostIcon (#PCDATA)>
+<!ELEMENT PostAttachCount (#PCDATA)>
+
+<!-- ================================================= -->
+<!-- ================= ATTACHMENTS =================== -->
+<!-- ================================================= -->
+<!ELEMENT AttachFilename (#PCDATA)>
+<!ELEMENT AttachFileSize (#PCDATA)>
+<!ELEMENT AttachMimeType (#PCDATA)>
+<!ELEMENT AttachDesc (#PCDATA)>
+<!ELEMENT AttachCreationIP (#PCDATA)>
+<!ELEMENT AttachCreationDate (#PCDATA)>
+<!ELEMENT AttachModifiedDate (#PCDATA)>
+<!ELEMENT AttachDownloadCount (#PCDATA)>
+<!ELEMENT AttachOption (#PCDATA)>
+<!ELEMENT AttachStatus (#PCDATA)>
+
+<!-- ================================================= -->
+<!-- ================ MESSAGE FOLDERS ================ -->
+<!-- ================================================= -->
+<!ELEMENT FolderName (#PCDATA)>
+<!ELEMENT FolderOrder (#PCDATA)>
+<!ELEMENT FolderCreationDate (#PCDATA)>
+<!ELEMENT FolderModifiedDate (#PCDATA)>
+
+<!-- ================================================= -->
+<!-- ==================== WATCHES ==================== -->
+<!-- ================================================= -->
+<!ELEMENT WatchType (#PCDATA)>
+<!ELEMENT WatchOption (#PCDATA)>
+<!ELEMENT WatchStatus (#PCDATA)>
+<!ELEMENT WatchCreationDate (#PCDATA)>
+<!ELEMENT WatchLastSentDate (#PCDATA)>
+<!ELEMENT WatchEndDate (#PCDATA)>
+
+<!-- ================================================= -->
+<!-- ===================== RANKS ===================== -->
+<!-- ================================================= -->
+<!ELEMENT RankMinPosts (#PCDATA)>
+<!ELEMENT RankLevel (#PCDATA)>
+<!ELEMENT RankTitle (#PCDATA)>
+<!ELEMENT RankImage (#PCDATA)>
+<!ELEMENT RankType (#PCDATA)>
+<!ELEMENT RankOption (#PCDATA)>
+
+

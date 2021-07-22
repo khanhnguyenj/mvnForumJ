@@ -1,0 +1,171 @@
+<html>
+<!--
+  Copyright (c) 2002-2005 by MyVietnam.net. All rights reserved.
+  $Author: minhnn $
+  $Revision: 1.6 $
+  $Date: 2007/12/17 03:46:01 $
+-->
+
+<body bgcolor="white">
+<h1> Request Information </h1>
+<font size="4">
+JSP Request Method: <%= request.getMethod() %>
+<br />
+Request URI: <%= request.getRequestURI() %>
+<br />
+Request Protocol: <%= request.getProtocol() %>
+<br />
+Servlet path: <%= request.getServletPath() %>
+<br />
+Context path: <%= request.getContextPath() %>
+<br />
+Path info: <% out.print(request.getPathInfo()); %>
+<br />
+Query string: <% out.print(request.getQueryString()); %>
+<br />
+Content length: <%= request.getContentLength() %>
+<br />
+Content type: <%= request.getContentType() %>
+<br />
+Server name: <%= request.getServerName() %>
+<br />
+Server port: <%= request.getServerPort() %>
+<br />
+Remote user: <%= request.getRemoteUser() %>
+<br />
+Remote address: <%= request.getRemoteAddr() %>
+<br />
+Remote host: <%= request.getRemoteHost() %>
+<br />
+Authorization scheme: <%= request.getAuthType() %> 
+<br />
+Locale: <%= request.getLocale() %>
+<br />
+Root Real Path: <%= pageContext.getServletContext().getRealPath("/") %>
+<br />
+WEB-INF/classes Real Path: <%= pageContext.getServletContext().getRealPath("/WEB-INF/classes") %>
+<br />
+Temp folder: <%= pageContext.getServletContext().getAttribute("javax.servlet.context.tempdir") %>
+<br />
+Servlet Context Name: <%= pageContext.getServletContext().getServletContextName() %>
+<hr>
+The browser you are using is <% out.print(request.getHeader("User-Agent")); %>
+
+<%
+        ServletContext context = application;
+        String serverInfo = context.getServerInfo();
+        int majorVersion  = context.getMajorVersion();
+        int minorVersion  = context.getMinorVersion();
+        String servletVersion = new StringBuffer().append(majorVersion).append('.').append(minorVersion).toString();
+
+        String vmName          = "";
+        String vmVendor        = "";
+        String vmVersion       = "";
+        String runtimeName     = "";
+        String runtimeVersion  = "";
+        String osName          = "";
+        String osVersion       = "";
+        String cpu             = "";
+
+        // get system info
+        try {
+            vmName          = System.getProperty("java.vm.name", "");
+            vmVendor        = System.getProperty("java.vm.vendor", "");
+            vmVersion       = System.getProperty("java.vm.version", "");
+            runtimeName     = System.getProperty("java.runtime.name", "");
+            runtimeVersion  = System.getProperty("java.runtime.version", "");
+            osName          = System.getProperty("os.name", "");
+            osVersion       = System.getProperty("os.version", "");
+            cpu             = System.getProperty("sun.cpu.isalist", "");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        // now save them
+        request.setAttribute("ServerInfo", serverInfo);
+        request.setAttribute("ServletVersion", servletVersion);
+
+        request.setAttribute("vmName", vmName);
+        request.setAttribute("vmVendor", vmVendor);
+        request.setAttribute("vmVersion", vmVersion);
+        request.setAttribute("runtimeName", runtimeName);
+        request.setAttribute("runtimeVersion", runtimeVersion);
+        request.setAttribute("osName", osName);
+        request.setAttribute("osVersion", osVersion);
+        request.setAttribute("cpu", cpu);
+%>
+
+<table width="95%" border="0" cellspacing="1" cellpadding="3" align="center" bgcolor="#999999">
+  <tr bgcolor="#666699" class="header">
+    <td colspan="2">Application Server Infomation</td>
+  </tr>
+  <tr bgcolor=#f5f5f5>
+    <td width="30%" class="messageText">Application Server</td>
+    <td class="messageText"><%=(String)request.getAttribute("ServerInfo")%></td>
+  </tr>
+  <tr bgcolor=#f5f5f5>
+    <td class="messageText">Servlet Version</td>
+    <td class="messageText"><%=(String)request.getAttribute("ServletVersion")%></td>
+  </tr>
+</table>
+
+<p>
+
+<p>
+<table width="95%" border="0" cellspacing="1" cellpadding="3" align="center" bgcolor="#999999">
+  <tr bgcolor="#666699" class="header">
+    <td colspan="2">System Information</td>
+  </tr>
+  <tr bgcolor=#f5f5f5>
+    <td width="30%" class="messageText">vmName</td>
+    <td class="messageText"><%=(String)request.getAttribute("vmName")%></td>
+  </tr>
+  <tr bgcolor=#f5f5f5>
+    <td class="messageText">vmVendor</td>
+    <td class="messageText"><%=(String)request.getAttribute("vmVendor")%></td>
+  </tr>
+  <tr bgcolor=#f5f5f5>
+    <td class="messageText">vmVersion</td>
+    <td class="messageText"><%=(String)request.getAttribute("vmVersion")%></td>
+  </tr>
+  <tr bgcolor=#f5f5f5>
+    <td class="messageText">runtimeName</td>
+    <td class="messageText"><%=(String)request.getAttribute("runtimeName")%></td>
+  </tr>
+  <tr bgcolor=#f5f5f5>
+    <td class="messageText">runtimeVersion</td>
+    <td class="messageText"><%=(String)request.getAttribute("runtimeVersion")%></td>
+  </tr>
+  <tr bgcolor=#f5f5f5>
+    <td class="messageText">osName</td>
+    <td class="messageText"><%=(String)request.getAttribute("osName")%></td>
+  </tr>
+  <tr bgcolor=#f5f5f5>
+    <td class="messageText">osVersion</td>
+    <td class="messageText"><%=(String)request.getAttribute("osVersion")%></td>
+  </tr>
+  <tr bgcolor=#f5f5f5>
+    <td class="messageText">cpu</td>
+    <td class="messageText"><%=(String)request.getAttribute("cpu")%></td>
+  </tr>
+<%
+Runtime runtime = Runtime.getRuntime();
+long totalMemory = runtime.totalMemory();
+long freeMemory  = runtime.freeMemory();
+long totalKB = totalMemory/1024;
+long freeKB  = freeMemory/1024;
+%>
+  <tr bgcolor=#f5f5f5>
+    <td class="messageText">Total Memory</td>
+    <td class="messageText"><%=totalKB%> KB</td>
+  </tr>
+  <tr bgcolor=#f5f5f5>
+    <td class="messageText">Free Memory</td>
+    <td class="messageText"><%=freeKB%> KB</td>
+  </tr>
+</table>
+
+<hr>
+</font>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN" "http://docbook.org/xml/4.3/docbookx.dtd"
+  [
+  ]
+>
+
+<article>
+    <articleinfo>
+        <title>New features in mvnForum 1.0.0 RC3</title>
+        <author>
+            <firstname> Tran </firstname>
+            <surname> Van Hung</surname>
+        </author>
+    </articleinfo>
+    <itemizedlist>
+               <title>New features: </title>
+            <listitem><para> <emphasis>i18n: </emphasis> Localize to 4 new languages: Portuguese, Korean, Japanese and Greek </para></listitem>
+            <listitem><para>  Moderation of threads/posts [cool]</para></listitem>
+            <listitem><para>  Support Thread Status (Normal, Disabled, Locked, Closed) [cool]</para></listitem>
+            <listitem><para>  Support Forum Status (Normal, Disabled, Locked, Closed) [cool]</para></listitem>
+            <listitem><para>  Support Forum Type (Normal and Private) [cool]</para></listitem>
+            <listitem><para>  Implement permission BYPASS_PRIVATE_FORUM : When a user have this permssion, then he can use the global permission even the forum has option "Private Forum"</para></listitem>
+            <listitem><para>  Allow a ForumAdmin to add users and/or groups to a forum, then he can set forum-specific permissions to those users.</para></listitem>
+            <listitem><para>  User can delete his own post/thread (if no reply has been made) [cool]</para></listitem>
+            <listitem><para>  Add image (JCaptcha) to prevent automatically register member + lostpassword [cool]</para></listitem>
+            <listitem><para>  MD5 Encode password in the browser by JavaScript before sending over network [cool]</para></listitem>
+            <listitem><para>  Support Flood Control for these actions: login, new post and register member (max actions per hour) [cool]</para></listitem>
+            <listitem><para>  Support User Agent filter (such as Teleport)</para></listitem>
+            <listitem><para>  Support intercepting email, post content, loginID, attachment description</para></listitem>
+            <listitem><para>  [Security Improvement] : Need explicit login in the Admin Zone (cookie is not allowed)</para></listitem>
+            <listitem><para>  Improved sendmail page that let admin send mail to all members, all activated members and all non-activated members [cool]</para></listitem>
+            <listitem><para>  New link in UserManagement that let you send activation mail to all non activated members</para></listitem>
+            <listitem><para>  Now all email content can be edited in the FreeMarker template files [cool]</para></listitem>
+            <listitem><para>  Change the configuration from properties file to xml file [cool]</para></listitem>
+            <listitem><para>  Configuration Tool</para></listitem>
+            <listitem><para>  Backup configuration file function</para></listitem>
+            <listitem><para>  Add option to disable login in User zone</para></listitem>
+            <listitem><para>  New config param: "default_watch_option" to change the default watch option (daily watch)</para></listitem>
+            <listitem><para>  Add some new configurable parameter (enable_avatar, enable_new_member, rows_per_rss, rows_per_pages, ...)</para></listitem>
+            <listitem><para>  Support providing extension to mvnForum in the build process by place the extension in folder "extension"</para></listitem>
+            <listitem><para>  Change the home page to show more information like a portal</para></listitem>
+            <listitem><para>  In addpost page, support inserting mvnCode with javascript in both IE and Netscape [cool]</para></listitem>
+            <listitem><para>  In index page in Admin zone, add 2 buttons to check latest version of mvnForum and mvnCore</para></listitem>
+            <listitem><para>  Refactor all database class to DAO pattern</para></listitem>
+    </itemizedlist>
+</article>

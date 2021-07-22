@@ -1,0 +1,84 @@
+<project name="vbulletinmvnForum" default="compile" basedir=".">
+
+  <property name="src.home" value="${basedir}/src" />
+  <property name="properties.home" value="${basedir}/properties" />
+  <property name="driver" value="${basedir}/../../driver" />
+
+  <property name="build-root.home" value="${basedir}/../../../build" />
+  <property name="build.home" value="${build-root.home}/build-mvnforum-contrib-vbulletinmvnForum" />
+  <property name="build.classes" value="${build.home}/classes" />
+
+  <property name="myvietnam.home" value="${basedir}/../../../myvietnam" />
+  <property name="myvietnam.build" value="${basedir}/../../../build/build-myvietnam" />
+  <property name="myvietnam.jar" value="${myvietnam.build}/lib/myvietnam.jar" />
+
+  <property name="myvietnam_enterprise.home" value="${basedir}/../../../myvietnam_enterprise" />
+  <property name="lib.myvietnam_enterprise" value="${myvietnam_enterprise.home}/lib" />
+  <property name="myvietnam_enterprise.build" value="${build-root.home}/build-myvietnam_enterprise" />
+  <property name="myvietnam_enterprise.jar" value="${myvietnam_enterprise.build}/lib/myvietnam_enterprise.jar" />
+
+  <property name="mvnforum.home" value="${basedir}/../../../mvnforum" />
+  <property name="mvnforum.build" value="${basedir}/../../../build/build-mvnforum" />
+  <property name="mvnforum.jar" value="${mvnforum.build}/lib/mvnforum.jar" />
+    
+  <property name="vbulletinmvnForum.jar" value="${build.home}/lib/vbulletinmvnForum.jar" />
+
+  <path id="compile.classpath">
+    <pathelement location="${myvietnam_enterprise.jar}" />
+    <pathelement location="${myvietnam.jar}" />
+    <pathelement location="${mvnforum.jar}" />
+    <fileset dir="${myvietnam.home}/lib">
+      <include name="*.jar" />
+    </fileset>
+  </path>
+
+  <path id="run.classpath">
+    <fileset dir="${build.home}/lib">
+      <include name="*.jar" />
+    </fileset>
+  </path>
+
+  <target name="clean" description="Delete build directories">
+    <delete dir="${build.home}" />
+  </target>
+
+  <target name="prepare">
+    <!-- Create build directories as needed -->
+    <mkdir dir="${build.classes}" />
+  </target>
+
+  <target name="compile" depends="prepare" description="Compile Java sources">
+    <javac srcdir="${src.home}" destdir="${build.classes}" source="1.4" target="1.4" debug="true">
+      <classpath refid="compile.classpath"></classpath>
+    </javac>
+    
+    <copy file="${mvnforum.home}/properties/log4j.properties" todir="${build.classes}" />
+      
+    <mkdir dir="${build.home}/lib" />
+    <jar destfile="${build.home}/lib/vbulletinmvnForum.jar" basedir="${build.home}/classes">
+      <manifest>
+        <attribute name="Main-Class" value="com.mvnforum.vbulletin.VBulletin2MvnForum" />
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="run" depends="compile" description="Run vbulletinmvnForum">
+    <copy file="${myvietnam.home}/properties/mvncore.xml" todir="${build.home}/lib" />
+    <copy file="${myvietnam.home}/properties/secondary-database.xml" todir="${build.home}/lib" />
+    <copy file="${mvnforum.home}/properties/mvnforum.xml" todir="${build.home}/lib" />
+    <copy file="${myvietnam_enterprise.jar}" todir="${build.home}/lib" />
+    <copy file="${myvietnam.jar}" todir="${build.home}/lib" />
+    <copy file="${mvnforum.jar}" todir="${build.home}/lib" />
+    <copy todir="${build.home}/lib">
+      <fileset dir="${myvietnam_enterprise.home}/lib" />
+      <fileset dir="${myvietnam.home}/lib" />
+      <fileset dir="${mvnforum.home}/lib" />
+    </copy>
+    <copy file="${driver}/mysql-connector-java-5.0.8-bin.jar" todir="${build.home}/lib" />
+    <java classname="com.mvnforum.vbulletin.VBulletin2MvnForum" fork="true" dir="${build.home}/lib/">
+      <arg value="-jar" />
+      <classpath refid="run.classpath"></classpath>
+    </java>
+  </target>
+    
+</project>

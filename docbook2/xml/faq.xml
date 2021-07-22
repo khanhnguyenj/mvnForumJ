@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!DOCTYPE article
+  PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN" "http://docbook.org/xml/4.3/docbookx.dtd"
+  [
+    <!ENTITY % global.entities SYSTEM "./include/global.xml">
+    %global.entities;
+
+    <!ENTITY % entities SYSTEM "./include/entities.xml">
+    %entities;
+  ]
+>
+
+<article class="faq" id="index">
+
+ <articleinfo>
+  <title>mvnForum FAQ</title>
+
+  <author>
+     <firstname>Cord</firstname>
+     <surname>Thomas</surname>
+     <affiliation>
+        <jobtitle>Software Architect</jobtitle>
+        <orgname>Lupine Information Systems</orgname>
+        <address><email>cord_sw (at) lupinex.com</email></address>
+     </affiliation>
+  </author>
+
+  <revhistory>
+   <revision>
+    <revnumber>v0.0.10</revnumber>
+    <date>5 June 2003</date>
+    <authorinitials>cat</authorinitials>
+    <revremark>
+     Prepared forum FAQ for RC1 - first round</revremark>
+   </revision>
+  </revhistory>
+  
+  <abstract>
+    <para>This is a FAQ for the mvnForum developed by <ulink url="http://www.myVietnam.net">
+    MyVietnam.net</ulink>.  The latest version of mvnForum can be found at <ulink url="http://www.mvnforum.com">
+    www.mvnforum.com</ulink>.  It is intended as a supplement to the existing
+    mvnForum documenation, to cover questions that keep occurring on the
+    mailing list.  PLEASE read this document before your post to the
+    list.</para>
+  </abstract>
+
+ </articleinfo>
+
+ <qandaset>
+
+   <qandadiv>
+    <title>General</title>
+
+    <qandaentry>
+      <question>
+        <para>What is mvnForum?</para>
+      </question>
+      <answer>
+        <para>mvnForum is an open source, powerful, easy to use, easy to
+         setup bulletin board (forum) developed following Java J2EE standards
+         and technologies (Jsp/Servlet).</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry>
+      <question>
+        <para>What license is mvnForum released under?</para>
+      </question>
+      <answer>
+        <para>mvnForum is a free, open-source project released under
+         the terms of the GNU General Public License. </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry>
+      <question>
+        <para>Where can I see the update-to-date version of this FAQ?</para>
+      </question>
+      <answer>
+        <para>The latest version of this FAQ are <ulink
+           url="http://www.mvnforum.com/mvnforum/docs/mvnFaq.html">here</ulink></para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry>
+      <question>
+        <para>Where can I see a list of forum features?</para>
+      </question>
+      <answer>
+        <para>The latest information about forum features are <ulink
+           url="http://www.mvnforum.com/mvnforumweb/features.jsp">here</ulink></para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry>
+      <question>
+        <para>Who has developed mvnForum?</para>
+      </question>
+      <answer>
+        <para>The core mvnForum framework is being developed by a group of
+         dedicated Vietnamese developers at <ulink url="http://www.MyVietnam.net">
+         MyVietnam.net</ulink></para>
+      </answer>
+    </qandaentry>
+  </qandadiv>
+
+     <qandadiv>
+    <title>Installation</title>
+    <qandaentry>
+      <question>
+        <para>Where do I get the latest binary installation of the mvnForum?</para>
+      </question>
+      <answer>
+        <para>The latest mvnForum release can be found <ulink
+           url="http://www.mvnforum.com/mvnforumweb/download.jsp">here</ulink></para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry>
+      <question>
+        <para>Where do I get the latest source code for development?</para>
+      </question>
+      <answer>
+        <para>See these notes for accessing the source via CVS <ulink
+           url="http://www.mvnforum.com/mvnforumweb/docs/CVS.txt">here</ulink></para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry>
+      <question>
+        <para>What databases are currently supported?</para>
+      </question>
+      <answer>
+        <para>The goal is to support ALL major database vendors that supply JDBC drivers that support JDBC 2.0 standards </para>
+      </answer>
+      <answer>
+        <para>The following databases are supported and have been tested: MySQL 3.23.51, postgreSQL 7.3, Oracle 8i 8.1.7, Microsoft SQL Server 2000, and hsqldb 1.7.1</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry>
+      <question>
+        <para>What Application Servers are supported?</para>
+      </question>
+      <answer>
+        <para>mvnForum can be installed on any Servlet Container which supports Jsp 1.2 and Servlet 2.3.</para>
+      </answer>
+      <answer>
+        <para>mvnForum has been tested on the following Application Servers: Apache Tomcat 4.1.7, 4.1.10, 4.1.12, 4.1.18,
+         and Resin 2.1.4 </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry>
+       <question>
+         <para>What user authentication protocols are supported?</para>
+       </question>
+       <answer>
+         <para>mvnForum supports a realm authentication model, customized authentication model and the
+           typical user name/password authentication.</para>
+       </answer>
+       <answer>
+         <para>Here are some links on people's efforts to implement realm authentication in mvnForum
+           <itemizedlist>
+             <listitem><para><ulink url="http://www.mvnforum.com/mvnforum/viewthread?thread=629">LDAP</ulink></para></listitem>
+             <listitem><para><ulink url="http://www.mvnforum.com/mvnforum/viewthread?thread=560">Tomcat JDBC Realm</ulink></para></listitem>
+             <listitem><para><ulink url="http://www.mvnforum.com/mvnforum/viewthread?thread=429">WebLogic</ulink></para></listitem>
+             <listitem><para><ulink url="http://www.mvnforum.com/mvnforum/viewthread?thread=405">Websphere</ulink></para></listitem>
+           </itemizedlist>
+         </para>
+       </answer>
+     </qandaentry>
+
+ </qandadiv>
+
+  <qandadiv>
+    <title>Administration</title>
+
+    <qandaentry>
+      <question>
+        <para>How do I add a new Forum to a Category?</para>
+      </question>
+      <answer>
+        <para>Forum categories are top-level groups of forums.  An administrator can create categories, add and remove
+             forums from a category and remove categories.</para>
+        <para>To add a category, from the Administrator's control panel, access the Forum Management
+              page and click on the Add new Category link near the top of the page to load the
+              category creation screen.  A category simply has a name and a description.  Use a short enough
+              description to give forum users a concise understanding of the types of forums they will expect to find
+              in the category.</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry>
+      <question>
+        <para>Should I associate the Admin section of the forum with an easy to identify URL?</para>
+      </question>
+      <answer>
+        <para>It is up to you, but by default, we suggest not doing this so as to minimize users
+         attempts to access the administration site.</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry>
+      <question>
+        <para>Can I restrict certain users to specific Forums?</para>
+      </question>
+      <answer>
+        <para>That feature is not currently supported. See the <ulink
+           url="http://www.mvnforum.com/mvnforumweb/docs/TODO.txt">TODO</ulink> list for the
+          intended inclusion of this capability</para>
+      </answer>
+    </qandaentry>
+
+        <qandaentry>
+      <question>
+        <para>Can a forum be moderated?</para>
+      </question>
+      <answer>
+        <para>Yes, beginning with RC1, a moderator can moderate all the forums at a site.  The plan is
+        to all moderators to be given permission to moderate indiviual forums.</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry>
+      <question>
+        <para>What do I have to do to localize mvnForum?</para>
+      </question>
+      <answer>
+        <para>Support a new language in mvnForum is very easy, just translate the file
+         mvnForum_i18n.properties, then change the file name to
+         mvnForum_i18n_.properties. Update the build.xml to support your new
+         locale and/or change the file build.properties to make your new locale
+         as the default displayed language.</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry>
+      <question>
+        <para>How do I change the default displayed language in mvnForum?</para>
+      </question>
+      <answer>
+        <para>If you are building mvnForum, just change the file build.properties to the appropriate values.</para>
+      </answer>
+      <answer>
+        <para>If you want to change the default displayed language in the
+          binary distribution package, just copy all the files from the
+          subfolder of webapp\mvnplugin\mvnforum\user that contains
+          your preferred language to the webapp\mvnplugin\mvnforum\user.
+          For example, if you want to change the default language to
+          Vietnamese, just copy all files from folder webapp\mvnplugin\mvnforum\user\vi to
+          folder webapp\mvnplugin\mvnforum\user </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry>
+      <question>
+        <para>Does mvnForum support Internationalization (i18n)?</para>
+      </question>
+      <answer>
+        <para>Yes. mvnForum uses unicode in the backend, so it supports (in theory) ALL languages.</para>
+      </answer>
+    </qandaentry>
+  </qandadiv>
+
+    <qandadiv>
+    <title>User</title>
+
+    <qandaentry>
+      <question>
+        <para>Can I delete a post I made?</para>
+      </question>
+      <answer>
+        <para>You cannot delete your post unless you are a moderator. However, you can edit your
+        post in a limited amount of time (1 week). If you do want to
+        delete your post, please contact your forum moderators/administrators and tell them to delete it.</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry>
+      <question>
+        <para>Can I follow a thread?</para>
+      </question>
+      <answer>
+        <para>At RC1, you are able to follow progress on a thread by creating a Watch for the thread.</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry>
+      <question>
+        <para>What sort of files can I attach to a forum post?</para>
+      </question>
+      <answer>
+        <para>At RC1, you are able to attach files, image files are automaticaly displayed in the web post.</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry>
+      <question>
+        <para>What HTML tags are supported? How can I add new tags to the list of supported tags? </para>
+      </question>
+      <answer>
+        <para>For the list of supported tags, review the features <ulink
+           url="http://www.mvnforum.com/mvnforumweb/features.jsp">here</ulink></para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry>
+      <question>
+        <para>What do the icons to the left of each post in the recent thread and forum index pages indicate?</para>
+      </question>
+      <answer>
+        <para>I am sure glad you asked; the icons come in 4 colors and mean this
+           <itemizedlist>
+             <listitem><para>Blue - light - thread</para></listitem>
+             <listitem><para>Blue - dark  - thread with new posts added since your last login</para></listitem>
+             <listitem><para>Red  - light - a hot thread (has had many posts)</para></listitem>
+             <listitem><para>Red  - dark -  a hot thread (has had many posts) with new posts since your last visit</para></listitem>
+           </itemizedlist>
+         </para>
+      </answer>
+    </qandaentry>
+
+        <qandaentry>
+      <question>
+        <para>How does Who's Online work?</para>
+      </question>
+      <answer>
+        <para>mvnForum tracks users who are online in the OnlineUserManager class, implemented as
+          a TreeMap of logged in and anonymous users.</para>
+        <para>the net.myvietnam.mvnplugin.mvnforum.auth is responsible for managing user sessions which
+        includes removing them from the OnlineUserManager TreeMap when they have changed from anonymous
+        to authenticated (or vice-versa) or timed out their session.</para>
+        <para>source: <ulink url="http://www.mvnforum.com/mvnforum/viewthread?thread=613">mvnForum</ulink></para>
+      </answer>
+    </qandaentry>
+
+  </qandadiv>
+
+  <qandadiv>
+    <title>Development</title>
+
+    <qandaentry>
+      <question>
+        <para>Can i help with development?</para>
+      </question>
+      <answer>
+        <para>This is an open source project initiated by and managed by the talented developers
+          at <ulink url="http://www.myVietnam.net">MyVietnam.net</ulink>.  To inquire about opportunities
+          to help with development efforts, contact <email>minhnn_at_MyVietnam.net</email></para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry>
+      <question>
+        <para>How do I change the colors and fonts?</para>
+      </question>
+      <answer>
+        <para>The majority of the styles in mvnForum are defined by a single
+          point of entry for cascading style sheets. Copy the existing
+          style.css file and make the changes you want to.</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry>
+      <question>
+        <para>Can I incorporate the mvnForum site in my site?</para>
+      </question>
+      <answer>
+        <para>The easiest way to merge the mvnForum into your existing site is to modify the header.jsp to match your site template.</para>
+      </answer>
+      <answer>
+        <para>Examples of existing integrated forums are
+        <itemizedlist>
+         <listitem><para><ulink url="http://www.cgchannel.com/forum/">CG Channel</ulink></para></listitem>
+         <listitem><para><ulink url="http://www.desiest.com/boards/index">Desiest.com</ulink></para></listitem>
+         <listitem><para><ulink url="http://68.65.202.79:8080/brds/index/">Lupinex.com</ulink></para></listitem>
+        </itemizedlist>
+        </para>
+      </answer>
+    </qandaentry>
+   </qandadiv>
+
+  <qandadiv>
+    <title>Suggest new FAQs</title>
+
+    <qandaentry>
+      <question>
+        <para>How can i contribute a FAQ?</para>
+      </question>
+      <answer>
+        <para>If you have thought of a question that is not answered above, email the FAQ Keeper <email>cord_sw_at_lupinex.com
+           </email> or post a request at <ulink
+           url="http://www.mvnforum.com/mvnforum/listthreads?forum=18">mvnForum Development</ulink></para>
+      </answer>
+    </qandaentry>
+  </qandadiv>
+
+ </qandaset>
+
+</article>

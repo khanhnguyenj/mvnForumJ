@@ -1,0 +1,336 @@
+******************************************************************
+* $Id: INSTALL.txt,v 1.38 2009/03/30 11:16:51 minhnn Exp $
+******************************************************************
+
+//////////////////////////////////////////////////////////////////////////////////
+//      mvnForum 1.2 GA  -  $Date: 2009/03/30 11:16:51 $
+//////////////////////////////////////////////////////////////////////////////////
+
+
+INSTALLATION GUIDE
+---------------------------------------------------
+
+1. Overview
+---------------------------------------------------
+
+     PLEASE READ FILE README.TXT FOR INTRODUCTION AND MVNFORUM SOFTWARE LICENSE AGREEMENT BEFORE INSTALLATION
+
+     READ THIS FILE THOTHOUGHLY BEFORE INSTALLING. IT WILL SAVE YOU A LOT OF WASTED TIME.
+
+- Before continue, we highly recommend you visit http://www.mvnforum.com/mvnforumweb/download.jsp
+  for latest release
+
+- Read the 1.2 GA Release Note at http://www.mvnforum.com/mvnforum/viewthread_thread,4218
+
+- If you just want to test mvnForum, please download the mvnForum package that bundled with Tomcat.
+    with this bundle package, you just unzip and run
+    
+
+****************************************************************************************
+*  DO NOT CONTINUE IF YOU HAVE NOT VISITED 2 ABOVE LINKS, OR YOU COULD ENTER TROUBLES  *
+****************************************************************************************
+
+****************************************************************************************
+*  BEFORE CONTINUE, WE HIGHLY RECOMMEND YOU TO BACKUP YOUR DATA AND DATABASE FIRST     *
+****************************************************************************************
+
+
+NOTE: This installation guide is for the mvnForum 1.2 GA release
+
+Install mvnForum is quite easy, just follow the below steps:
+NOTE: This release supports 9 DBMS:
+    MySQL, Oracle 8i/9i, Sql Server, DB2, postgreSQL, hsqldb, Interbase/Firebird, SAPDB and Sybase
+    (If mvnForum doesn't support your database, you should be able to port it
+    to other databases easily by using file sql/mvnForum_JDBC.sql as a template)
+
+********************************************************************************
+*  NOTE: To upgrade from beta1, beta2 ,beta3, rc1, rc2, rc3 or rc4, 1.0 GA, 1.1 GA release, READ THIS SECTION CAREFULLY
+*
+*  1. Backup your database first.
+*
+*  2. Run the update sql script, please look at mvnforum\sql\upgrade,
+*     if you upgrade from mvnForum Opensource to mvnForum Enterprise, you will 
+*     need to run 2 more sql script at myvietnam_enterprise\sql and mvnforum_enterprise\sql
+*
+*  3. Backup your mvnForumHome folder, which contains a lot of important data
+*
+*  4. Backup your users' avatars in your App Server in this
+*     folder: mvnplugin\mvnforum\upload\memberavatars
+*     (The above folder is relative to the webapp dir of your App Server)
+      (NOTE: this step is only for RC3 and before)
+*
+*  5. Back up all your config (.properties and/or .xml files) in your App Server in this
+*     folder: WEB-INF\classes (Backup this is for reference only)
+*     (The above folder is relative to the webapp dir of your App Server)
+*
+*  6. Back up your current servlet context folder. Then delete your current
+*     servlet context of mvnForum before continuing the setup
+*
+*  7. In step 3 below, you MUST re-config your new mvncore.xml and mvnforum.xml files
+*     (Note: The properties files has been changed to xml files since previous release, so you cannot reuse
+*     the properties files in the beta1/beta2/beta3/rc1/rc2/rc3, rc4, 1.0 GA release)
+*     Config the file log4j.properties for your logging (we highly recommend
+*     you config you log file to the log folder in mvnForumHome)
+*
+*  8. After setting up successfully, restore the avartars that you
+*     have backuped above.
+*     NOTE: that begin with RC4, the avatar folder is
+*           moved to folder mvnForumHome/memberavatars
+*
+*  9. Run and test if mvnForum can run properly, and confirm the mvnForumHome
+*     has been configured properly
+*
+*  10. Delete all the index in folder mvnForumHome/search. Rebuild the Lucene index
+*     for your forum before user can search on your forum:
+*     Admin Index -> Miscellaneous Tasks -> Rebuild Lucene Search Index
+*     NOTE: the post index has been changed from mvnForumHome/search
+*           to mvnForumHome/search/post since RC4. If you are using RC4,
+            you dont have to rebuild the index file.
+*
+*  If you have problem with the upgrade, just post message to
+*  the box Installation and Upgrade at http://www.mvnForum.com
+********************************************************************************
+
+
+2. System requirements
+---------------------------------------------------
+- Any App Server SUPPORTS Jsp 1.2 and Servlet 2.3 (mvnForum WILL NOT
+    run on Jsp 1.1/Servlet 2.2 Container such as Tomcat 3/ JRun 3)
+  NOTE: mvnForum CANNOT run on Orion App Server because Orion does not
+        fully support Jsp 1.2 and Servlet 2.3
+
+- JDK 1.4 or later (Note that release 1.0 GA is the last release that support JDK 1.3)
+
+- One of supported databases with a JDBC 2.0 compliant driver
+  (this release includes 4 drivers: Connector/J, JTDS, postgreSQL and hsqldb)
+
+
+3. Application Server Setup
+---------------------------------------------------
+NOTE: If you use JRun 4, JBoss and have problem with log4j, please remove log4j.jar from WEB-INF/lib
+
+NOTE: If you use JRun 4 or Tomcat 5.x and have problem with log4j,
+      please read logging configuration guide in the file WEB-INF/classes/commons-logging.properties
+
+NOTE: If you use old version of Resin and you have error with the xml parser,
+      you should delete file web.xml, and rename web.xml.resin to web.xml
+      (Only need if you have problem with XML parser)
+
+NOTE: If you use Resin, make sure you DELETE these 4 files in mvnForum package:
+      (Not sure why Resin does not conform to Servlet standard)
+      WEB-INF/lib/jstl.jar
+      WEB-INF/lib/standard.jar
+      WEB-INF/fmt.tld
+      WEB-INF/fmt-rt.tld
+
+NOTE: Your App Server SHOULD NOT be installed in a folder whose path name contains
+      the space character. For example, "C:\Program Files" contains a space character
+      and that can pose problems.
+
+- Unzip the distribution zip file into a folder
+
+- Create a context in your app server. In Tomcat, just create a dir
+  (for example : mvnforum) in the tomcat/webapps. This dir (context)
+  MUST be in lower case (such as mvnforum). Note that in some
+  app server such as Web Logic, you MUST deploy the context, just create
+  a context dir will not work.
+
+  NOTE: If you already have a context, you can install mvnForum to your existed
+        context, please note that folder WEB-INF must be the direct sub folder
+        of your context. Then just merge the web.xml and mvnForum
+        will run happily with your current app in the same context
+
+- Create a home folder for mvnForum, which MUST NOT be accessible from
+  the web (This folder could be in your WEB-INF folder, such as WEB-INF/mvnForumHome)
+  This mvnForumHome folder IS VERY IMPORTANT, it is used to store the uploaded
+  attachment, uploaded avatar, uploaded PM's attachment and the Lucene search index.
+  mvnForum WILL NOT run if you did not configure it properly
+  NOTE: if you do not use the default WEB-INF/mvnForumHome, then copy the content
+        of folder WEB-INF/mvnForumHome to your new folder mvnForumHome. The reason
+        is some default files such as email template are needed
+
+- In the extracted folder, find the dir webapp/WEB-INF/classes,
+  there are 2 xml files here (mvncore.xml and mvnforum.xml), open them in a text editor 
+  and change the config parameters to appropriate values (the short guide in these files
+  will help you config). You can also find the file log4j.properties,
+  this file is for logging, so open and edit it to a proper value on your system.
+  NOTE: Set database parameters to the correct values in the step 4 below
+        The information for database configuration is in the comment header
+        of the sql script. Ex: if you use MySql, please read the configuration
+        parameter guide in sql/mvnForum_mysql.sql
+  NOTE: Currently since RC4, you SHOULD restart your App Server if you make changes
+        to properties or xml files (although you can reload the configuration
+        in the Admin zone, not all parameters can be reloaded)
+
+- Copy the content of webapp dir in the extracted folder to the context dir
+  that you have created above.
+
+  NOTE: Open and see picture at mvnforum\docs\images\webapp_structure.gif
+
+        IMPORTANT: Please confirm you have correct directory structure
+        as in the picture, if not, mvnForum will NOT run.
+
+- If you dont need some language support, remove that locale in
+      option <supported_locales> in file mvnforum.xml.
+
+- You could change the default language with parameter <default_locale_name> in mvnforum.xml
+
+- NOTE: since RC4, the localization is implemented by JSTL, so there are not
+        many folders for each language as in RC3 and before.
+
+- NOTE: On Oracle AS 10g:
+        By default, The Oc4j library is loaded first then the local library load later
+        That makes mvnforum does not work properly.. To work properly, 
+        you should copy (you can find it in the OC4J_HOME/j2ee/home/application-deployments/default/your-app folder) 
+        or create a file naming "orion-web.xml" into the "WEB-INF" folder
+        
+        web-orion.xml: remember the attribute: search-local-classes-first="true"
+
+<?xml version="1.0"?>
+<!DOCTYPE orion-web-app PUBLIC "-//ORACLE//DTD OC4J Web Application 9.04//EN" "http://xmlns.oracle.com/ias/dtds/orion-web-9_04.dtd">
+
+<orion-web-app
+    deployment-version="10.1.2.0.0"
+    jsp-cache-directory="./persistence"
+    jsp-cache-tlds="on"
+    temporary-directory="./temp">
+    <web-app-class-loader search-local-classes-first="true" include-war-manifest-class-path="true" />
+    <security-role-mapping name="tomcat">
+    </security-role-mapping>
+</orion-web-app>
+
+4. Database Setup
+---------------------------------------------------
+NOTE: If you upgrade from beta1/beta2/beta3/rc1,rc2,rc3,rc4,1.0 GA you have to upgrade your database schema.
+      Run the upgrade sql script at mvnforum\sql\upgrade.
+
+NOTE: Before running the script, we highly recommend that you back up all your data.
+
+NOTE: There are notes/guides/database configuration for specific database in the header of specific
+      sql script file (sql/mvnForum_<database>.sql). You are highly recommended
+      to read all the notes carefully, because it may help you avoid wasted time and
+      possible database-specific problems
+
+NOTE: If you use MySql 4.1.x or 5.0.x, please see help at
+      http://dev.mysql.com/doc/refman/5.0/en/connector-j-installing-upgrading.html
+
+The below database setup is for NEW INSTALLATION ONLY:
+
+- In the extracted folder, find the file sql/mvnForum_<database>.sql
+  (<database> is the database you would like to setup)
+
+- Create a database and confirm the correct database params that have been set
+  in the step 3 above
+
+- Run the sql script. Please see your database document for detail on how to run a sql script
+
+- Copy the JDBC driver for your database to the WEB-INF/lib folder of your context
+  in step 3 above. (Note that this release includes 4 drivers for MySQL, Sql Server, postgreSQL and hsqldb)
+
+NOTE: mvnForum includes an embeded database for hsqldb in folder sql/hsqldb, so you can
+      copy this folder (hsqldb) to your mvnForumHome and config the file
+      mvncore.xml (that is, just copy and dont need to run the hsqldb script).
+      This is the fastest way to use mvnForum.
+      Read the short guide in /sql/mvnForum_hsqldb.sql for detailed hsqldb configuration guide.
+      
+
+5. Setup Admin tool
+---------------------------------------------------
+There are 2 links by default:
+If you install in a context other than ROOT context, the url looks like this:
+http://www.[yourserver].com/[yourcontext]/mvnforum/index : home for mvnForum
+http://www.[yourserver].com/[yourcontext]/mvnforumadmin/index : Admin Zone
+
+If you install in the ROOT context, the url look likes this:
+http://www.[yourserver].com/mvnforum/index : home for mvnForum
+http://www.[yourserver].com/mvnforumadmin/index : Admin Zone
+
+- Go to the Admin Zone and enter username = admin and password = admin
+
+- If Login successfully, click a Test System Configuration to check the config
+  (If you deploy on a Linux/Unix box, Image Processing might not been supported)
+
+- The index page you see when you login also give you other info, including
+  database and system info
+
+- Change the password and edit your profile by clicking Forum Index -> MyProfile
+
+- Click Forum Management to create categories/forums for your community
+
+- You can create new users and set permissions for these new users
+
+- Please spend time to read the mvnForum's documentation and FAQ
+  at  http://www.[yourserver].com/[yourcontext]/mvnforum/help
+  or access the latest version at:
+  http://www.mvnforum.com/mvnforum/help (you are highly recommended to read this Help link)
+
+Congratulation, you have installed mvnForum successfully. Start creating your
+own community today and enjoy a cup of coffee :-)
+
+
+=======================================================================
+ NOTE: if you cannot setup mvnForum, please follow these steps:
+
+ - Make sure you meet the system requirements
+
+ - Make sure you have read this installation guide carefully
+   (BELIEVE ME: 99% of your installation problem could be solved by read this file carefully)
+
+ - Make sure you setup from the bin distribution package,
+   not the source distribution package. If you have the source package,
+   please see file BUILD.txt
+
+ - Make sure you have read the short database guide in
+   sql/mvnForum_<database>.sql carefully
+
+ - Make sure you have looked at the stacktrace in your console and log file
+
+ - If you get this error :
+
+   Error executing SQL in MVNForumPermissionWebHelper.getPermissionsForGroupGuest.
+
+   It means you have not configured your database properly. BEFORE print this error stacktrace
+   mvnForum also print other stacktrace that tell the EXACT DATABASE PROBLEM CAUSE.
+   Please look for this stacktrace, it begin with:
+
+   Can't create a new connection in DBConnectionPool. URL = ....
+
+   You can config the log4j.properties to log all messages to file and use
+   this file to find your database problem
+
+ - Make sure you have read the online docs and FAQ at:
+   http://www.mvnforum.com/mvnforum/help
+
+ - Make sure you did make some search in the online www.mvnForum.com, someone might
+   have the same problem as you.
+
+ - If you still cannot setup mvnForum, please prepare the following information
+   before posting to the online mvnForum.com for help:
+   * Your mvnForum version (such as rc4)
+   * Your mvnForum is official release or you get from CVS
+     (in this case, please give the date when you check CVS)
+   * Your OS version (Such as Windows 2000 service pack 2)
+   * Your App Server version (Such as Tomcat 4.1.24)
+   * Your Database version (Such as Mysql 3.23.51)
+   * Your JDBC driver version (Such as mysql-connector-java-3.0.8-stable-bin.jar)
+   * Your mvnForum .properties and .xml files content
+   * Your browser version
+   * Any stacktrace that you found in log file and console
+   * Any other information that you think useful to solve the problem
+=======================================================================
+
+
+Please help us by participating in mvnForum http://www.mvnForum.com/mvnforum/index,
+give us your feedback and comments, features discussion and bugs report. With your
+help we could develop mvnForum better and better each day.
+
+If you find that this installation guide is unclear or need more explanation,
+please do not hesitate to email me with comments and suggestions.
+
+Thanks and enjoy,
+
+Minh Nguyen
+minhnn at MyVietnam d0t net
+
+
+

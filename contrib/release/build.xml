@@ -1,0 +1,1465 @@
+<!--
+  $Id: build.xml,v 1.48 2010/08/20 04:55:31 minhnn Exp $
+
+  This build script is for release the source, binary and bundle of mvnForum, mvnAd, mvnPublish
+-->
+<project name="release" basedir=".">
+    <!-- ===================== Property Definitions =========================== -->
+    <property file="build.properties" />
+
+    <!-- ==================== File and Directory Names ======================== -->
+    <property name="myvietnam.home"             value="${source.home}/myvietnam" />
+    <property name="myvietnam_enterprise.home"  value="${source.home}/myvietnam_enterprise" />
+    <property name="mvnforum.home"              value="${source.home}/mvnforum" />
+    <property name="mvnforum_enterprise.home"   value="${source.home}/mvnforum_enterprise" />
+    <property name="mvnforum-portlet.home"      value="${source.home}/portlet-mvnforum" />
+    <property name="mvnad.home"                 value="${source.home}/mvnad" />
+    <property name="mvnad_enterprise.home"      value="${source.home}/mvnad_enterprise" />
+    <property name="mvnad-portlet.home"         value="${source.home}/mvnad-portlet" />
+    <property name="mvncms.home"                value="${source.home}/mvncms" />
+    <property name="mvncms-portlet.home"        value="${source.home}/mvncms-portlet" />
+    
+    <property name="mvncore-portal.home"        value="${source.home}/mvncore-portal" />
+    <property name="mvncore-portlet.home"       value="${source.home}/mvncore-portlet" />
+    <property name="mvncore-user-portlet.home"  value="${source.home}/mvncore-user-portlet" />
+    <property name="pluto_1_1-for-tomcat5.home" value="${source.home}/pluto_1_1-for-tomcat5" />
+    <property name="pluto_2_0-for-tomcat5.home" value="${source.home}/pluto_2_0-for-tomcat5" />
+
+    <property name="docs_for_builds.home"       value="${mvnforum.home}/docs/docs_for_builds" />
+    <property name="mvn_profile_filename"       value="${docs_for_builds.home}/MVN_Profile_standard_20081002.pdf" />
+    <property name="hsqldb.home"                value="${mvnforum.home}/sql/hsqldb" />
+    <property name="driver.home"                value="${mvnforum.home}/driver" />
+    
+    <property name="mvnforum-mvnad.src.foldername"                       value="mvnforum-${mvnforum.version}-mvnad-${mvnad.version}-src-${date_release}" />
+    <property name="mvnforum-mvnad.bin.foldername"                       value="mvnforum-${mvnforum.version}-mvnad-${mvnad.version}-bin-${date_release}" />
+    <property name="mvnforum_enterprise.src.foldername"                  value="mvnforum_enterprise-${mvnforum_enterprise.version}-src-${date_release}" />
+    <property name="mvnforum_enterprise.bin.foldername"                  value="mvnforum_enterprise-${mvnforum_enterprise.version}-bin-${date_release}" />
+    <property name="mvnforum_enterprise-mvnad_enterprise.src.foldername" value="mvnforum_enterprise-${mvnforum_enterprise.version}-mvnad_enterprise-${mvnad_enterprise.version}-src-${date_release}" />
+    <property name="mvnforum-mvnad.bundle.foldername"                    value="mvnforum-${mvnforum.version}-mvnad-${mvnad.version}-jakarta-tomcat-${tomcat.version}-${date_release}" />
+    <property name="mvn_collab.bundle.foldername"                        value="mvn_collaboration_suite-${mvn_collab.version}-jakarta-tomcat-${tomcat.version}-${date_release}" />
+    <property name="mvncms.src.foldername"                               value="mvnpublish-${mvncms.version}-src-${date_release}" />
+    <property name="mvnforum_portlet.src.foldername"                     value="mvnforum_portlet-${mvnforum_portlet.version}-src-${date_release}" />
+    <property name="mvnad_portlet.src.foldername"                        value="mvnad_portlet-${mvnad_portlet.version}-src-${date_release}" />
+
+    <property name="mvnforum-mvnad.src.build"                       value="${build.home}/${mvnforum-mvnad.src.foldername}" />
+    <property name="mvnforum-mvnad.bin.build"                       value="${build.home}/${mvnforum-mvnad.bin.foldername}" />
+    <property name="mvnforum_enterprise.src.build"                  value="${build.home}/${mvnforum_enterprise.src.foldername}" />
+    <property name="mvnforum_enterprise.bin.build"                  value="${build.home}/${mvnforum_enterprise.bin.foldername}" />
+    <property name="mvnforum_enterprise-mvnad_enterprise.src.build" value="${build.home}/${mvnforum_enterprise-mvnad_enterprise.src.foldername}" />
+    <property name="mvnforum-mvnad.bundle.build"                    value="${build.home}/${mvnforum-mvnad.bundle.foldername}" />
+    <property name="mvn_collab.bundle.build"                        value="${build.home}/${mvn_collab.bundle.foldername}" />
+    <property name="mvncms.src.build"                               value="${build.home}/${mvncms.src.foldername}" />
+    <property name="mvncms.src.datanium" value="${build.home}/datanium-${mvncms.version}-src-${date_release}" />
+    <property name="mvncms.src.vnbc" value="${build.home}/vnbc-${mvncms.version}-src-${date_release}" />
+    <property name="mvnforum_portlet.src.build"                     value="${build.home}/${mvnforum_portlet.src.foldername}" />
+    <property name="mvnad_portlet.src.build"                        value="${build.home}/${mvnad_portlet.src.foldername}" />
+
+    <property name="mvnforum-mvnad-temp.bin.build"      value="${build.home}/build-temp-mvnforum-with-mvnad-bin" />
+    <property name="mvnforum_enterprise-temp.bin.build" value="${build.home}/build-temp-mvnforum_enterprise" />
+    <property name="mvncms-temp.bin.build"              value="${build.home}/build-temp-mvncms" />
+    <property name="mvncms_portlet-temp.bin.build"      value="${build.home}/build-temp-mvncms-portlet" />
+    <property name="check-jspc-temp.bin.build"          value="${build.home}/build-temp-check-jspc" />
+    
+    <!-- ==================== Clean Target ==================================== -->
+    <target name="clean" description="delete old build directories">
+        <delete dir="${build.home}" />
+    </target>
+    
+    <!-- ==================== Clean All Target ================================ -->
+    <target name="clean-all" depends="clean" description="delete source and build directories">
+        <delete dir="${source.home}" />
+    </target>
+    
+    <!-- ==================== Prepair Target ================================== -->
+    <!-- create some directories -->
+    <target name="prepare" description="prepare folder and copy source from checkout to folder source">
+        <mkdir dir="${source.home}" />
+        <mkdir dir="${build.home}" />
+        <mkdir dir="${release.home}" />
+
+        <copy todir="${source.home}/myvietnam">
+            <fileset dir="${checkout.home}/myvietnam" />
+        </copy>
+        <copy todir="${source.home}/mvnforum">
+            <fileset dir="${checkout.home}/mvnforum" excludes="**/docs_for_builds/*.pdf" />
+        </copy>
+        <copy todir="${source.home}/myvietnam_enterprise">
+            <fileset dir="${checkout.home}/myvietnam_enterprise" />
+        </copy>
+        <copy todir="${source.home}/mvnforum_enterprise">
+            <fileset dir="${checkout.home}/mvnforum_enterprise" excludes="internal_docs/**" />
+        </copy>
+        <copy todir="${source.home}/mvnad">
+            <fileset dir="${checkout.home}/mvnad" />
+        </copy>
+        <copy todir="${source.home}/mvnad_enterprise">
+            <fileset dir="${checkout.home}/mvnad_enterprise" />
+        </copy>
+    </target>
+    
+    <target name="prepare-portlet" depends="prepare" description="prepare folder source for portlet">
+        <copy todir="${source.home}/mvncore-portlet">
+            <fileset dir="${checkout.home}/mvncore-portlet" />
+        </copy>
+        <copy todir="${source.home}/mvncore-portal">
+            <fileset dir="${checkout.home}/mvncore-portal" />
+        </copy>
+        <copy todir="${source.home}/mvncore-user-portlet">
+            <fileset dir="${checkout.home}/mvncore-user-portlet" />
+        </copy>
+        <copy todir="${source.home}/pluto_1_1-for-tomcat5">
+            <fileset dir="${checkout.home}/pluto_1_1-for-tomcat5" />
+        </copy>
+        <copy todir="${source.home}/pluto_2_0-for-tomcat5">
+            <fileset dir="${checkout.home}/pluto_2_0-for-tomcat5" />
+        </copy>
+    </target>
+    
+    <target name="prepare-mvnforum-portlet" depends="prepare-portlet" description="prepare folder source for mvnForum portlet">
+        <copy todir="${source.home}/portlet-mvnforum">
+            <fileset dir="${checkout.home}/portlet-mvnforum" />
+        </copy>
+    </target>
+    
+    <target name="prepare-mvnad-portlet" depends="prepare-portlet" description="prepare folder source for mvnAd portlet">
+        <copy todir="${source.home}/mvnad-portlet">
+            <fileset dir="${checkout.home}/mvnad-portlet" />
+        </copy>
+    </target>
+    
+    <target name="prepare-mvncms" depends="prepare" description="Prepare folder source for mvnPublish">
+        <copy todir="${source.home}/mvncms">
+            <fileset dir="${checkout.home}/mvncms" 
+                excludes="contrib/tram/**, 
+                          srcweb/mvnplugin/mvncms/cds/standard/**, 
+                          properties/cnms_config_content.xml, 
+                          properties/web-handlers@cnms.xml, 
+                          properties/web-handlers@tincntt.xml, 
+                          properties/web-handlers@vms.xml" />
+        </copy>
+        <copy todir="${source.home}/mvncms/srcweb/mvnplugin/mvncms/cds/standard/template1">
+            <fileset dir="${checkout.home}/mvncms/srcweb/mvnplugin/mvncms/cds/standard/template1" />
+        </copy>
+        <copy todir="${source.home}/mvncms/srcweb/mvnplugin/mvncms/cds/standard/jvn2">
+            <fileset dir="${checkout.home}/mvncms/srcweb/mvnplugin/mvncms/cds/standard/jvn2" />
+        </copy>
+        <copy todir="${source.home}/mvncms/srcweb/mvnplugin/mvncms/cds/standard/khxhnv">
+            <fileset dir="${checkout.home}/mvncms/srcweb/mvnplugin/mvncms/cds/standard/khxhnv" />
+        </copy>
+    </target>
+    
+    <target name="prepare-mvncms-portlet" depends="prepare-mvncms, prepare-portlet" description="Prepare folder source for mvnPublish portlet">
+        <copy todir="${source.home}/mvncms-portlet">
+            <fileset dir="${checkout.home}/mvncms-portlet" />
+        </copy>
+    </target>
+    
+    <!-- ============= Release mvnForum and mvnAd Source Target =============== -->
+    <target name="release-mvnforum-mvnad-src" depends="prepare" description="Release mvnForum and mvnAd source package">
+        <echo>Release mvnForum and mvnAd source package</echo>
+        
+        <!-- Create build directories as needed -->
+        <mkdir dir="${mvnforum-mvnad.src.build}" />
+        
+        <!-- Copy static content -->
+        <copy todir="${mvnforum-mvnad.src.build}/myvietnam">
+            <fileset dir="${myvietnam.home}" />
+        </copy>
+        <copy todir="${mvnforum-mvnad.src.build}/mvnforum">
+            <fileset dir="${mvnforum.home}" />
+        </copy>
+        <copy todir="${mvnforum-mvnad.src.build}/mvnad">
+            <fileset dir="${mvnad.home}" />
+        </copy>
+        
+        <!-- Copy docs files -->
+        <copy todir="${mvnforum-mvnad.src.build}" file="${mvn_profile_filename}" />
+        <copy todir="${mvnforum-mvnad.src.build}" file="${docs_for_builds.home}/mvnforum_mvnad_src/README.txt" />
+
+        <!-- Create application JAR file, but first delete it to make sure creating a fresh file -->
+        <delete file="${release.home}/${mvnforum-mvnad.src.foldername}.zip" />
+        <zip update="true" destfile="${release.home}/${mvnforum-mvnad.src.foldername}.zip">
+            <zipfileset dir="${mvnforum-mvnad.src.build}" prefix="${mvnforum-mvnad.src.foldername}" />
+        </zip>
+    </target>
+    
+    <!-- =========== Release mvnForum Enterprise Source Target ================ -->
+    <target name="release-mvnforum_enterprise-src" depends="prepare" description="Release mvnForum Enterprise source package">
+        <echo>Release mvnForum Enterprise source package</echo>
+        
+        <!-- Create build directories as needed -->
+        <mkdir dir="${mvnforum_enterprise.src.build}" />
+        
+        <!-- Copy static content -->
+        <copy todir="${mvnforum_enterprise.src.build}/myvietnam">
+            <fileset dir="${myvietnam.home}" />
+        </copy>
+        <copy todir="${mvnforum_enterprise.src.build}/mvnforum">
+            <fileset dir="${mvnforum.home}" />
+        </copy>
+        <copy todir="${mvnforum_enterprise.src.build}/myvietnam_enterprise">
+            <fileset dir="${myvietnam_enterprise.home}" />
+        </copy>
+        <copy todir="${mvnforum_enterprise.src.build}/mvnforum_enterprise">
+            <fileset dir="${mvnforum_enterprise.home}" />
+        </copy>
+        
+        <!-- Copy docs files -->
+        <copy todir="${mvnforum_enterprise.src.build}" file="${mvn_profile_filename}" />
+        
+        <!-- Create application JAR file, but first delete it to make sure creating a fresh file -->
+        <delete file="${release.home}/${mvnforum_enterprise.src.foldername}.zip" />
+        <zip update="true" destfile="${release.home}/${mvnforum_enterprise.src.foldername}.zip">
+            <zipfileset dir="${mvnforum_enterprise.src.build}" prefix="${mvnforum_enterprise.src.foldername}" />
+        </zip>
+    </target>
+    
+    <!-- ====== Release mvnForum Enterprise and mvnAd Enterprise Source Target ====== -->
+    <target name="release-mvnforum_enterprise-mvnad_enterprise-src" depends="prepare" 
+            description="Release mvnForum Enterprise and mvnAd Enterprise source package">
+        
+        <echo>Release mvnForum Enterprise and mvnAd Enterprise source package</echo>
+         
+        <!-- Create build directories as needed -->
+        <mkdir dir="${mvnforum_enterprise-mvnad_enterprise.src.build}" />
+        
+        <!-- Copy static content -->
+        <copy todir="${mvnforum_enterprise-mvnad_enterprise.src.build}/myvietnam">
+            <fileset dir="${myvietnam.home}" />
+        </copy>
+        <copy todir="${mvnforum_enterprise-mvnad_enterprise.src.build}/mvnforum">
+            <fileset dir="${mvnforum.home}" />
+        </copy>
+        <copy todir="${mvnforum_enterprise-mvnad_enterprise.src.build}/myvietnam_enterprise">
+            <fileset dir="${myvietnam_enterprise.home}" />
+        </copy>
+        <copy todir="${mvnforum_enterprise-mvnad_enterprise.src.build}/mvnforum_enterprise">
+            <fileset dir="${mvnforum_enterprise.home}" />
+        </copy>
+        <copy todir="${mvnforum_enterprise-mvnad_enterprise.src.build}/mvnad">
+            <fileset dir="${mvnad.home}" />
+        </copy>
+        <copy todir="${mvnforum_enterprise-mvnad_enterprise.src.build}/mvnad_enterprise">
+            <fileset dir="${mvnad_enterprise.home}" />
+        </copy>
+        
+        <!-- Copy docs files -->
+        <copy todir="${mvnforum_enterprise-mvnad_enterprise.src.build}" file="${mvn_profile_filename}" />
+        
+        <!-- Create application JAR file, but first delete it to make sure creating a fresh file -->
+        <delete file="${release.home}/${mvnforum_enterprise-mvnad_enterprise.src.foldername}.zip" />
+        <zip update="true" destfile="${release.home}/${mvnforum_enterprise-mvnad_enterprise.src.foldername}.zip">
+            <zipfileset dir="${mvnforum_enterprise-mvnad_enterprise.src.build}" prefix="${mvnforum_enterprise-mvnad_enterprise.src.foldername}" />
+        </zip>
+    </target>
+    
+    <!-- ====== Release mvnPublish Source Target ====== -->
+    
+    <target name="release-mvncms-src" depends="prepare-mvncms" description="Release mvnPublish source package">
+        <echo>Release mvnPublish source package</echo>
+        <!-- Create build directories as needed -->
+        <mkdir dir="${mvncms.src.build}" />
+        <!-- Copy static content -->
+        <copy todir="${mvncms.src.build}/myvietnam">
+            <fileset dir="${myvietnam.home}" />
+        </copy>
+        <copy todir="${mvncms.src.build}/mvnforum">
+            <fileset dir="${mvnforum.home}" />
+        </copy>
+        <copy todir="${mvncms.src.build}/myvietnam_enterprise">
+            <fileset dir="${myvietnam_enterprise.home}" />
+        </copy>
+        <copy todir="${mvncms.src.build}/mvnforum_enterprise">
+            <fileset dir="${mvnforum_enterprise.home}" />
+        </copy>
+        <copy todir="${mvncms.src.build}/mvnad">
+            <fileset dir="${mvnad.home}" />
+        </copy>
+        <copy todir="${mvncms.src.build}/mvnad_enterprise">
+            <fileset dir="${mvnad_enterprise.home}" />
+        </copy>
+        <copy todir="${mvncms.src.build}/mvncms">
+            <fileset dir="${mvncms.home}" />
+        </copy>
+        <!-- Copy docs files -->
+        <copy todir="${mvncms.src.build}" file="${mvn_profile_filename}" />
+        <!-- Create application JAR file, but first delete it to make sure creating a fresh file -->
+        <delete file="${release.home}/${mvncms.src.foldername}.zip" />
+        <zip update="true" destfile="${release.home}/${mvncms.src.foldername}.zip">
+            <zipfileset dir="${mvncms.src.build}" prefix="${mvncms.src.foldername}" />
+        </zip>
+    </target>
+    <!-- ============== realease datanium ============= -->
+    <target name="prepare-mvncms-datanium" depends="prepare" description="Prepare folder source for mvnPublish">
+        <copy todir="${source.home}/mvncms">
+            <fileset dir="${checkout.home}/mvncms" 
+                excludes="contrib/tram/**, 
+                          srcweb/mvnplugin/mvncms/cds/standard/**, 
+                          properties/cnms_config_content.xml" />
+        </copy>
+        <copy todir="${source.home}/mvncms/srcweb/mvnplugin/mvncms/cds/standard/datanium">
+            <fileset dir="${checkout.home}/mvncms/srcweb/mvnplugin/mvncms/cds/standard/datanium" />
+        </copy>
+    </target>
+    <target name="release-mvncms-datanium-src" depends="prepare-mvncms-datanium" description="Release mvnPublish source package">
+        <echo>Release mvnPublish source package</echo>
+        <!-- Create build directories as needed -->
+        <mkdir dir="${mvncms.src.build}" />
+        <!-- Copy static content -->
+        <copy todir="${mvncms.src.build}/myvietnam">
+            <fileset dir="${myvietnam.home}" />
+        </copy>
+        <copy todir="${mvncms.src.build}/mvnforum">
+            <fileset dir="${mvnforum.home}" />
+        </copy>
+        <copy todir="${mvncms.src.build}/myvietnam_enterprise">
+            <fileset dir="${myvietnam_enterprise.home}" />
+        </copy>
+        <copy todir="${mvncms.src.build}/mvnforum_enterprise">
+            <fileset dir="${mvnforum_enterprise.home}" />
+        </copy>
+        <copy todir="${mvncms.src.build}/mvnad">
+            <fileset dir="${mvnad.home}" />
+        </copy>
+        <copy todir="${mvncms.src.build}/mvnad_enterprise">
+            <fileset dir="${mvnad_enterprise.home}" />
+        </copy>
+        <copy todir="${mvncms.src.build}/mvncms">
+            <fileset dir="${mvncms.home}" />
+        </copy>
+        <!-- Copy docs files -->
+        <copy todir="${mvncms.src.build}" file="${mvn_profile_filename}" />        
+    </target>
+    
+    <target name="release-datanium-src" depends="release-mvncms-datanium-src" description="Release mvncms-datanium source package">
+        <echo>Release datanium source package</echo>
+        <mkdir dir="${mvncms.src.datanium}" />
+        <copy todir="${mvncms.src.datanium}">
+            <fileset dir="${mvncms.src.build}" 
+                excludes="*.war, 
+                          test.jsp, 
+                          index_mvnforum.jsp,
+                          mvncms/properties/cnms_config_content.xml,
+                          mvncms/properties/config_cms_jvn.xml,
+                          mvncms/properties/config_cms_khaidong.xml,
+                          mvncms/properties/config_cms_tincntt.xml,
+                          mvncms/properties/config_home_khxhnv.xml,
+                          mvncms/properties/web-handlers@cnms.xml,
+                          mvncms/properties/web-handlers@default.xml,
+                          mvncms/properties/web-handlers@jvn2.xml,
+                          mvncms/properties/web-handlers@khaidong.xml,
+                          mvncms/properties/web-handlers@khxhnv.xml,
+                          mvncms/properties/web-handlers@template1.xml,
+                          mvncms/properties/web-handlers@tincntt.xml,
+                          mvncms/properties/web-handlers@vms.xml,
+                          mvncms/properties/web-handlers@vnbc_vi.xml,
+                          mvncms/i18n/mvncms/cds/standard/khaidong/**,
+                          mvncms/i18n/mvncms/cds/standard/template1/**,
+                          mvncms/i18n/mvncms/cds/standard/tincntt/**,
+                          mvncms/src/com/mvnsoft/mvncms/cds/standard/configlayout/**,
+                          mvncms/src/com/mvnsoft/mvncms/cds/standard/handler/impl/cnms/**,
+                          mvncms/src/com/mvnsoft/mvncms/cds/standard/handler/impl/vnbc/**,
+                          mvncms/src/com/mvnsoft/mvncms/cds/standard/handler/impl/jvn/**,
+                          mvncms/src/com/mvnsoft/mvncms/cds/standard/handler/impl/tincntt/**,
+                          mvncms/src/com/mvnsoft/mvncms/cds/standard/handler/impl/khaidong/**,
+                          mvncms/src/com/mvnsoft/mvncms/cds/standard/handler/impl/khxhnv/**,
+                          myvietnam/src/net/myvietnam/mvncore/servlet/HelloWorldServlet.java,
+                          mvncms/i18n/mvncms/cds/standard/vnbc_vi/**"
+            />
+        </copy>
+        <replace file="${mvncms.src.datanium}/mvncms/srcweb/WEB-INF/web.xml">
+            <replacetoken><![CDATA[<!-- Place holder for servlet for template7 -->]]></replacetoken>
+            <replacevalue><![CDATA[<servlet>
+                <servlet-name>MVNCDSServlet1</servlet-name>
+                <servlet-class>com.mvnsoft.mvncms.cds.standard.CDSServlet1</servlet-class>
+                <init-param>
+                    <param-name>template</param-name>
+                    <param-value>datanium</param-value>
+                </init-param>
+                <init-param>
+                    <param-name>root_channel_id</param-name>
+                    <param-value>2</param-value>
+                </init-param>
+                <init-param>
+                    <param-name>language</param-name>
+                    <param-value>en</param-value>
+                </init-param>
+                <init-param>
+                    <param-name>url_pattern</param-name>
+                    <param-value>/en</param-value>
+                </init-param>
+                <load-on-startup>0</load-on-startup>
+            </servlet>            
+            <servlet>
+                <servlet-name>MVNCDSServlet2</servlet-name>
+                <servlet-class>com.mvnsoft.mvncms.cds.standard.CDSServlet2</servlet-class>
+                <init-param>
+                    <param-name>template</param-name>
+                    <param-value>datanium</param-value>
+                </init-param>
+                <init-param>
+                    <param-name>root_channel_id</param-name>
+                    <param-value>1</param-value>
+                </init-param>
+                <init-param>
+                    <param-name>language</param-name>
+                    <param-value>vi</param-value>
+                </init-param>
+                <init-param>
+                    <param-name>url_pattern</param-name>
+                    <param-value>/vi</param-value>
+                </init-param>
+                <load-on-startup>0</load-on-startup>
+            </servlet>]]></replacevalue>
+        </replace>
+        <replace file="${mvncms.src.datanium}/mvncms/srcweb/WEB-INF/web.xml">
+            <replacetoken><![CDATA[<!-- Place holder for servlet mapping for template7 -->]]></replacetoken>
+            <replacevalue><![CDATA[<servlet-mapping>
+                <servlet-name>MVNCDSServlet1</servlet-name>
+                <url-pattern>/en/*</url-pattern>
+            </servlet-mapping>
+            <servlet-mapping>
+                <servlet-name>MVNCDSServlet2</servlet-name>
+                <url-pattern>/vi/*</url-pattern>
+            </servlet-mapping>]]></replacevalue>
+        </replace>
+        <replace file="${mvncms.src.datanium}/mvncms/build.properties">
+            <replacetoken><![CDATA[mvncms.app.name=mvncms]]></replacetoken>
+            <replacevalue><![CDATA[mvncms.app.name=datanium]]></replacevalue>
+        </replace>
+        <replace file="${mvncms.src.datanium}/mvncms/build.properties">
+            <replacetoken><![CDATA[template1.name=template1]]></replacetoken>
+            <replacevalue><![CDATA[#template1.name=template1]]></replacevalue>
+        </replace>
+        <replace file="${mvncms.src.datanium}/mvncms/build.properties">
+            <replacetoken><![CDATA[#template7.name=datanium]]></replacetoken>
+            <replacevalue><![CDATA[template7.name=datanium]]></replacevalue>
+        </replace>
+        <replace file="${mvncms.src.datanium}/myvietnam/properties/mvncore.xml">
+            <replacetoken><![CDATA[<mvncoreservice_implementation>com.mvnsoft.mvncms.service.impl.MvnCoreServiceImplEntMvnCmsEntAds</mvncoreservice_implementation>]]></replacetoken>
+            <replacevalue><![CDATA[<mvncoreservice_implementation>com.mvnsoft.mvncms.service.impl.MvnCoreServiceImplEntMvnCmsEntDatanium</mvncoreservice_implementation>]]></replacevalue>
+        </replace>
+        <delete file="${release.home}/datanium-${mvncms.version}-src-${date_release}.zip" />
+        <zip update="true" destfile="${release.home}/datanium-${mvncms.version}-src-${date_release}.zip">
+            <zipfileset dir="${mvncms.src.datanium}" prefix="datanium-${mvncms.version}-src-${date_release}" />
+        </zip>
+    </target>
+    
+    <!-- ============== realease vnbc ============= -->
+        <target name="prepare-mvncms-vnbc" depends="prepare" description="Prepare folder source for mvnPublish">
+            <copy todir="${source.home}/mvncms">
+                <fileset dir="${checkout.home}/mvncms" 
+                    excludes="contrib/tram/**, 
+                              srcweb/mvnplugin/mvncms/cds/standard/**, 
+                              properties/cnms_config_content.xml" />
+            </copy>
+            <copy todir="${source.home}/mvncms/srcweb/mvnplugin/mvncms/cds/standard/vnbc_vi">
+                <fileset dir="${checkout.home}/mvncms/srcweb/mvnplugin/mvncms/cds/standard/vnbc_vi" />
+            </copy>
+        </target>
+        <target name="release-mvncms-vnbc-src" depends="prepare-mvncms-vnbc" description="Release mvnPublish source package">
+            <echo>Release mvnPublish source package</echo>
+            <!-- Create build directories as needed -->
+            <mkdir dir="${mvncms.src.build}" />
+            <!-- Copy static content -->
+            <copy todir="${mvncms.src.build}/myvietnam">
+                <fileset dir="${myvietnam.home}" />
+            </copy>
+            <copy todir="${mvncms.src.build}/mvnforum">
+                <fileset dir="${mvnforum.home}" />
+            </copy>
+            <copy todir="${mvncms.src.build}/myvietnam_enterprise">
+                <fileset dir="${myvietnam_enterprise.home}" />
+            </copy>
+            <copy todir="${mvncms.src.build}/mvnforum_enterprise">
+                <fileset dir="${mvnforum_enterprise.home}" />
+            </copy>
+            <copy todir="${mvncms.src.build}/mvnad">
+                <fileset dir="${mvnad.home}" />
+            </copy>
+            <copy todir="${mvncms.src.build}/mvnad_enterprise">
+                <fileset dir="${mvnad_enterprise.home}" />
+            </copy>
+            <copy todir="${mvncms.src.build}/mvncms">
+                <fileset dir="${mvncms.home}" />
+            </copy>
+            <!-- Copy docs files -->
+            <copy todir="${mvncms.src.build}" file="${mvn_profile_filename}" />        
+        </target>
+    
+    <target name="release-vnbc-src" depends="release-mvncms-vnbc-src" description="Release mvncms-vnbc source package">
+            <echo>Release vnbc source package</echo>
+            <mkdir dir="${mvncms.src.vnbc}" />
+            <copy todir="${mvncms.src.vnbc}">
+                <fileset dir="${mvncms.src.build}" 
+                    excludes="*.war, 
+                              test.jsp, 
+                              index_mvnforum.jsp,
+                              mvncms/properties/cnms_config_content.xml,
+                              mvncms/properties/config_cms_jvn.xml,
+                              mvncms/properties/config_cms_khaidong.xml,
+                              mvncms/properties/config_cms_tincntt.xml,
+                              mvncms/properties/config_home_khxhnv.xml,
+                              mvncms/properties/web-handlers@cnms.xml,
+                              mvncms/properties/web-handlers@default.xml,
+                              mvncms/properties/web-handlers@jvn2.xml,
+                              mvncms/properties/web-handlers@khaidong.xml,
+                              mvncms/properties/web-handlers@khxhnv.xml,
+                              mvncms/properties/web-handlers@template1.xml,
+                              mvncms/properties/web-handlers@tincntt.xml,
+                              mvncms/properties/web-handlers@vms.xml,
+                              mvncms/properties/web-handlers@datanium.xml,
+                              mvncms/i18n/mvncms/cds/standard/khaidong/**,
+                              mvncms/i18n/mvncms/cds/standard/template1/**,
+                              mvncms/i18n/mvncms/cds/standard/tincntt/**,
+                              mvncms/src/com/mvnsoft/mvncms/cds/standard/configlayout/**,
+                              mvncms/src/com/mvnsoft/mvncms/cds/standard/handler/impl/cnms/**,
+                              mvncms/src/com/mvnsoft/mvncms/cds/standard/handler/impl/datanium/**,
+                              mvncms/src/com/mvnsoft/mvncms/cds/standard/handler/impl/jvn/**,
+                              mvncms/src/com/mvnsoft/mvncms/cds/standard/handler/impl/tincntt/**,
+                              mvncms/src/com/mvnsoft/mvncms/cds/standard/handler/impl/khaidong/**,
+                              mvncms/src/com/mvnsoft/mvncms/cds/standard/handler/impl/khxhnv/**,
+                              myvietnam/src/net/myvietnam/mvncore/servlet/HelloWorldServlet.java,
+                              mvncms/i18n/mvncms/cds/standard/datanium/**"
+                />
+            </copy>
+            <replace file="${mvncms.src.vnbc}/mvncms/srcweb/WEB-INF/web.xml">
+                <replacetoken><![CDATA[<!-- Place holder for servlet for template6 -->]]></replacetoken>
+                <replacevalue><![CDATA[<servlet>
+                        <servlet-name>MVNCDSServlet6</servlet-name>
+                        <servlet-class>com.mvnsoft.mvncms.cds.standard.CDSServlet6</servlet-class>
+                        <init-param>
+                            <param-name>template</param-name>
+                            <param-value>vnbc_vi</param-value>
+                        </init-param>
+                    <init-param>
+                            <param-name>language</param-name>
+                            <param-value>vi</param-value>
+                        </init-param>
+                    <init-param>
+                            <param-name>root_channel_id</param-name>
+                            <param-value>9</param-value>
+                        </init-param>
+                    <init-param>
+                            <param-name>url_pattern</param-name>
+                            <param-value>/vi</param-value>
+                        </init-param>
+                    <load-on-startup>0</load-on-startup>
+                    </servlet>
+                  <servlet>
+                  <servlet-name>MVNCDSServlet7</servlet-name>
+                        <servlet-class>com.mvnsoft.mvncms.cds.standard.CDSServlet1</servlet-class>
+                        <init-param>
+                            <param-name>template</param-name>
+                            <param-value>vnbc_vi</param-value>
+                        </init-param>
+                    <init-param>
+                            <param-name>language</param-name>
+                            <param-value>en</param-value>
+                        </init-param>
+                    <init-param>
+                            <param-name>root_channel_id</param-name>
+                            <param-value>10</param-value>
+                        </init-param>
+                    <init-param>
+                            <param-name>url_pattern</param-name>
+                            <param-value>/en</param-value>
+                        </init-param>
+                    <load-on-startup>0</load-on-startup>
+                    </servlet>]]></replacevalue>
+            </replace>
+            <replace file="${mvncms.src.vnbc}/mvncms/srcweb/WEB-INF/web.xml">
+                    <replacetoken><![CDATA[<!-- Place holder for servlet mapping for template6 -->]]></replacetoken>
+                    <replacevalue><![CDATA[<servlet-mapping>
+                        <servlet-name>MVNCDSServlet6</servlet-name>
+                        <url-pattern>/vi/*</url-pattern>
+                    </servlet-mapping>
+                   <servlet-mapping>
+                        <servlet-name>MVNCDSServlet7</servlet-name>
+                        <url-pattern>/en/*</url-pattern>
+                    </servlet-mapping>]]></replacevalue>
+            </replace>
+            <replace file="${mvncms.src.vnbc}/mvncms/build.properties">
+                <replacetoken><![CDATA[mvncms.app.name=mvncms]]></replacetoken>
+                <replacevalue><![CDATA[mvncms.app.name=vnbc]]></replacevalue>
+            </replace>
+            <replace file="${mvncms.src.vnbc}/mvncms/build.properties">
+                <replacetoken><![CDATA[template1.name=template1]]></replacetoken>
+                <replacevalue><![CDATA[#template1.name=template1]]></replacevalue>
+            </replace>
+            <replace file="${mvncms.src.vnbc}/mvncms/build.properties">
+                <replacetoken><![CDATA[#template7.name=vnbc_vi]]></replacetoken>
+                <replacevalue><![CDATA[template7.name=vnbc_vi]]></replacevalue>
+            </replace>
+            <delete file="${release.home}/vnbc-${mvncms.version}-src-${date_release}.zip" />
+            <zip update="true" destfile="${release.home}/vnbc-${mvncms.version}-src-${date_release}.zip">
+                <zipfileset dir="${mvncms.src.vnbc}" prefix="vnbc-${mvncms.version}-src-${date_release}" />
+            </zip>
+        </target>
+    
+    <!-- ====== Release mvnForum Portlet Source Target ====== -->
+    <target name="release-mvnforum-portlet-src" depends="prepare-mvnforum-portlet" description="Release mvnForum Portlet source package">
+        
+        <echo>Release mvnForum Portlet source package</echo>
+         
+        <!-- Create build directories as needed -->
+        <mkdir dir="${mvnforum_portlet.src.build}" />
+        
+        <!-- Copy static content -->
+        <copy todir="${mvnforum_portlet.src.build}/myvietnam">
+            <fileset dir="${myvietnam.home}" />
+        </copy>
+        <copy todir="${mvnforum_portlet.src.build}/mvnforum">
+            <fileset dir="${mvnforum.home}" />
+        </copy>
+        <copy todir="${mvnforum_portlet.src.build}/myvietnam_enterprise">
+            <fileset dir="${myvietnam_enterprise.home}" />
+        </copy>
+        <copy todir="${mvnforum_portlet.src.build}/mvnforum_enterprise">
+            <fileset dir="${mvnforum_enterprise.home}" />
+        </copy>
+        <copy todir="${mvnforum_portlet.src.build}/portlet-mvnforum">
+            <fileset dir="${mvnforum-portlet.home}" />
+        </copy>
+        <copy todir="${mvnforum_portlet.src.build}/mvncore-portal">
+            <fileset dir="${mvncore-portal.home}" />
+        </copy>
+        <copy todir="${mvnforum_portlet.src.build}/mvncore-portlet">
+            <fileset dir="${mvncore-portlet.home}" />
+        </copy>
+        <copy todir="${mvnforum_portlet.src.build}/mvncore-user-portlet">
+            <fileset dir="${mvncore-user-portlet.home}" />
+        </copy>
+        <copy todir="${mvnforum_portlet.src.build}/pluto_1_1-for-tomcat5">
+            <fileset dir="${pluto_1_1-for-tomcat5.home}" />
+        </copy>
+        <copy todir="${mvnforum_portlet.src.build}/pluto_2_0-for-tomcat5">
+            <fileset dir="${pluto_2_0-for-tomcat5.home}" />
+        </copy>
+        
+        <!-- Copy docs files -->
+        <copy todir="${mvnforum_portlet.src.build}" file="${mvn_profile_filename}" />
+        
+        <!-- Create application JAR file, but first delete it to make sure creating a fresh file -->
+        <delete file="${release.home}/${mvnforum_portlet.src.foldername}.zip" />
+        <zip update="true" destfile="${release.home}/${mvnforum_portlet.src.foldername}.zip">
+            <zipfileset dir="${mvnforum_portlet.src.build}" prefix="${mvnforum_portlet.src.foldername}" />
+        </zip>
+    </target>
+    
+    <!-- ====== Release mvnForum Portlet Source Target ====== -->
+    <target name="release-mvnad-portlet-src" depends="prepare-mvnad-portlet" description="Release mvnAd Portlet source package">
+        
+        <echo>Release mvnAd Portlet source package</echo>
+         
+        <!-- Create build directories as needed -->
+        <mkdir dir="${mvnad_portlet.src.build}" />
+        
+        <!-- Copy static content -->
+        <copy todir="${mvnad_portlet.src.build}/myvietnam">
+            <fileset dir="${myvietnam.home}" />
+        </copy>
+        <copy todir="${mvnad_portlet.src.build}/mvnforum">
+            <fileset dir="${mvnforum.home}" />
+        </copy>
+        <copy todir="${mvnad_portlet.src.build}/myvietnam_enterprise">
+            <fileset dir="${myvietnam_enterprise.home}" />
+        </copy>
+        <copy todir="${mvnad_portlet.src.build}/mvnad">
+            <fileset dir="${mvnad.home}" />
+        </copy>
+        <copy todir="${mvnad_portlet.src.build}/mvnad_enterprise">
+            <fileset dir="${mvnad_enterprise.home}" />
+        </copy>
+        <copy todir="${mvnad_portlet.src.build}/mvnad-portlet">
+            <fileset dir="${mvnad-portlet.home}" />
+        </copy>
+        <copy todir="${mvnad_portlet.src.build}/mvncore-portal">
+            <fileset dir="${mvncore-portal.home}" />
+        </copy>
+        <copy todir="${mvnad_portlet.src.build}/mvncore-portlet">
+            <fileset dir="${mvncore-portlet.home}" />
+        </copy>
+        <copy todir="${mvnad_portlet.src.build}/mvncore-user-portlet">
+            <fileset dir="${mvncore-user-portlet.home}" />
+        </copy>
+        <copy todir="${mvnad_portlet.src.build}/pluto_1_1-for-tomcat5">
+            <fileset dir="${pluto_1_1-for-tomcat5.home}" />
+        </copy>
+        <copy todir="${mvnad_portlet.src.build}/pluto_2_0-for-tomcat5">
+            <fileset dir="${pluto_2_0-for-tomcat5.home}" />
+        </copy>
+        
+        <!-- Copy docs files -->
+        <copy todir="${mvnad_portlet.src.build}" file="${mvn_profile_filename}" />
+        
+        <!-- Create application JAR file, but first delete it to make sure creating a fresh file -->
+        <delete file="${release.home}/${mvnad_portlet.src.foldername}.zip" />
+        <zip update="true" destfile="${release.home}/${mvnad_portlet.src.foldername}.zip">
+            <zipfileset dir="${mvnad_portlet.src.build}" prefix="${mvnad_portlet.src.foldername}" />
+        </zip>
+    </target>
+    
+    <!-- ================== Build temp mvnForum Only Target =================== -->
+    <target name="build-mvnforum-only" depends="prepare" description="Building the mvnForum only">
+        <echo>Building the mvnForum only</echo>
+        <!-- Create build directories as needed -->
+        <mkdir dir="${mvnforum-mvnad-temp.bin.build}" />
+        
+        <!-- Copy static content -->
+        <copy todir="${mvnforum-mvnad-temp.bin.build}/myvietnam">
+            <fileset dir="${myvietnam.home}" />
+        </copy>
+        <copy todir="${mvnforum-mvnad-temp.bin.build}/mvnforum">
+            <fileset dir="${mvnforum.home}" />
+        </copy>
+        
+        <!-- Build mvnforum -->
+        <ant dir="${mvnforum-mvnad-temp.bin.build}/mvnforum" inheritAll="false">
+            <property name="tomcat.home" value="${tomcat.home}" />
+            <property name="sqldriver.jar" value="${sqldriver.jar}" />
+        </ant>
+        <echo>mvnForum module has been built.</echo>
+    </target>
+    
+    <!-- ============== Build Temp MvnForum And MvnAd Target ================== -->
+    <target name="build-mvnforum-with-mvnad" depends="build-mvnforum-only" description="Building the mvnForum and mvnAd">
+        <echo>Building the mvnForum and mvnAd</echo>
+
+        <!-- Copy static content -->
+        <copy todir="${mvnforum-mvnad-temp.bin.build}/mvnad">
+            <fileset dir="${mvnad.home}" />
+        </copy>
+        
+        <!-- Copy webapps folder -->
+        <mkdir dir="${mvnforum-mvnad-temp.bin.build}/build/webapps_mvnforum_with_mvnad" />
+        <copy todir="${mvnforum-mvnad-temp.bin.build}/build/webapps_mvnforum_with_mvnad">
+            <fileset dir="${mvnforum-mvnad-temp.bin.build}/build/build-mvnforum/webapp" />
+        </copy>
+                    
+        <!-- Build mvnad -->
+        <ant target="deploy-localhost" dir="${mvnforum-mvnad-temp.bin.build}/mvnad" inheritAll="false">
+            <property name="tomcat.home" value="${tomcat.home}" />
+            <property name="sqldriver.jar" value="${sqldriver.jar}" />
+            <property name="deploy.localhost" value="${mvnforum-mvnad-temp.bin.build}/build/webapps_mvnforum_with_mvnad/mvnforum" />
+        </ant>
+        <echo>mvnForum and mvnAd module has been built.</echo>
+    </target>
+    
+    <!-- ============ Release mvnForum and mvnAd Binary Target ================ -->
+    <target name="release-mvnforum-mvnad-bin" depends="build-mvnforum-with-mvnad" description="Release mvnForum and mvnAd binary package">
+        <echo>Release mvnForum and mvnAd binary package</echo>
+
+        <!-- Create build directories as needed -->
+        <mkdir dir="${mvnforum-mvnad.bin.build}" />
+        <mkdir dir="${mvnforum-mvnad.bin.build}/docs_mvnforum" />
+        <mkdir dir="${mvnforum-mvnad.bin.build}/docs_mvnad" />
+        <mkdir dir="${mvnforum-mvnad.bin.build}/driver" />
+        <mkdir dir="${mvnforum-mvnad.bin.build}/sql_mvnforum" />
+        <mkdir dir="${mvnforum-mvnad.bin.build}/sql_mvnad" />
+        <mkdir dir="${mvnforum-mvnad.bin.build}/webapp_mvnforum_only" />
+        <mkdir dir="${mvnforum-mvnad.bin.build}/webapp_mvnforum_with_mvnad" />
+                
+        <!-- Copy docs folders -->
+        <copy todir="${mvnforum-mvnad.bin.build}/docs_mvnforum">
+            <fileset dir="${mvnforum.home}/docs" />
+        </copy>
+        <copy todir="${mvnforum-mvnad.bin.build}/docs_mvnad">
+            <fileset dir="${mvnad.home}/docs" />
+        </copy>
+        
+        <!-- Copy driver files -->
+        <copy todir="${mvnforum-mvnad.bin.build}/driver">
+            <fileset dir="${mvnforum.home}/driver" />
+        </copy>
+        
+        <!-- Copy sql files -->
+        <copy todir="${mvnforum-mvnad.bin.build}/sql_mvnforum">
+             <fileset dir="${mvnforum.home}/sql" />
+        </copy>
+        <copy todir="${mvnforum-mvnad.bin.build}/sql_mvnad">
+             <fileset dir="${mvnad.home}/sql" />
+        </copy>
+        
+        <!-- Copy docs for build files -->
+        <copy todir="${mvnforum-mvnad.bin.build}" file="${mvn_profile_filename}" />
+        <copy todir="${mvnforum-mvnad.bin.build}" file="${docs_for_builds.home}/mvnforum_mvnad_bin/README.txt" />
+        
+        <!-- Create webapp_mvnforum_only -->
+        <copy todir="${mvnforum-mvnad.bin.build}/webapp_mvnforum_only">
+              <fileset dir="${mvnforum-mvnad-temp.bin.build}/build/build-mvnforum/webapp/mvnforum" />
+        </copy>
+        <!-- Delete driver sql for build temp mvnforum only -->
+        <delete file="${mvnforum-mvnad.bin.build}/webapp_mvnforum_only/WEB-INF/lib/${sqldriver.jar}" />
+        
+        <!-- Create webapp_mvnforum_with_mvnad -->
+        <copy todir="${mvnforum-mvnad.bin.build}/webapp_mvnforum_with_mvnad">
+              <fileset dir="${mvnforum-mvnad-temp.bin.build}/build/webapps_mvnforum_with_mvnad/mvnforum" />
+        </copy>
+        <!-- Delete driver sql for build temp mvnforum with mvnad-->
+        <delete file="${mvnforum-mvnad.bin.build}/webapp_mvnforum_with_mvnad/WEB-INF/lib/${sqldriver.jar}" />
+        
+        <!-- Create application JAR file, but first delete it to make sure creating a fresh file 
+        <delete file="${release.home}/${mvnforum-mvnad.bin.foldername}.zip" />
+        -->
+        <zip update="true" destfile="${release.home}/${mvnforum-mvnad.bin.foldername}.zip">
+            <zipfileset dir="${mvnforum-mvnad.bin.build}" prefix="${mvnforum-mvnad.bin.foldername}" />
+        </zip>
+    </target>
+    
+    <!-- ================== Build temp mvnForum Enterprise Only Target =================== -->
+    <target name="build-mvnforum_enterprise-only" depends="prepare" description="Building the mvnForum Enterprise only">
+        <echo>Building the mvnForum Enterprise only</echo>
+        <!-- Create build directories as needed -->
+        <mkdir dir="${mvnforum_enterprise-temp.bin.build}" />
+        
+        <!-- Copy static content -->
+        <copy todir="${mvnforum_enterprise-temp.bin.build}/myvietnam">
+            <fileset dir="${myvietnam.home}" />
+        </copy>
+        <copy todir="${mvnforum_enterprise-temp.bin.build}/mvnforum">
+            <fileset dir="${mvnforum.home}" />
+        </copy>
+        <copy todir="${mvnforum_enterprise-temp.bin.build}/myvietnam_enterprise">
+            <fileset dir="${myvietnam_enterprise.home}" />
+        </copy>
+        <copy todir="${mvnforum_enterprise-temp.bin.build}/mvnforum_enterprise">
+            <fileset dir="${mvnforum_enterprise.home}" />
+        </copy>
+        
+        <!-- Build mvnForum Enterprise -->
+        <ant target="dist" dir="${mvnforum_enterprise-temp.bin.build}/mvnforum_enterprise" inheritAll="false">
+            <property name="tomcat.home" value="${tomcat.home}" />
+            <property name="mvnforum.version" value="${mvnforum_enterprise.version}" />
+            <property name="sqldriver.jar" value="${sqldriver.jar}" />
+        </ant>
+
+        <!-- Delete driver sql for build temp mvnforum with mvnad-->
+        <delete file="${mvnforum_enterprise-temp.bin.build}/build/build-mvnforum_enterprise/webapp/mvnforum_enterprise/WEB-INF/lib/${sqldriver.jar}" />
+        
+        <echo>mvnForum Enterprise has been built.</echo>
+    </target>
+    
+    <!-- ============== Build Temp mvnForum Enterprise and mvnAd Enterprise Target ================== -->
+    <target name="build-mvnforum_enterprise-with-mvnad_enterprise" depends="build-mvnforum_enterprise-only" 
+        description="Building the mvnForum Enterprise and mvnAd Enterprise">
+        
+        <echo>Building the mvnForum Enterprise and mvnAd Enterprise</echo>
+
+        <!-- Copy static content -->
+        <copy todir="${mvnforum_enterprise-temp.bin.build}/mvnad">
+            <fileset dir="${mvnad.home}" />
+        </copy>
+        <copy todir="${mvnforum_enterprise-temp.bin.build}/mvnad_enterprise">
+            <fileset dir="${mvnad_enterprise.home}" />
+        </copy>
+        
+        <!-- Copy webapps folder -->
+        <mkdir dir="${mvnforum_enterprise-temp.bin.build}/build/webapps_mvnforum_enterprise_with_mvnad_enterprise" />
+        <copy todir="${mvnforum_enterprise-temp.bin.build}/build/webapps_mvnforum_enterprise_with_mvnad_enterprise">
+            <fileset dir="${mvnforum_enterprise-temp.bin.build}/build/build-mvnforum_enterprise/webapp" />
+        </copy>
+                    
+        <!-- Build mvnAd Enterprise -->
+        <ant target="deploy-localhost" dir="${mvnforum_enterprise-temp.bin.build}/mvnad_enterprise" inheritAll="false">
+            <property name="tomcat.home" value="${tomcat.home}" />
+            <property name="sqldriver.jar" value="${sqldriver.jar}" />
+            <property name="deploy.localhost" value="${mvnforum_enterprise-temp.bin.build}/build/webapps_mvnforum_enterprise_with_mvnad_enterprise/mvnforum_enterprise" />
+        </ant>
+
+        <echo>mvnForum Enterprise and mvnAd Enterprise module has been built.</echo>
+    </target>
+    
+    <!-- ============== Build Temp mvnForum Enterprise and mvnAd Enterprise Target ================== -->
+    <target name="jspc" depends="prepare-mvnforum-portlet, prepare-mvnad-portlet" 
+        description="Use JspC to check for JSP validation">
+        
+        <!-- Create build directories as needed -->
+        <mkdir dir="${check-jspc-temp.bin.build}" />
+        
+        <!-- Copy static content -->
+        <copy todir="${check-jspc-temp.bin.build}/myvietnam">
+            <fileset dir="${myvietnam.home}" />
+        </copy>
+        <copy todir="${check-jspc-temp.bin.build}/myvietnam_enterprise">
+            <fileset dir="${myvietnam_enterprise.home}" />
+        </copy>
+        <copy todir="${check-jspc-temp.bin.build}/mvnforum">
+            <fileset dir="${mvnforum.home}" />
+        </copy>
+        <copy todir="${check-jspc-temp.bin.build}/mvnforum_enterprise">
+            <fileset dir="${mvnforum_enterprise.home}" />
+        </copy>
+        <copy todir="${check-jspc-temp.bin.build}/mvnad">
+            <fileset dir="${mvnad.home}" />
+        </copy>
+        <copy todir="${check-jspc-temp.bin.build}/mvnad_enterprise">
+            <fileset dir="${mvnad_enterprise.home}" />
+        </copy>
+        <!--
+        <copy todir="${check-jspc-temp.bin.build}/mvnad-portlet">
+            <fileset dir="${mvnad-portlet.home}" />
+        </copy>
+        -->
+        <copy todir="${check-jspc-temp.bin.build}/portlet-mvnforum">
+            <fileset dir="${mvnforum-portlet.home}" />
+        </copy>
+        <copy todir="${check-jspc-temp.bin.build}/mvncore-portal">
+            <fileset dir="${mvncore-portal.home}" />
+        </copy>
+        <copy todir="${check-jspc-temp.bin.build}/mvncore-portlet">
+            <fileset dir="${mvncore-portlet.home}" />
+        </copy>
+        <copy todir="${check-jspc-temp.bin.build}/mvncore-user-portlet">
+            <fileset dir="${mvncore-user-portlet.home}" />
+        </copy>
+
+        <echo>Use JspC to check for mvnForum</echo>
+        <ant target="jspc" dir="${check-jspc-temp.bin.build}/mvnforum" inheritAll="false">
+            <property name="tomcat.home" value="${tomcat.home}" />
+            <property name="sqldriver.jar" value="${sqldriver.jar}" />
+        </ant>
+
+        <echo>Use JspC to check for mvnForum Enterprise</echo>
+        <ant target="jspc" dir="${check-jspc-temp.bin.build}/mvnforum_enterprise" inheritAll="false">
+            <property name="tomcat.home" value="${tomcat.home}" />
+            <property name="sqldriver.jar" value="${sqldriver.jar}" />
+        </ant>
+        
+        <echo>Use JspC to check for mvnForum Portlet</echo>
+        <ant target="jspc" dir="${check-jspc-temp.bin.build}/portlet-mvnforum" inheritAll="false">
+            <property name="tomcat.home" value="${tomcat.home}" />
+            <property name="sqldriver.jar" value="${sqldriver.jar}" />
+        </ant>
+        
+        <echo>Use JspC to check for mvnAd</echo>
+        <ant target="jspc" dir="${check-jspc-temp.bin.build}/mvnad" inheritAll="false">
+            <property name="tomcat.home" value="${tomcat.home}" />
+            <property name="sqldriver.jar" value="${sqldriver.jar}" />
+        </ant>
+        
+        <echo>Use JspC to check for mvnAd Enterprise</echo>
+        <ant target="jspc" dir="${check-jspc-temp.bin.build}/mvnad_enterprise" inheritAll="false">
+            <property name="tomcat.home" value="${tomcat.home}" />
+            <property name="sqldriver.jar" value="${sqldriver.jar}" />
+        </ant>
+        <!--
+        <echo>Use JspC to check for mvnAd Portlet</echo>
+        <ant target="jspc" dir="${check-jspc-temp.bin.build}/mvnad-portlet" inheritAll="false">
+            <property name="tomcat.home" value="${tomcat.home}" />
+            <property name="sqldriver.jar" value="${sqldriver.jar}" />
+        </ant>
+        -->
+    </target>
+    
+    <!-- ============ Release mvnForum Enterprise binary package Target ================ -->
+    <target name="release-mvnforum_enterprise-bin" depends="build-mvnforum_enterprise-only" description="Release mvnForum Enterprise binary package">
+        <echo>Release mvnForum Enterprise binary package</echo>
+
+        <!-- Create build directories as needed -->
+        <mkdir dir="${mvnforum_enterprise.bin.build}" />
+
+        <copy todir="${mvnforum_enterprise.bin.build}">
+            <fileset dir="${mvnforum_enterprise-temp.bin.build}/build/build-mvnforum_enterprise/dist" />
+        </copy>
+
+        <!-- Copy docs for build files -->
+        <copy todir="${mvnforum_enterprise.bin.build}" file="${mvn_profile_filename}" />
+
+        <!-- Create application JAR file, but first delete it to make sure creating a fresh file -->
+        <delete file="${release.home}/${mvnforum_enterprise.bin.foldername}.zip" />
+        <zip update="true" destfile="${release.home}/${mvnforum_enterprise.bin.foldername}.zip">
+            <zipfileset dir="${mvnforum_enterprise.bin.build}" prefix="${mvnforum_enterprise.bin.foldername}" />
+        </zip>
+    </target>
+    
+    <!-- ================== Build temp mvnPublish Target =================== -->
+    <target name="build-mvncms" depends="prepare-mvncms" description="Building the mvnPublish">
+        <echo>Building the mvnPublish</echo>
+        <!-- Create build directories as needed -->
+        <mkdir dir="${mvncms-temp.bin.build}" />
+        
+        <!-- Copy static content -->
+        <copy todir="${mvncms-temp.bin.build}/myvietnam">
+            <fileset dir="${myvietnam.home}" />
+        </copy>
+        <copy todir="${mvncms-temp.bin.build}/myvietnam_enterprise">
+            <fileset dir="${myvietnam_enterprise.home}" />
+        </copy>
+        <copy todir="${mvncms-temp.bin.build}/mvnforum">
+            <fileset dir="${mvnforum.home}" />
+        </copy>
+        <copy todir="${mvncms-temp.bin.build}/mvnforum_enterprise">
+            <fileset dir="${mvnforum_enterprise.home}" />
+        </copy>
+        <copy todir="${mvncms-temp.bin.build}/mvnad">
+            <fileset dir="${mvnad.home}" />
+        </copy>
+        <copy todir="${mvncms-temp.bin.build}/mvnad_enterprise">
+            <fileset dir="${mvnad_enterprise.home}" />
+        </copy>
+        <copy todir="${mvncms-temp.bin.build}/mvncms">
+            <fileset dir="${mvncms.home}" />
+        </copy>
+        
+        <!-- Build mvnPublish -->
+        <ant dir="${mvncms-temp.bin.build}/mvncms" inheritAll="false">
+            <property name="tomcat.home" value="${tomcat.home}" />
+            <property name="mvncms.version" value="${mvncms.version}" />
+            <property name="sqldriver.jar" value="${sqldriver.jar}" />
+            <property name="template1.name" value="template1" />
+        </ant>
+
+        <!-- Delete driver sql for build temp mvnPublish -->
+        <delete file="${mvncms-temp.bin.build}/build/build-mvncms-mvncms/webapp-enterprise/mvncms/WEB-INF/lib/${sqldriver.jar}" />
+        
+        <echo>mvnPublish has been built.</echo>
+    </target>
+    
+    <!-- ================== Build temp mvnPublish Portlet Target =================== -->
+    <target name="build-mvncms-portlet" depends="prepare-mvncms-portlet" description="Building the mvnPublish Portlet">
+        <echo>Building the mvnPublish Portlet</echo>
+        <!-- Create build directories as needed -->
+        <mkdir dir="${mvncms_portlet-temp.bin.build}" />
+        
+        <!-- Copy static content -->
+        <copy todir="${mvncms_portlet-temp.bin.build}/myvietnam">
+            <fileset dir="${myvietnam.home}" />
+        </copy>
+        <copy todir="${mvncms_portlet-temp.bin.build}/myvietnam_enterprise">
+            <fileset dir="${myvietnam_enterprise.home}" />
+        </copy>
+        <copy todir="${mvncms_portlet-temp.bin.build}/mvnforum">
+            <fileset dir="${mvnforum.home}" />
+        </copy>
+        <copy todir="${mvncms_portlet-temp.bin.build}/mvnforum_enterprise">
+            <fileset dir="${mvnforum_enterprise.home}" />
+        </copy>
+        <copy todir="${mvncms_portlet-temp.bin.build}/portlet-mvnforum">
+            <fileset dir="${mvnforum-portlet.home}" />
+        </copy>
+        <copy todir="${mvncms_portlet-temp.bin.build}/mvnad">
+            <fileset dir="${mvnad.home}" />
+        </copy>
+        <copy todir="${mvncms_portlet-temp.bin.build}/mvnad_enterprise">
+            <fileset dir="${mvnad_enterprise.home}" />
+        </copy>
+        <copy todir="${mvncms_portlet-temp.bin.build}/mvnad-portlet">
+            <fileset dir="${mvnad-portlet.home}" />
+        </copy>
+        <copy todir="${mvncms_portlet-temp.bin.build}/mvncms">
+            <fileset dir="${mvncms.home}" />
+        </copy>
+        <copy todir="${mvncms_portlet-temp.bin.build}/mvncms-portlet">
+            <fileset dir="${mvncms-portlet.home}" />
+        </copy>
+        <copy todir="${mvncms_portlet-temp.bin.build}/mvncore-portlet">
+            <fileset dir="${mvncore-portlet.home}" />
+        </copy>
+        <copy todir="${mvncms_portlet-temp.bin.build}/mvncore-user-portlet">
+            <fileset dir="${mvncore-user-portlet.home}" />
+        </copy>
+        
+        <!-- Build mvnPublish Portlet -->
+        <ant dir="${mvncms_portlet-temp.bin.build}/mvncms-portlet" target="compile-for-pluto-1_1" inheritAll="false">
+            <property name="tomcat.home" value="${tomcat.home}" />
+            <property name="mvncms.version" value="${mvncms.version}" />
+            <property name="sqldriver.jar" value="${sqldriver.jar}" />
+        </ant>
+
+        <!-- Delete driver sql for build temp mvnPublish -->
+        <delete file="${mvncms_portlet-temp.bin.build}/build/build-mvncms_portlet/webapp-pluto_1_1/mvncms_portlet/WEB-INF/lib/${sqldriver.jar}" />
+        
+        <echo>mvnPublish Portlet has been built.</echo>
+    </target>
+    
+    <!-- ============= Release mvnForum and mvnAd Bundle Target =============== -->
+    <target name="release-mvnforum-mvnad-bundle" depends="release-mvnforum-mvnad-bin" description="Release mvnForum and mvnAd bundled with Tomcat">
+        <echo>Release mvnForum and mvnAd bundled with Tomcat</echo>
+        
+        <!-- Create build directories as needed -->
+        <mkdir dir="${mvnforum-mvnad.bundle.build}" />
+
+        <!-- Copy tomcat folders -->
+        <copy todir="${mvnforum-mvnad.bundle.build}">
+            <fileset dir="${tomcat.home}" excludes="LICENSE,NOTICE,RELEASE-NOTES,*.txt" />
+        </copy>
+                
+        <!-- Config tomcat -->
+        <replace file="${mvnforum-mvnad.bundle.build}/conf/server.xml">
+            <replacetoken><![CDATA[disableUploadTimeout="true" />]]></replacetoken>
+            <replacevalue><![CDATA[disableUploadTimeout="true" URIEncoding="UTF-8" />]]></replacevalue>
+        </replace>
+        
+        <!-- Edit startup.sh -->
+        <replace file="${mvnforum-mvnad.bundle.build}/bin/startup.sh">
+            <replacetoken><![CDATA[start "$@"]]></replacetoken>
+            <replacevalue><![CDATA[run "$@"]]></replacevalue>
+        </replace>
+
+        <!-- Edit startup.bat -->
+        <replace file="${mvnforum-mvnad.bundle.build}/bin/startup.bat">
+            <replacetoken><![CDATA[call "%EXECUTABLE%" start %CMD_LINE_ARGS%]]></replacetoken>
+            <replacevalue><![CDATA[call "%EXECUTABLE%" run %CMD_LINE_ARGS%]]></replacevalue>
+        </replace>
+        
+        <!-- Copy docs files -->
+        <copy todir="${mvnforum-mvnad.bundle.build}" file="${mvn_profile_filename}" />
+        <copy todir="${mvnforum-mvnad.bundle.build}" file="${docs_for_builds.home}/mvnforum_mvnad_bundle/README.txt" />
+        
+        <!-- Copy context mvnforum to tomcat_home/webapps -->
+        <mkdir dir="${mvnforum-mvnad.bundle.build}/webapps/mvnforum" />
+        <copy todir="${mvnforum-mvnad.bundle.build}/webapps/mvnforum">
+            <fileset dir="${mvnforum-mvnad.bin.build}/webapp_mvnforum_with_mvnad" />
+        </copy>
+        
+        <!-- Copy mvnad/sql/hsqldb to tomcat_home -->
+        <mkdir dir="${mvnforum-mvnad.bundle.build}/hsqldb" />
+        <copy todir="${mvnforum-mvnad.bundle.build}/hsqldb" >
+            <fileset dir="${mvnad.home}/sql/hsqldb" />
+        </copy>
+        
+        <!-- Copy hsqldb.jar to tomcat_home/common/lib -->
+        <copy todir="${mvnforum-mvnad.bundle.build}/common/lib" file="${mvnforum.home}/driver/hsqldb.jar" />
+        
+        <!-- Edit file mvncore.xml -->
+        <replace file="${mvnforum-mvnad.bundle.build}/webapps/mvnforum/WEB-INF/classes/mvncore.xml">
+            <replacetoken><![CDATA[<driver_class_name>com.mysql.jdbc.Driver</driver_class_name>]]></replacetoken>
+            <replacevalue><![CDATA[<driver_class_name>org.hsqldb.jdbcDriver</driver_class_name>]]></replacevalue>
+        </replace>
+        <replace file="${mvnforum-mvnad.bundle.build}/webapps/mvnforum/WEB-INF/classes/mvncore.xml">
+            <replacetoken><![CDATA[<database_url>jdbc:mysql://localhost/mvnforum?useUnicode=true&amp;characterEncoding=utf-8&amp;useOldUTF8Behavior=true&amp;emulateLocators=true</database_url>]]></replacetoken>
+            <replacevalue><![CDATA[<database_url>jdbc:hsqldb:file:../hsqldb/mvnforum</database_url>]]></replacevalue>
+        </replace>
+        <replace file="${mvnforum-mvnad.bundle.build}/webapps/mvnforum/WEB-INF/classes/mvncore.xml">
+            <replacetoken><![CDATA[<database_url>jdbc:mysql://localhost/mvnforum?useUnicode=true&amp;characterEncoding=utf-8&amp;useOldUTF8Behavior=true</database_url>]]></replacetoken>
+            <replacevalue><![CDATA[<database_url>jdbc:hsqldb:file:../hsqldb/mvnforum</database_url>]]></replacevalue>
+        </replace>
+        <replace file="${mvnforum-mvnad.bundle.build}/webapps/mvnforum/WEB-INF/classes/mvncore.xml">
+            <replacetoken><![CDATA[<database_user>root</database_user>]]></replacetoken>
+            <replacevalue><![CDATA[<database_user>sa</database_user>]]></replacevalue>
+        </replace>
+        
+        <!-- Copy file index_mvnforum.jsp to tomcat_home/ROOT -->
+        <copy todir="${mvnforum-mvnad.bundle.build}/webapps/ROOT" file="${mvnforum.home}/srcweb/index_mvnforum.jsp" />
+        <replace file="${mvnforum-mvnad.bundle.build}/webapps/ROOT/index_mvnforum.jsp">
+            <replacetoken><![CDATA[<% if (false /* mvnAd */) {%>]]></replacetoken>
+            <replacevalue><![CDATA[<% if (true /* mvnAd */) {%>]]></replacevalue>
+        </replace>
+        
+        <!-- Change Tomcat ROOT web.xml -->
+        <replace file="${mvnforum-mvnad.bundle.build}/webapps/ROOT/WEB-INF/web.xml">
+            <replacetoken><![CDATA[<!-- JSPC servlet mappings end -->]]></replacetoken>
+            <replacevalue><![CDATA[<!-- JSPC servlet mappings end (modified) -->
+    <welcome-file-list><welcome-file>index_mvnforum.jsp</welcome-file></welcome-file-list>]]></replacevalue>
+        </replace>
+        
+        <!-- Copy pre-built Lucene search index -->
+        <copy  todir="${mvnforum-mvnad.bundle.build}/webapps/mvnforum/WEB-INF/mvnForumHome">
+            <fileset dir="${mvnforum.home}/contrib/lucene_prebuild/lucene_mvnforum_only" />
+        </copy>
+        
+        <!-- Create application JAR file, but first delete it to make sure creating a fresh file 
+        <delete file="${release.home}/${mvnforum-mvnad.bundle.foldername}.zip" />
+        -->
+        <zip update="true" destfile="${release.home}/${mvnforum-mvnad.bundle.foldername}.zip">
+            <zipfileset dir="${mvnforum-mvnad.bundle.build}" prefix="${mvnforum-mvnad.bundle.foldername}" />
+        </zip>
+    </target>
+    
+    <!-- ============= Release MVN Collaboration bundled with Tomcat =============== -->
+    <target name="release-mvn_collab-bundle" depends="release-mvnforum-mvnad-bundle, build-mvnforum_enterprise-with-mvnad_enterprise, prepare-portlet, build-mvncms, build-mvncms-portlet" 
+        description="Release MVN Collaboration bundled with Tomcat">
+        
+        <echo>Release MVN Collaboration bundled with Tomcat</echo>
+
+        <!-- Create build directories as needed -->
+        <mkdir dir="${mvn_collab.bundle.build}" />
+                                
+        <!-- Copy tomcat folders -->
+        <copy todir="${mvn_collab.bundle.build}">
+            <fileset dir="${mvnforum-mvnad.bundle.build}" excludes="hsqldb/*.*" />
+        </copy>
+                
+        <!-- Copy mvncms/sql/hsqldb to tomcat_home -->
+        <copy todir="${mvn_collab.bundle.build}/hsqldb" >
+            <fileset dir="${mvncms.home}/sql/hsqldb" />
+        </copy>
+        
+        <!-- Copy pluto to tomcat_home -->
+        <copy todir="${mvn_collab.bundle.build}" >
+            <fileset dir="${pluto_1_1-for-tomcat5.home}" excludes="common/lib/*mysql*.jar" />
+        </copy>
+        
+        <replace file="${mvn_collab.bundle.build}/conf/Catalina/localhost/pluto.xml">
+            <replacetoken><![CDATA[driverName="com.mysql.jdbc.Driver"]]></replacetoken>
+            <replacevalue><![CDATA[driverName="org.hsqldb.jdbcDriver"]]></replacevalue>
+        </replace>
+        <replace file="${mvn_collab.bundle.build}/conf/Catalina/localhost/pluto.xml">
+            <replacetoken><![CDATA[connectionURL="jdbc:mysql://localhost/mvnforum"]]></replacetoken>
+            <replacevalue><![CDATA[connectionURL="jdbc:hsqldb:file:../hsqldb/mvnforum"]]></replacevalue>
+        </replace>
+        <replace file="${mvn_collab.bundle.build}/conf/Catalina/localhost/pluto.xml">
+            <replacetoken><![CDATA[connectionName="root"]]></replacetoken>
+            <replacevalue><![CDATA[connectionName="sa"]]></replacevalue>
+        </replace>
+        
+        <!-- Edit catalina.sh -->
+        <replace file="${mvn_collab.bundle.build}/bin/catalina.sh">
+            <replacetoken><![CDATA[# OS specific support.  $var _must_ be set to either true or false.]]></replacetoken>
+            <replacevalue><![CDATA[
+echo "Old JAVA_OPTS: $JAVA_OPTS"
+
+JAVA_OPTS="-Dorg.apache.tapestry.disable-caching=true -Xms512M -Xmx768M -XX:PermSize=512M -XX:MaxPermSize=768M"
+
+echo "New JAVA_OPTS: $JAVA_OPTS"
+
+# OS specific support. (modified) $var _must_ be set to either true or false.]]></replacevalue>
+        </replace>
+
+        <!-- Edit catalina.bat -->
+        <replace file="${mvn_collab.bundle.build}/bin/catalina.bat">
+            <replacetoken><![CDATA[rem Guess CATALINA_HOME if not defined]]></replacetoken>
+            <replacevalue><![CDATA[
+echo Old JAVA_OPTS: %JAVA_OPTS%
+
+set JAVA_OPTS=-Dorg.apache.tapestry.disable-caching=true -Xms512M -Xmx768M -XX:PermSize=512M -XX:MaxPermSize=768M
+
+echo New JAVA_OPTS: %JAVA_OPTS%
+
+rem Guess CATALINA_HOME if not (modified) defined]]></replacevalue>
+        </replace>
+        
+        <replace file="${mvn_collab.bundle.build}/webapps/ROOT/index_mvnforum.jsp">
+            <replacetoken><![CDATA[<% if (false /* mvnForum enterprise */) {%>]]></replacetoken>
+            <replacevalue><![CDATA[<% if (true /* mvnForum enterprise */) {%>]]></replacevalue>
+        </replace>
+        <replace file="${mvn_collab.bundle.build}/webapps/ROOT/index_mvnforum.jsp">
+            <replacetoken><![CDATA[<% if (false /* mvnAd enterprise */) {%>]]></replacetoken>
+            <replacevalue><![CDATA[<% if (true /* mvnAd enterprise */) {%>]]></replacevalue>
+        </replace>
+
+        <replace file="${mvn_collab.bundle.build}/webapps/ROOT/index_mvnforum.jsp">
+            <replacetoken><![CDATA[<% if (false /* mvnForum portlet */) {%>]]></replacetoken>
+            <replacevalue><![CDATA[<% if (true /* mvnForum portlet */) {%>]]></replacevalue>
+        </replace>
+        <replace file="${mvn_collab.bundle.build}/webapps/ROOT/index_mvnforum.jsp">
+            <replacetoken><![CDATA[<% if (false /* mvnPublish */) {%>]]></replacetoken>
+            <replacevalue><![CDATA[<% if (true /* mvnPublish */) {%>]]></replacevalue>
+        </replace>
+        
+        <!-- Copy context mvnforum_enterprise to tomcat_home/webapps -->
+        <mkdir dir="${mvn_collab.bundle.build}/webapps/mvnforum_enterprise" />
+        <copy todir="${mvn_collab.bundle.build}/webapps/mvnforum_enterprise">
+            <fileset dir="${mvnforum_enterprise-temp.bin.build}/build/webapps_mvnforum_enterprise_with_mvnad_enterprise/mvnforum_enterprise" />
+        </copy>
+        
+        <!-- Edit file mvncore.xml -->
+        <replace file="${mvn_collab.bundle.build}/webapps/mvnforum_enterprise/WEB-INF/classes/mvncore.xml">
+            <replacetoken><![CDATA[<driver_class_name>com.mysql.jdbc.Driver</driver_class_name>]]></replacetoken>
+            <replacevalue><![CDATA[<driver_class_name>org.hsqldb.jdbcDriver</driver_class_name>]]></replacevalue>
+        </replace>
+        <replace file="${mvn_collab.bundle.build}/webapps/mvnforum_enterprise/WEB-INF/classes/mvncore.xml">
+            <replacetoken><![CDATA[<database_url>jdbc:mysql://localhost/mvnforum?useUnicode=true&amp;characterEncoding=utf-8&amp;useOldUTF8Behavior=true&amp;emulateLocators=true</database_url>]]></replacetoken>
+            <replacevalue><![CDATA[<database_url>jdbc:hsqldb:file:../hsqldb/mvnforum</database_url>]]></replacevalue>
+        </replace>
+        <replace file="${mvn_collab.bundle.build}/webapps/mvnforum_enterprise/WEB-INF/classes/mvncore.xml">
+            <replacetoken><![CDATA[<database_url>jdbc:mysql://localhost/mvnforum?useUnicode=true&amp;characterEncoding=utf-8&amp;useOldUTF8Behavior=true</database_url>]]></replacetoken>
+            <replacevalue><![CDATA[<database_url>jdbc:hsqldb:file:../hsqldb/mvnforum</database_url>]]></replacevalue>
+        </replace>
+        <replace file="${mvn_collab.bundle.build}/webapps/mvnforum_enterprise/WEB-INF/classes/mvncore.xml">
+            <replacetoken><![CDATA[<database_user>root</database_user>]]></replacetoken>
+            <replacevalue><![CDATA[<database_user>sa</database_user>]]></replacevalue>
+        </replace>
+    
+        <!-- Copy pre-built Lucene search index -->
+        <copy  todir="${mvn_collab.bundle.build}/webapps/mvnforum_enterprise/WEB-INF/mvnForumHome">
+            <fileset dir="${mvnforum.home}/contrib/lucene_prebuild/lucene_mvnforum_enterprise_only" />
+        </copy>
+
+        <!-- Copy context mvncms to tomcat_home/webapps -->
+        <mkdir dir="${mvn_collab.bundle.build}/webapps/mvncms" />
+        <copy todir="${mvn_collab.bundle.build}/webapps/mvncms">
+            <fileset dir="${mvncms-temp.bin.build}/build/build-mvncms-mvncms/webapp-enterprise/mvncms" />
+        </copy>
+        
+        <!-- Edit file mvncore.xml -->
+        <replace file="${mvn_collab.bundle.build}/webapps/mvncms/WEB-INF/classes/mvncore.xml">
+            <replacetoken><![CDATA[<driver_class_name>com.mysql.jdbc.Driver</driver_class_name>]]></replacetoken>
+            <replacevalue><![CDATA[<driver_class_name>org.hsqldb.jdbcDriver</driver_class_name>]]></replacevalue>
+        </replace>
+        <replace file="${mvn_collab.bundle.build}/webapps/mvncms/WEB-INF/classes/mvncore.xml">
+            <replacetoken><![CDATA[<database_url>jdbc:mysql://localhost/mvnforum?useUnicode=true&amp;characterEncoding=utf-8&amp;useOldUTF8Behavior=true&amp;emulateLocators=true</database_url>]]></replacetoken>
+            <replacevalue><![CDATA[<database_url>jdbc:hsqldb:file:../hsqldb/mvnforum</database_url>]]></replacevalue>
+        </replace>
+        <replace file="${mvn_collab.bundle.build}/webapps/mvncms/WEB-INF/classes/mvncore.xml">
+            <replacetoken><![CDATA[<database_url>jdbc:mysql://localhost/mvnforum?useUnicode=true&amp;characterEncoding=utf-8&amp;useOldUTF8Behavior=true</database_url>]]></replacetoken>
+            <replacevalue><![CDATA[<database_url>jdbc:hsqldb:file:../hsqldb/mvnforum</database_url>]]></replacevalue>
+        </replace>
+        <replace file="${mvn_collab.bundle.build}/webapps/mvncms/WEB-INF/classes/mvncore.xml">
+            <replacetoken><![CDATA[<database_user>root</database_user>]]></replacetoken>
+            <replacevalue><![CDATA[<database_user>sa</database_user>]]></replacevalue>
+        </replace>
+        
+        <!-- Copy pre-built Lucene search index -->
+        <copy  todir="${mvn_collab.bundle.build}/webapps/mvncms/WEB-INF/mvnForumHome">
+            <fileset dir="${mvnforum.home}/contrib/lucene_prebuild/lucene_mvnforum_enterprise_only" />
+        </copy>
+        <copy  todir="${mvn_collab.bundle.build}/webapps/mvncms/WEB-INF/mvnCmsHome">
+            <fileset dir="${mvnforum.home}/contrib/lucene_prebuild/lucene_mvncms" />
+        </copy>
+        
+        <!-- Copy context mvncms_portlet to tomcat_home/webapps -->
+        <mkdir dir="${mvn_collab.bundle.build}/webapps/mvncms_portlet" />
+        <copy todir="${mvn_collab.bundle.build}/webapps/mvncms_portlet">
+            <fileset dir="${mvncms_portlet-temp.bin.build}/build/build-mvncms_portlet/webapp-pluto_1_1/mvncms_portlet" />
+        </copy>
+        
+        <!-- Edit file mvncore.xml -->
+        <replace file="${mvn_collab.bundle.build}/webapps/mvncms_portlet/WEB-INF/classes/mvncore.xml">
+            <replacetoken><![CDATA[<driver_class_name>com.mysql.jdbc.Driver</driver_class_name>]]></replacetoken>
+            <replacevalue><![CDATA[<driver_class_name>org.hsqldb.jdbcDriver</driver_class_name>]]></replacevalue>
+        </replace>
+        <replace file="${mvn_collab.bundle.build}/webapps/mvncms_portlet/WEB-INF/classes/mvncore.xml">
+            <replacetoken><![CDATA[<database_url>jdbc:mysql://localhost/mvnforum?useUnicode=true&amp;characterEncoding=utf-8&amp;useOldUTF8Behavior=true&amp;emulateLocators=true</database_url>]]></replacetoken>
+            <replacevalue><![CDATA[<database_url>jdbc:hsqldb:file:../hsqldb/mvnforum</database_url>]]></replacevalue>
+        </replace>
+        <replace file="${mvn_collab.bundle.build}/webapps/mvncms_portlet/WEB-INF/classes/mvncore.xml">
+            <replacetoken><![CDATA[<database_url>jdbc:mysql://localhost/mvnforum?useUnicode=true&amp;characterEncoding=utf-8&amp;useOldUTF8Behavior=true</database_url>]]></replacetoken>
+            <replacevalue><![CDATA[<database_url>jdbc:hsqldb:file:../hsqldb/mvnforum</database_url>]]></replacevalue>
+        </replace>
+        <replace file="${mvn_collab.bundle.build}/webapps/mvncms_portlet/WEB-INF/classes/mvncore.xml">
+            <replacetoken><![CDATA[<database_user>root</database_user>]]></replacetoken>
+            <replacevalue><![CDATA[<database_user>sa</database_user>]]></replacevalue>
+        </replace>
+        
+        <!-- Edit file secondary-database.xml -->
+        <replace file="${mvn_collab.bundle.build}/webapps/mvncms_portlet/WEB-INF/classes/secondary-database.xml">
+            <replacetoken><![CDATA[<driver_class_name>com.mysql.jdbc.Driver</driver_class_name>]]></replacetoken>
+            <replacevalue><![CDATA[<driver_class_name>org.hsqldb.jdbcDriver</driver_class_name>]]></replacevalue>
+        </replace>
+        <replace file="${mvn_collab.bundle.build}/webapps/mvncms_portlet/WEB-INF/classes/secondary-database.xml">
+            <replacetoken><![CDATA[<database_url>jdbc:mysql://localhost/mvnforum?useUnicode=true&amp;characterEncoding=utf-8&amp;useOldUTF8Behavior=true&amp;emulateLocators=true</database_url>]]></replacetoken>
+            <replacevalue><![CDATA[<database_url>jdbc:hsqldb:file:../hsqldb/mvnforum</database_url>]]></replacevalue>
+        </replace>
+        <replace file="${mvn_collab.bundle.build}/webapps/mvncms_portlet/WEB-INF/classes/secondary-database.xml">
+            <replacetoken><![CDATA[<database_url>jdbc:mysql://localhost/mvnforum?useUnicode=true&amp;characterEncoding=utf-8&amp;useOldUTF8Behavior=true</database_url>]]></replacetoken>
+            <replacevalue><![CDATA[<database_url>jdbc:hsqldb:file:../hsqldb/mvnforum</database_url>]]></replacevalue>
+        </replace>
+        <replace file="${mvn_collab.bundle.build}/webapps/mvncms_portlet/WEB-INF/classes/secondary-database.xml">
+            <replacetoken><![CDATA[<database_user>root</database_user>]]></replacetoken>
+            <replacevalue><![CDATA[<database_user>sa</database_user>]]></replacevalue>
+        </replace>
+        
+        <!-- Edit file mvncms.xml, remove the cnms -->
+        <replace file="${mvn_collab.bundle.build}/webapps/mvncms_portlet/WEB-INF/classes/mvncms.xml" value="">
+            <replacetoken><![CDATA[<!-- template>cnms</template>]]></replacetoken>
+            <replacevalue><![CDATA[]]></replacevalue>
+        </replace>
+        <replace file="${mvn_collab.bundle.build}/webapps/mvncms_portlet/WEB-INF/classes/mvncms.xml" value="">
+            <replacetoken><![CDATA[<handler_config_file>web-handlers@cnms.xml</handler_config_file>]]></replacetoken>
+            <replacevalue><![CDATA[]]></replacevalue>
+        </replace>
+        <replace file="${mvn_collab.bundle.build}/webapps/mvncms_portlet/WEB-INF/classes/mvncms.xml" value="">
+            <replacetoken><![CDATA[<processor_impl>com.mvnsoft.mvncms.cds.cnms.CDSDefaultModuleProcessor</processor_impl -->]]></replacetoken>
+            <replacevalue><![CDATA[]]></replacevalue>
+        </replace>
+        
+        <!-- because when run in portlet, we do not have servlet map to /mvnforum, actually we have /download -->
+        <replace file="${mvn_collab.bundle.build}/webapps/mvncms_portlet/WEB-INF/classes/web-handlers@template1.xml" value="">
+            <replacetoken><![CDATA[mvncms_portlet/mvnforum/rss]]></replacetoken>
+            <replacevalue><![CDATA[mvncms_portlet/download/rss]]></replacevalue>
+        </replace>
+
+        <!-- Copy pre-built Lucene search index -->
+        <copy  todir="${mvn_collab.bundle.build}/webapps/mvncms_portlet/WEB-INF/mvnForumHome">
+            <fileset dir="${mvnforum.home}/contrib/lucene_prebuild/lucene_mvnforum_enterprise_only" />
+        </copy>
+        <copy  todir="${mvn_collab.bundle.build}/webapps/mvncms_portlet/WEB-INF/mvnCmsHome">
+            <fileset dir="${mvnforum.home}/contrib/lucene_prebuild/lucene_mvncms" />
+        </copy>
+        
+        <replace file="${mvn_collab.bundle.build}/webapps/pluto/WEB-INF/pluto-portal-driver-config.xml">
+            <replacetoken><![CDATA[default="Secondary Page"]]></replacetoken>
+            <replacevalue><![CDATA[default="mvnForum"]]></replacevalue>
+        </replace>
+        <replace file="${mvn_collab.bundle.build}/webapps/pluto/WEB-INF/pluto-portal-driver-config.xml">
+            <replacetoken><![CDATA[<!-- Place holder for portlet, do not edit -->]]></replacetoken>
+            <replacevalue><![CDATA[<page name="mvnForum" uri="/WEB-INF/themes/pluto-mvn-theme.jsp">
+      <portlet context="/mvncms_portlet" name="UserForumPortlet" />
+    </page>
+    <page name="mvnForumAdmin" uri="/WEB-INF/themes/pluto-mvn-theme.jsp">
+      <portlet context="/mvncms_portlet" name="AdminForumPortlet" />
+    </page>
+    <page name="mvnForumThreads" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/mvncms_portlet" name="RecentThreadsPortlet" />
+      <portlet context="/mvncms_portlet" name="HotThreadsPortlet" />
+    </page>
+    <page name="mvnPollAlbum" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/mvncms_portlet" name="AlbumPortlet"/>
+      <portlet context="/mvncms_portlet" name="PollPortlet"/>
+    </page>
+    <page name="mvnAd" uri="/WEB-INF/themes/pluto-mvn-theme.jsp">
+      <portlet context="/mvncms_portlet" name="UserAdPortlet" />
+    </page>
+    <page name="mvnAdDisplay" uri="/WEB-INF/themes/pluto-mvn-theme.jsp">
+      <portlet context="/mvncms_portlet" name="DisplayAdPortlet"/>
+    </page>
+    <page name="mvnAdAdmin" uri="/WEB-INF/themes/pluto-mvn-theme.jsp">
+      <portlet context="/mvncms_portlet" name="AdminAdPortlet" />
+    </page>
+    <page name="mvnPublish" uri="/WEB-INF/themes/pluto-mvn-theme.jsp">
+      <portlet context="/mvncms_portlet" name="CDSPortlet" />
+    </page>
+    <page name="mvnPublishContents" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/mvncms_portlet" name="HotNewsPortlet" />
+      <portlet context="/mvncms_portlet" name="LatestNewsPortlet" />
+    </page>
+    <page name="mvnPublishAdmin" uri="/WEB-INF/themes/pluto-mvn-theme.jsp">
+      <portlet context="/mvncms_portlet" name="mvnPublishAdminPortlet"/>
+    </page>
+    <page name="mvnContactUs" uri="/WEB-INF/themes/pluto-mvn-theme.jsp">
+      <portlet context="/mvncms_portlet" name="ContactUsPortlet"/>
+    </page>
+    <page name="mvnWebLink" uri="/WEB-INF/themes/pluto-mvn-theme.jsp">
+      <portlet context="/mvncms_portlet" name="WebLinkPortlet"/>
+    </page>
+    <page name="UserManagement" uri="/WEB-INF/themes/pluto-mvn-theme.jsp">
+      <portlet context="/mvncms_portlet" name="UserManagementPortlet" />
+    </page>
+]]></replacevalue>
+        </replace> 
+        
+        <!-- Create application JAR file, but first delete it to make sure creating a fresh file 
+        <delete file="${release.home}/${mvn_collab.bundle.foldername}.zip" />
+        -->
+        <zip update="true" destfile="${release.home}/${mvn_collab.bundle.foldername}.zip">
+            <zipfileset dir="${mvn_collab.bundle.build}" prefix="${mvn_collab.bundle.foldername}" />
+        </zip>
+    </target>
+    
+    <!-- ========= Release all mvnForum and mvnAd related packages Target =============== -->
+    <target name="release-all-mvnforum-mvnad" 
+        depends="release-mvnforum-mvnad-src, 
+                 release-mvnforum_enterprise-src, 
+                 release-mvnforum_enterprise-mvnad_enterprise-src, 
+                 release-mvnforum_enterprise-bin, 
+                 release-mvnforum-mvnad-bin, 
+                 release-mvnforum-mvnad-bundle" 
+        description="Release all mvnForum and mvnAd related packages" />
+    
+    <!-- ========= Release all mvnForum and mvnAd Portlet packages Target =============== -->
+    <target name="release-all-portlet" 
+        depends="release-mvnforum-portlet-src, 
+                 release-mvnad-portlet-src" 
+        description="Release all mvnForum and mvnAd Portlet packages" />
+    
+    <!-- ========= Release all mvnForum, mvnAd and mvnPublish Portlet packages Target =============== -->
+    <target name="release-all" 
+        depends="release-all-mvnforum-mvnad, 
+                 release-all-portlet, 
+                 release-mvn_collab-bundle, 
+                 release-mvncms-src" 
+        description="Release all mvnForum, mvnAd and mvnPublish Portlet packages" />
+    
+</project>

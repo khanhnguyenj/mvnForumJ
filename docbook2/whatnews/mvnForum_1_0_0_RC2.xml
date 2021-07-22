@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN" "http://docbook.org/xml/4.3/docbookx.dtd"
+  [
+  ]
+>
+
+<article>
+    <articleinfo>
+        <title> Features in mvnForum 1.0.0 RC2 </title>
+        <author>
+            <firstname> Tran </firstname>
+            <surname> Van Hung </surname>
+        </author>
+    </articleinfo>
+
+    <itemizedlist>
+            <title> General features: </title>
+            <listitem><para> Based on MVC architecture  </para></listitem>
+               <listitem><para>Built-in Database connection pool</para></listitem>
+               <listitem><para>Support Datasource configuration if your Servlet Container supports Datasource</para></listitem>
+               <listitem><para>Multi-databases (currently supports 9 DBMS: MySQL, Oracle 8i/9i, Sql Server, postgreSQL, hsqldb, Interbase/Firebird, SAPDB, DB2, Sybase) [improved]  </para></listitem>
+               <listitem><para>Localization (currently localized in 16 languages: English, Vietnamese, Russian, Traditional Chinese, Simplified Chinese, Spanish, Italian, German, French, Danish, Latvian, Serbian cyrillic, Serbian latin, Slovenian, Dutch and Arabic) [improved]  </para></listitem>
+               <listitem><para>Internationalization (support all languages in the backend) [improved]  </para></listitem>
+               <listitem><para>File Attachment [RC1]</para></listitem>
+               <listitem><para>Search/Advanced Search [RC1]</para></listitem>
+               <listitem><para>Global/Category/Forum/Thread Watch [RC1]</para></listitem>
+               <listitem><para>Favorite Threads [RC2]</para></listitem>
+               <listitem><para>RSS/Content Syndication [RC1]</para></listitem>
+               <listitem><para>Powerful logging system with Jakarta Common Logging [RC1]</para></listitem>
+               <listitem><para>Date/time are correctly formatted based on user preferred locale</para></listitem>
+               <listitem><para>Support automatic login (use cookie)</para></listitem>
+             <listitem><para>Check error input by JavaScript on the browser [RC2]</para></listitem>
+               <listitem><para>CSS Style sheet (fully customizable GUI) [RC2]</para></listitem>
+               <listitem><para>Forum Title and Forum Name are customizable in the Ant build process (default is mvnForum) [RC2]</para></listitem>
+            <listitem><para>New Online FAQ/Documentation [improved]</para></listitem>
+         </itemizedlist>
+        <itemizedlist>
+            <title>Security features:</title>
+            <listitem><para>User cannot view email until he have logged in (avoid spam and email-harvest tools)</para></listitem>
+            <listitem><para>MD5 Encrypted Passwords for greater security</para></listitem>
+            <listitem><para>Password Reset via email (forgot password)</para></listitem>
+            <listitem><para>User can now delete cookie (in login page) for better security [RC1]</para></listitem>
+            <listitem><para>Add configuration option to ensure Email Validation before the user can login [RC1]</para></listitem>
+            <listitem><para>Improved IP blocking: now support IP range blocking (e.g. 127.0.0.*)</para></listitem>
+            <listitem><para>In Admin Zone, only show links that user have privilege on them</para></listitem>
+            <listitem><para>Support realm authentication [improved]</para></listitem>
+            <listitem><para>Support any customized authentication [improved]</para></listitem>
+           </itemizedlist>
+           <itemizedlist>
+            <title>User features:</title>
+            <listitem><para>Member lists</para></listitem>
+            <listitem><para>Viewable profiles</para></listitem>
+            <listitem><para>Comprehensive User Control Panel</para></listitem>
+            <listitem><para>Who's Online allows you to view all users visiting your board with all members come above all guests</para></listitem>
+            <listitem><para>Show online/offline status in viewthread and viewmember [RC1]</para></listitem>
+            <listitem><para>User now can choose a preferred displayed language when registering [RC1]</para></listitem>
+            <listitem><para>User can configure the number of rows per page when viewing mvnForum [RC2]</para></listitem>
+            <listitem><para>Support Post Preview</para></listitem>
+            <listitem><para>Users can (optionally) edit posts</para></listitem>
+            <listitem><para>Support 5 sorting options when viewing Recent threads and Threads in forum</para></listitem>
+            <listitem><para>Support all of mvnCode, such as [b] : bold, [color=deeppink] : Deep pink text [improved]</para></listitem>
+            <listitem><para>Support full mvnEmotion, such as [:)] smile, [:D] biggrin</para></listitem>
+            <listitem><para>User can choose avatar, either from built-in avatars or upload his own avatar (Jpg/Gif/Png)</para></listitem>
+            <listitem><para>Dynamic Signatures</para></listitem>
+            <listitem><para>Powerful Rank system [RC2]</para></listitem>
+            <listitem><para>New link to go to last page of a thread [RC1]</para></listitem>
+            <listitem><para>Show link for AIM, Yahoo Messenger, ICQ </para></listitem>
+            <listitem><para>Support Thread/Post icons </para></listitem>
+            <listitem><para>Show new/no new status of a forum</para></listitem>
+            <listitem><para>Show hot/normal and new/no new status of a thread</para></listitem>
+            <listitem><para>Show member's title based on the number of posts</para></listitem>
+            <listitem><para>Post/Thread Print Friendly feature [RC2]</para></listitem>
+            <listitem><para>Statistics Information in the index page [RC2]</para></listitem>
+           </itemizedlist>
+           <itemizedlist>
+            <title>Administration features:</title>
+            <listitem><para>Comprehensive system information and system diagnosis</para></listitem>
+            <listitem><para>Create an unlimited amount of forums</para></listitem>
+            <listitem><para>Re-order, edit forums at any time</para></listitem>
+            <listitem><para>Create an unlimited amount of categories</para></listitem>
+            <listitem><para>Re-order, edit categories at any time</para></listitem>
+            <listitem><para>Admin can view the IP of any post (both creation time and last edit time)</para></listitem>
+            <listitem><para>Enable/disable member (disabled member cannot login)</para></listitem>
+            <listitem><para>ForumAdmin can delete any forums at any time</para></listitem>
+            <listitem><para>ForumAdmin can delete empty category</para></listitem>
+            <listitem><para>Moderator can edit posts at any time</para></listitem>
+            <listitem><para>Moderator can delete posts at any time</para></listitem>
+            <listitem><para>Moderator can delete threads at any time</para></listitem>
+            <listitem><para>Moderator can move threads at any time [RC2]</para></listitem>
+            <listitem><para>Assign members to any group at any time</para></listitem>
+            <listitem><para>Admin can remove member from group at any time</para></listitem>
+            <listitem><para>Support setting/customize Member's Title [RC1]</para></listitem>
+            <listitem><para>Improved User Management [RC1]</para></listitem>
+            <listitem><para>Admin can delete any groups at any time</para></listitem>
+            <listitem><para>Restrict permissions for an entire group at a time</para></listitem>
+            <listitem><para>Support forum-specific Permission [RC2]</para></listitem>
+            <listitem><para>Support Individual Permission [RC2]</para></listitem>
+            <listitem><para>Admin can email in the AdminZone</para></listitem>
+            <listitem><para>Admin can reset member's signature, avatar and activation [RC2]</para></listitem>
+            <listitem><para>Admin can view the IP and UserAgent of online users in listonlineusers [RC2]</para></listitem>
+            <listitem><para>Allow access to the moderation features</para></listitem>
+            <listitem><para>Allow access to the Administration Control Panel</para></listitem>
+   </itemizedlist>
+
+</article>

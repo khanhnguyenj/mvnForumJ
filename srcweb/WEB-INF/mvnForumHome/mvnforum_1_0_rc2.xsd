@@ -1,0 +1,792 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ - $Revision: 1.2 $
+ - $Date: 2006/04/15 04:49:05 $
+ -
+ - ====================================================================
+ -
+ - Copyright (C) 2002-2006 by MyVietnam.net
+ -
+ - All copyright notices regarding mvnForum MUST remain 
+ - intact in the scripts and in the outputted HTML.
+ - The "powered by" text/logo with a link back to
+ - http://www.mvnForum.com and http://www.MyVietnam.net in 
+ - the footer of the pages MUST remain visible when the pages
+ - are viewed on the internet or intranet.
+ -
+ - This program is free software; you can redistribute it and/or modify
+ - it under the terms of the GNU General Public License as published by
+ - the Free Software Foundation; either version 2 of the License, or
+ - any later version.
+ -
+ - This program is distributed in the hope that it will be useful,
+ - but WITHOUT ANY WARRANTY; without even the implied warranty of
+ - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ - GNU General Public License for more details.
+ -
+ - You should have received a copy of the GNU General Public License
+ - along with this program; if not, write to the Free Software
+ - Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ -
+ - Support can be obtained from support forums at:
+ - http://www.mvnForum.com/mvnforum/index
+ -
+ - Correspondence and Marketing Questions can be sent to:
+ - info at MyVietnam net
+ -->
+<!--
+  
+    =====================================================================
+    ===                 MVN Forum XML DTD definition                  ===
+    ===                                                               ===
+    ===    Made by Igor Manic, mailto:imanic@users.sourceforge.net    ===
+    ===                                                               ===
+    ===                   Donated to General Public                   ===
+    ===                                                               ===
+    ===                                                               ===
+    === this file can be obtained at:                                 ===
+    ===              http://www.mvnforum.com/dtd/mvnforum_1_0_rc2.dtd ===
+    =====================================================================
+  
+  
+  Used formats:
+   timestamp: use one of the following formats:
+                yyyy/MM/dd HH:mm:ss.nn
+                yyyy-MM-dd HH:mm:ss.nn
+                yyyyMMddHHmmssnn
+                EEE MMM dd HH:mm:ss z yyyy  (e.g.: "Fri Jan 16 18:48:25 CEST 2002")
+              In first three formats, last "nn" are hundreths and are optional
+              example: 2001/01/17 19:17:33
+              exception: MemberBirthday is not complete timestamp, it's only the date part (e.g. yyyy/MM/DD)
+   boolean: use values: 0, 1, true, false, yes, no
+  
+  some info on mvnForum database:
+  - all ID fields in the database are auto_increment, and might not be exported to XML
+    (that is, they are optional), except for the AttachmentID, since it is important
+    because of attachment file name on the server
+  - MemberGroup allows (GroupID,MemberID)=(0,0) - that record should be ignored
+  - MemberForum allows (MemberID,ForumID)=(0,0) - that record should be ignored
+  - GroupForum allows (GroupID,ForumID)=(0,0) - that record should be ignored
+  - Watch allows (MemberID,CategoryID,ForumID,ThreadID)=(0,0,0,0) - that record should be ignored
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="mvnforum">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="MemberList"/>
+        <xs:element minOccurs="0" ref="GroupList"/>
+        <xs:element minOccurs="0" ref="CategoryList"/>
+        <xs:element minOccurs="0" ref="RankList"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="attlist.mvnforum"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="attlist.mvnforum">
+    <xs:attribute name="version" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="1.0"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="exportDate" use="required"/>
+  </xs:attributeGroup>
+  <!-- ================================================= -->
+  <!-- ==== MEMBERS, permissions and message folders === -->
+  <!-- ================================================= -->
+  <xs:element name="MemberList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Member"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Member">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="MemberName"/>
+        <xs:element ref="MemberPassword"/>
+        <xs:element ref="MemberFirstEmail"/>
+        <xs:element ref="MemberEmail"/>
+        <xs:element minOccurs="0" ref="MemberEmailVisible"/>
+        <xs:element minOccurs="0" ref="MemberNameVisible"/>
+        <xs:element minOccurs="0" ref="MemberFirstIP"/>
+        <xs:element minOccurs="0" ref="MemberLastIP"/>
+        <xs:element minOccurs="0" ref="MemberViewCount"/>
+        <xs:element minOccurs="0" ref="MemberPostCount"/>
+        <xs:element minOccurs="0" ref="MemberCreationDate"/>
+        <xs:element minOccurs="0" ref="MemberModifiedDate"/>
+        <xs:element minOccurs="0" ref="MemberLastLogon"/>
+        <xs:element minOccurs="0" ref="MemberOption"/>
+        <xs:element minOccurs="0" ref="MemberStatus"/>
+        <xs:element minOccurs="0" ref="MemberActivateCode"/>
+        <xs:element minOccurs="0" ref="MemberTempPassword"/>
+        <xs:element minOccurs="0" ref="MemberMessageCount"/>
+        <xs:element minOccurs="0" ref="MemberMessageOption"/>
+        <xs:element minOccurs="0" ref="MemberPostsPerPage"/>
+        <xs:element minOccurs="0" ref="MemberWarnCount"/>
+        <xs:element minOccurs="0" ref="MemberVoteCount"/>
+        <xs:element minOccurs="0" ref="MemberVoteTotalStars"/>
+        <xs:element minOccurs="0" ref="MemberRewardPoints"/>
+        <xs:element ref="MemberTitle"/>
+        <xs:element minOccurs="0" ref="MemberTimeZone"/>
+        <xs:element minOccurs="0" ref="MemberSignature"/>
+        <xs:element minOccurs="0" ref="MemberAvatar"/>
+        <xs:element minOccurs="0" ref="MemberSkin"/>
+        <xs:element minOccurs="0" ref="MemberLanguage"/>
+        <xs:element ref="MemberFirstname"/>
+        <xs:element ref="MemberLastname"/>
+        <xs:element minOccurs="0" ref="MemberGender"/>
+        <xs:element minOccurs="0" ref="MemberBirthday"/>
+        <xs:element minOccurs="0" ref="MemberAddress"/>
+        <xs:element minOccurs="0" ref="MemberCity"/>
+        <xs:element minOccurs="0" ref="MemberState"/>
+        <xs:element minOccurs="0" ref="MemberCountry"/>
+        <xs:element minOccurs="0" ref="MemberPhone"/>
+        <xs:element minOccurs="0" ref="MemberMobile"/>
+        <xs:element minOccurs="0" ref="MemberFax"/>
+        <xs:element minOccurs="0" ref="MemberCareer"/>
+        <xs:element minOccurs="0" ref="MemberHomepage"/>
+        <xs:element minOccurs="0" ref="MemberYahoo"/>
+        <xs:element minOccurs="0" ref="MemberAol"/>
+        <xs:element minOccurs="0" ref="MemberIcq"/>
+        <xs:element minOccurs="0" ref="MemberMsn"/>
+        <xs:element minOccurs="0" ref="MemberCoolLink1"/>
+        <xs:element minOccurs="0" ref="MemberCoolLink2"/>
+        <xs:element minOccurs="0" ref="GlobalPermissionList"/>
+        <xs:element minOccurs="0" ref="MessageFolderList"/>
+        <xs:element minOccurs="0" ref="GlobalWatchList"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="attlist.Member"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="attlist.Member">
+    <xs:attribute name="class">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="Guest"/>
+          <xs:enumeration value="Admin"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:element name="MessageFolderList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="MessageFolder"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!-- MessageFolder.MemberID is not here -->
+  <xs:element name="MessageFolder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="FolderName"/>
+        <xs:element minOccurs="0" ref="FolderOrder"/>
+        <xs:element minOccurs="0" ref="FolderCreationDate"/>
+        <xs:element minOccurs="0" ref="FolderModifiedDate"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GlobalWatchList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="GlobalWatch"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!-- ================================================= -->
+  <!-- ============== GROUPS (of members) ============== -->
+  <!-- ================================================= -->
+  <xs:element name="GroupList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Group"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!-- Group.GroupOwnerID is not here -->
+  <xs:element name="Group">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="GroupOwnerName"/>
+        <xs:element ref="GroupName"/>
+        <xs:element minOccurs="0" ref="GroupDesc"/>
+        <xs:element minOccurs="0" ref="GroupOption"/>
+        <xs:element minOccurs="0" ref="GroupCreationDate"/>
+        <xs:element minOccurs="0" ref="GroupModifiedDate"/>
+        <xs:element minOccurs="0" ref="GlobalPermissionList"/>
+        <xs:element minOccurs="0" ref="GroupMemberList"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="attlist.Group"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="attlist.Group">
+    <xs:attribute name="class">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="RegisteredMembers"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:element name="GroupMemberList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="GroupMember"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!-- GroupMember.GroupID and GroupMember.MemberID are not here -->
+  <xs:element name="GroupMember">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="MemberName"/>
+        <xs:element minOccurs="0" ref="Privilege"/>
+        <xs:element minOccurs="0" ref="CreationDate"/>
+        <xs:element minOccurs="0" ref="ModifiedDate"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!-- ================================================= -->
+  <!-- ============== GLOBAL PERMISSIONS =============== -->
+  <!-- ================================================= -->
+  <xs:element name="GlobalPermissionList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="GlobalPermission"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GlobalPermission" type="xs:string"/>
+  <!-- ================================================= -->
+  <!-- ================== CATEGORIES =================== -->
+  <!-- ================================================= -->
+  <xs:element name="CategoryList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Category"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!-- Category.CategoryID and Category.ParentCategoryID are not here -->
+  <!-- each Category can have it's own subcategories -->
+  <xs:element name="Category">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="CategoryName"/>
+        <xs:element minOccurs="0" ref="CategoryDesc"/>
+        <xs:element minOccurs="0" ref="CategoryCreationDate"/>
+        <xs:element minOccurs="0" ref="CategoryModifiedDate"/>
+        <xs:element minOccurs="0" ref="CategoryOrder"/>
+        <xs:element minOccurs="0" ref="CategoryOption"/>
+        <xs:element minOccurs="0" ref="CategoryStatus"/>
+        <xs:element minOccurs="0" ref="CategoryWatchList"/>
+        <xs:element minOccurs="0" ref="ForumList"/>
+        <xs:element minOccurs="0" ref="CategoryList"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CategoryWatchList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="CategoryWatch"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!-- ================================================= -->
+  <!-- ==================== FORUMS ===================== -->
+  <!-- ================================================= -->
+  <xs:element name="ForumList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Forum"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!-- Forum.ForumID and Forum.CategoryID are not here -->
+  <xs:element name="Forum">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="ForumLastPostMemberName"/>
+        <xs:element ref="ForumName"/>
+        <xs:element minOccurs="0" ref="ForumDesc"/>
+        <xs:element minOccurs="0" ref="ForumCreationDate"/>
+        <xs:element minOccurs="0" ref="ForumModifiedDate"/>
+        <xs:element minOccurs="0" ref="ForumLastPostDate"/>
+        <xs:element minOccurs="0" ref="ForumOrder"/>
+        <xs:element minOccurs="0" ref="ForumType"/>
+        <xs:element minOccurs="0" ref="ForumFormatOption"/>
+        <xs:element minOccurs="0" ref="ForumOption"/>
+        <xs:element minOccurs="0" ref="ForumStatus"/>
+        <xs:element minOccurs="0" ref="ForumModerationMode"/>
+        <xs:element ref="ForumPassword"/>
+        <xs:element minOccurs="0" ref="ForumThreadCount"/>
+        <xs:element minOccurs="0" ref="ForumPostCount"/>
+        <xs:element minOccurs="0" ref="MemberForumPermissionList"/>
+        <xs:element minOccurs="0" ref="GroupForumPermissionList"/>
+        <xs:element minOccurs="0" ref="ForumWatchList"/>
+        <xs:element minOccurs="0" ref="ThreadList"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ForumWatchList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="ForumWatch"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!-- ================================================= -->
+  <!-- ========== FORUM-SPECIFIC PERMISSIONS =========== -->
+  <!-- ================================================= -->
+  <xs:element name="MemberForumPermissionList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="MemberForumPermission"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MemberForumPermission">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="MemberName"/>
+        <xs:element ref="ForumPermission"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GroupForumPermissionList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="GroupForumPermission"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GroupForumPermission">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="GroupName"/>
+        <xs:element ref="ForumPermission"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ForumPermission" type="xs:string"/>
+  <!-- ================================================= -->
+  <!-- ==================== THREADS ==================== -->
+  <!-- ================================================= -->
+  <xs:element name="ThreadList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Thread"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!-- Thread.ThreadID and Thread.ForumID are not here -->
+  <xs:element name="Thread">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="MemberName"/>
+        <xs:element minOccurs="0" ref="ThreadLastPostMemberName"/>
+        <xs:element ref="ThreadTopic"/>
+        <xs:element ref="ThreadBody"/>
+        <xs:element minOccurs="0" ref="ThreadVoteCount"/>
+        <xs:element minOccurs="0" ref="ThreadVoteTotalStars"/>
+        <xs:element minOccurs="0" ref="ThreadCreationDate"/>
+        <xs:element minOccurs="0" ref="ThreadLastPostDate"/>
+        <xs:element minOccurs="0" ref="ThreadType"/>
+        <xs:element minOccurs="0" ref="ThreadOption"/>
+        <xs:element minOccurs="0" ref="ThreadStatus"/>
+        <xs:element minOccurs="0" ref="ThreadHasPoll"/>
+        <xs:element minOccurs="0" ref="ThreadViewCount"/>
+        <xs:element minOccurs="0" ref="ThreadReplyCount"/>
+        <xs:element minOccurs="0" ref="ThreadIcon"/>
+        <xs:element minOccurs="0" ref="ThreadDuration"/>
+        <xs:element minOccurs="0" ref="ThreadWatchList"/>
+        <xs:element minOccurs="0" ref="FavoriteThreadList"/>
+        <xs:element minOccurs="0" ref="PostList"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ThreadWatchList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="ThreadWatch"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FavoriteThreadList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="FavoriteThread"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!-- this is list of FavoriteThread records that refer to this particular thread -->
+  <!-- FavoriteThread.MemberID is not here, but I added MemberName to identify the member -->
+  <xs:element name="FavoriteThread">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="MemberName"/>
+        <xs:element minOccurs="0" ref="FavoriteCreationDate"/>
+        <xs:element minOccurs="0" ref="FavoriteType"/>
+        <xs:element minOccurs="0" ref="FavoriteOption"/>
+        <xs:element minOccurs="0" ref="FavoriteStatus"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!-- ================================================= -->
+  <!-- ===================== POSTS ===================== -->
+  <!-- ================================================= -->
+  <xs:element name="PostList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Post"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!-- Post.PostID, Post.ParentPostID, Post.ForumID, Post.ThreadID, Post.MemberID are not here -->
+  <!-- each post can have it's own replies -->
+  <xs:element name="Post">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="MemberName"/>
+        <xs:element minOccurs="0" ref="LastEditMemberName"/>
+        <xs:element ref="PostTopic"/>
+        <xs:element ref="PostBody"/>
+        <xs:element minOccurs="0" ref="PostCreationDate"/>
+        <xs:element minOccurs="0" ref="PostLastEditDate"/>
+        <xs:element minOccurs="0" ref="PostCreationIP"/>
+        <xs:element minOccurs="0" ref="PostLastEditIP"/>
+        <xs:element minOccurs="0" ref="PostEditCount"/>
+        <xs:element minOccurs="0" ref="PostFormatOption"/>
+        <xs:element minOccurs="0" ref="PostOption"/>
+        <xs:element minOccurs="0" ref="PostStatus"/>
+        <xs:element minOccurs="0" ref="PostIcon"/>
+        <xs:element minOccurs="0" ref="PostAttachCount"/>
+        <xs:element minOccurs="0" ref="AttachmentList"/>
+        <xs:element minOccurs="0" ref="PostList"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!-- ================================================= -->
+  <!-- ================== ATTACHMENTS ================== -->
+  <!-- ================================================= -->
+  <xs:element name="AttachmentList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Attachment"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!--
+    Attachment.AttachID is mandatory. Otherwise, we would lose connection between
+    this data (in database), and attachment files on server
+  -->
+  <xs:attributeGroup name="attlist.Attachment">
+    <xs:attribute name="id" use="required"/>
+  </xs:attributeGroup>
+  <!--
+    Attachment.PostID, Attachment.MemberID are not here,
+    but I've added Attachment.MemberName (which is unique) to identify the member
+  -->
+  <xs:element name="Attachment">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="MemberName"/>
+        <xs:element ref="AttachFilename"/>
+        <xs:element ref="AttachFileSize"/>
+        <xs:element ref="AttachMimeType"/>
+        <xs:element minOccurs="0" ref="AttachDesc"/>
+        <xs:element minOccurs="0" ref="AttachCreationIP"/>
+        <xs:element minOccurs="0" ref="AttachCreationDate"/>
+        <xs:element minOccurs="0" ref="AttachModifiedDate"/>
+        <xs:element minOccurs="0" ref="AttachDownloadCount"/>
+        <xs:element minOccurs="0" ref="AttachOption"/>
+        <xs:element minOccurs="0" ref="AttachStatus"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="attlist.Attachment"/>
+    </xs:complexType>
+  </xs:element>
+  <!-- ================================================= -->
+  <!-- ==================== WATCHES ==================== -->
+  <!-- ================================================= -->
+  <!--
+    WatchID and MemberID are not subelements in any of these watch elements
+    
+    <GlobalWatch>: it doesn't need CategoryID, ForumID, ThreadID, and it corresponds to
+                   the parent <Member> element
+    
+    <ThreadWatch>, <ForumWatch>, <CategoryWatch>:
+      They don't need CategoryID, ForumID, ThreadID, since these non-global watch elements
+      are under their corresponding <Category>, <Forum> or <Thread> elements.
+      These elements identify their MemberID through the MemberName subelement (MemberName is
+      unique in the database).
+    
+    watches without MemberName are equivalent to watches with MemberID=0 in the database
+  -->
+  <xs:element name="GlobalWatch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="WatchType"/>
+        <xs:element minOccurs="0" ref="WatchOption"/>
+        <xs:element minOccurs="0" ref="WatchStatus"/>
+        <xs:element minOccurs="0" ref="WatchCreationDate"/>
+        <xs:element minOccurs="0" ref="WatchLastSentDate"/>
+        <xs:element minOccurs="0" ref="WatchEndDate"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CategoryWatch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="MemberName"/>
+        <xs:element minOccurs="0" ref="WatchType"/>
+        <xs:element minOccurs="0" ref="WatchOption"/>
+        <xs:element minOccurs="0" ref="WatchStatus"/>
+        <xs:element minOccurs="0" ref="WatchCreationDate"/>
+        <xs:element minOccurs="0" ref="WatchLastSentDate"/>
+        <xs:element minOccurs="0" ref="WatchEndDate"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ForumWatch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="MemberName"/>
+        <xs:element minOccurs="0" ref="WatchType"/>
+        <xs:element minOccurs="0" ref="WatchOption"/>
+        <xs:element minOccurs="0" ref="WatchStatus"/>
+        <xs:element minOccurs="0" ref="WatchCreationDate"/>
+        <xs:element minOccurs="0" ref="WatchLastSentDate"/>
+        <xs:element minOccurs="0" ref="WatchEndDate"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ThreadWatch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="MemberName"/>
+        <xs:element minOccurs="0" ref="WatchType"/>
+        <xs:element minOccurs="0" ref="WatchOption"/>
+        <xs:element minOccurs="0" ref="WatchStatus"/>
+        <xs:element minOccurs="0" ref="WatchCreationDate"/>
+        <xs:element minOccurs="0" ref="WatchLastSentDate"/>
+        <xs:element minOccurs="0" ref="WatchEndDate"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!-- ================================================= -->
+  <!-- ===================== RANKS ===================== -->
+  <!-- ================================================= -->
+  <xs:element name="RankList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Rank"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!-- Rank.RankID is not here -->
+  <xs:element name="Rank">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="RankMinPosts"/>
+        <xs:element minOccurs="0" ref="RankLevel"/>
+        <xs:element ref="RankTitle"/>
+        <xs:element minOccurs="0" ref="RankImage"/>
+        <xs:element minOccurs="0" ref="RankType"/>
+        <xs:element minOccurs="0" ref="RankOption"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!-- ================================================= -->
+  <!-- ==================== MEMBERS ==================== -->
+  <!-- ================================================= -->
+  <xs:element name="MemberName" type="xs:string"/>
+  <xs:element name="MemberPassword" type="xs:string"/>
+  <!-- MD5 + Base64 encrypted -->
+  <xs:element name="MemberFirstEmail" type="xs:string"/>
+  <xs:element name="MemberEmail" type="xs:string"/>
+  <xs:element name="MemberEmailVisible" type="xs:string"/>
+  <!-- boolean -->
+  <xs:element name="MemberNameVisible" type="xs:string"/>
+  <!-- boolean -->
+  <xs:element name="MemberFirstIP" type="xs:string"/>
+  <xs:element name="MemberLastIP" type="xs:string"/>
+  <xs:element name="MemberViewCount" type="xs:string"/>
+  <xs:element name="MemberPostCount" type="xs:string"/>
+  <xs:element name="MemberCreationDate" type="xs:string"/>
+  <xs:element name="MemberModifiedDate" type="xs:string"/>
+  <xs:element name="MemberLastLogon" type="xs:string"/>
+  <xs:element name="MemberOption" type="xs:string"/>
+  <xs:element name="MemberStatus" type="xs:string"/>
+  <!-- 0=Enabled, 1=Disabled -->
+  <xs:element name="MemberActivateCode" type="xs:string"/>
+  <!-- Empty if activation hasn't been initiated -->
+  <!-- The actual code if activation pending -->
+  <!-- "activated" if activation completed -->
+  <xs:element name="MemberTempPassword" type="xs:string"/>
+  <xs:element name="MemberMessageCount" type="xs:string"/>
+  <xs:element name="MemberMessageOption" type="xs:string"/>
+  <xs:element name="MemberPostsPerPage" type="xs:string"/>
+  <xs:element name="MemberWarnCount" type="xs:string"/>
+  <xs:element name="MemberVoteCount" type="xs:string"/>
+  <xs:element name="MemberVoteTotalStars" type="xs:string"/>
+  <xs:element name="MemberRewardPoints" type="xs:string"/>
+  <xs:element name="MemberTitle" type="xs:string"/>
+  <!--
+    The string that appears under the user's login name
+    (Stranger, Newbie, Member, Advanced Member, ...)
+    Empty means use default (forum-determined)
+  -->
+  <xs:element name="MemberTimeZone" type="xs:string"/>
+  <!-- Hours relative to Zero Meridian; integer only -->
+  <xs:element name="MemberSignature" type="xs:string"/>
+  <xs:element name="MemberAvatar" type="xs:string"/>
+  <xs:element name="MemberSkin" type="xs:string"/>
+  <xs:element name="MemberLanguage" type="xs:string"/>
+  <!-- two-letter code such as "sh" or "vi" -->
+  <!-- empty means use default -->
+  <xs:element name="MemberFirstname" type="xs:string"/>
+  <xs:element name="MemberLastname" type="xs:string"/>
+  <xs:element name="MemberGender" type="xs:string"/>
+  <!-- 0=Female, 1=Male -->
+  <xs:element name="MemberBirthday" type="xs:string"/>
+  <xs:element name="MemberAddress" type="xs:string"/>
+  <xs:element name="MemberCity" type="xs:string"/>
+  <xs:element name="MemberState" type="xs:string"/>
+  <xs:element name="MemberCountry" type="xs:string"/>
+  <xs:element name="MemberPhone" type="xs:string"/>
+  <xs:element name="MemberMobile" type="xs:string"/>
+  <xs:element name="MemberFax" type="xs:string"/>
+  <xs:element name="MemberCareer" type="xs:string"/>
+  <xs:element name="MemberHomepage" type="xs:string"/>
+  <xs:element name="MemberYahoo" type="xs:string"/>
+  <xs:element name="MemberAol" type="xs:string"/>
+  <xs:element name="MemberIcq" type="xs:string"/>
+  <xs:element name="MemberMsn" type="xs:string"/>
+  <xs:element name="MemberCoolLink1" type="xs:string"/>
+  <xs:element name="MemberCoolLink2" type="xs:string"/>
+  <!-- ================================================= -->
+  <!-- ===================== GROUPS ==================== -->
+  <!-- ================================================= -->
+  <xs:element name="GroupOwnerName" type="xs:string"/>
+  <xs:element name="GroupName" type="xs:string"/>
+  <xs:element name="GroupDesc" type="xs:string"/>
+  <xs:element name="GroupOption" type="xs:string"/>
+  <xs:element name="GroupCreationDate" type="xs:string"/>
+  <xs:element name="GroupModifiedDate" type="xs:string"/>
+  <xs:element name="Privilege" type="xs:string"/>
+  <xs:element name="CreationDate" type="xs:string"/>
+  <xs:element name="ModifiedDate" type="xs:string"/>
+  <!-- ================================================= -->
+  <!-- =================== CATEGORIES ================== -->
+  <!-- ================================================= -->
+  <xs:element name="CategoryName" type="xs:string"/>
+  <xs:element name="CategoryDesc" type="xs:string"/>
+  <xs:element name="CategoryCreationDate" type="xs:string"/>
+  <xs:element name="CategoryModifiedDate" type="xs:string"/>
+  <xs:element name="CategoryOrder" type="xs:string"/>
+  <xs:element name="CategoryOption" type="xs:string"/>
+  <xs:element name="CategoryStatus" type="xs:string"/>
+  <!-- 0=enabled, 1=disabled -->
+  <!-- ================================================= -->
+  <!-- ==================== FORUMS ===================== -->
+  <!-- ================================================= -->
+  <xs:element name="ForumLastPostMemberName" type="xs:string"/>
+  <xs:element name="ForumName" type="xs:string"/>
+  <xs:element name="ForumDesc" type="xs:string"/>
+  <xs:element name="ForumCreationDate" type="xs:string"/>
+  <xs:element name="ForumModifiedDate" type="xs:string"/>
+  <xs:element name="ForumLastPostDate" type="xs:string"/>
+  <xs:element name="ForumOrder" type="xs:string"/>
+  <xs:element name="ForumType" type="xs:string"/>
+  <xs:element name="ForumFormatOption" type="xs:string"/>
+  <xs:element name="ForumOption" type="xs:string"/>
+  <xs:element name="ForumStatus" type="xs:string"/>
+  <!-- 0=enabled, 1=disabled -->
+  <xs:element name="ForumModerationMode" type="xs:string"/>
+  <xs:element name="ForumPassword" type="xs:string"/>
+  <!-- MD5 + Base64 encrypted -->
+  <xs:element name="ForumThreadCount" type="xs:string"/>
+  <xs:element name="ForumPostCount" type="xs:string"/>
+  <!-- ================================================= -->
+  <!-- ==================== THREADS ==================== -->
+  <!-- ================================================= -->
+  <xs:element name="ThreadLastPostMemberName" type="xs:string"/>
+  <xs:element name="ThreadTopic" type="xs:string"/>
+  <xs:element name="ThreadBody" type="xs:string"/>
+  <xs:element name="ThreadVoteCount" type="xs:string"/>
+  <xs:element name="ThreadVoteTotalStars" type="xs:string"/>
+  <xs:element name="ThreadCreationDate" type="xs:string"/>
+  <xs:element name="ThreadLastPostDate" type="xs:string"/>
+  <xs:element name="ThreadType" type="xs:string"/>
+  <xs:element name="ThreadOption" type="xs:string"/>
+  <xs:element name="ThreadStatus" type="xs:string"/>
+  <!-- 0=enabled, 1=disabled -->
+  <xs:element name="ThreadHasPoll" type="xs:string"/>
+  <xs:element name="ThreadViewCount" type="xs:string"/>
+  <xs:element name="ThreadReplyCount" type="xs:string"/>
+  <xs:element name="ThreadIcon" type="xs:string"/>
+  <xs:element name="ThreadDuration" type="xs:string"/>
+  <!-- ================================================= -->
+  <!-- ============== FAVORITE-THREADS ================= -->
+  <!-- ================================================= -->
+  <xs:element name="FavoriteCreationDate" type="xs:string"/>
+  <xs:element name="FavoriteType" type="xs:string"/>
+  <xs:element name="FavoriteOption" type="xs:string"/>
+  <xs:element name="FavoriteStatus" type="xs:string"/>
+  <!-- ================================================= -->
+  <!-- ====================== POSTS ==================== -->
+  <!-- ================================================= -->
+  <xs:element name="LastEditMemberName" type="xs:string"/>
+  <xs:element name="PostTopic" type="xs:string"/>
+  <xs:element name="PostBody" type="xs:string"/>
+  <xs:element name="PostCreationDate" type="xs:string"/>
+  <xs:element name="PostLastEditDate" type="xs:string"/>
+  <xs:element name="PostCreationIP" type="xs:string"/>
+  <xs:element name="PostLastEditIP" type="xs:string"/>
+  <xs:element name="PostEditCount" type="xs:string"/>
+  <xs:element name="PostFormatOption" type="xs:string"/>
+  <xs:element name="PostOption" type="xs:string"/>
+  <xs:element name="PostStatus" type="xs:string"/>
+  <xs:element name="PostIcon" type="xs:string"/>
+  <xs:element name="PostAttachCount" type="xs:string"/>
+  <!-- ================================================= -->
+  <!-- ================= ATTACHMENTS =================== -->
+  <!-- ================================================= -->
+  <xs:element name="AttachFilename" type="xs:string"/>
+  <xs:element name="AttachFileSize" type="xs:string"/>
+  <xs:element name="AttachMimeType" type="xs:string"/>
+  <xs:element name="AttachDesc" type="xs:string"/>
+  <xs:element name="AttachCreationIP" type="xs:string"/>
+  <xs:element name="AttachCreationDate" type="xs:string"/>
+  <xs:element name="AttachModifiedDate" type="xs:string"/>
+  <xs:element name="AttachDownloadCount" type="xs:string"/>
+  <xs:element name="AttachOption" type="xs:string"/>
+  <xs:element name="AttachStatus" type="xs:string"/>
+  <!-- ================================================= -->
+  <!-- ================ MESSAGE FOLDERS ================ -->
+  <!-- ================================================= -->
+  <xs:element name="FolderName" type="xs:string"/>
+  <xs:element name="FolderOrder" type="xs:string"/>
+  <xs:element name="FolderCreationDate" type="xs:string"/>
+  <xs:element name="FolderModifiedDate" type="xs:string"/>
+  <!-- ================================================= -->
+  <!-- ==================== WATCHES ==================== -->
+  <!-- ================================================= -->
+  <xs:element name="WatchType" type="xs:string"/>
+  <xs:element name="WatchOption" type="xs:string"/>
+  <xs:element name="WatchStatus" type="xs:string"/>
+  <xs:element name="WatchCreationDate" type="xs:string"/>
+  <xs:element name="WatchLastSentDate" type="xs:string"/>
+  <xs:element name="WatchEndDate" type="xs:string"/>
+  <!-- ================================================= -->
+  <!-- ===================== RANKS ===================== -->
+  <!-- ================================================= -->
+  <xs:element name="RankMinPosts" type="xs:string"/>
+  <xs:element name="RankLevel" type="xs:string"/>
+  <xs:element name="RankTitle" type="xs:string"/>
+  <xs:element name="RankImage" type="xs:string"/>
+  <xs:element name="RankType" type="xs:string"/>
+  <xs:element name="RankOption" type="xs:string"/>
+</xs:schema>

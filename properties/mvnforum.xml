@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<baseElement>
+
+    <adminmoduleconfig>
+        <!--
+         Default url pattern for admin, you don't have to change anything here
+         Note: make change to this property is for advanced users only (if you
+               change this value, you MUST change the value in file web.xml
+        -->
+        <url_pattern>/mvnforumadmin</url_pattern>
+    </adminmoduleconfig>
+
+    <usermoduleconfig>
+        <url_pattern>/mvnforum</url_pattern>
+    </usermoduleconfig>
+    
+    <mobilemoduleconfig>
+        <url_pattern>/m</url_pattern>
+    </mobilemoduleconfig>
+
+    <mvnforumconfig>
+
+        <!--
+         NOTE: mvnforum_home is a folder that cannot be accessed from the web,
+               you could create a folder mvnForumHome in your WEB-INF and
+               set mvnforum_home to point to this folder. Please note that
+               this example use relative path, and you could set the absolute path like:
+               mvnforum_home = /home/tomcat/mvnForumHome
+        -->
+        <mvnforum_home>../webapps/mvnforum/WEB-INF/mvnForumHome</mvnforum_home>
+
+        <!--
+         NOTE: the mvnforum_log is used to view the log file in Admin area only.
+         You have to config it in its correct place (jlo_logging.xml or log4j.properties)
+        -->
+        <mvnforum_log>../webapps/mvnforum/WEB-INF/mvnForumHome/log/mvnforum.log</mvnforum_log>
+        <webmaster_email>youremail@yourdomain.com</webmaster_email>
+        <watch_email>youremail@yourdomain.com</watch_email>
+        <logo_url>http://www.mvnForum.com</logo_url>
+        <redirect_login_url>default</redirect_login_url>
+        <redirect_logout_url>default</redirect_logout_url>
+
+        <supported_locales>en;vi;ru;zh_CN;zh_TW;es;fr;it;de;da;lv;sr;sh;si;nl;ar;ko;pt_BR;ja;el;tr;no;bg;hu</supported_locales>
+        <supported_locales_for_images>en;vi</supported_locales_for_images>
+        <default_locale_name>en</default_locale_name>
+        <locale_parameter_name>lang</locale_parameter_name>
+        <event_log_locale>en</event_log_locale>
+        <!--
+         NOTE: default_guest_name: set default name of a virtual Guest user.
+         IMPORTANT: It will be overridden with the data from the database, if it exists (for the Guest user).
+        -->
+        <default_guest_name>Guest</default_guest_name>
+        <default_guest_timezone>0</default_guest_timezone>
+        <default_category_id>-1</default_category_id>
+
+        <enable_cache_member>true</enable_cache_member>
+        <enable_cache_post>true</enable_cache_post>
+        <enable_cache_thread>true</enable_cache_thread>
+        <enable_cache_forum>true</enable_cache_forum>
+        <enable_cache_category>true</enable_cache_category>
+
+        <!--
+         NOTE: enable_passwordless_auth is not supported and should be false
+        -->
+        <enable_passwordless_auth>false</enable_passwordless_auth>
+        <enable_login_info_in_cookie>true</enable_login_info_in_cookie>
+        <enable_login_info_in_session>true</enable_login_info_in_session>
+        <enable_login_info_in_realm>false</enable_login_info_in_realm>
+        <enable_login_info_in_customization>false</enable_login_info_in_customization>
+
+        <!--
+         NOTE: if enable_login_info_in_customization is true, then 
+               enable_encrypt_password_on_browser must be false
+        -->
+        <enable_encrypt_password_on_browser>true</enable_encrypt_password_on_browser>
+        <enable_external_user_database>false</enable_external_user_database>
+        
+        <enable_friendly_url>true</enable_friendly_url>
+        
+        <enable_check_invalid_session>true</enable_check_invalid_session>
+
+        <require_activation>false</require_activation>
+
+        <!--
+         Set the default watch option:
+          0 : Relevant
+          1 : time descending
+          2 : time ascending
+        -->
+        <default_search_order_by>0</default_search_order_by>
+
+        <enable_search>true</enable_search>
+        <enable_login>true</enable_login>
+        <enable_register_rule>true</enable_register_rule>
+        <enable_new_member>true</enable_new_member>
+        <enable_new_post>true</enable_new_post>
+        <enable_split_thread>true</enable_split_thread>
+        <enable_rss>true</enable_rss>
+        <enable_watch>true</enable_watch>
+        <enable_attachment>true</enable_attachment>
+        <enable_avatar>true</enable_avatar>
+        <enable_emoticon>true</enable_emoticon>
+        <enable_captcha>true</enable_captcha>
+        <enable_listmembers>true</enable_listmembers>
+        <enable_listunansweredthreads>true</enable_listunansweredthreads>
+        <enable_show_last_login_of_current_member>true</enable_show_last_login_of_current_member>
+        <enable_admin_can_change_password>true</enable_admin_can_change_password>
+        <enable_use_popup_menu_in_viewthread>false</enable_use_popup_menu_in_viewthread>
+        <enable_rich_text_editor>false</enable_rich_text_editor>
+
+        <enable_online_users>true</enable_online_users>
+        <enable_invisible_users>true</enable_invisible_users>
+        <!--
+          if enable this option, duplicate online users will be shown (as in RC3 and before)
+          if disable it, then the online user will be shown only once with the number of his session
+        -->
+        <enable_duplicate_onlineusers>true</enable_duplicate_onlineusers>
+
+        <enable_list_users_browsing_forum>true</enable_list_users_browsing_forum>
+        <enable_list_users_browsing_thread>true</enable_list_users_browsing_thread>
+        <enable_email_threatening_content>true</enable_email_threatening_content>
+        <enable_email_to_admin_content_with_censored_words>true</enable_email_to_admin_content_with_censored_words>
+
+        <!-- if equals false, then use RC2-style (like listforums) index page -->
+        <enable_portal_like_index_page>false</enable_portal_like_index_page>
+
+        <enable_expanse_category_tree_by_default>true</enable_expanse_category_tree_by_default>
+
+        <enable_private_message>true</enable_private_message>
+        <!-- If this option is enabled, Only user with permission AdminSystem
+             can send a message to all registered users in the forum.
+         -->
+        <enable_public_message>true</enable_public_message>
+        <enable_message_attachment>true</enable_message_attachment>
+
+        <!-- if enable this option, then guest and all users can always view image attachment -->
+        <enable_guest_view_image_attachment>false</enable_guest_view_image_attachment>
+        <enable_guest_view_listusers>true</enable_guest_view_listusers>
+
+        <!-- If enabling, show the most active threads/members on index page and list forums-->
+        <enable_most_active_members>true</enable_most_active_members>
+        <enable_most_active_threads>true</enable_most_active_threads>
+        <only_normal_thread_type_in_active_threads>false</only_normal_thread_type_in_active_threads>
+        <enable_site_statistics_overview>true</enable_site_statistics_overview>
+        <enable_list_new_members_in_recent_days>true</enable_list_new_members_in_recent_days>
+        <days_to_show_recent_members>7</days_to_show_recent_members>
+
+        <enable_show_birthday>true</enable_show_birthday>
+        <enable_show_gender>true</enable_show_gender>
+        <enable_show_email>true</enable_show_email>
+        <enable_show_email_visible>true</enable_show_email_visible>
+        <enable_show_name_visible>true</enable_show_name_visible>
+        <enable_show_online_status>true</enable_show_online_status>
+        <enable_show_firstname>true</enable_show_firstname>
+        <enable_show_lastname>true</enable_show_lastname>
+        <enable_show_address>true</enable_show_address>
+        <enable_show_city>true</enable_show_city>
+        <enable_show_state>true</enable_show_state>
+        <enable_show_country>true</enable_show_country>
+        <enable_show_phone>true</enable_show_phone>
+        <enable_show_mobile>true</enable_show_mobile>
+        <enable_show_fax>true</enable_show_fax>
+        <enable_show_career>true</enable_show_career>
+        <enable_show_homepage>true</enable_show_homepage>
+        <enable_show_cool_link_1>true</enable_show_cool_link_1>
+        <enable_show_cool_link_2>true</enable_show_cool_link_2>
+        <enable_show_yahoo>true</enable_show_yahoo>
+        <enable_show_aol>true</enable_show_aol>
+        <enable_show_icq>true</enable_show_icq>
+        <enable_show_msn>true</enable_show_msn>
+        <enable_show_join_date>true</enable_show_join_date>
+        <enable_show_last_login>true</enable_show_last_login>
+        <enable_show_post_count>true</enable_show_post_count>
+        <enable_show_view_count>true</enable_show_view_count>
+        <enable_show_signature>true</enable_show_signature>
+        <enable_show_posts_per_page>true</enable_show_posts_per_page>
+        <enable_show_modified_date>true</enable_show_modified_date>
+
+        <require_register_firstname>true</require_register_firstname>
+        <require_register_lastname>true</require_register_lastname>
+        <require_register_gender>true</require_register_gender>
+        <require_register_birthday>true</require_register_birthday>
+        <require_register_address>false</require_register_address>
+        <require_register_city>false</require_register_city>
+        <require_register_state>false</require_register_state>
+        <require_register_country>false</require_register_country>
+        <require_register_phone>false</require_register_phone>
+        <require_register_mobile>false</require_register_mobile>
+        <require_register_fax>false</require_register_fax>
+        <require_register_career>false</require_register_career>
+        <require_register_homepage>false</require_register_homepage>
+        <require_register_yahoo>false</require_register_yahoo>
+        <require_register_aol>false</require_register_aol>
+        <require_register_icq>false</require_register_icq>
+        <require_register_msn>false</require_register_msn>
+        <require_register_link_1>false</require_register_link_1>
+        <require_register_link_2>false</require_register_link_2>
+
+        <have_internet>true</have_internet>
+
+        <image_thumbnail>
+            <enable>true</enable>
+            <width>100</width>
+            <height>100</height>
+        </image_thumbnail>
+
+        <!--
+         Set the default watch option:
+          1 : live watch
+          2 : hourly watch
+          0 or 3 : daily watch
+          4 : weekly watch
+        -->
+        <default_watch_option>0</default_watch_option>
+
+        <!--
+         Set the default watch type:
+          1 : watch type digest
+          2 : watch type non digest
+        -->
+        <default_watch_type>1</default_watch_type>
+        <send_watchmail_as_html>false</send_watchmail_as_html>
+        <enable_auto_watching>true</enable_auto_watching>
+        <enable_easy_watching>true</enable_easy_watching>
+        <enable_send_watch_mail_of_my_own_post>true</enable_send_watch_mail_of_my_own_post>
+        <!--
+         Set the max characters in last post body in watch mail:
+          0 : unlimited
+        -->
+        <max_last_post_body_in_watch>0</max_last_post_body_in_watch>
+
+        <!--
+         Set the default register member option:
+          0: enable
+          1: disable
+          2: pending
+          3: mark as deleted
+         -->
+        <default_status_of_registered_member>0</default_status_of_registered_member>
+
+        <!--
+         Set the default moderation option:
+          0 or 1 : no moderation
+          2 : thread and post moderation
+          3 : thread only moderation
+          4 : post only moderation
+        -->
+        <default_moderation_option>0</default_moderation_option>
+
+        <!--
+         NOTE: max_attachment_size : set the maximum attachment file size
+               max_attachment_size = -1  means no limit on the attachment file size
+               You can use suffixes "K" or "KB" to specify the size in kilobytes,
+               "M" or "MB" to specify it in megabytes. Otherwise, the size is in bytes.
+         Example: max_attachment_size = 1024 : maximum size is 1024 bytes = 1 KB
+         Example: max_attachment_size = 1KB  : same as previous
+        -->
+        <max_attachment_size>1024</max_attachment_size>
+
+        <max_message_attachment_size>1024</max_message_attachment_size>
+
+        <max_favorite_thread>100</max_favorite_thread>
+        <max_private_message>100</max_private_message>
+        <max_edit_days>3</max_edit_days>
+        <max_attach_days>1</max_attach_days>
+        <max_delete_days>1</max_delete_days>
+        <rows_per_page>10</rows_per_page>
+        <rows_per_rss>15</rows_per_rss>
+        <hot_topic_threshold>10</hot_topic_threshold>
+
+        <!-- max_password_days = 0 mean never expire -->
+        <max_password_days>0</max_password_days>
+
+        <max_chars_in_short_summary>100</max_chars_in_short_summary>
+        <max_chars_in_long_summary>1000</max_chars_in_long_summary>
+        <max_chars_in_rss>400</max_chars_in_rss>
+
+        <!--
+         These 5 below values will prevent flooding per IP per hour
+         If set to 0, it means no limit
+         Ex: a computer (IP) can register maximum 2 accounts per hour
+        -->
+        <max_http_requests_per_hour_per_ip>500</max_http_requests_per_hour_per_ip>
+        <max_http_requests_per_minute_per_ip>100</max_http_requests_per_minute_per_ip>
+        <max_posts_per_hour_per_ip>20</max_posts_per_hour_per_ip>
+        <max_members_per_hour_per_ip>2</max_members_per_hour_per_ip>
+        <max_logins_per_hour_per_ip>5</max_logins_per_hour_per_ip>
+        <max_messages_per_hour_per_ip>5</max_messages_per_hour_per_ip>
+
+        <!--
+         This 1 below value will prevent flooding per member per hour
+         If set to 0, it means no limit
+         Ex: a member name can post maximum 10 posts per hour
+        -->
+        <max_posts_per_hour_per_member>10</max_posts_per_hour_per_member>
+        
+        <!--
+         NOTE: max_import_size: set the maximum import file size
+               max_import_size = -1  means no limit on the import file size
+         You can use suffixes "K" or "KB" to specify the size in kilobytes,
+          "M" or "MB" to specify it in megabytes. Otherwise, the size is in bytes.
+         Example: max_import_size = 1MB      : maximum size is 1 MB = 1024 KB
+
+         NOTE: To disable storing backup files on server, set ENABLE_BACKUP_ON_SERVER = false
+         In the current release, this parameter is ignored (always true).
+        -->
+        <enable_backup_on_server>true</enable_backup_on_server>
+        <max_import_size>4096000</max_import_size>
+
+    </mvnforumconfig>
+
+    <mvnforumfactoryconfig>
+        <mvnforum_service_implementation>com.mvnforum.service.impl.MvnForumServiceImplDefault</mvnforum_service_implementation>
+        <member_implementation>com.mvnforum.db.jdbc.MemberDAOImplJDBC</member_implementation>
+        <onlineuser_implementation>com.mvnforum.auth.OnlineUserFactoryImpl</onlineuser_implementation>
+        <authenticator_implementation/>
+        <requestprocessor_implementation>com.mvnforum.RequestProcessorDefault</requestprocessor_implementation>
+        <lucene_analyzer_implementation>org.apache.lucene.analysis.standard.StandardAnalyzer</lucene_analyzer_implementation>
+        <mvn_auth_service_implementation>com.mvnforum.auth.service.impl.MvnAuthServiceImplDefault</mvn_auth_service_implementation>
+    </mvnforumfactoryconfig>
+</baseElement>

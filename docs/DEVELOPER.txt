@@ -1,0 +1,227 @@
+******************************************************************
+* $Id: DEVELOPER.txt,v 1.11 2006/06/09 10:39:11 minhnn Exp $
+******************************************************************
+
+
+This document is for developers intend to customize and/or extend mvnForum
+
+
+
+Q. How to receive CVS commit update mail?
+
+A. Please subscribe to mvnforum-cvs@lists.sourceforge.net
+
+
+
+Q. How to customize the style of mvnForum?
+
+A. mvnForum support customize the style by changing the style.css. You could change
+   a lot of style with this, but there are some changes which you have to make
+   directly to the *.jsp files. This will be addressed in later releases.
+
+
+
+Q. Do you have example source code of mvnForum Single Sign-On authentication?
+
+A. Yes, there is a full demo of this feature, and you can find it at
+   folder mvnforum\docs\demo\realm_authentication
+   Please read demo guide at mvnforum\docs\demo\realm_authentication\docs\README.txt
+
+   Since 1.0 GA, there are 2 contribution that also demonstrate the single sign-on
+   contrib/jdbcRealm and contrib/ldap
+   
+
+
+Q. How can I integrate mvnForum with my existed user database (such as in LDAP)?
+
+A. There are several approaches you could use depending on your
+   necessities. Below is a list in order of simplicity (the simplest first):
+
+1) You have pre-loaded your users into the mvnforum database and wants
+   to have single-sign-on with others applications: you have two
+   solutions here:
+
+   a) Use the realm information from your application server. If you
+      activate (change to true) this option (enable_login_info_in_realm)
+      in the mvnforum.xml file, mvnforum will ask
+      the application server for the name of the user and, if found a
+      same name in the forum database, the user will be automatically
+      logged into the system. No code change is needed. The limitation of
+      this method is that the user in realm must also be in mvnForum.
+      If you want to use realm and want to auto create user if
+      it is not in mvnForum, please read the below second solution.
+
+   b) You don't use realm authentication but want to have the same
+      functionality (or if you use realm and want to automatically create
+      user in mvnForum). Just implement the interface Authenticator. This
+      interface has one method that returns the name of the user if he
+      is already logged onto the system. Please read comment in this
+      file. You must activate (change to true) the option
+      enable_login_info_in_customization in the mvnforum.xml file.
+
+2) You don't want (or can't, some user databases does not allow to
+   retrieve the password) to store the password in the forum database
+   (although you have pre-loaded the users in the database). In this
+   case, you have to implement the interface OnlineUserFactory (maybe
+   extending the class that is currently used) and configure the
+   MVNForumFactoryConfig class to load your new class (see the
+   question about the MVNForumFactoyrConfig class).
+
+   This interface has two methods that you need to customise for this
+   situation:
+
+   * validatePassword: in this method you should contact your user
+     back-end to validate the user password. All the passwords check of
+     mvnforum must user this method and the login process will call
+     this method too.
+
+   * getEncodedPassword: this method is used to store a copy of the
+     encrypted password on a cookie. If you don't want to use cookies,
+     don't like the idea or cannot retrieve the password, you can
+     return null.
+
+3) You don't want to pre-load the user database but want some kind of
+   synchronisation between your user database and the forum database.
+   You can use the getAuthenticatedUser of OnlineUserFactory for this
+   kind of things. This method is called in the login process, so you
+   can override the current implementation to make a copy of the user
+   information to the forum database the first time a user enters in
+   mvnforum. Additionally, you need to follow the steps described in 2)
+   if you don't copy the password to the database or the format of the
+   encrypted password is different.
+
+4) You want to store the user information in your own back-end. In
+   this case, You must implement the MemberDAO interface with your
+   existed member information. This is the interface that controls the
+   access to all the user information, so you have total control. If
+   you want to use a different kinds of passwords than the default,
+   you should also implement the OnlineUserFactory interface (see 2
+   and 3).
+
+Please note that there are many people have integrated mvnForum with
+their systems successfully with many strategies. Please search the
+online mvnForum.com for the possible solution (some keyword such as
+realm, authentication, authenticator, ldap, ...).
+
+Since 1.0 GA, there are 2 contribution that also demonstrate the single sign-on
+ and integration: contrib/jdbcRealm and contrib/ldap
+
+
+Q. What is the class MVNForumFactoryConfig for?
+
+A. This class in conjunction with the ManagerFactory class implements
+   a kind of plugin system that allows some external integrator to change
+   some internal classes of mvnForum without the need to change the forum
+   code. The ManagerFactory class has methods to retrieve the classes
+   that implement certain interfaces. The MVNForumFactoryConfig tell
+   which specific classes implement this interfaces. So, to change the
+   default classes, you have to set the corresponding values under
+   mvnforumfactoryconfig tag in file mvnforum.xml. Please, see the code of
+   ManagerFactory and MVNForumFactoryConfig for more information.
+
+
+
+Q. How can I implement other functionality related with access
+   restriction to some pages, deactivation of some paths, etc.
+
+A. Please look at the RequestProcessor question.
+
+
+
+Q. What is the interface RequestProcessor for?
+
+The RequestProcessor interface allows to control all the processing of the
+user request thus allowing to insert code to perform extra
+functionality without modifying the mvnforum classes. To have more
+information, please see the code of the class ForumUserServlet and the
+descriptions of the interface methods. Below are some
+suggested uses for the three methods of the interface:
+
+  * preLogin: this method is the first that is executed in the
+    processing of the request, so you can use it to modify the request
+    before any other class touch its (this is needed, for example, to
+    set the encoding of the request).
+
+  * preProcess: this method is similar to the preLogin, but here the
+    user has been authenticated and his information will be available
+    in the request. You can use this method to redirect to a login
+    page if the information of the user is not valid (i.e. is the
+    guest user) or you can forbid some paths depending of the access
+    of the user.
+
+  * postProcess: this method can be used to add additional information
+    to the request in order to show additional data in the web pages
+    (if the user has modified the web pages). Doing this addition at
+    the end of the request processing allows the user to be sure of
+    the page the forum system is going to redirect the user to (and
+    change it if needed). Also, this method can be used to use a
+    different set of jsps without modifying the mappings of mvnforum
+    (for example listforums.jsp -> mypages/listforums.jsp)
+
+Of course, these methods can have several other uses as well.
+
+
+
+Q. Why should I donate my extensions to mvnForum back to the project?
+
+A. By extensions, we mean totally new code that invokes existing mvnForum classes.
+You are free to do whatever you wish with your proprietary mvnForum extensions.
+In particular, you may choose to never release your extensions to the wider public.
+We are very careful not to change the mvnForum public API so that newer mvnForum releases
+are backward compatible with previous versions. We are a lot less scrupulous with the
+internal mvnForum API. Thus, if your extension is designed to work with mvnForum version n,
+then when mvnForum release version n+1 comes out, you will probably need to adapt your
+proprietary extensions to the new release. Thus, you will be forced to spend precious
+resources in order to keep up with mvnForum changes. This is commonly referred to as the
+"stupid-tax." By donating the code and making it part of the standard distribution,
+you save yourself the unnecessary maintenance work.
+
+If your extensions are useful then someone will eventually write an extension providing
+the same or very similar functionality. Your development effort will be wasted.
+Unless the proprietary mvnForum extension is business critical, there is little reason
+for not donating your extensions back to the project.
+
+
+
+Q. How can I join the mvnForum development team?
+
+A. Like many current members of the mvnForum team, joining the development team
+should be naturally:
+
+- Participate on the online mvnForum.com, help others to solve their problem and discuss
+  how to improve mvnForum
+
+- Get familiar with the current mvnForum source code and begin writing some patch.
+
+- Prepare a plan on what part of mvnForum that you would like to contribute your effort.
+  You could publicly discuss it on the mvnForum or send me an email. This will help
+  to avoid wasted time if two or more people trying to do the same tasks.
+
+- Send me an email that you would like to contribute to the mvnForum, and also prepare
+  your sourceforge.net ID.
+
+- Stick to the existing indentation style even if you hate it. Alternating between
+  indentation styles makes it hard to understand the source code. Make it hard on
+  yourself but easier on others. mvnForum follows the Code Conventions for the
+  Java Programming Language (http://java.sun.com/docs/codeconv/).
+
+- If you contribute to the current source code, put your name and email in the header
+  of current files
+
+- If you write new files, use the copyright notice in the docs/CopyrightTemplate.txt
+  (It has template for .java files and .Jsp files). You also agree to grant copyright
+  of the source code to MyVietnam.net, and don't forget to put your name and email
+  to the header of the files.
+
+- Please test your code carefully before commit to the CVS, if you are going to make
+  quite a lot of changes, please discuss it in the online mvnForum.com so that others
+  could have a chance to review and give you suggestions.
+
+
+
+Cheers!
+
+minhnn (Minh Nguyen)
+http://www.mvnForum.com
+minhnn at MyVietnam d0t net
+

@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<chapter>
+  <title>Administration</title>
+  <sect1>
+    <title>General</title>
+    <para>
+      To perform general forum administration tasks, such as testing the configuration
+      of the forum installation or building the search index, visit the Miscellaneous tasks
+      page.
+    </para>
+    <sect2>
+      <title>Test System Configuration</title>
+      <para>
+        To test the database, mail support, indexing support and image processing support,
+        click the Test System Configuration link on the Miscellaneous page or on the Admin Control Panel page.
+        The following system parameters are tested. Below are a brief explanation on the significance of each
+        and where to look to correct the problem.
+        <itemizedlist>
+          <listitem><para>Support JNDI - required for the Java Application Server to locate the forum framework classes.
+            If this is missing then most likely the forum is not installed properly.</para></listitem>
+          <listitem><para>Java SQL Ext - the standard Java SQL extensions  provide standard connection pool via the javax.sql.DataSource</para></listitem>
+          <listitem><para>Java Activation Framework - required for JavaMail to send email</para></listitem>
+          <listitem><para>Java Mail - the Java Mail extension is used to process SMTP messages sent from the administrator and
+            by the Forum Watch system</para></listitem>
+          <listitem><para>Jakarta BeanUtils - required for common upload to upload avatar images</para></listitem>
+          <listitem><para>Jakarta Common Logging - the Java Common Logging interface is a common interface for logging messages
+            and used by mvnForum as the template for logging events and errors - this interface can be extended to provide custom
+            logging solutions</para></listitem>
+          <listitem><para>Jakarta Common Codec - not sure</para></listitem>
+          <listitem><para>Jakarta Common Collection - supports collection operator utilities</para></listitem>
+          <listitem><para>Jakarta Common Digester - not sure</para></listitem>
+          <listitem><para>Jakarta Common Lang - not sure</para></listitem>
+          <listitem><para>Jakarta Regular Expressions - regular expressions are used to support the Search functionality</para></listitem>
+          <listitem><para>Jakarta Lucene - a complete content indexing and searching interface that supports the forum thread search capabilities</para></listitem>
+          <listitem><para>Dom4j - an XML document object model parser for java</para></listitem>
+          <listitem><para>Image Processing - used to support the avatar icons and captcha images</para></listitem>
+        </itemizedlist>
+      </para>
+    </sect2>
+    <sect2>
+      <title>Configure mvnForum</title>
+      <para>New to mvnForum is the ability to configure the application setup using the online configuration interface. The minimal 
+            setup must be completed first. Once the forum is running and you can access the Admin Control Panel, you can
+            configure the remaining forum setup from the control panel. The minimal setup steps to get mvnForum running are
+            presented in the <ulink url="install.html#install_system">installation</ulink>.</para>
+      <para>The configuration menu, accessed from the Admin Control Panel, has the following main parts: backing up the configuration
+           file; core forum configuration, which reflects the parameters found in mvnforum.xml; factory configuration for identifying the implementations of the
+           major forum user authentication and http request processing; interface configuration for global standard
+           user interface settings; and the core server configurations which reflect the parameters found in mvncore.xml</para>
+      <para>Changes to the configuration information are not immediately put into place. As a matter of fact, most application parameters
+           would not be noticed until the Servlet container is restarted. mvnForum provides a reload feature to force the application
+           to reread the forum configuration. To force mvnForum to reread the configuration information, click the Reload all Changes link
+           on the Admin's configuration menu. mvnForum will restart after reading all the parameters in the mvnforum.xml configuration 
+           file; namely the majority of user-experience features.</para>
+      <para>This section defines the purpose of the individual configuration parameters
+        <itemizedlist>
+          <title>Backup Configuration File</title>
+          <listitem><para>Before making changes to the forum configuration, make a backup of the two configuration files. From the admin's
+               forum configuration page, click the Backup Configuration File link to execute a backup of the configuration file.</para></listitem>
+          <listitem><para>To recover to the saved version, you must stop the Servlet container, copy the backup of the configuration files over the current files, 
+              and restart the Servlet container.</para></listitem>
+        </itemizedlist>
+        <itemizedlist>
+          <title>mvnForum Core Configuration</title>
+          <listitem><para>mvnforum_home - [absolute network path] - MVNFORUM_HOME is a folder that cannot be accessed from the web,
+             you could create a folder mvnForumHome in your WEB-INF and
+             set MVNFORUM_HOME to point to this folder. Please note that the
+             example is for the Windows system, for the *nux system, it look like this:
+             MVNFORUM_HOME   = /home/tomcat/mvnForumHome</para></listitem>
+          <listitem><para>webmaster_email - [String - valid email address] email address for webmaster</para></listitem>
+          <listitem><para>logo_url - [String - a complete http url] - the url the logo points to</para></listitem>
+          <listitem><para>supported_locales - [String - any valid locale] a semicoma-separated list of locales supported by the site. This is for internationalization/localization support.</para></listitem>
+          <listitem><para>default_locale_name - [String - one of the valid list of supported_locales] - the default locale for the forum</para></listitem>
+          <listitem><para>default_guest_name - [String] - set default name of a virtual Guest user.
+                  IMPORTANT: It will be overridden with the data from the database, if it exists (for the Guest user)</para></listitem>
+          <listitem><para>disable_passwordless_auth - [true/false] - this release supports realm/customized authentication, if you would like to
+                use this feature, then uncomment and set DISABLE_PASSWORDLESS_AUTH = false</para></listitem>
+          <listitem><para>require_activation - [true/false] - forum members can be created (or seeded) by the forum administrator(s) or through
+               self registration. For self-registering forum members, you can require that they activate their accounts through an
+               email exchange. This was recently introduced to many forums to prevent bots (automated agents) from creating
+               forum accounts. Through the email activation, there is a human step involved in registering for forums (though there
+               is the chance that people will enhance their bots with the ability to collect mail information and respond accordingly).</para></listitem>
+          <listitem><para>enable_login_info_in_cookie - [true/false] - enable tracking of login information through browser cookies</para></listitem>
+          <listitem><para>enable_login_info_in_session - [true/false] - enable tracking of login information through Servlet sessions</para></listitem>
+          <listitem><para>enable_login_info_in_realm - [true/false] - use application realm-specific authentication</para></listitem>
+          <listitem><para>enable_login_info_in_customization - [true/false] - ??</para></listitem>
+          <listitem><para>enable_new_member - [true/false] - enable self-registration</para></listitem>
+          <listitem><para>enable_new_post - [true/false] - enable creating new posts - this is a default for the entire forum</para></listitem>
+          <listitem><para>enable_rss - [true/false] - enable RSS feeds. If false, RSS feeds will not be supplied</para></listitem>
+          <listitem><para>enable_watch - [true/false] - enable thread/post watches</para></listitem>
+          <listitem><para>enable_attachment - [true/false] - enable file attachments to threads/posts</para></listitem>
+          <listitem><para>enable_avatar - [true/false] - enable member avatars</para></listitem>
+          <listitem><para>enable_emoticon - [true/false] - enable using emoticons</para></listitem>
+          <listitem><para>enable_moderation - [true/false] - enable forum moderation</para></listitem>
+        </itemizedlist>
+        <itemizedlist>
+           <title>mvnForum Factory Configuration</title>
+          <listitem><para>member_implementation - the implementation class providing forum member management</para></listitem>
+          <listitem><para>onlineuser_implementation - </para></listitem>
+          <listitem><para>authenticator_implementation - </para></listitem>
+          <listitem><para>requestprocessor_implementation - </para></listitem>
+        </itemizedlist>
+        <itemizedlist>
+          <title>mvnForum Interface Configuration</title>
+          <listitem><para>max_attachment_size - </para></listitem>
+          <listitem><para>max_favorite_thread - </para></listitem>
+          <listitem><para>max_edit_days - </para></listitem>
+          <listitem><para>max_attach_days - </para></listitem>
+          <listitem><para>max_delete_days - </para></listitem>
+          <listitem><para>rows_per_page - </para></listitem>
+          <listitem><para>rows_per_rss - </para></listitem>
+          <listitem><para>hot_topic_threshold - </para></listitem>
+          <listitem><para>max_posts_per_hour - </para></listitem>
+          <listitem><para>max_members_per_hour - </para></listitem>
+          <listitem><para>enable_backup_on_server - </para></listitem>
+          <listitem><para>max_import_size - </para></listitem>
+        </itemizedlist>
+        <itemizedlist>
+          <title>mvnForum Server Configuration (mvncore.xml)</title>
+          <listitem><para>use_datasource - [true/false] - Some application server support datasource connection 
+                          pool. If you want to use it, set this parameter to true and setup the datasource for
+                          your application server. Then change the parameter below datasource_name to the name
+                          you config in your application server. However, the easiest way is to use mvnForum's
+                          default built-in connection pool by set this parameter to false and set below database
+                          parameters. Please note that information for setting for each DBMS can be found in 
+                          driver/README.txt and/or the header of the sql script file in folder "sql". For example,
+                          information for setup with MySql can be found in file sql\mvnForum_mysql.sql
+                    </para></listitem>
+          <listitem><para>database_type - [integer - default 0] - You should use the default value 0 for most cases.
+                          However, if you are sure that your JDBC driver/database does not support scrollable resultset,
+                          then you could try to set value 2.
+                    </para></listitem>
+          <listitem><para>driver_class_name - [String] - the driver class name. Please see your JDBC docs for more information.</para></listitem>
+          <listitem><para>database_url - [String] - the database url. Please see your JDBC docs for more information.</para></listitem>
+          <listitem><para>database_user - [String] - the user name to login to your database.</para></listitem>
+          <listitem><para>database_password - [String] - the password to login to your database.</para></listitem>
+          <listitem><para>max_connection - [integer - default 20] - the max connections that will be created.</para></listitem>
+          <listitem><para>max_time_to_wait - [integer - default 2000] - the millisecond that will be waited to get the connection
+                          from connection pool. Default is 2 seconds.</para></listitem>
+          <listitem><para>minutes_between_refresh - [integer - default 30] - The minutes interval that the pool should be 
+                          refreshed. When refresh the connection pool, all current open connection are closed and the 
+                          pool is reseted. Some database setting (specifically in share hosting server) that will automatically
+                          close the connection after some minutes. If in this case, you should set this paremeter a value
+                          that smaller than the time that DBMS will close your connection.
+                          </para></listitem>
+          <listitem><para>datasource_name - [String] - if you use application server's connection pool by setting above
+                          use_datasource to true, then you must set this parameter to a corect value. This value should 
+                          be a correct JNDI name. Please see your allication server docs for detailed information.</para></listitem>
+          <listitem><para>mail_server - [String] the IP or server name of your mail server. Please contact your system admin for detailed information.</para></listitem>
+          <listitem><para>default_mail_from - [String - must be valid email address] - the default mail address that will
+                          be used to send the email</para></listitem>
+          <listitem><para>username - [String] - the username of the email account that is used to send email</para></listitem>
+          <listitem><para>password - [String] - the pasword of the above username</para></listitem>
+          <listitem><para>port - [integer - default 25] the port that will be used to connect to email server.</para></listitem>
+          <listitem><para>context_path -forum - </para></listitem>
+          <listitem><para>server_path - </para></listitem>
+          <listitem><para>server_hour_offset - </para></listitem>
+          <listitem><para>blocked_user_agent - </para></listitem>
+        </itemizedlist>
+      </para>
+    </sect2>
+    <sect2>
+      <title>Email Templates</title>
+      <para>Email templates are used to send standard emails to new members (for account activation), password recovery
+            requests, and for users who have active forum watches (requesting notification of updates to discussion topics
+            they are interested in).</para>
+      <para>Using standard keyword substitution, you can create standard templates by accessing the email template
+            editor from the Miscellaneous tasks in the Admin section. Using the predefined keywords presented 
+            at the top of the template editor, change one of 3 templates.</para>
+      <para>After making changes to a template, be sure to commit the changes by clicking Save Template. Selecting
+            from the list of templates to access another template will not commit the changes you have just made.</para>
+    </sect2>
+    <sect2>
+      <title>Build Searching Index</title>
+      <para>
+        mvnForum provides a comprehensive set of search features that enable the user to find posts by author, post topic, and date.
+        The search features are supported by Jakarta's Lucene project. Lucene builds an index configured by mvnForum
+        which speeds user's searches of the forum content. To rebuild the index, click on the Rebuild Searching Index.
+      </para>
+    </sect2>
+  </sect1>
+  <sect1>
+    <title>Overview</title>
+    <para>
+      To get started with mvnForum, you should understand these basic issues.
+      <itemizedlist>
+        <title>Getting started with forum administration</title>
+        <listitem><para>The hierarchy of the forums is categories to forums to threads (or posts). Threads belong to a single forum and forums belong to a single category.</para></listitem>
+        <listitem><para>Guests can access forum threads for reading and searching only</para></listitem>
+        <listitem><para>Access to forums is restricted based on group and user permissions.</para></listitem>
+        <listitem>
+          <para>
+            Given that, here is a typical setup process for creating a new forum
+            <itemizedlist>
+              <listitem><para>Create a new Group, called newGroup</para></listitem>
+              <listitem><para>Set the global group permissions for the group so members of the group can login, and perform other tasks</para></listitem>
+              <listitem><para>Create a new User, called newGroupUser</para></listitem>
+              <listitem><para>Set the newGroupUser as the owner of the group, newGroup (this also adds the user newGroupUser as a member of this group)</para></listitem>
+              <listitem><para>Create a new category for the forum, called newCategory</para></listitem>
+              <listitem><para>Create a new forum, newForum, in the newCategory category</para></listitem>
+              <listitem><para>Set the forum-specific group permissions of the newGroup so they can moderate the forum</para></listitem>
+            </itemizedlist>
+            Following these actions, you will have a new forum and a user that belongs to a group that can access and
+            moderate all threads in the new forum. mvnForum has a very granular approach to managing forums
+            and group/user permissions to the forums.
+          </para>
+        </listitem>
+        <listitem><para></para></listitem>
+      </itemizedlist>
+    </para>
+  </sect1>
+  <sect1>
+    <title>Forum Management</title>
+    <para>
+      mvnForum follows a typical structure for grouping discussions into common interests. To manage these
+      groups of discussions, an administrator can create, edit and delete forum categories and forums using the
+      Forum Management control panel. Accessed from the forums administration control panel, the forum management
+      interface shows the list of current categories and forums. Use the links provided to manage
+      forum categories and forums.
+    </para>
+    <sect2 id="admin_category">
+      <title>Category</title>
+      <para>
+        Forum categories are top-level groups of forums. An administrator can create categories, add and remove
+        forums from a category and remove categories. Also, once categories have been added to the list, administrators
+        can change the order of the categories and add and remove forums within the categories. For forum management,
+        see  the <link linkend="admin_forum" endterm="admin_forum.title"/> section.
+        <itemizedlist>
+          <listitem><para>Add Category - click on the Add new Category link near the top of the page to load the
+            category creation screen. A category has a name and a description. Use a short enough
+            description to give forum users a concise understanding of the types of forums they will expect to find
+            in the category.</para></listitem>
+          <listitem><para>Edit Category - click on the edit icon (<inlinemediaobject><imageobject>
+            <imagedata fileref="figure/edit.gif" format="GIF"/></imageobject><textobject><phrase>Edit icon</phrase></textobject></inlinemediaobject>)
+            on the right side of the row of the forum you want to edit to navigate to the category
+            edit screen. Change the description of the category or the category sort order.</para></listitem>
+          <listitem><para>Delete Category - Because of the danger of removing categories, the web interface only allows
+            deleting empty categories. To delete a category, first delete all the <link linkend="admin_forum">forums</link>.</para></listitem>
+        </itemizedlist>
+      </para>
+    </sect2>
+    <sect2 id="admin_forum">
+      <title id="admin_forum.title">Forum</title>
+      <para>
+        Forums are groups of topics sharing a common thread or subject. The forum is the common meeting place for people
+        to share ideas and ask questions on topics where they can expect to receive answers from people sharing interests
+        and knowledge on the topics in the forum. To administer the list of forums supported by your site, navigate to
+        the Forum Management interface accessed in the administrator control panel.
+        <itemizedlist>
+          <listitem><para>Add Forum - click on the Add Forum link in the Add Forum column of the Forum Category
+            you want to add the forum to. To add a forum, the category must first exist. If you have not added a category,
+            visit the c help.
+            <itemizedlist>
+              <title>Adding a new forum</title>
+              <listitem><para>Forum Category - a forum belongs to a category - select the forum category from the list</para></listitem>
+              <listitem><para>Forum name - must be unique within a category. Currently, the name can be up to 250 characters long. It is suggested you keep
+                               name shorter for better display results and avoid special characters that might not be rendered
+                               by various browsers.</para></listitem>
+              <listitem><para>Description - optionally provide a description for the forum. This description can provide people clues
+                              about the forum topic if the name is not clear enough.</para></listitem>
+              <listitem><para>Forum Order - the order the forum appears in the list of forums within the forum category.</para></listitem>
+              <listitem>
+                <para>
+                  Forum status - sets the forum's status to either normal, disabled, locked, or closed. These status mean:
+                  <itemizedlist>
+                    <title>Forum Status</title>
+                    <listitem><para>Normal - </para></listitem>
+                    <listitem><para>Disabled - </para></listitem>
+                    <listitem><para>Locked - </para></listitem>
+                    <listitem><para>Closed - </para></listitem>
+                  </itemizedlist>
+                </para>
+              </listitem>
+              <listitem>
+                <para>Forum Type - sets the forum's type to either normal or private. These types mean:
+                  <itemizedlist>
+                    <title>Forum Type</title>
+                    <listitem><para>Normal - The forum is open to all registered forum users</para></listitem>
+                    <listitem><para>Private - The forum is open only to those members given access by the forum owner(s). To
+                                    give members access to a private forum, do this //TODO - working with private forums</para></listitem>
+                  </itemizedlist>                   
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  Moderation Mode - sets the forum's moderation mode to either normal or one of a list of moderated forums. Moderation
+                  is explained in <ulink url="user.html#moderation">moderation</ulink> documentation in the user section. These types mean:
+                  <itemizedlist>
+                    <title>Moderation Mode</title>
+                    <listitem><para>System Default - the default configured for the entire site can be one of the following.</para></listitem>
+                    <listitem><para>No Moderation - non of the content in the forum is moderated</para></listitem>
+                    <listitem><para>Thread and Post Moderation - both threads and posts can be moderated; when a thread is moderated its posts are also moderated</para></listitem>
+                    <listitem><para>Only Thread Moderation- only moderate threads, once a thread is approved, all posts within it are automatically accepted</para></listitem>
+                    <listitem><para>Only Post Moderation - only moderate posts, any thread can be started; posts within the thread are moderated</para></listitem>
+                  </itemizedlist>                   
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para></listitem>
+          <listitem>
+            <para>
+              Edit Forum - click on the edit icon <inlinemediaobject><imageobject>
+              (<imagedata fileref="figure/edit.gif" format="GIF"/></imageobject><textobject><phrase>Edit icon</phrase></textobject></inlinemediaobject>)
+              on the right side of the row of the forum you want to edit to navigate to the category edit screen.
+              The forums are children of the categories they belong to and can be differentiated because they have
+              the icon to the left of their names while categories are on the left margin.
+              <itemizedlist>
+                <title>Changes you can make to a forum</title>
+                <listitem><para>Change the category the forum belongs to by selecting another category from the list</para></listitem>
+                <listitem><para>Update the name and description of the forum</para></listitem>
+                <listitem><para>Update the sort order of the forum. This moves the forum's location
+                  within the list of forums in a category.</para></listitem>
+                <listitem><para>Enable a forum. By default all new forums are enabled, but you may want to
+                  temporarily disable a forum. Uncheck the box to disable the forum.</para></listitem>
+              </itemizedlist>
+            </para>
+          </listitem>
+          <listitem><para>Group Permissions - The most common way to define access permissions to forums, group permissions define
+            the authority groups of members have to various actions in the forums. To set group permissions to a forum,
+            click on the icon under the Group Permissions field for the forum row. This opens the 'Assign Group to Forum &lt;Forum Name&gt;' form. See
+            <link linkend="admin_forum_groups" endterm="admin_forum_groups.title"/> for more on this.
+            </para></listitem>
+          <listitem><para>Member Permissions - The most granular approach to defining access permissions to forums. Typically 
+            you would implement group permissions, except when assigning group moderators. To grant or revoke member permissions,
+            click on the icon under the Member Permissions field for the forum row. This opens the 'Assign Member to Forum'. See
+            <link linkend="admin_forum_members" endterm="admin_forum_members.title"/> for more on this.</para></listitem>
+        </itemizedlist>
+      </para>
+    </sect2>
+    <sect2 id="admin_forum_groups">
+      <title id="admin_forum_groups.title">Assign Group to Forum</title>
+      <para>This form is used to assign groups to the forum, review the current group's permissions and current group's permissions. 
+        To assign group permissions to a forum, select a group from the list of available groups and click <guibutton>Choose Group</guibutton> button. From here
+        you will access the Edit Forum-Specific Group Permissions form to add and remove forum permissions for the group. There are <link linkend="permissions_combined">combined</link> 
+        and <link linkend="permissions_individual">individual</link> permissions.
+      </para>
+    </sect2>
+    <sect2 id="admin_forum_members">
+      <title id="admin_forum_members.title">Assign Member to Forum</title>
+      <para>This form is used to assign members to a forum, review the current member's permissions and current user's permissions. 
+        To assign member permissions to a forum, enter either the member's name or memberid (unique numeric key) in the form and click the <guibutton>Choose Member</guibutton> button. From here
+        you will access the Edit Forum-Specific Member Permissions form to add and remove forum permissions for the member. There are <link linkend="permissions_combined">combined</link> 
+        and <link linkend="permissions_individual">individual</link> permissions.
+      </para>
+    </sect2>
+  </sect1>
+  <sect1 id="admin_groups">
+    <title>Groups</title>
+    <para>
+      Access to forums is managed through a combination of group and user permissions. A group is
+      a role definition that provides access to a collection of forum user and administration actions.
+      Users are assigned to groups to provide them access to these actions. Rather than manage individual
+      group permissions, it is easier to manage permissions for a group and then assign users to one or more
+      groups.
+    </para>
+    <sect2 id="admin_groups_def">
+      <title>Default Groups</title>
+      <para>
+        mvnForum installs with 5 predefined groups that provide the following action access. For more information
+        on specific permission definitions, see <link linkend="permissions_combined">Combined Permissions</link> and
+        <link linkend="permissions_individual">Individual Permissions</link>
+        <itemizedlist>
+          <listitem><para>Guest - by default all users are guests. Guests can search and read forum threads. To gain
+          further access to the forums, a guest must register and become a member.</para></listitem>
+          <listitem><para>Member - a member is a registered forum user. To become a member, a guest must
+          create an account, provide a valid email address and activate their account. Members can create
+          new discussion threads and edit their own threads.</para></listitem>
+          <listitem><para>Admin - administrators can manage all aspects of mvnForum, including managing the forum
+          categories and forums, manage user accounts, and group permissions. At installation, mvnForum has a single
+          account, admin, which belongs to the admin group.</para></listitem>
+          <listitem><para>Forum Admin - forum administrators can administer forums, including creating new forums. They
+          cannot manage group or user accounts or permissions.</para></listitem>
+          <listitem><para>Forum Moderator - forum moderators are forum members that have the additional ability
+          to monitor one or more forums. Forum moderation includes managing the posts submitted to that forum.</para></listitem>
+        </itemizedlist>
+      </para>
+    </sect2>
+    <sect2 id="admin_groups_man">
+      <title>Group Management</title>
+      <para>
+        The default groups installed with mvnForum are typically sufficient for most people to provide
+        access rights and restrictions to the forum areas and actions. Some forum administrators may want to
+        provide a more granular environment in which certain groups of people are limited to specific
+        forums, forum moderators can only moderate certain forums (to provide both moderated and unmoderated forums),
+        and certain users can only add or edit posts in certain forums.
+      </para>
+      <para>
+        The default group management screen shows the existing list of groups, the owner, member count and links
+        to edit the group and delete the group for each group. You cannot delete the guest or member groups as they 
+        are required groups for the forum. From the group management screen, you can click the Add new group
+        link or click any of the group name links to modify the groups.
+        <itemizedlist>
+          <listitem><para>Add new Group - if the list of default groups is insufficient, you can add your own group. You might
+            want to add a group, such as ThisForumModerators that has forum moderator permissions on a select list of forums.
+            <itemizedlist>
+               <title>Adding a new group</title>
+               <listitem><para>Group name - group names can be 250 characters long and must be unique within the entire mvnForum</para></listitem>
+               <listitem><para>Description - optionally provide a description for the group.</para></listitem>
+               <listitem><para>Group owner name - the name of the forum owner; must be the name of an existing mvnForum member. You can
+                 leave this blank if you have not yet created the member who will own this group and update it later. If you enter
+                 the name of a member incorrectly and the member name does not exist, the group owner will also be left blank.</para></listitem>
+             </itemizedlist>
+          </para></listitem>
+          <listitem id="group_permissions_global"><para>Edit Global Group Permissions - Every group has global and forum-specific permissions. 
+            Global permissions apply to all the forums in the site. Setting global group permissions is the most encompassing way to set
+            forum permissions as it applies to all groups, users and forums. 
+            <itemizedlist>
+              <title>Editing Global Group Permissions</title>
+              <listitem><para>Combined Permissions - see  <link linkend="permissions_combined">Combined Permissions</link></para></listitem>
+              <listitem><para>Individual permissions - see  <link linkend="permissions_individual">Individual Permissions</link></para></listitem>
+             </itemizedlist>
+          </para></listitem>
+          <listitem id="group_permissions_forum"><para>Edit Forum-Specific Group Permissions - A group can be granted permissions to individual forums. To manage a group's
+            forum access rights, select the group from the Group Management console and select the Edit Forum-Specific Group Permissions. Select the
+            forum to add or remove rights from and click the Choose Forum button.
+            <itemizedlist>
+              <title>Editing Forum-Specific Group Permissions</title>
+              <listitem><para>Combined Permissions - see  <link linkend="permissions_combined">Combined Permissions</link></para></listitem>
+              <listitem><para>Individual permissions - see  <link linkend="permissions_individual">Individual Permissions</link></para></listitem>
+             </itemizedlist>
+          </para></listitem>
+          <listitem id="group_option"><para>Change Group Option - not implemented yet - ??</para>
+          </listitem>
+          <listitem id="group_ownership"><para>Change Group Owner - To change a group owner, click this link and enter the new group owner's name. This must be 
+              a valid existing forum account id</para>
+          </listitem>
+          <listitem id="group_member_add"><para>Add Member to Group - To add a new forum member to a group, click this link, enter the list of new member ids and set 
+              their privileges. This is done for each group. To add new moderators, enter only the member ids of the people you want to be moderators; 
+              do the same for admins. Members added to a group that are not already registered with the forum are not added but no warning is issued.</para>
+          </listitem>
+          <listitem id="group_member_list"><para>List Members in this Group - Lists the members of a group, identifying whether they are the owner of the owner of the group, what their
+            group privileges are and a link to remove each member from group.</para>
+          </listitem>
+          <listitem id="group_delete"><para>Delete this Group - To delete an administrative group, click this button. mvnForum will ask for a confirmation
+          before deleting the group. Note that deleting a group will not delete its members or delete any threads/posts the members have posted. Deleting
+          a group will likely affect the permissions the members have as the permissions the group they belonged to will be lost.</para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </sect2>
+  </sect1>
+  <sect1>
+    <title>Users</title><para></para>
+    <para>Users are forum members, either preregistered by forum managers or registered by visitors to the forum. User management
+      involves adding, removing and editing users as well as managing user ranks. Additional, very useful features provided by 
+      mvnForum are the ability to see users and their permissions; send mail to all non-activated members; and remove stale, 
+      non-activated users from the forum database.
+    </para>
+    <sect2 id="admin_user_def">
+      <title>Default Users</title>
+      <para>mvnForum installs with 1 predefined user, the admin user. The admin user, installed with a password of the same
+        name has access to all forum functions. The admin user can then create additional users and groups. The admin
+        user can also grant permissions to users in the various forums. For more information
+        on specific permission definitions, see <link linkend="permissions_combined">Combined Permissions</link> and
+        <link linkend="permissions_individual">Individual Permissions</link>
+        <itemizedlist>
+          <listitem><para>Guest - by default all users are guests. Guests can search and read forum threads. To gain
+          further access to the forums, a guest must register and become a member.</para></listitem>
+          <listitem><para>Member - a member is a registered forum user. To become a member, a guest must
+          create an account, provide a valid email address and activate their account. Members can create
+          new discussion threads and edit their own threads.</para></listitem>
+          <listitem><para>Admin - administrators can manage all aspects of mvnForum, including managing the forum
+          categories and forums, manage user accounts, and group permissions. At installation, mvnForum has a single
+          account, admin, which belongs to the admin group.</para></listitem>
+          <listitem><para>Forum Admin - forum administrators can administer forums, including creating new forums. They
+          cannot manage group or user accounts or permissions.</para></listitem>
+          <listitem><para>Forum Moderator - forum moderators are forum members that have the additional ability
+          to monitor one or more forums. Forum moderation includes managing the posts submitted to that forum.
+          For more on moderation, see <ulink url="user.html#moderation">moderation</ulink> documentation in the user section.</para></listitem>
+        </itemizedlist>
+      </para>
+    </sect2>
+    <sect2 id="admin_user_man">
+      <title>User Management</title>
+      <para>After successfully installing mvnForum, the first thing you will want to do is add at least 1 new user. For guidance on how to add users,
+        change user permissions, and assign them to groups, read the following.
+        <itemizedlist>
+          <listitem><para>Add Group - if the list of default groups is insufficient, you can add your own group. You might
+            want to add a group, such as ThisForumModerators that has forum moderator permissions on a select list of forums.
+            <itemizedlist>
+              <title>Adding a new group</title>
+              <listitem><para>Group name - group names can be 250 characters long and must be unique within the entire mvnForum</para></listitem>
+              <listitem><para>Description - optionally provide a description for the group.</para></listitem>
+              <listitem><para>Group owner name - the name of the forum owner; must be the name of an existing mvnForum member. You can
+                leave this blank if you have not yet created the member who will own this group and update it later. If you enter
+                the name of a member incorrectly and the member name does not exist, the group owner will also be left blank.</para></listitem>
+            </itemizedlist>
+          </para></listitem>
+          <listitem id="user_permissions_global"><para>Edit Global Group Permissions - if the list of default groups is insufficient, you can add your own group. You might
+            want to add a group, such as ThisForumModerators that has forum moderator permissions on a select list of forums.
+            <itemizedlist>
+              <title>Editing Global Group Permissions</title>
+              <listitem><para>Combined Permissions - see  <link linkend="permissions_combined">Combined Permissions</link></para></listitem>
+              <listitem><para>Individual permissions - see  <link linkend="permissions_individual">Individual Permissions</link></para></listitem>
+            </itemizedlist>
+          </para></listitem>
+          <listitem id="user_permissions_forum"><para>Edit Forum-Specific Group Permissions - A user can be granted permissions to individual forums. To manage a group's
+            forum access rights, select the group from the Group Management console and select the Edit Forum-Specific Group Permissions. Select the
+            forum to add or remove rights from and click the Choose Forum button.
+            <itemizedlist>
+              <title>Editing Forum-Specific Group Permissions</title>
+              <listitem><para>Combined Permissions - see  <link linkend="permissions_combined">Combined Permissions</link></para></listitem>
+              <listitem><para>Individual permissions - see  <link linkend="permissions_individual">Individual Permissions</link></para></listitem>
+            </itemizedlist>
+          </para></listitem>
+        </itemizedlist>
+      </para>
+    </sect2>
+    <sect2 id="admin_user_rank">
+      <title>Rank Management</title>
+      <para>Ranks are a catchy way to categorize forum users based on the amount of their participation. Use the rank management
+      to set the participation thresholds for how many forum posts a user must participate in to achieve a new ranking.</para>
+      <para>By default, mvnForum installs with 4 ranks, Stranger (less than 20 posts), Newbie (less than 50 posts), Member (less than 100 posts),
+          and Advanced Member (more than 100 posts). You can edit these thresholds and add new ones.
+        <itemizedlist>
+          <listitem><para>Edit Rank - Change the minimum number of posts or the title of the ranking.</para></listitem>
+          <listitem><para>Add new Rank - Enter a minimum number of posts and the rank title to create a new ranking.</para></listitem>
+        </itemizedlist>
+      </para>
+    </sect2>
+  </sect1>
+  <sect1 id="permissions">
+    <title>Permissions</title>
+    <para>With release candidate 2 (RC2), mvnForum introduced a very granular permissions system for granting access to and
+    restricting access from all aspects of the forum environment. Permissions are granted to groups and users based on
+    sets of restriction rules (combined permissions) and individual permissions for specific functions such as deleting forums 
+    and adding post threads.</para>
+    <para>By default, new accounts are not granted any permissions except for those permissions provided by the group they
+      belong to. Permissions are determined by combining the most permissive permission restrictions of a user's group and their
+      individual permissions. Therefore, a user who belongs to the forum moderator group that has permissions to moderate the forum
+      called 'thisForum' but does not have individual permission to moderate that forum will have permission to moderate the forum
+      because of their participation in the group.</para>
+    <para>In addition to the combination of the user and group permissions, mvnForum provides the ability to manage
+      permissions for the entire forum site, global permissions, and for individual forums, forum permissions.</para>
+    <para>The following sections describe the two classes of permissions, combined permissions and individual permissions.</para>
+    <sect2 id="permissions_combined">
+      <title>Combined Permissions</title>
+      <para>
+        As the name implies, combined permissions are group logical sets of permissions into more easily managed
+        categories. The following describes the permission combinations and the individual permissions they group. Depending
+        on whether you are managing <link linkend="group_permissions_global">group global permissions</link>,
+        <link linkend="group_permissions_forum">group forum permissions</link>, <link linkend="user_permissions_global">user global permissions</link>,
+        or <link linkend="user_permissions_forum">user forum permissions</link>, the exact result of setting the permissions will differ.
+        <itemizedlist>
+          <listitem><para>Forum Admin</para></listitem>
+          <listitem><para>Forum Moderator</para></listitem>
+          <listitem><para>Limited User</para></listitem>
+          <listitem><para>Normal User</para></listitem>
+          <listitem><para>Power User</para></listitem>
+        </itemizedlist>
+      </para>
+    </sect2>
+    <sect2 id="permissions_individual">
+      <title>Individual Permissions</title>
+      <para>The individual permissions provide access restriction to nearly every action a user could take in mvnForum. To limit
+        a user's ability to perform any of the actions listed, you must set both their user and group permission to No.
+        <itemizedlist>
+          <listitem><para>Edit Forum - edit forum name, description and owner</para></listitem>
+          <listitem><para>Delete Forum - delete the forum from the category</para></listitem>
+          <listitem><para>Read Post - read a post/thread within the site/forum</para></listitem>
+          <listitem><para>Add Thread - add a thread (first post) to any or specific forum</para></listitem>
+          <listitem><para>Add Post - add a post to a thread to any or specific forum</para></listitem>
+          <listitem><para>Edit Post - edit an existing post in any or a specific forum</para></listitem>
+          <listitem><para>Delete Post - delete a post in any or a specific forum</para></listitem>
+          <listitem><para>Add Poll - add a new poll</para></listitem>
+          <listitem><para>Edit Poll - edit an existing poll</para></listitem>
+          <listitem><para>Delete Poll - delete a poll</para></listitem>
+          <listitem><para>Add Attachment - add an attachment to a thread/post</para></listitem>
+          <listitem><para>Get Attachment - get/download an attachment from a thread</para></listitem>
+        </itemizedlist>
+      </para>
+    </sect2>
+  </sect1>
+</chapter>

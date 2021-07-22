@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!DOCTYPE book
+  PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN" "http://docbook.org/xml/4.3/docbookx.dtd"
+  [
+  ]
+>
+  <book>
+    <title> MVN FORUM </title>
+    <subtitle> What's new </subtitle>
+
+    <preface>
+            <title> Preface</title>
+            <para> This document will show you some new features improvement and changes in mvnForum 1.0 GA. </para>
+    </preface>
+        
+    <bookinfo>
+        <authorgroup>
+            <author>
+                <firstname> Tran </firstname>
+                <othername> Van </othername>
+                <surname>  Hung </surname>
+            </author>
+        </authorgroup>
+        <copyright>
+            <year> 2002 - 2006 </year>
+            <holder> by myvietnam.net </holder>
+        </copyright>
+        <releaseinfo> 18.04.2006 </releaseinfo>
+    </bookinfo>
+    
+    <include file="mvnForum_1_0_GA.xml" />
+    <include file="mvnForum_1_0_0_RC4.xml" />
+    <include file="mvnForum_1_0_0_RC3.xml" />
+    <include file="mvnForum_1_0_0_RC2.xml" />
+    
+  </book>

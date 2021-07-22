@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN" "http://docbook.org/xml/4.3/docbookx.dtd"
+  [
+  ]
+>
+
+<article>
+    <articleinfo>
+        <title> New features improvement and changes in mvnForum 1.0.0 RC4</title>
+        <author>
+            <firstname> Tran </firstname>
+            <surname>  Van Hung </surname>
+        </author>
+    </articleinfo>
+    
+    <itemizedlist>
+            <title> 21 new Features: </title>
+            <listitem><para>Private Mesage [cool] </para></listitem>
+            <listitem><para>Admin can send Public Message to all members [cool] </para></listitem>
+            <listitem><para>Support Sticky/Annoucement/GlobalAnnoucement thread type [cool] </para></listitem>
+            <listitem><para>Localize the message in Java files [cool] </para></listitem>
+            <listitem><para>Support Compression Filter for fastest tranferation on the network (enabled by default) (thread=1889) </para></listitem>
+            <listitem><para>Advanced Member Search with Lucene in the User Management </para></listitem>
+            <listitem><para>Support RSS 2.0 + Atom (including sorting option) </para></listitem>
+            <listitem><para>Most active threads in the week (or last 7 days) </para></listitem>
+            <listitem><para>Most active users in the week (or last 7 days) </para></listitem>
+            <listitem><para>Support spam prevention initiative by Google (rel="nofollow") http://www.google.com/googleblog/2005/01/preventing-comment-spam.html </para></listitem>
+            <listitem><para>Implement MemberInvisiable feature (enable with option enable_invisible_users) </para></listitem>
+            <listitem><para>Admin Zone: Log file Management in Admin zone to view/download/delete/backup any log file in the log folder [cool] </para></listitem>
+            <listitem><para>Admin Zone: a new page to show permission summary </para></listitem>
+            <listitem><para>Admin Zone: A new page to view cumulative permissions of any member and groups that is user belong to (thread=1974) [cool] </para></listitem>
+            <listitem><para>Admin Zone: Admin can turn on/off the access to the User area (such as for maintanence or urgent situation) [cool] </para></listitem>
+            <listitem><para>Admin Zone: Show Forum Uptime </para></listitem>
+            <listitem><para>Admin Zone: A new page to delete non activated members with no posts based on the registration day </para></listitem>
+            <listitem><para>Admin Zone: a new page that admin can change password (note that noone can change password of root admin) </para></listitem>
+            <listitem><para>Admin Zone: add new page to allow admin edit member information </para></listitem>
+            <listitem><para>Admin Zone: add new page to edit the freemarker template files </para></listitem>
+               <listitem><para>Admin Zone: new option to send email to all members in any group [cool] </para></listitem>
+        </itemizedlist>
+
+        <itemizedlist>
+            <title> 56 Improvements: </title>
+            <listitem><para>Now support JDK 1.3 (RC3 require JDK 1.4) [cool] </para></listitem>
+            <listitem><para>Change localization to use the JSTL (no more each folder for each languages) [cool] </para></listitem>
+            <listitem><para>Support search post by date. [cool] </para></listitem>
+            <listitem><para>Support search all posts with attachment count option [cool] </para></listitem>
+            <listitem><para>Support 3 option when search post: [O] Both Title and body [0] Title only [0] Body only </para></listitem>
+            <listitem><para>Show paperclip icon if thread/post has attachment (thread=1357) [cool] </para></listitem>
+            <listitem><para>In UserManagement, show number of Enabled/Disabled Members, Activated/NonActivated Members [cool] </para></listitem>
+            <listitem><para>Admin can upload attachment and PM attachment with unlimited size </para></listitem>
+            <listitem><para>Show the max upload size in the upload attachment page </para></listitem>
+            <listitem><para>New images/emoticon in mvnForum [cool] </para></listitem>
+            <listitem><para>Add icon near category name in listforums to show/hide forums in that category </para></listitem>
+            <listitem><para>Add link to set permissions to group in the groupmanagement </para></listitem>
+            <listitem><para>Download attachment now use new method to avoid the memory contraint </para></listitem>
+            <listitem><para>Show the color of quota bar based on percentage of usage  </para></listitem>
+            <listitem><para>New configurable to turn on/off statistics information in index and listforums </para></listitem>
+            <listitem><para>New configurable  to set the default timezone for Guest (thread=2646) </para></listitem>
+            <listitem><para>Upgrade Config page in Admin zone, now support all configuable parameters [cool] </para></listitem>
+            <listitem><para>Rename the Index name to standard name in sql script </para></listitem>
+            <listitem><para>Search Lucene index summary and new optimized rebuild process (avoid bug when rebuild too much posts) [cool] </para></listitem>
+            <listitem><para>Admin can view first Email and first IP of any users </para></listitem>
+               <listitem><para>Improve Configuration Backup File (mvncore.xml, mvnforum.xml)  </para></listitem>
+            <listitem><para>Use Javascript for the login and other pages require password to submit when press Enter key (thread=2212) </para></listitem>
+            <listitem><para>In Admin zone in viewmember, show the number of watches of that user </para></listitem>
+            <listitem><para>Each edit screen of configuration now have a Cancel button (thread=1972) </para></listitem>
+            <listitem><para>Watch mail now use the time that based on both timezone and locale (thread=2489) </para></listitem>
+            <listitem><para>Add legend icon to forum, thread, private message </para></listitem>
+            <listitem><para>Show forum type and forum moderation mode in the forummanagement </para></listitem>
+            <listitem><para>Admin can view IP of user in User area and Admin area </para></listitem>
+            <listitem><para>Support remember Vietnamese keyboard via cookie [cool] </para></listitem>
+            <listitem><para>Show IP and time of last login in the header  </para></listitem>
+            <listitem><para>Add configurable parameter enable_duplicate_onlineusers. When set it equals false, then the duplicate session are combined (thread=1314) (thread=589) [cool] </para></listitem>
+            <listitem><para>Now the Lucene's Analyzer can be configured in mvnforum.xml [cool] </para></listitem>
+            <listitem><para>If a moderator creates a thread in moderated forum, the threads/posts are automatically approved. </para></listitem>
+            <listitem><para>New link to Enable/Disable user in viewmember in Admin zone. </para></listitem>
+            <listitem><para>Javascript checking for checkGoodName (in LoginName and FolderName) </para></listitem>
+            <listitem><para>[Source code] Remove a lot of warning code with the Eclipse compiler </para></listitem>
+            <listitem><para>Add new configurable parameter (enable_guest_view_image_attachment) to allow guest to view image attach (thread=2469) [cool] </para></listitem>
+            <listitem><para>[i18n] Now all template files are loaded and saved with encoding utf-8 [cool] </para></listitem>
+            <listitem><para>Support many new configuration parameter to let you customize mvnForum to suit your need </para></listitem>
+            <listitem><para>Limit the post length in the index.jsp (value can be configed) </para></listitem>
+            <listitem><para>Support Send Mail preview [cool] </para></listitem>
+               <listitem><para>Support new logging library http://jlo.jzonic.org (Because JRun does not support Log4J) </para></listitem>
+            <listitem><para>Now ObjectNotFoundException is catched and re-throw with friendly message to the user (thread=2365) </para></listitem>
+            <listitem><para>Show the lucene's index document count and compare with the record count in the database [cool] </para></listitem>
+            <listitem><para>Support edit attachment description [cool] </para></listitem>
+            <listitem><para>Show listforums in listrecentthreads if we enable option enable_portal_like_index_page </para></listitem>
+            <listitem><para>Add new tasks in build.xml to checking the missing resource key in jsp and java files </para></listitem>
+            <listitem><para>In Forum Management, show disabled forum with different color </para></listitem>
+            <listitem><para>Write a jsp file to test database. To use, just change testdatabase.jsp.txt to testdatabase.jsp </para></listitem>
+            <listitem><para>[Database] Change the attachment description to type TEXT to store more than 255 characters </para></listitem>
+            <listitem><para>Improve the truncate of String (split at nearest work break) </para></listitem>
+            <listitem><para>Begin to add support for localization in pages in the Admin Zone (not fully localized) </para></listitem>
+            <listitem><para>Admin zone: Validate data at server side for configuration page (Check if class can be loaded, mvnForumHome is writable) </para></listitem>
+            <listitem><para>When click link sendactivationcode in MyProfile, the MemberName and MemberEmail are auto filled with current user's data </para></listitem>
+               <listitem><para>Tags [color] and other mvnCode tag now work in rank title in viewthread (and other pages too) (thread=2232) </para></listitem>
+               <listitem><para>URL are now linkable in viewmember in Admin Zone </para></listitem>
+    </itemizedlist>
+
+</article>

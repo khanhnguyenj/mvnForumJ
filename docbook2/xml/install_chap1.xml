@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+  <chapter>
+    <title>Installation</title>
+    <sect1 id="install_system">
+      <title>System requirements</title>
+      <para>
+        mvnForum has the following system requirements:
+        <itemizedlist>
+         <listitem><para>Any App Server supports Jsp 1.2 and Servlet 2.3 (mvnForum will not run on JSP 1.1/Servlet 2.2 Containers such as Tomcat 3, 
+         JRun 3 and Orion App Server because it does not fully support JSP 1.2/Servlet 2.3 protocols.</para></listitem>
+         <listitem><para>JDK 1.3 or later</para></listitem>
+         <listitem><para>A JDBC 2.0-compliant database (see <xref linkend="databases"/> for list of supported databases
+          (this release includes 4 drivers: mm.mysql, Connector/J, postgreSQL and hsqldb)</para></listitem>
+        </itemizedlist>
+      </para>
+    </sect1>
+    <sect1>
+      <title>Application Server</title>
+       <para>
+         Follow these steps to setup the application server.
+         <itemizedlist>
+          <listitem><para>Create a home folder for mvnForum, which MUST NOT be accessible from the web.
+            This mvnForumHome folder is <emphasis>VERY IMPORTANT</emphasis>; it is where mvnForum
+            will store uploaded attachments and the Lucene search index.  mvnForum will not run
+            if you do not configure this properly.</para></listitem>
+          <listitem><para>Unzip the distributed zip file into this folder.</para></listitem>
+          <listitem><para>Create a context in your app server.  See the application server-specific configuration options for your server.</para></listitem>
+          <listitem><para>In the extracted folder, find the dir <filename class="directory">webapp\WEB-INF\classes</filename>.
+            There are several properties files here.  Open each file in a text editor and change
+            the configuration parameters to appropriate values.  In each property file are the instructions for the parameters in the configurations.
+            <note><para>Set database parameters to the correct values.  Database server-specific information is presented <xref linkend="databases"/> and also in
+              the header of the sql script file.</para></note>
+            <note><para>Currently you have to restart your App Server if you make changes
+              in properties files (if not, your new config cannot take effect)</para></note></para></listitem>
+          <listitem><para>Copy the content of webapp dir in the extracted folder to the context dir that you have created above.</para></listitem>
+          <listitem><para>If you dont need some language support, just delete the folder for that language
+              <informalexample><para>Ex: If you dont need Vietnamese support (locale is vi), delete the folder for that language
+               <filename class="directory">webapp/mvnplugin/mvnforum/user/vi</filename></para></informalexample></para>
+          </listitem>
+          <listitem><para>If you would like to change the default language of mvnForum, just copy and
+                  overwrite the content of your preferred locale to this folder webapp/mvnplugin/mvnforum/user
+              <informalexample><para>Ex: to change the default language from English to Vietnamese (locale is vi), just copy
+                  all files from <filename class="directory">webapp/mvnplugin/mvnforum/user/vi</filename> to
+                  <filename class="directory">webapp/mvnplugin/mvnforum/user</filename></para></informalexample></para>
+           </listitem>
+         </itemizedlist>
+       </para>
+      <sect2>
+        <title>Apache Tomcat Application Server</title>
+        <para>
+           Following is tomcat-specific application server setup configuration information:
+           <itemizedlist>
+             <listitem><para>To create a context, create a folder beneath <filename class="directory">tomcat/webapps</filename> (for example : mvnforum).
+             This dir (context) MUST be in lower case (such as mvnforum) and is considered the root
+             context for this web application.</para></listitem>
+             <listitem><para>For additional information on Tomcat contexts,
+             visit the <ulink url="http://jakarta.apache.org/tomcat/tomcat-4.0-doc/config/context.html">Apache Tomcat site</ulink>
+             </para></listitem>
+           </itemizedlist>
+        </para>
+      </sect2>
+      <sect2>
+        <title>Caucho Resin Application Server</title>
+        <para>Following is resin-specific application server setup configuration information:
+           Following is a directory layout for a mvnForum installation in the
+           ROOT context (where the &lt;resin-root&gt; is /var/www):
+           <itemizedlist>
+             <listitem><para>&lt;resin-root&gt;/mvnplugin</para></listitem>
+             <listitem><para>&lt;resin-root&gt;/mvnplugin/mvnforum (contains all JSP files)</para></listitem>
+             <listitem><para>&lt;resin-root&gt;/mvnplugin/WEB-INF (created by RESIN)</para></listitem>
+             <listitem><para>&lt;resin-root&gt;/WEB-INF/</para></listitem>
+             <listitem><para>&lt;resin-root&gt;/WEB-INF/web.xml (see below)</para></listitem>
+             <listitem><para>&lt;resin-root&gt;/WEB-INF/listitemb/</para></listitem>
+             <listitem><para>&lt;resin-root&gt;/WEB-INF/lib/commons-beanutils.jar, commons-logging.jar, mvnforum.jar, myvietnam.jar (activation.jar, jndi.jar, mail.jar, and servlet.jar are in /resin/lib because they are globally used)</para></listitem>
+             <listitem><para>&lt;resin-root&gt;/WEB-INF/classes/</para></listitem>
+             <listitem><para>&lt;resin-root&gt;/WEB-INF/classes/*.properties files (7 files)</para></listitem>
+           </itemizedlist>
+           Snippet of web.xml:
+            <literallayout>
+            &lt;servlet-mapping&gt;
+               &lt;servlet-name&gt;ForumUserServlet&lt;/servlet-name&gt;
+               &lt;url-pattern&gt;/brds/*&lt;/url-pattern&gt;
+            &lt;/servlet-mapping&gt;
+            &lt;servlet-mapping&gt;
+               &lt;servlet-name&gt;ForumAdminServlet&lt;/servlet-name&gt;
+               &lt;url-pattern&gt;/mvnforumsadmin/*&lt;/url-pattern&gt;
+            &lt;/servlet-mapping&gt;
+          </literallayout>
+          This results in an application that maps to:
+          &nbsp;&nbsp;&nbsp;http://&lt;host name&gt;/brds/index
+        </para>
+      </sect2>
+      <sect2>
+        <title>Weblogic Application Server</title>
+        <para>
+           Following are notes on installing/configuring mvnForum in a WebLogic 7.0 context:
+           <itemizedlist>
+             <listitem><para>Copy the files from the webapps folder that came with mvnForum distribution into
+                the weblogic applications directory and deploy it using the WLS console.</para></listitem>
+             <listitem><para>Setup the database (MySql as an example) by creating a connection pool with these parameters
+                <itemizedlist>
+                  <listitem><para>name: mySQLConnectionPool</para></listitem>
+                  <listitem><para>URL: jdbc:mysql://localhost/mvnforum</para></listitem>
+                  <listitem><para>driver: org.gjt.mm.mysql.Driver</para></listitem>
+                  <listitem><para>properties: user=mvnforum</para></listitem>
+                  <listitem><para> password=mvnforum</para></listitem>
+                  <listitem><para>number of connections:  10 (your choice here)</para></listitem>
+                </itemizedlist>
+             </para></listitem>
+             <listitem><para>Create a datasource for this pool
+                <itemizedlist>
+                  <listitem><para>name: mySQLDataSource</para></listitem>
+                  <listitem><para>JNDI Name: mySQLDataSource</para></listitem>
+                  <listitem><para>Pool Name: mySQLConnectionPool</para></listitem>
+                </itemizedlist>
+             </para></listitem>
+             <listitem><para>Do not forget to add the driver in the server classpath.</para></listitem>
+             <listitem><para>Change the mvnplugin_mvnforum_MVNForumConfig.properties file to point to
+               your application mvnforum and mvnplugin_mvnforum_ParamOptions.properties to identify
+               the context name (the name of the web application you deployed in the console).</para></listitem>
+             <listitem><para>In mvncore_db_DBOptions.properties, comment out all entries but
+               USE_DATASOURCE = true and DATASOURCE_NAME=mySQLDataSource.</para></listitem>
+           </itemizedlist>
+           <note><para>The only change noted to upgrade from WLS 7 to 8 is to change the ACL from mySQLConnectionPool
+               to weblogic.jdbc.connectionPool.mySQLConnectionPool</para></note>
+        </para>
+      </sect2>
+      <sect2>
+        <title>Other...</title><para></para>
+      </sect2>
+    </sect1>
+    <sect1 id="databases">
+      <title>Database Server</title>
+      <sect2>
+        <title>First-Time Database Installation</title>
+          <para>
+            Follow these steps to setup the mvnForum database schema and prepare the data tables with seed forum data.  See the following section on Upgrades for documentation on how to perform database-related upgrades from previous verions.
+            <note><para>Before running database scripts, we <emphasis>highly recommend</emphasis>
+               that you back up all your data.</para></note>
+            <note><para>The database-specific notes and installation/configuration guidelines are presented in the header
+                  of each of the appropriately named .sql files (sql/mvnForum_&lt;supported database server&gt;.sql).
+                  We urge you to to read and follow these
+                  guidelines carefully, because it may help you avoid
+                  possible database-specific problems</para></note>
+            <itemizedlist>
+                <listitem><para>In the extracted folder, find the file sql/mvnForum_&lt;supported database server&gt;.sql</para></listitem>
+                <listitem><para>Create a database and confirm the correct database parameters have been set in the application server configuration step</para></listitem>
+                <listitem><para>Run the script. Please see the documentation for your database server for details on how to run sql scripts.  Details on the sql scripts are presented in the database server-specific sections below.</para></listitem>
+                <listitem><para>Copy the jdbc driver for your database to the WEB-INF/lib folder of your context in step 3 above.  (Note that this release includes 4 drivers for MySQL,
+                           postgreSQL and hsqldb)</para></listitem>
+            </itemizedlist>
+            <note><para>mvnForum includes an embedded database for hsqldb in folder sql/hsqldb, so you can
+            copy this folder (hsqldb) to your mvnForumHome and set the proper config file
+            <filename>mvncore_db_DBOptions.properties</filename>. This is the quickest way to get started with mvnForum</para></note>.
+           </para>
+      </sect2>
+      <sect2>
+        <title>Database Upgrades</title>
+        <para>The following upgrade notes are provided to identify the database changes
+          between versions and point to upgrade scripts where available.  Remember,
+          before running the script, we <emphasis>highly recommemd</emphasis>
+          that you back up all your data.
+        </para>
+        <sect3>
+          <title>General Upgrade Notes</title>
+            <para>To upgrade from beta1, beta2, beta3 or rc1 release, READ THE FOLLOWING NOTES CAREFULLY</para>
+            <para>
+              <itemizedlist>
+                <listitem><para>Update the sql script first, please look at mvnforum\sql\upgrade</para></listitem>
+                <listitem><para>Backup your users' avatars in your App Server in this folder: mvnplugin\mvnforum\upload\memberavatars (The above folder is relative to the webapp dir of your App Server)</para></listitem>
+                <listitem><para>Back up all your config (.properties files) in your App Server in this folder: WEB-INF\classes(Backup this is for reference only) (The above folder is relative to the webapp dir of your App Server)</para></listitem>
+                <listitem><para>Delete your current servlet context of mvnForum before continueing the setup</para></listitem>
+                <listitem><para>In step 3 below, you MUST re-config your properties files (Note: There are several changes in properties files, so you cannot reuse the properties files in the beta1/beta2/beta3/rc1 release) Config the file log4j.properties for your logging (we highly recommend you config you log file to the log folder in mvnForumHome)</para></listitem>
+                <listitem><para>After setting up successfully, restore the avartars that you have backuped above</para></listitem>
+                <listitem><para>Run and test if mvnForum can run properly, and confirm the mvnForumHome has been configured properly</para></listitem>
+                <listitem><para>Rebuild the Lucene index for your forum before user can search on your forum: Admin Index -> Miscellaneous Tasks -> Rebuild Lucene Search Index Note: you dont have to rebuild Lucene index if upgrade from RC1</para></listitem>
+              </itemizedlist>
+              If you have a problem with the upgrade, post a message to the Installation and Upgrade forum at http://www.mvnForum.com.  Include informatoin about your platform, your current installed version, and the specific error message(s) you are getting.
+            </para>
+        </sect3>
+        <sect3>
+          <title>Beta1/Beta2 to Beta3</title>
+          <para>The database from the beta1 and beta2 schema changed on the upgrade to beta3:
+            <itemizedlist>
+              <listitem><para>Updated database schema - mvnforumForum table's unique index
+                changed from ForumName to ForumName and CategoryID</para></listitem>
+            </itemizedlist>
+          </para>
+          <para>Use this script to upgrade to beta 3 (for mySQL and other databases that support this):
+             <filename>sql\upgrade\1_0_0_beta2_to_1_0_0_beta3\mvnForum_update_mysql.sql</filename>.
+                Modify this file to suit your database requirements
+           </para>
+         </sect3>
+         <sect3>
+           <title>Beta3 to Release Candidate 1</title>
+           <para>The database from the beta3 schema changed on the upgrade to RC1:
+             <itemizedlist>
+               <listitem><para>Added two tables to the schema: mvnforumWatch and
+                  mvnforumAttachment</para></listitem>
+             </itemizedlist>
+           </para>
+           <para>Use this script to upgrade from beta 3 to rc1 (find scripts for each supported database server):
+              <filename>sql\upgrade\1_0_0_beta3_to_1_0_0_rc1\mvnForum_update_mysql.sql</filename>.
+                Modify this file to suit your database requirements
+            </para>
+         </sect3>
+      </sect2>
+      <sect2>
+        <title>MySQL</title>
+        <para>
+          Some key points to using MySQL as the database for persisting forum threads
+          <itemizedlist>
+            <listitem><para>Driver: com.mysql.jdbc.Driver or org.gjt.mm.mysql.Driver</para></listitem>
+            <listitem><para>Url: jdbc:mysql://localhost/&lt;database server&gt;?useUnicode=true&amp;characterEncoding=utf-8</para></listitem>
+            <listitem><para>Additional resources:
+              <itemizedlist>
+                <listitem><para><ulink url="http://www.mysql.com">MySQL dot Com</ulink></para></listitem>
+                <listitem><para><ulink url="http://www.onlamp.com/onlamp/general/mysql.csp">O'Reilly on MySQL</ulink></para></listitem>
+              </itemizedlist>
+             </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </sect2>
+      <sect2>
+        <title>postgreSQL</title>
+        <para>
+          Some interesting tidbits about storing the forum discussions in the postgreSQL database
+          <itemizedlist>
+            <listitem><para>Driver: org.postgresql.Driver</para></listitem>
+            <listitem><para>Url: jdbc:postgresql://&lt;database host name&gt;:&lt;host port&gt;/&lt;database name&gt;
+              <note><para>you should use jdbc driver version 7.3 or later</para></note>
+            </para></listitem>
+            <listitem><para>Additional information repositories:
+              <itemizedlist>
+                <listitem><para><ulink url="http://www.postgresql.org">postgreSQL dot org</ulink></para></listitem>
+                <listitem><para><ulink url="http://jdbc.postgresql.org/">JDBC drivers for posgreSQL</ulink></para></listitem>
+              </itemizedlist>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </sect2>
+      <sect2>
+        <title>Microsoft SQL Server</title>
+        <para>
+          Some commercial notes about a commercial product
+          <itemizedlist>
+            <listitem><para>Driver: com.microsoft.jdbc.sqlserver.SQLServerDriver</para></listitem>
+            <listitem><para>Url: jdbc:microsoft:sqlserver://&lt;database host name&gt;:&lt;port&gt;;DatabaseName=&lt;database name&gt;[;property=value...]
+              <note><para>There is a service pack available for SQL Server 2000 JDBC driver, release 1/2003.</para></note>
+            </para></listitem>
+            <listitem><para>Points of interest for Microsoft's database server solution:
+              <itemizedlist>
+                <listitem><para><ulink url="http://www.microsoft.com/sql/">Home of SQL Server</ulink></para></listitem>
+                <listitem><para><ulink url="http://www.microsoft.com/sql/downloads/default.asp">JDBC drivers for SQL Server</ulink></para></listitem>
+              </itemizedlist>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </sect2>
+      <sect2>
+        <title>Oracle</title>
+        <para>
+          Let the wisedom of the oracle guide you with this one
+          <itemizedlist>
+            <listitem><para>Driver (both 8 and 9i): oracle.jdbc.driver.OracleDriver</para></listitem>
+            <listitem><para>Url: jdbc:oracle:thin:@&lt;database host name&gt;:1521:&lt;database name&gt;
+              <note><para>Note: If your jdbc driver is before 8.1.7, you MUST upgrade jdbc driver
+                      to 8.1.7 or later (You dont have to upgrade Oracle database, just upgrade jdbc driver)
+                      mvnForum will not run on Oracle's jdbc driver before 8.1.7</para></note>
+            </para></listitem>
+            <listitem><para>Links from o to q:
+              <itemizedlist>
+                <listitem><para><ulink url="http://technet.oracle.com/">Oracle's Technical Home</ulink></para></listitem>
+                <listitem><para><ulink url="http://www.orafaq.org/faqjdbc.htm">JDBC drivers info for Oracle</ulink></para></listitem>
+                <listitem><para><ulink url="http://otn.oracle.com/software/tech/java/sqlj_jdbc/content.html">Download driver</ulink></para></listitem>
+              </itemizedlist>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </sect2>
+      <sect2>
+        <title>SAPDB</title>
+        <para>
+          <blockquote><attribution>Aaron Holmes</attribution><para>In 2001 the source code for SAPdb was released to the general public, completing SAP's
+          roadmap for releasing their database software under a GNU/GPL user license. By doing this SAP has
+          brought a fully-featured, enterprise-class database system to the open source community.
+          SAP continues to update and support SAPdb through their website (<ulink url="http://www.sapdb.org">www.sapdb.org</ulink>) and an
+          active mailing list (<ulink url="http://www.sapdb.org/sap_db_contact.htm">www.sapdb.org/sap_db_contact.htm</ulink>).</para>
+          <para>There are no limitations on database sizes or on the number of users. SAPdb is ACID compliant (fully supports ISO-SQL 92 Standards) and includes all RDBMS and enterprise
+          features expected in an open DBMS such as Views, triggers, foreign keys, constraints of various kinds,
+          stored procedures, versioning, hot backups, etc.
+            <ulink url="http://www.robelle.com/tips/sapdb.html">From web</ulink>
+            </para>
+          </blockquote>
+          Don't let the strain sap you of your energy, read on to glean key points on this database
+          <itemizedlist>
+            <listitem><para>Driver:  com.sap.dbtech.jdbc.DriverSapDB</para></listitem>
+            <listitem><para>Url: jdbc:sapdb://&lt;database host name&gt;/&lt;database name&gt;
+              <note><para> JDBC driver (sapdbc.jar) is typically found in the $SAPDB_HOME/dep/misc
+                      directory of your installed SAPDB software.  Be sure this is in the classpath visible to mvnForum</para></note>
+            </para></listitem>
+            <listitem><para>Links from o to q:
+              <itemizedlist>
+                <listitem><para><ulink url="http://www.robelle.com/tips/sapdb.html">Some SAPDB Information</ulink></para></listitem>
+                <listitem><para><ulink url="http://www.sapdb.org/sap_db_jdbc.htm">SAPDB and JDBC</ulink></para></listitem>
+              </itemizedlist>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </sect2>
+      <sect2>
+        <title>hsqldb</title>
+        <para>
+          <blockquote><attribution>http://hsqldb.sourceforge.net/</attribution><para>hsqldb is a relational database engine written in Java,
+            with a JDBC driver, supporting a rich subset of ANSI-92 SQL (BNF tree format). It
+            offers a small (less than 160k), fast database engine which offers both in memory
+            and disk based tables. Embedded and server modes are available. Additionally, it
+            includes tools such as a minimal web server, in-memory query and management
+            tools (can be run as applets) and a number of demonstration examples.</para>
+          </blockquote>
+          <itemizedlist>
+            <listitem><para>Driver: org.hsqldb.jdbcDriver</para></listitem>
+            <listitem><para>Url: jdbc:hsqldb:&lt;database name&gt;</para>
+                      <para>Example: if your MVNFORUM_HOME is c:\mvnForumHome and you copy the
+                            folder hsqldb (in the sql folder) to the mvnForumHome folder,
+                            then your url is:</para>
+                      <para>DATABASE_URL = jdbc:hsqldb:c:\\mvnForumHome\\hsqldb\\mvnforum</para>
+            </listitem>
+            <listitem><para>User: sa</para></listitem>
+            <listitem><para>Pasword:</para></listitem>
+            <listitem><para>
+              <note><para> Due to strange behaviour of hsqldb's IDENTITY column (begin with 0 instead of 1)
+                  then you cannot reply to the first post, which has id = 0 in this case.
+                   If you know how to start an IDENTITY column with 1, please let me know.</para>
+                   <para>Read more on  http://sourceforge.net/forum/forum.php?thread_id=838632&amp;forum_id=73673</para></note>
+            </para></listitem>
+            <listitem><para>
+              <itemizedlist>
+                <title>Links on help with hsqldb:</title>
+                <listitem><para><ulink url="http://hsqldb.sourceforge.net/">HSQL Database at SourceForge dot net</ulink></para></listitem>
+              </itemizedlist>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </sect2>
+      <sect2>
+        <title>Other...</title><para></para>
+      </sect2>
+    </sect1>
+
+    <sect1>
+      <title>Setup Administrator Control panel</title>
+      <para>The administrator's control panel comprises a set of tools for managing the
+        forums and users related to this context/installation of mvnForum.  When you
+        have succesfully installed the forum, there are, by default, 2 links
+      </para>
+      <para>
+        <itemizedlist><title>If you install in a context other than ROOT context, the url looks like this</title>
+          <listitem><para><emphasis>home for mvnForum</emphasis> - http://www.[yourserver].com/[yourcontext]/mvnforum/index</para></listitem>
+          <listitem><para><emphasis>Administrator Control Panel</emphasis> - http://www.[yourserver].com/[yourcontext]/mvnforumadmin/index</para></listitem>
+        </itemizedlist>
+        <itemizedlist><title>If you install in the ROOT context, the url look likes this</title>
+          <listitem><para><emphasis>home for mvnForum</emphasis> - http://www.[yourserver].com/mvnforum/index</para></listitem>
+          <listitem><para><emphasis>Administrator Control Panel</emphasis> - http://www.[yourserver].com/mvnforumadmin/index</para></listitem>
+        </itemizedlist>
+      </para>
+      <para>Go to the Admin Zone and enter username = admin and password = admin</para>
+      <para>If Login successfully, click a Test System Configuration to check the config
+          (If you deploy on a Linux/Unix box, Image Processing might not been supported)</para>
+      <para>The index page you see when you login also give you other info, including
+            database and system info</para>
+      <para>Go to the Admin Zone and enter username = admin and password = admin</para>
+      <para>Change the password and edit your profile by clicking Forum Index -&gt; MyProfile</para>
+      <para>Click Forum Management to create categories/forums for your community</para>
+      <para>You can create new users and set permissions for these new users</para>
+    </sect1>
+    <sect1>
+      <title>Troubleshooting</title>
+      <para>Following are some helpful thoughts on what to do and where to look if you are
+         having troubles with setting up or using mvnForum after your installation/upgrade
+        <itemizedlist>
+           <title>Basic reminders</title>
+           <listitem><para>Make sure you meet the <link linkend="install_system">system requirements</link></para></listitem>
+           <listitem><para>Make sure you have read this installation guide carefully</para></listitem>
+           <listitem><para>Make sure you setup from the binary distribution package, not
+           the source distribution package. If you have the source package, please see read the build
+           <link id="dev_build" linkend="dev_build">instructions</link></para></listitem>
+           <listitem><para>Make sure you have read the short database guide in
+             <filename>sql/mvnForum_&lt;database&gt;.sql</filename> carefully</para></listitem>
+        </itemizedlist>
+        <itemizedlist>
+           <title>Error messages</title>
+           <listitem><para>Error executing SQL in MVNForumPermissionWebHelper.getPermissionsForGroupGuest</para>
+             <para>
+                It means you have not configured your database properly. BEFORE printing this error in
+                the stacktrace mvnForum also prints other information that details
+                the EXACT DATABASE PROBLEM.  Please review the stacktrace, it and find a string beginning with:
+             </para>
+             <para>
+                Can't create a new connection in DBConnectionPool. URL = ....
+             </para>
+             <para>
+                You can configure the log4j.properties to log all messages to file and use
+                this file to find your database problem
+              </para>
+           </listitem>
+           <listitem><para>Cannot upload an avatar to the server</para>
+             <para>This is most likely an image support problem, please search the
+               mvnForum for keyword headless</para></listitem>
+           <listitem><para>Error says 'Cannot update table Thread where primary key = (3)</para>
+             <para>This is probably a database driver issue.  Some drivers do not properly support
+               the JDBC standards needed by mvnForum.  See <ulink url="http://www.mvnforum.com/mvnforum/viewthread?thread=304">
+               this thread for more</ulink></para></listitem>
+        </itemizedlist>
+        Remember, you can now search the mvnForum online to see if someone else has
+        dealt with the problem you are facing.
+        <itemizedlist>
+           <title>If all else fails...gather this information and post a question</title>
+           <listitem><para>Your mvnForum version (such as rc1, build 24 April 2003)</para></listitem>
+           <listitem><para>Your OS version (Such as Windows 2000 service pack 2)</para></listitem>
+           <listitem><para>Your App Server version (Such as Tomcat 4.1.24)</para></listitem>
+           <listitem><para>Your Database version (Such as Mysql 3.23.51)</para></listitem>
+           <listitem><para>Your JDBC driver version (Such as mysql-connector-java-3.0.8-stable-bin.jar)</para></listitem>
+           <listitem><para>Your mvnForum .properties files content</para></listitem>
+           <listitem><para>Any stacktrace that you found</para></listitem>
+           <listitem><para>Any other information that you think useful to solve the problem</para></listitem>
+        </itemizedlist>
+      </para>
+    </sect1>
+    <sect1>
+      <title>Versions</title><para></para>
+    </sect1>
+  </chapter>

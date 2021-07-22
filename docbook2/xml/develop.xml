@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!DOCTYPE book
+  PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN" "http://docbook.org/xml/4.3/docbookx.dtd"
+  [
+    <!ENTITY % global.entities SYSTEM "./include/global.xml">
+    %global.entities;
+    <!ENTITY develop1 SYSTEM "develop_chap1.xml">
+
+    <!ENTITY % entities SYSTEM "./include/entities.xml">
+    %entities;
+  ]
+>
+<book lang="en">
+
+  <bookinfo>
+
+   <title>mvnForum Developer Documentation</title>
+   <pubdate>18 April 2004</pubdate>
+
+   <author>
+     <firstname>Cord</firstname>
+     <surname>Thomas</surname>
+     <affiliation>
+        <jobtitle>Software Architect</jobtitle>
+        <orgname>Lupine Information Systems</orgname>
+        <address><email>cord_sw (at) lupinex.com</email></address>
+     </affiliation>
+   </author>
+
+  <revhistory>
+   <revision>
+    <revnumber>v0.0.10</revnumber>
+    <date>18 April 2004</date>
+    <authorinitials>cat</authorinitials>
+    <revremark>
+     Prepared documentation for RC3.</revremark>
+   </revision>
+  </revhistory>
+
+  </bookinfo>
+  <preface>
+    <title>Foreward</title>
+          <para>mvnForum, developed by <ulink url="www.myvietnam.net/myvietnam/index.jsp">MyVietnam</ulink>,
+          based on their java framework for web development.  This document focuses on the implementation
+          of the framework with respect to mvnForum.  It also touches on the framework where necessary.</para>
+  </preface>
+
+   &develop1;
+
+</book>

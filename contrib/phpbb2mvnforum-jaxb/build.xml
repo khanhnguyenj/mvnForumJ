@@ -1,0 +1,77 @@
+<project name="phpbb2mvnforum-jaxb" default="compile" basedir=".">
+
+    <property name="build-root.home" value="${basedir}/../../../build" />
+    <property name="build.home" value="${build-root.home}/build-mvnforum-contrib-phpbb2mvnforum-jaxb" />
+    <property name="build.classes" value="${build.home}/classes" />
+
+    <property name="build.phpbb2mvnforum.classes" value="${build-root.home}/build-mvnforum-contrib-phpbb2mvnforum/classes" />
+
+    <property name="driver" value="${basedir}/../../driver" />
+    <property name="mvnforum.lib" value="${basedir}/../../lib" />
+    <property name="myvietnam.build" value="${build-root.home}/build-myvietnam" />
+    <property name="myvietnam.jar" value="${myvietnam.build}/lib/myvietnam.jar" />
+    <property name="mvnforum.build" value="${build-root.home}/build-mvnforum" />
+    <property name="mvnforum.jar" value="${mvnforum.build}/lib/mvnforum.jar" />
+    <property name="phpbb2mvnforum.class" value="${build-root.home}/build-mvnforum-contrib-phpbb2mvnforum/classes" />
+
+    <property name="src.phpbb2mvnforum.home" value="${basedir}/../phpbb2mvnforum/src" />
+    <property name="src.home" value="${basedir}/src" />
+    <property name="lib.home" value="${basedir}/lib" />
+
+    <!--
+      Set up the classpath for the generation task.
+      Include all the standard jaxme jars.
+      -->
+    <path id="compile.classpath">
+        <pathelement location="${myvietnam.jar}" />
+        <pathelement location="${mvnforum.jar}" />
+        <pathelement path="${phpbb2mvnforum.class}" />
+        <fileset dir="${driver}">
+            <include name="*.jar" />
+        </fileset>
+        <fileset dir="${lib.home}">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+
+    <target name="all" depends="clean,compile" description="Clean build, then compile" />
+
+    <target name="clean" description="Delete old build">
+        <delete dir="${build.home}" />
+    </target>
+
+    <target name="prepare">
+        <!-- Create build directories as needed -->
+        <mkdir dir="${build.classes}" />
+    </target>
+
+    <target name="compile-phpbb2mvnforum" depends="prepare" description="Compile Java sources">
+        <javac srcdir="${src.phpbb2mvnforum.home}" destdir="${build.phpbb2mvnforum.classes}" source="1.4" target="1.4" debug="true">
+            <classpath>
+                <pathelement location="${mvnforum.jar}" />
+                <pathelement location="${myvietnam.jar}" />
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="compile" depends="prepare,compile-phpbb2mvnforum" description="Compile Java sources">
+        <javac srcdir="${src.home}" destdir="${build.classes}" source="1.4" target="1.4" debug="true">
+            <classpath refid="compile.classpath" />
+        </javac>
+        <mkdir dir="${build.classes}/xml" />
+        <copy file="${src.home}/com/mvnforum/jaxb/db/bgm.ser" todir="${build.classes}/com/mvnforum/jaxb/db" />
+        <copy file="${src.home}/com/mvnforum/jaxb/db/jaxb.properties" todir="${build.classes}/com/mvnforum/jaxb/db" />
+    </target>
+
+    <target name="run" depends="compile">
+<!--        <java classname="com.mvnforum.jaxb.ImportExportXML" fork="true" dir="${build.classes}">
+-->
+        <java classname="com.mvnforum.jaxb.ExportMvnforum2Mvnforum" fork="true" dir="${build.classes}">
+            <classpath refid="compile.classpath" />
+            <classpath>
+                <pathelement path="${build.classes}" />
+            </classpath>
+        </java>
+    </target>
+</project>
+

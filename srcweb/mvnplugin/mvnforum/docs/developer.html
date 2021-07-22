@@ -1,0 +1,79 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>mvnForum Developer Documentation</title><link rel="stylesheet" href="document_mvnforum.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.61.3"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div xmlns="http://www.w3.org/TR/xhtml1/transitional" id="customheader"><!--
+ - $Header: /cvsroot/mvnforum/mvnforum/srcweb/mvnplugin/mvnforum/docs/developer.html,v 1.3 2006/04/15 04:49:05 minhnn Exp $
+ - $Author: minhnn $
+ - $Revision: 1.3 $
+ - $Date: 2006/04/15 04:49:05 $
+ -
+ - ====================================================================
+ -
+ - Copyright (C) 2002-2006 by MyVietnam.net
+ -
+ - All copyright notices regarding mvnForum MUST remain 
+ - intact in the scripts and in the outputted HTML.
+ - The "powered by" text/logo with a link back to
+ - http://www.mvnForum.com and http://www.MyVietnam.net in 
+ - the footer of the pages MUST remain visible when the pages
+ - are viewed on the internet or intranet.
+ -
+ - This program is free software; you can redistribute it and/or modify
+ - it under the terms of the GNU General Public License as published by
+ - the Free Software Foundation; either version 2 of the License, or
+ - any later version.
+ -
+ - This program is distributed in the hope that it will be useful,
+ - but WITHOUT ANY WARRANTY; without even the implied warranty of
+ - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ - GNU General Public License for more details.
+ -
+ - You should have received a copy of the GNU General Public License
+ - along with this program; if not, write to the Free Software
+ - Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ -
+ - Support can be obtained from support forums at:
+ - http://www.mvnForum.com/mvnforum/index
+ -
+ - Correspondence and Marketing Questions can be sent to:
+ - info at MyVietnam net
+ -
+ - @author: Minh Nguyen  
+ - @author: Mai  Nguyen  
+ --></div><div class="book" lang="en"><div class="titlepage"><div><div><h1 class="title"><a name="d0e1"></a>mvnForum Developer Documentation</h1></div><div><div class="author"><h3 class="author"><span class="firstname">Cord</span> <span class="surname">Thomas</span></h3><div class="affiliation"><span class="jobtitle">Software Architect<br></span><span class="orgname">Lupine Information Systems<br></span><div class="address"><p><tt class="email">&lt;<a href="mailto:cord_sw (at) lupinex.com">cord_sw&nbsp;(at)&nbsp;lupinex.com</a>&gt;</tt></p></div></div></div></div><div><p class="pubdate">18 April 2004</p></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="3"><b>Revision History</b></th></tr><tr><td align="left">Revision v0.0.10</td><td align="left">18 April 2004</td><td align="left">cat</td></tr><tr><td align="left" colspan="3">
+     Prepared documentation for RC3.</td></tr></table></div></div></div><div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><ol><li><a href="#d0e30">Foreward</a></li><li>1. <a href="#d0e38">Developer Documentation</a><ol><li><a href="#dev_build">Getting Started</a></li><li><a href="#d0e130">Overview</a><ol><li><a href="#d0e135">myvietnam</a></li><li><a href="#d0e140">mvnForum</a></li></ol></li><li><a href="#d0e145">Admin development</a><ol><li><a href="#d0e150">myvietnam</a></li><li><a href="#d0e155">mvnForum</a></li></ol></li><li><a href="#d0e160">User development</a><ol><li><a href="#d0e165">myvietnam</a></li><li><a href="#d0e170">mvnForum</a></li></ol></li></ol></li></ol></div><div class="preface" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="d0e30"></a>Foreward</h2></div></div><div></div></div><p>mvnForum, developed by <a href="www.myvietnam.net/myvietnam/index.jsp" target="_top">MyVietnam</a>,
+          based on their java framework for web development.  This document focuses on the implementation
+          of the framework with respect to mvnForum.  It also touches on the framework where necessary.</p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="d0e38"></a>Chapter&nbsp;1.&nbsp;Developer Documentation</h2></div></div><div></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="dev_build"></a>Getting Started</h2></div></div><div></div></div><p>Follow these steps to access mvnForum source code and build mvnForum binaries
+        from source code.  To access the source code, use CVS to checkout the latest files
+        from the shared project repository maintained on SourceForge.  There are currently
+        2 modules, myvietnam and mvnforum.
+        </p><div class="itemizedlist"><p class="title"><b>Anonymous CVS Access</b></p><ul type="disc"><li><p>The project's Sourceforge.net CVS repository can be checked out through
+             anonymous (pserver) CVS with the following instructions</p></li><li><p>The module you wish to check out muts be specified as the modulename.</p></li><li><p>When prompted for a password for the anonymous user, press the <b class="keycap">ENTER</b> key.</p></li><li><p><b class="command">cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/mvnforum login</b></p></li><li><p><b class="command">cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/mvnforum co modulename</b></p></li><li><p>Updates from within the module's directory do not need the -d parameter</p></li></ul></div><p>
+        </p><div class="itemizedlist"><p class="title"><b>Developer CVS Access via SSH</b></p><ul type="disc"><li><p>Only project developers can access the CVS tree via this method.
+              SSH1 must be installed on your client machine. Substitute modulename and
+              developername with the proper values. Enter your site password when prompted.</p></li><li><p><b class="command">export CVS_RSH=ssh</b></p></li><li><p><b class="command">cvs -z3 -d:ext:&lt;developername&gt;@cvs.sourceforge.net:/cvsroot/mvnforum co modulename</b></p></li><li><p>Please mail the Project Administrators (found at
+              www.sourceforge.net/projects/mvnforum) to include your Sourceforge User ID
+              (in other words you need to be a registered user on SourceForge) to the MvnForum
+              project. You cannot commit your changes until your SourceForge user ID has been
+              assigned to the project.</p></li><li><p>The Eclipse V2.1 Java Development Environment (www.eclipse.org) has a very intuitive
+              GUI for CVS access, using the extssh protocol in combination with the Sourceforge
+              user ID and password. With a few clicks you have checked out the mvnForum project
+              and are ready to participate in mvnForum development!</p></li></ul></div><p>
+        </p><div class="orderedlist"><p class="title"><b>Build the source code</b></p><ol type="1"><li><p>Get the source code, if you have the source package, just extract
+            it to a folder. If you don't have the source package or you would
+            like to build the newest development source code, check out from
+            CVS. See the CVS.txt for detailed information.
+           </p></li><li><p>Download ant build tool from <a href="http://jakarta.apache.org" target="_top">
+              http://jakarta.apache.org</a>, then config it
+              (please see the document from the ant package)
+           </p></li><li><p>cd to folder <tt class="filename">myvietnam</tt>, then type
+               <b class="command">ant</b>
+           </p></li><li><p>cd to folder <tt class="filename">mvnforum</tt>, then type
+               <b class="command">ant</b>
+           </p></li><li><p>the mvnForum webapp is created in folder <tt class="filename">
+             mvnforum/build/webapp</tt></p></li></ol></div><p>
+      </p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e130"></a>Overview</h2></div></div><div></div></div><p>The overview....</p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e135"></a>myvietnam</h3></div></div><div></div></div><p>Introduction to myvietnam...
+          </p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e140"></a>mvnForum</h3></div></div><div></div></div><p>Introduction to mvnforum.</p></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e145"></a>Admin development</h2></div></div><div></div></div><p>The overview....</p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e150"></a>myvietnam</h3></div></div><div></div></div><p>Introduction to myvietnam...
+          </p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e155"></a>mvnForum</h3></div></div><div></div></div><p>Introduction to mvnforum.</p></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e160"></a>User development</h2></div></div><div></div></div><p>The overview....</p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e165"></a>myvietnam</h3></div></div><div></div></div><p>Introduction to myvietnam...
+          </p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e170"></a>mvnForum</h3></div></div><div></div></div><p>Introduction to mvnforum.</p></div></div></div></div><div xmlns="http://www.w3.org/TR/xhtml1/transitional" id="customfooter">
+      mvnForum documentation created using docbook.
+   </div></body></html>

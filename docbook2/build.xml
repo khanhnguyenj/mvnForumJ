@@ -1,0 +1,109 @@
+<project name="Docbook styler test." default="all">
+
+    <!-- split the ant.docbook.styler property into dir and xml file
+         to be able to reuse the dir in the ant-build-docbook.xml 
+     Example:
+     
+     <property name="ant.docbook.styler.dir" value="/java/ant-docbook-styler" />
+
+     On a windows box, this would resolve e.g. to: "c:/java/ant-docbook-styler"
+     -->
+    
+    <property name="ant.docbook.styler.dir" location="../../docbook" />
+    <property name="ant.docbook.styler"     value="ant-build-docbook.xml" />
+    <property name="resources.dir"          location="figure" />
+    
+
+    <target name="all">
+        <antcall target="all-docbook2-document" />
+        <antcall target="all-docbook2-whatnews" />
+    </target>
+
+    
+    <target name="all-docbook2-document">
+        <property name="xml.dir" location="xml" />
+        <property name="ant.docbook.src"        value="../../build/docbook2/document" />
+        <antcall target="docbook" />
+        <antcall target="pdf.fop" />
+    </target>
+    
+    <target name="all-docbook2-whatnews">
+        <property name="xml.dir"                 location="whatnews" />
+        <property name="ant.docbook.src"        value="../../build/docbook2/whatnews" />
+        <antcall target="docbook" />
+        <antcall target="pdf.fop" />
+    </target>
+
+    <target name="docbook">
+        <antcall target="clean" />
+        <mkdir dir="${ant.docbook.src}/chunked" />
+        <ant antfile="${ant.docbook.styler}" dir="${ant.docbook.styler.dir}" inheritall="false"
+            target="html.chunked">
+             <property name="docbook.xml.dir" location="${xml.dir}" />
+             <property name="docbook.resources.dir" location="${resources.dir}" />  <!--  figures -->
+             <property name="distribution.dir" location="${ant.docbook.src}/chunked" />
+             <property name="build.dir" location="${ant.docbook.src}/build" />
+        </ant>
+        
+        <available property="tmp:chunked.ok" file="${ant.docbook.src}/chunked/index.html" />
+        <fail message="not good :(" unless="tmp:chunked.ok" />
+
+        <antcall target="clean" />
+        <mkdir dir="${ant.docbook.src}/single" />
+        <ant antfile="${ant.docbook.styler}" dir="${ant.docbook.styler.dir}" inheritall="false"
+              target="html.single">
+             <property name="docbook.xml.dir" location="${xml.dir}" />
+             <property name="docbook.resources.dir" location="${resources.dir}" />   <!-- figures -->
+             <property name="distribution.dir" location="${ant.docbook.src}/single" />
+             <property name="build.dir" location="${ant.docbook.src}/build" />
+        </ant>
+
+        <available property="tmp:chunked.ok" file="${ant.docbook.src}/single/index.html" />
+        <fail message="not good :(" unless="tmp:chunked.ok" />
+    </target>
+        
+    <target name="pdf.fop">
+        <antcall target="clean" />
+        <mkdir dir="${ant.docbook.src}/pdf.fop" />
+
+        <available file="${ant.docbook.styler.dir}/module-fop" type="dir"
+               property="module.fop.present" value="true" /> 
+        
+        <antcall target="pdf.fop.internal" />
+        
+    </target>
+    
+    <target name="pdf.fop.internal" if="module.fop.present">
+        <ant antfile="${ant.docbook.styler}" dir="${ant.docbook.styler.dir}" inheritall="false"
+              target="pdf.fop">
+             <property name="docbook.xml.dir" location="${xml.dir}" />
+             <property name="docbook.resources.dir" location="${resources.dir}" />  <!-- figures-->
+             <property name="distribution.dir" location="${ant.docbook.src}/pdf.fop" />
+             <property name="build.dir" location="${ant.docbook.src}/build" />
+        </ant>
+    </target>
+    
+    <target name="clean">
+        <delete dir="${ant.docbook.src}/build" failonerror="false" quiet="true" />
+        <mkdir dir="${ant.docbook.src}/build" />
+    </target>
+    
+    <!-- ##################################### -->
+    <!-- ###     CHECK REQUIRED PROPS      ### -->
+    <!-- ##################################### -->
+    <!--  This targed ensures that the ant-docbook-styler install directory is set -->
+    <target name="check.required-properties">
+        <condition property="tmp:ant.docbook.styler.dir.ok" value="true">
+            <and>
+                <not>
+                    <equals arg1="${ant.docbook.styler.dir}" arg2="${undefined}" />
+                </not>
+                <available file="${ant.docbook.styler.dir}" type="dir" />
+            </and>
+        </condition>
+        <fail message="### Define 'ant.docbook.styler.dir' property pointing at the
+                       ant-docbook-styler install dir (as URL, like '/opt/ant-docbook-styler')."
+              unless="tmp:ant.docbook.styler.dir.ok" />
+    </target>   
+
+</project>

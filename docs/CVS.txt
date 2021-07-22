@@ -1,0 +1,259 @@
+******************************************************************
+* $Id: CVS.txt,v 1.43 2010/04/15 10:24:28 minhnn Exp $
+******************************************************************
+
+CVS INSTRUCTION
+------------------------------------------
+
+
+How to use CVS to checkout the latest source code files:
+
+If you would like to get the mvnForum's latest files, you could
+access CVS to checkout.
+
+Note: Currently there are 5 modules:
+mvnforum    : the mvnForum project
+myvietnam   : the mvnCoreLib, used by mvnforum
+mvnforumweb : the project for the web site www.mvnForum.com
+thirdparty  : the project for third party libraries such as pager taglib
+test        : some test source code of mvnForum
+
+NOTE: Only 2 modules myvietnam and mvnforum are required
+
+
+
+Anonymous CVS Access
+-----------------------------
+This project's SourceForge.net CVS repository can be checked out
+through anonymous (pserver) CVS with the following instruction set.
+The module you wish to check out must be specified as the modulename.
+When prompted for a password for anonymous, simply press the Enter key.
+
+cvs -d:pserver:anonymous@mvnforum.cvs.sourceforge.net:/cvsroot/mvnforum login
+
+cvs -z3 -d:pserver:anonymous@mvnforum.cvs.sourceforge.net:/cvsroot/mvnforum co modulename
+
+Updates from within the module's directory do not need the -d parameter.
+
+
+
+Developer CVS Access via SSH
+-----------------------------
+Only project developers can access the CVS tree via this method.
+SSH1 must be installed on your client machine. Substitute modulename and
+developername with the proper values. Enter your site password when prompted.
+
+export CVS_RSH=ssh
+
+cvs -z3 -d:ext:<developername>@mvnforum.cvs.sourceforge.net:/cvsroot/mvnforum co modulename
+
+Please mail the Project Administrators, to be found at
+www.sourceforge.net/projects/mvnforum , to include your Sourceforge User ID
+(in other words you need to be a registered user on SourceForge) to the mvnForum
+project. You cannot commit your changes until your SourceForge user ID has been
+assigned to the project. Please see DEVELOPER.txt for some notes when joining mvnForum.
+
+The Eclipse version 3.x Java Development Environment (www.eclipse.org) has a very intuitive
+GUI for CVS access, using the extssh protocol in combination with the Sourceforge
+user ID and password. With a few clicks you have checked out the mvnForum project
+and are ready to participate in mvnForum development!
+
+Other good CVS GUI are WinCVS or SmartCVS. You could find link to download
+these tool by searching on www.google.com
+
+Note: The FingerPrints of CVS server is at below link:
+    http://alexandria.wiki.sourceforge.net/SSH+Host+Key+Fingerprints
+
+
+
+Browse the CVS Tree
+-----------------------------
+Browsing the CVS tree gives you a great view into the current status of this
+project's code. You may also view the complete histories of any file in
+the repository. Try the integrated web interface at Sourceforge:
+http://mvnforum.cvs.sourceforge.net/mvnforum/
+
+
+
+Note for Developer
+-----------------------------
+If you mistakenly commit the file with wrong cvs keyword substitution, 
+then you can use WinCVS, select the files, then choose 
+Admin =>> Command Line ... =>> then enter "cvs admin -kkv", then 
+choose option Excecute for current selection, then press OK
+(Note: the above example is to change keyword to -kkv)
+
+
+
+The name of current dev-branch of myvietnam
+-----------------------------
+* myvietnam-1_5_0-20031105-branch
+  Branch for RC2 release
+
+* myvietnam-2_0-20060414-branch
+  Branch for 2.0 and maintenance release
+
+* myvietnam-2_1-20080130-branch
+  Branch for 2.1 and maintenance release
+
+* myvietnam-2_2-20080627-branch
+  Branch for 2.2 and maintenance release
+
+
+The name of current dev-branch of mvnforum
+-----------------------------
+* mvnforum-1_0_0_rc2_dev-20031008-hibernate_branch
+  For migrate to DAO/Hibernate
+
+* mvnforum-1_0_0_rc2-20031105-branch
+  Branch for RC2 release
+
+* mvnforum-1_0_0_rc4_02-20050224-branch
+  Branch for RC4_02 and later release
+
+* mvnforum-1_0_ga-20060414-branch
+  Branch for 1.0 GA and maintenance release
+
+* mvnforum-1_1_ga-20080130-branch
+  Branch for 1.1 GA and maintenance release
+  
+* mvnforum-1_2_ga-20080627-branch
+  Branch for 1.2 GA and maintenance release
+
+
+The name of current dev-branch of myvietnam_enterprise
+-----------------------------
+* myvietnam_enterprise-2_2-20080627-branch
+  Branch for 2.2.x maintenance release
+
+
+The name of current dev-branch of mvnforum_enterprise
+-----------------------------
+* mvnforum_enterprise-1_2_ga-20080627-branch
+  Branch for 1.2.x maintenance release
+
+
+The name of current dev-branch of mvnad
+-----------------------------
+* mvnad-1_0_ga-20080627-branch
+  Branch for 1.0.x maintenance release
+
+
+The name of current dev-branch of mvnad_enterprise
+-----------------------------
+* mvnad_enterprise-1_0_ga-20080627-branch
+  Branch for 1.0.x maintenance release
+
+
+The name of current dev-branch of mvncms
+-----------------------------
+
+
+
+The tag's name of myvietnam in CVS
+------------------------------
+myvietnam-1_2_0-20021215
+myvietnam-1_3_0-20030303
+myvietnam-1_4_0-20030611
+myvietnam-1_5_0-20031105
+myvietnam-1_6_0_dev-20031122
+myvietnam-1_6_0_dev-20031212
+myvietnam-1_6_0_dev-20040126
+myvietnam-1_6_0-20040629
+myvietnam-1_7_0_dev-20040916
+myvietnam-1_7_0-20050129
+myvietnam-1_8_0_dev-20050204
+myvietnam-1_8_0_dev-20050224
+myvietnam-2_0-20060414
+myvietnam-2_1-20080130
+myvietnam-2_2-20080612              : 2.2 RC
+myvietnam-2_2-20080627              : 2.2 GA
+
+
+The tag's name of myvietnam_enterprise in CVS
+------------------------------
+myvietnam_enterprise-2_2-20080612   : 2.2 RC
+myvietnam_enterprise-2_2-20080627   : 2.2 GA
+
+
+The tag's name of mvnforum in CVS
+------------------------------
+mvnforum-1_0_0_beta2-20021215       : final beta 2 release
+mvnforum-1_0_0_beta3-20030303       : final beta 3 release
+mvnforum-1_0_0_rc1-20030611         : final RC1 release
+mvnforum-1_0_0_rc2-20031105         : final RC2 release
+mvnforum-1_0_0_rc3_dev-20031122     : RC3-dev stable build release
+mvnforum-1_0_0_rc3_dev-20031212     : RC3-dev stable build release
+mvnforum-1_0_0_rc3_dev-20040126     : RC3-dev stable build release
+mvnforum-1_0_0_rc3-20040629         : final RC3 release
+mvnforum-1_0_0_rc4_dev-20040916     : RC4-dev stable build release with Private Message
+mvnforum-1_0_0_rc4-20050129         : final RC4 release
+mvnforum-1_0_0_rc4_01-20050204      : RC4_01 release (Update 1)
+mvnforum-1_0_0_rc4_02-20050224      : RC4_02 release (Update 2)
+mvnforum-1_0_0_rc4_03-20050520      : RC4_03 release (Update 3) (branch)
+mvnforum-1_0_0_rc4_04-20050618      : RC4_04 release (Update 4) (branch)
+mvnforum-1_0_ga-20060414            : 1.0 GA release (branch)
+   mvnforum-1_0_1_ga-20060612       : 1.0.1 GA release
+mvnforum-1_1_ga-20080130            : 1.1 GA release 
+mvnforum-1_2_ga-20080612            : 1.2 RC release 
+mvnforum-1_2_ga-20080627            : 1.2 GA release 
+
+
+The tag's name of mvnforum_enterprise in CVS
+------------------------------
+mvnforum_enterprise-1_2_ga-20080612 : 1.2 RC release 
+mvnforum_enterprise-1_2_ga-20080627 : 1.2 GA release 
+
+
+The tag's name of mvnforum_portlet in CVS
+------------------------------
+mvnforum_portlet-1_2_ga-20080612    : 1.2 RC release 
+mvnforum_portlet-1_2_ga-20080627    : 1.2 GA release 
+
+
+The tag's name of mvnad in CVS
+------------------------------
+mvnad-1_0_ga-20080612               : 1.0 RC release 
+mvnad-1_0_ga-20080627               : 1.0 GA release 
+
+
+The tag's name of mvnad_enterprise in CVS
+------------------------------
+mvnad_enterprise-1_0_ga-20080612    : 1.0 RC release 
+mvnad_enterprise-1_0_ga-20080627    : 1.0 GA release 
+
+
+The tag's name of mvnad_portlet in CVS
+------------------------------
+mvnad_portlet-1_0_ga-20080612       : 1.0 RC release 
+mvnad_portlet-1_0_ga-20080627       : 1.0 GA release 
+
+
+The tag's name of mvncms in CVS
+------------------------------
+mvncms-1_0_ga-20080612              : 1.0 RC release 
+mvncms-1_0_ga-20080627              : 1.0 GA release 
+
+
+The tag's name of mvncms-portlet in CVS
+------------------------------
+mvncms-portlet-2_0_dev-20100415     : 1.1 dev release, only support Portlet 1.0 
+
+
+
+The tag's name of mvncore-portal in CVS
+------------------------------
+mvncore-portal-20080612             : 1.0 RC release 
+mvncore-portal-20080627             : 1.0 GA release 
+
+
+The tag's name of mvncore-portlet in CVS
+------------------------------
+mvncore-portlet-20080612            : 1.0 RC release 
+mvncore-portlet-20080627            : 1.0 GA release 
+
+
+The tag's name of mvncore-user-portlet in CVS
+------------------------------
+mvncore-user-portlet-20080612       : 1.0 RC release 
+mvncore-user-portlet-20080627       : 1.0 GA release 

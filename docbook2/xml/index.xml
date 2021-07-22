@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!DOCTYPE book
+  PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN" "http://docbook.org/xml/4.3/docbookx.dtd"
+  [
+    <!ENTITY % global.entities SYSTEM "./include/global.xml">
+    %global.entities;
+       
+    <!ENTITY % entities SYSTEM "./include/entities.xml">
+    %entities;
+  ]
+>
+  <book>
+    <title> MVN FORUM </title>
+    <subtitle> java vietnam </subtitle>
+    
+    <bookinfo>
+        <authorgroup>
+            <author>
+                <firstname> Tran </firstname>
+                <surname> Van Hung </surname>
+            </author>
+            <author>
+                <firstname> Nguyen </firstname>
+                <surname> Ngoc Minh </surname>
+            </author>
+        </authorgroup>
+        <copyright>
+            <year> 2002 - 2006 </year>
+            <holder> by myvietnam.net </holder>
+        </copyright>
+        <releaseinfo> ngay relsease </releaseinfo>
+    </bookinfo>
+           
+
+    <include file="intro.xml" />
+    <include file="user_chap1.xml" />
+    <include file="admin_chap1.xml" />
+    <include file="develop_chap1.xml" />
+    
+  </book>

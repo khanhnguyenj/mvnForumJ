@@ -1,0 +1,79 @@
+******************************************************************
+* $Id: I18N.txt,v 1.10 2008/02/21 03:13:01 minhnn Exp $
+******************************************************************
+
+****************************************************************************
+* IMPORTANT: Please read the note below carefully before continuing any i18n tasks
+****************************************************************************
+
+Note for user:
+--------------------
+- If you found any issues in the current translation, please email
+    the suggestion for the language maintainer (and CC to me) (found in i18n/*.properties)
+
+- If your language has not been translated/localized, you could go
+    ahead and translate it (I will very happy to help you and officially
+    support your language in the next release of mvnForum). This will bring
+    benefit to your language community and mvnForum community alike
+
+
+Note for developers:
+--------------------
+- Please test daily mvnForum to know the current localization status in
+  general and your language specifically.
+  URL: http://mvnforum.linux.dk/
+
+- Currently only user module in mvnForum has been localized.
+    (Jsp admin module and .java later)
+
+- All resource keys in ResourceBundle MUST begin with mvnforum and
+    MUST NOT contain these three characters ':' (colon) , '=' (equal sign), ' ' (space)
+    ex: mvnforum.common.forum
+
+
+i18n TODO list
+-----------------------------
+
+- i18n and l10n all messages in the *.jsp files in the Admin Zone
+    (maybe not in the near future)
+- l10n to more and more languages (We need your help with this task)
+
+
+
+Cheers!
+
+minhnn (Minh Nguyen)
+http://www.mvnForum.com
+minhnn at MyVietnam d0t net
+
+
+
+==================================================
+           Translation Tracking Sheet
+==================================================
+
+Code     Language                     Maintainer                        Status             Note
+-------------------------------------------------------------------------------------------------------
+ar       Arabic                       Mohammed Al-shake                 Waiting
+bg       Bulgarian                    Svetoslav Tabakov                                    stabakov@grafportal.org (does not work)
+da       Danish                                                         Need Maintainer    Note that Gunther will be busy
+de       German                       Mat                               Need confirm       Quite busy now
+el       Greek                        Theodosios Paschalidis            Need confirm
+es       Spanish                      Luis Miguel Hernanz               OK                 jmenend1 - NOTE: luish@germinus.com (does not work)
+fr       French                       Stephane Mirabella                OK
+it       Italian                      Simone                            Waiting
+ja       Japanese                     Kazuho Arita                      Waiting
+ko       Korean                       Grant                             Need confirm
+lv       Latvian                      Imants Firsts                     Need confirm
+nl       Dutch                        Martin Visser                                        m.visser@everest.nl (does not work)
+no       Norwegian                    Christian Nicolaisen              Waiting ...
+pt_BR    Portuguese                   Andre Bernardes Pezza                                andre@javasoft.com.br (does not work)
+ru       Rusian
+sh       Serbian                      Dejan Krsmanovic                  Need confirm
+si       Slovenian                                                                         sn0wball@volja.net (does not work)
+sr       Serbian                      Dejan Krsmanovic                  Need confirm
+tr       Turkish                      Ercan Yurt                        Waiting            ey@elmak.com.tr (does not work)
+vi       Vietnamese                   Minh Nguyen                       OK
+zh_CN    Chinese                      Jacky Chu                         Waiting            new email jacky.ju@gmail.com
+zh_TW    Chinese                      Jacky Chu                         Waiting
+

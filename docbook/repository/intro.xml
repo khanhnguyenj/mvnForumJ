@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+  <chapter>
+    <title>Introduction</title>
+    <sect1>
+      <title>What is a Forum</title>
+      <para>
+        <blockquote>
+          <attribution>searchvb.com</attribution>
+          <para>
+            A discussion board (known also by various other names such as discussion group,
+            discussion forum, message board, and online forum) is a general term for any
+            online "bulletin board" where you can leave and expect to see responses to
+            messages you have left. Or you can just read the board. The first discussion
+            boards were available on bulletin board systems. On the Internet,
+            Usenet provides thousands of discussion boards; these can now sometimes be
+            viewed from a Web browser.
+          </para>
+        </blockquote>
+        <emphasis>mvnForum</emphasis> is an open source, powerful, easy to use, easy to setup bulletin board (forum) built using Java J2EE technologies (Java Server Pages/Servlets).
+        <emphasis>mvnForum</emphasis> is compatible with any Servlet Container which supports Jsp 1.2 and Servlet 2.3. <emphasis>mvnForum</emphasis> is free, opensource and released under the terms of the GNU General Public License.
+        This means that you can use it free of charge to build your own discussion communities.  We hope you find its design and features useful and please provide feedback on your use and improvements.
+      </para>
+    </sect1>
+    <sect1>
+      <title>Features</title>
+      <para>
+         Please note that below is a list of the most significant features.
+      </para>
+      <para>
+        <emphasis>New features in mvnForum 1.0.0 rc 4 - dev: - <ulink url="docs/Changes.txt">Change Log</ulink> - <ulink url="docs/ToDo.txt">Todo List</ulink> - [hot]</emphasis>
+        <itemizedlist spacing="compact">
+          <listitem><para>Private Mesage</para></listitem>
+          <listitem><para>Admin can send Public Message to all members</para></listitem>
+          <listitem><para>Support Sticky/Annoucement/GlobalAnnoucement thread type</para></listitem>
+          <listitem><para>Localize the message in Java files</para></listitem>
+          <listitem><para>Support Compression Filter for fastest tranferation on the network (enabled by default) (thread=1889)</para></listitem>
+          <listitem><para>Advanced Member Search with Lucene in the User Management</para></listitem>
+          <listitem><para>Support RSS 2.0 + Atom (including sorting option)</para></listitem>
+          <listitem><para>Most active threads in the week (or last 7 days)</para></listitem>
+          <listitem><para>Most active users in the week (or last 7 days)</para></listitem>
+          <listitem><para>Support spam prevention initiative by Google (rel="nofollow") http://www.google.com/googleblog/2005/01/preventing-comment-spam.html</para></listitem>
+          <listitem><para>Implement MemberInvisiable feature (enable with option enable_invisible_users)</para></listitem>
+          <listitem><para>Admin Zone: Log file Management in Admin zone to view/download/delete/backup any log file in the log folder</para></listitem>
+          <listitem><para>Admin Zone: a new page to show permission summary</para></listitem>
+          <listitem><para>Admin Zone: A new page to view cumulative permissions of any member and groups that is user belong to (thread=1974)</para></listitem>
+          <listitem><para>Admin Zone: Admin can turn on/off the access to the User area (such as for maintanence or urgent situation)</para></listitem>
+          <listitem><para>Admin Zone: Show Forum Uptime</para></listitem>
+          <listitem><para>Admin Zone: A new page to delete non activated members with no posts based on the registration day</para></listitem>
+          <listitem><para>Admin Zone: a new page that admin can change password (note that noone can change password of root admin)</para></listitem>
+          <listitem><para>Admin Zone: add new page to allow admin edit member information</para></listitem>
+          <listitem><para>Admin Zone: add new page to edit the freemarker template files</para></listitem>
+          <listitem><para>Admin Zone: new option to send email to all members in any group </para></listitem>
+        </itemizedlist>
+        <emphasis>New features in mvnForum 1.0.0 rc 3 - dev: - <ulink url="docs/Changes.txt">Change Log</ulink> - <ulink url="docs/ToDo.txt">Todo List</ulink> - [hot]</emphasis>
+        <itemizedlist spacing="compact">
+          <listitem><para>18n: Localize to 4 new languages: Portuguese, Korean, Japanese and Greek</para></listitem>
+          <listitem><para>Moderation of threads/posts</para></listitem>
+          <listitem><para>Support Thread Status (Normal, Disabled, Locked, Closed)</para></listitem>
+          <listitem><para>Support Forum Status (Normal, Disabled, Locked, Closed)</para></listitem>
+          <listitem><para>Support Forum Type (Normal and Private)</para></listitem>
+          <listitem><para>Implement permission BYPASS_PRIVATE_FORUM : When a user have this permssion, then he can use the global permission even the forum has option "Private Forum"</para></listitem>
+          <listitem><para>Allow a ForumAdmin to add users and/or groups to a forum, then he can set forum-specific permissions to those users.</para></listitem>
+          <listitem><para>User can delete his own post/thread (if no reply has been made)</para></listitem>
+          <listitem><para>Add image (JCaptcha) to prevent automatically register member + lostpassword</para></listitem>
+          <listitem><para>MD5 Encode password in the browser by JavaScript before sending over network</para></listitem>
+          <listitem><para>Support Flood Control for these actions: login, new post and register member (max actions per hour)</para></listitem>
+          <listitem><para>Support User Agent filter (such as Teleport)</para></listitem>
+          <listitem><para>Support intercepting email, post content, loginID, attachment description</para></listitem>
+          <listitem><para>[Security Improvement] : Need explicit login in the Admin Zone (cookie is not allowed)</para></listitem>
+          <listitem><para>Improved sendmail page that let admin send mail to all members, all activated members and all non-activated members</para></listitem>
+          <listitem><para>New link in UserManagement that let you send activation mail to all non activated members</para></listitem>
+          <listitem><para>Now all email content can be edited in the FreeMarker template files</para></listitem>
+          <listitem><para>Change the configuration from properties file to xml file</para></listitem>
+          <listitem><para>Configuration Tool</para></listitem>
+          <listitem><para>Backup configuration file function</para></listitem>
+          <listitem><para>Add option to disable login in User zone</para></listitem>
+          <listitem><para>New config param: "default_watch_option" to change the default watch option (daily watch)</para></listitem>
+          <listitem><para>Add some new configurable parameter (enable_avatar, enable_new_member, rows_per_rss, rows_per_pages, ...)</para></listitem>
+          <listitem><para>Support providing extension to mvnForum in the build process by place the extension in folder "extension"</para></listitem>
+          <listitem><para>Change the home page to show more information like a portal</para></listitem>
+          <listitem><para>In addpost page, support inserting mvnCode with javascript in both IE and Netscape</para></listitem>
+          <listitem><para>In index page in Admin zone, add 2 buttons to check latest version of mvnForum and mvnCore</para></listitem>
+          <listitem><para>Refactor all database class to DAO pattern</para></listitem>
+        </itemizedlist>
+        <emphasis>New features in mvnForum 1.0.0 rc 2 - dev: - <ulink url="docs/Changes.txt">Change Log</ulink> - <ulink url="docs/ToDo.txt">Todo List</ulink> - [hot]</emphasis>
+        <itemizedlist spacing="compact">
+          <listitem><para>Individual Persmissions</para></listitem>
+          <listitem><para>Forum-specific Permissions</para></listitem>
+          <listitem><para>Move threads between forums</para></listitem>
+          <listitem><para>New CSS (stylesheet) for improved forum customization</para></listitem>
+          <listitem><para>Search posts by user id</para></listitem>
+          <listitem><para>Search post ranking system</para></listitem>
+          <listitem><para>Print-friendly display for posts and threads</para></listitem>
+          <listitem><para>Customize Forum Title and Name in build</para></listitem>
+          <listitem><para>List online users sorts members above guests</para></listitem>
+          <listitem><para>Administrator can view IP and UserAgent of online users</para></listitem>
+          <listitem><para>mvnCode tags enabled in user signature</para></listitem>
+          <listitem><para>Localization: 4 additional languages: Arabic and Dutch</para></listitem>
+          <listitem><para>Database: 1 additional database: DB2 </para></listitem>
+          <listitem><para>Support 2 additional mvnCode tags: [img] (embed image in thread) and [utl=mailto] (for mail link)</para></listitem>
+        </itemizedlist>
+        <emphasis>Features in mvnForum 1.0.0 rc 1 - dev: - <ulink url="docs/Changes.txt">Change Log</ulink> - <ulink url="docs/ToDo.txt">Todo List</ulink> - [hot]</emphasis>
+        <itemizedlist spacing="compact">
+          <listitem><para>[Security]: User can now delete cookie (in login page) for better security </para></listitem>
+          <listitem><para>[Security]: Add configuration option to ensure Email Validation before the user can login </para></listitem>
+          <listitem><para>Support setting/customize Member's Title </para></listitem>
+          <listitem><para>Improved User Management </para></listitem>
+          <listitem><para>Support Global/Category/Forum/Thread Watch </para></listitem>
+          <listitem><para>Improved IP blocking: now support IP range blocking (eg. 127.0.0.*) </para></listitem>
+          <listitem><para>Powerful logging system with Jakarta Common Logging </para></listitem>
+          <listitem><para>Localization: 4 additional languages: Italian, German, French and Danish </para></listitem>
+          <listitem><para>Database: 1 additional database: SAPDB </para></listitem>
+          <listitem><para>Support 1 additional tags: [code] (to format code)</para></listitem>
+        </itemizedlist>
+        <emphasis>Features in mvnForum 1.0.0 beta3: - <ulink url="download.jsp">Download Now</ulink></emphasis>
+        <itemizedlist spacing="compact">
+          <listitem override="none"><para><emphasis>General features:</emphasis> </para></listitem>
+          <listitem><para>Based on MVC architecture </para></listitem>
+          <listitem><para>Built-in Database connection pool </para></listitem>
+          <listitem><para>Support Datasource configuration if your Servlet Container supports Datasource </para></listitem>
+          <listitem><para>Multi-databases (currently supports 6 DBMS: MySQL, Oracle, Sql Server, postgreSQL, hsqldb, Interbase/Firebird) [beta3] </para></listitem>
+          <listitem><para>Localization (currently localized in 6 languages: English, Vietnamese, Russian, Traditional Chinese, Simplified Chinese, Spanish) [beta3] </para></listitem>
+          <listitem><para>Internationalization (support all languages in the backend) [beta3] </para></listitem>
+          <listitem><para>Date/time are correctly formated based on user preferred locale [beta3] </para></listitem>
+          <listitem><para>Support automatic login (use cookie) [beta3] </para></listitem>
+          <listitem><para>New Online FAQ/Documentation [beta3]</para></listitem>
+        </itemizedlist>
+        <itemizedlist spacing="compact">
+          <listitem override="none"><para><emphasis>Security features:</emphasis> </para></listitem>
+          <listitem><para>User cannot view email until he have logged in (avoid spam and email-harvest tools) </para></listitem>
+          <listitem><para>MD5 Encrypted Passwords for greater security </para></listitem>
+          <listitem><para>Password Reset via email (forgot password) </para></listitem>
+          <listitem><para>Support IP block to prevent certain IP to access the system [beta3] </para></listitem>
+          <listitem><para>In Admin Zone, only show links that user have previledge on them [beta3] </para></listitem>
+          <listitem><para>Support realm authentication [beta3] </para></listitem>
+          <listitem><para>Support any customized authentication [beta3] </para></listitem>
+        </itemizedlist>
+        <itemizedlist spacing="compact">
+          <listitem override="none"><para><emphasis>User features: </emphasis> </para></listitem>
+          <listitem><para>Member lists </para></listitem>
+          <listitem><para>Viewable profiles </para></listitem>
+          <listitem><para>Comprehensive User Control Panel </para></listitem>
+          <listitem><para>Who's Online allows you to view all users visiting your board </para></listitem>
+          <listitem><para>User now can choose a prefered displayed language when registering [beta3] </para></listitem>
+          <listitem><para>Support Post Preview [beta3] </para></listitem>
+          <listitem><para>Users can (optionally) edit posts </para></listitem>
+          <listitem><para>Support 5 sorting options when viewing Recent threads and Threads in forum </para></listitem>
+          <listitem><para>Support most of mvnCode, such as [b] : bold, [color=deeppink] : Deep pink text </para></listitem>
+          <listitem><para>Support 5 additional tags: [quote] , [url] , [size] , [font] and [list] [beta3] </para></listitem>
+          <listitem><para>Support full mvnEmotion, such as [:)] , [:D]  [improved] </para></listitem>
+          <listitem><para>User can choose avatar, either from built-in avatars or upload his own avatar (Jpg/Gif/Png) [improved] </para></listitem>
+          <listitem><para>Dynamic Signatures </para></listitem>
+          <listitem><para>Show link for AIM, Yahoo Messenger, ICQ [beta3] </para></listitem>
+          <listitem><para>Support Thread/Post icons [beta3] </para></listitem>
+          <listitem><para>Show new/nonew status of a forum [beta3] </para></listitem>
+          <listitem><para>Show hot/normal and new/nonew status of a thread [beta3] </para></listitem>
+          <listitem><para>Show member's title based on the number of posts [beta3] </para></listitem>
+        </itemizedlist>
+        <itemizedlist spacing="compact">
+          <listitem override="none"><para><emphasis>Administration features:</emphasis> </para></listitem>
+          <listitem><para>Based on MVC architecture </para></listitem>
+          <listitem><para>Comprehensive system information and system diagnosis </para></listitem>
+          <listitem><para>Create an unlimited amount of forums </para></listitem>
+          <listitem><para>Re-order, edit forums at any time </para></listitem>
+          <listitem><para>Create an unlimited amount of categories </para></listitem>
+          <listitem><para>Re-order, edit categories at any time </para></listitem>
+          <listitem><para>Admin can view the IP of any post (both creation time and last edit time) </para></listitem>
+          <listitem><para>Enable/disable member (disabled member cannot login) [beta3] </para></listitem>
+          <listitem><para>ForumAdmin can delete any forums at any time </para></listitem>
+          <listitem><para>ForumAdmin can delete empty category [beta3] </para></listitem>
+          <listitem><para>Moderator can edit any posts at any time </para></listitem>
+          <listitem><para>Moderator can delete any posts at any time [beta3] </para></listitem>
+          <listitem><para>Moderator can delete any threads at any time [improved] </para></listitem>
+          <listitem><para>Assign members to any group at any time </para></listitem>
+          <listitem><para>Admin can remove member from group at any time </para></listitem>
+          <listitem><para>Admin can delete any groups at any time </para></listitem>
+          <listitem><para>Restrict permissions for an entire group at a time </para></listitem>
+          <listitem><para>Admin can email in the AdminZone </para></listitem>
+          <listitem><para>Allow access to the moderation features </para></listitem>
+          <listitem><para>Allow access to the Administration Control Panel </para></listitem>
+        </itemizedlist>
+      </para>
+    </sect1>
+  </chapter>

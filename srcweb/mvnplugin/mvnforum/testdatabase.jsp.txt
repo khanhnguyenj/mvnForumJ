@@ -1,0 +1,220 @@
+<%@ page contentType="text/html;charset=utf-8" %>
+
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.DriverManager" %>
+<%@ page import="java.sql.SQLException" %>
+
+<%@ page import="javax.sql.DataSource" %>
+
+<%@ page import="javax.naming.Context" %>
+<%@ page import="javax.naming.InitialContext" %>
+<%@ page import="javax.naming.NamingException" %>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<!--
+  Copyright (c) 2002-2005 by MyVietnam.net. All rights reserved.
+  $Author: minhnn $
+  $Revision: 1.6 $
+  $Date: 2009/02/20 07:52:38 $
+-->
+<head>
+  <title>mvnForum - Quick Test Database</title>
+</head>
+<body leftmargin="0" topmargin="0">
+<script type="text/javascript">
+function isBlank(field, strBodyHeader) {
+    strTrimmed = trim(field.value);
+    if (strTrimmed.length > 0) return false;
+    alert("\"" + strBodyHeader + "\" is a required field.");
+    field.focus();
+    return true;
+}
+function trimLeft(s) {
+    var whitespaces = " \t\n\r";
+    for (n = 0; n < s.length; n++) { if (whitespaces.indexOf(s.charAt(n)) == -1) return (n > 0) ? s.substring(n, s.length) : s; }
+    return("");
+}
+function trimRight(s){
+    var whitespaces = " \t\n\r";
+    for (n = s.length - 1; n  > -1; n--) { if (whitespaces.indexOf(s.charAt(n)) == -1) return (n < (s.length - 1)) ? s.substring(0, n+1) : s; }
+    return("");
+}
+function trim(s) {return ((s == null) ? "" : trimRight(trimLeft(s))); }
+
+function OnChangeUseDatasource() {
+  if (document.submitform.use_datasource.options[document.submitform.use_datasource.selectedIndex].value == "false") {
+    document.getElementById("id_driver_class_name").style.display = '';
+    document.getElementById("id_database_url").style.display = '';
+    document.getElementById("id_database_user").style.display = '';
+    document.getElementById("id_database_password").style.display = '';
+    document.getElementById("id_datasource_name").style.display = 'none';
+  } else {
+    document.getElementById("id_driver_class_name").style.display = 'none';
+    document.getElementById("id_database_url").style.display = 'none';
+    document.getElementById("id_database_user").style.display = 'none';
+    document.getElementById("id_database_password").style.display = 'none';
+    document.getElementById("id_datasource_name").style.display = '';
+  }
+}
+
+function SubmitForm() {
+    if (ValidateForm()) {
+        document.submitform.submitbutton.disabled = true;
+        document.submitform.submit();
+    }
+}
+function ValidateForm() {
+    if (document.submitform.use_datasource.options[document.submitform.use_datasource.selectedIndex].value == "false") {
+        if (isBlank(document.submitform.driver_class_name, "driver_class_name")) return false;
+        if (isBlank(document.submitform.database_url, "database_url")) return false;
+        if (isBlank(document.submitform.database_user, "database_user")) return false;
+    } else {
+        if (isBlank(document.submitform.datasource_name, "datasource_name")) return false;
+    }
+    return true;
+}
+</script>
+
+<%
+String useDataSource   = request.getParameter("use_datasource");
+String dataSourceName  = request.getParameter("datasource_name");
+String driverClassName = request.getParameter("driver_class_name");
+String databaseURL     = request.getParameter("database_url");
+String user            = request.getParameter("database_user");
+String password        = request.getParameter("database_password");
+
+if (useDataSource == null ) {
+    useDataSource   = "false";
+    dataSourceName  = "mvnforum";
+    driverClassName = "org.postgresql.Driver";
+    databaseURL     = "jdbc:postgresql://localhost:5432/mvnforum";
+    user            = "postgres";
+    password        = "postgres";
+}
+%>
+<h1 align="center">mvnForum - Test Database Connection</h1>
+<form name="submitform">
+<table width="95%" border="0" cellspacing="1" cellpadding="3" align="center" bgcolor="#999999">
+  <tr bgcolor="#666699" class="header">
+     <td colspan="2" align="center"><b>Database Test</b></td>
+  </tr>
+  <tr bgcolor="#FFFFFF">
+    <td width="30%">use_datasource <span class="requiredfield">*</span></td>
+    <td>
+    <select name="use_datasource" size="1" onChange="javascript:OnChangeUseDatasource();">
+<%  String use_datasource = useDataSource;
+    String[] arr = {"true", "false"};
+    for (int i = 0; i < arr.length; i++) {
+      if (arr[i].equals(use_datasource)) { %>
+      <option value=<%=arr[i]%> selected="selected"><%=arr[i]%></option>
+    <%} else { %>
+      <option value=<%=arr[i]%>><%=arr[i]%></option>
+    <%} 
+    } %>
+    </select>
+    </td>
+  </tr>
+  <tr bgcolor=#f5f5f5 id="id_driver_class_name" style="display: none;">
+    <td>driver_class_name <span class="requiredfield">*</span></td>
+    <td><input type="text" size="60" name="driver_class_name" value="<%=driverClassName%>"></td>
+  </tr>
+  <tr bgcolor=#FFFFFF id="id_database_url" style="display: none;">
+    <td>database_url <span class="requiredfield">*</span></td>
+    <td><input type="text" size="60" name="database_url" value="<%=databaseURL%>"></td>
+  </tr>
+  <tr bgcolor=#f5f5f5 id="id_database_user" style="display: none;">
+    <td>database_user <span class="requiredfield">*</span></td>
+    <td><input type="text" size="60" name="database_user" value="<%=user%>"></td>
+  </tr>
+  <tr bgcolor=#FFFFFF id="id_database_password" style="display: none;">
+    <td>database_password</td>
+    <td><input type="text" size="60" name="database_password" value="<%=password%>"></td>
+  </tr>
+  <tr bgcolor=#f5f5f5 id="id_datasource_name" style="display: none;">
+    <td>datasource_name</td>
+    <td><input type="text" size="60" name="datasource_name" value="<%=dataSourceName%>"></td>
+  </tr>
+  <tr bgcolor="#C0C0C0">
+    <td colspan="2" align="center"><input name="submitbutton" type="button" value="Test It" onclick="SubmitForm();"/></td>
+  </tr>
+</table>
+</form>
+
+<%
+String message = "";
+String errorMessage = "Good! No error.";
+String suggest = "No suggestion";
+if (useDataSource.equalsIgnoreCase("true")) {
+    Context context = new InitialContext();
+    Connection con = null;
+    try {
+        DataSource dataSource = (DataSource)context.lookup(dataSourceName);
+        if (dataSource != null) {
+            con = dataSource.getConnection();
+        } else {
+            errorMessage = "Cannot lookup the DataSource : " + dataSourceName;
+        }
+    } catch (NamingException ne) { 
+        errorMessage = "NamingException : " + ne.getExplanation();
+    } catch (SQLException e) {
+        errorMessage = "SQLException : " + e.getMessage();
+    }
+    if (con != null ) {
+        message = "Now, DataSource " + dataSourceName + " is ready for mvnForum!";
+        try {
+            con.close();
+        } catch (SQLException ex) {}
+    } else {
+        message = "DataSource is not ready for mvnforum yet.";
+        errorMessage = "Error caused by : " + errorMessage; 
+        suggest = "Please try again.";
+    }
+} else {
+    Connection con = null;
+    try { 
+        Class.forName(driverClassName);
+        con = DriverManager.getConnection(databaseURL, user, password);
+    } catch(ClassNotFoundException cnfe) {
+        errorMessage = "ClassNotFoundException : " + cnfe.getMessage();
+    } catch (SQLException sqle) {
+        errorMessage = "DatabaseConnectionException : " + sqle.getMessage();
+    }
+    if (con != null ) {
+        message = "Now, Database " + databaseURL + " is ready for mvnforum";
+        try {
+            con.close();
+        } catch (SQLException ex) {}
+    } else {
+        message = "Cannot connect database " + databaseURL + ".";
+        errorMessage = "Error caused by : " + errorMessage; 
+        suggest = "Please test again.";
+    }
+}
+%>
+  <br/>
+<table width="95%" border="0" cellspacing="1" cellpadding="3" align="center" bgcolor="#999999">
+  <tr bgcolor="#666699" class="header">
+    <td colspan="2" align="center"><b>Database Test Results</b></td>
+  </tr>
+  <tr bgcolor=#f5f5f5>
+    <td width="30%">Message for you:</td>
+    <td><%=message%></td>
+  </tr>
+  <tr bgcolor=#f5f5f5>
+    <td>Noisy:</td>
+    <td><%=errorMessage%></td>
+    </strong>
+  </tr>
+  <tr bgcolor=#f5f5f5>
+    <td>Suggestion for you:</td>
+    <td><%=suggest%></td>
+  </tr>
+</table>
+</body>
+<script type="text/javascript">
+<!--
+    OnChangeUseDatasource();
+//-->
+</script>
+</html>

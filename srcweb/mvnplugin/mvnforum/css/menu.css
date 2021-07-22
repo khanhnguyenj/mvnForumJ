@@ -1,0 +1,78 @@
+ div.domMenu_menuBar {
+      background-color: #f64a4a;
+      border: solid #d81d25;  
+      border-width: 1px 1px 1px 1px;
+}
+div.domMenu_menuElement {
+     font-family: "Tahoma", "Helvetica", "Arial", "sans-serif"; 
+     font-size: 10px;
+     font-weight: bold;
+     border: solid #FFFFFF;  
+     border-width: 0px 0px 0px 0px;
+     color: #FFFFFF;
+     text-align: center;
+     height: 14px;
+     line-height: 14px;
+     vertical-align: middle;
+}
+div.domMenu_menuElementHover {
+     background-color:#666699;
+     color: #FFFFFF;
+}
+div.domMenu_subMenuBar {
+     border: solid #7E7E7E 1px;
+     background-color: #FFFFFF;
+     padding-bottom: 1px;   
+}
+div.domMenu_subMenuElement {
+     font-family:"Tahoma", "Helvetica", "Arial", "sans-serif";
+     font-size: 10px;
+     margin: 0px 0px 0px 0px;
+     color: #FFFFFF;
+     padding: 4px 1px;
+     background-color:#f64a4a;
+     text-align: left;
+ }
+div.domMenu_subMenuElementHover {
+     background-color: #666699;
+     color:#FFFFFF
+ }
+div.domMenu_menuElement_admin {
+   font-family: "Tahoma", "Helvetica", "Arial", "sans-serif"; 
+   font-size: 12px;
+   font-weight: bold;
+   border: solid #FFFFFF;  
+   border-width: 0px 2px 0px 0px;
+   color: #FFFFFF;
+   text-align: center;
+   height: 28px;
+   line-height: 28px;
+   vertical-align: middle;
+}
+div.domMenu_menuElementHover_admin {
+    background-color:#666699;
+    color: #FFFFFF;
+}
+div.domMenu_subMenuBar_admin {
+    border: solid #7E7E7E 1px;
+    background-color: #FFFFFF;
+    padding-bottom: 1px;   
+}
+div.domMenu_subMenuElement_admin {
+    font-family:"Tahoma", "Helvetica", "Arial", "sans-serif";
+    font-size: 12px;
+    margin: 0px 0px 0px 0px;
+    color: #FFFFFF;
+    padding: 4px 7px;
+    background-color:#8888af;
+}
+div.domMenu_subMenuElementHover_admin {
+    background-color: #666699;
+    color:#FFFFFF
+}
+div.domMenu_menuBar_admin {
+    background-color: #8888af;
+    border: solid #666699;  
+    border-width: 1px 1px 1px 1px;
+}
+

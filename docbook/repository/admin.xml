@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!DOCTYPE book
+  PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN" "http://docbook.org/xml/4.3/docbookx.dtd"
+  [
+    <!ENTITY % global.entities SYSTEM "include/global.xml">
+    %global.entities;
+    <!ENTITY admin1 SYSTEM "admin_chap1.xml">
+
+    <!ENTITY % entities SYSTEM "entities.xml">
+    %entities;
+  ]
+>
+<book lang="en">
+
+  <bookinfo>
+
+    <title>mvnForum Administration Documentation</title>
+    <pubdate>20 January 2005</pubdate>
+
+    <author>
+      <firstname>Cord</firstname>
+      <surname>Thomas</surname>
+      <affiliation>
+        <jobtitle>Software Architect</jobtitle>
+        <orgname>Lupine Information Systems</orgname>
+        <address><email>cord_sw (at) lupinex.com</email></address>
+      </affiliation>
+    </author>
+
+  <revhistory>
+    <revision>
+      <revnumber>v0.4</revnumber>
+      <date>20 January 2005</date>
+      <authorinitials>cat</authorinitials>
+      <revremark>Updated for new features in RC4.</revremark>
+    </revision>
+    <revision>
+      <revnumber>v0.3</revnumber>
+      <date>20 April 2004</date>
+      <authorinitials>cat</authorinitials>
+      <revremark>Updated for new features in RC3.</revremark>
+    </revision>
+    <revision>
+      <revnumber>v0.2</revnumber>
+      <date>16 Jan 2004</date>
+      <authorinitials>cat</authorinitials>
+      <revremark>Updated for new features in RC2.  Refactor documentation to be
+        more in line with forum structure.</revremark>
+    </revision>
+    <revision>
+      <revnumber>v0.1</revnumber>
+      <date>8 June 2003</date>
+      <authorinitials>cat</authorinitials>
+      <revremark>
+        Prepared documentation for RC1 with installation and user instructions.</revremark>
+    </revision>
+  </revhistory>
+
+  </bookinfo>
+  <preface>
+    <title>Foreword</title>
+    <para>
+      The Administration Guide provides an introduction to setting up your first online forum
+      and the proper use of the forum administration tools. If you do not see what you are looking for
+      here, take a look at the <ulink url="faq.html">FAQ section</ulink>,
+      carefully compiled for your edification.
+    </para>
+  </preface>
+
+  &admin1;
+
+</book>

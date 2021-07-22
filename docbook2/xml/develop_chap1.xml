@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+  <chapter>
+    <title>Developer Documentation</title>
+    <sect1 id="dev_build">
+      <title>Getting Started</title>
+      <para>Follow these steps to access mvnForum source code and build mvnForum binaries
+        from source code.  To access the source code, use CVS to checkout the latest files
+        from the shared project repository maintained on SourceForge.  There are currently
+        2 modules, myvietnam and mvnforum.
+        <itemizedlist>
+           <title>Anonymous CVS Access</title>
+           <listitem><para>The project's Sourceforge.net CVS repository can be checked out through
+             anonymous (pserver) CVS with the following instructions</para></listitem>
+           <listitem><para>The module you wish to check out muts be specified as the modulename.</para></listitem>
+           <listitem><para>When prompted for a password for the anonymous user, press the <keycap>ENTER</keycap> key.</para></listitem>
+           <listitem><para><command>cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/mvnforum login</command></para></listitem>
+           <listitem><para><command>cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/mvnforum co modulename</command></para></listitem>
+           <listitem><para>Updates from within the module's directory do not need the -d parameter</para></listitem>
+        </itemizedlist>
+        <itemizedlist>
+           <title>Developer CVS Access via SSH</title>
+           <listitem><para>Only project developers can access the CVS tree via this method.
+              SSH1 must be installed on your client machine. Substitute modulename and
+              developername with the proper values. Enter your site password when prompted.</para></listitem>
+           <listitem><para><command>export CVS_RSH=ssh</command></para></listitem>
+           <listitem><para><command>cvs -z3 -d:ext:&lt;developername&gt;@cvs.sourceforge.net:/cvsroot/mvnforum co modulename</command></para></listitem>
+           <listitem><para>Please mail the Project Administrators (found at
+              www.sourceforge.net/projects/mvnforum) to include your Sourceforge User ID
+              (in other words you need to be a registered user on SourceForge) to the MvnForum
+              project. You cannot commit your changes until your SourceForge user ID has been
+              assigned to the project.</para></listitem>
+           <listitem><para>The Eclipse V2.1 Java Development Environment (www.eclipse.org) has a very intuitive
+              GUI for CVS access, using the extssh protocol in combination with the Sourceforge
+              user ID and password. With a few clicks you have checked out the mvnForum project
+              and are ready to participate in mvnForum development!</para></listitem>
+        </itemizedlist>
+        <orderedlist>
+          <title>Build the source code</title>
+          <listitem><para>Get the source code, if you have the source package, just extract
+            it to a folder. If you don't have the source package or you would
+            like to build the newest development source code, check out from
+            CVS. See the CVS.txt for detailed information.
+           </para></listitem>
+           <listitem><para>Download ant build tool from <ulink url="http://jakarta.apache.org">
+              http://jakarta.apache.org</ulink>, then config it
+              (please see the document from the ant package)
+           </para></listitem>
+           <listitem><para>cd to folder <filename class="directory">myvietnam</filename>, then type
+               <command>ant</command>
+           </para></listitem>
+           <listitem><para>cd to folder <filename class="directory">mvnforum</filename>, then type
+               <command>ant</command>
+           </para></listitem>
+           <listitem><para>the mvnForum webapp is created in folder <filename class="directory">
+             mvnforum/build/webapp</filename></para></listitem>
+        </orderedlist>
+      </para>
+    </sect1>
+    <sect1>
+      <title>Overview</title>
+      <para>The overview....</para>
+        <sect2>
+          <title>myvietnam</title>
+          <para>Introduction to myvietnam...
+          </para>
+        </sect2>
+        <sect2>
+          <title>mvnForum</title>
+          <para>Introduction to mvnforum.</para>
+         </sect2>
+    </sect1>
+    <sect1>
+      <title>Admin development</title>
+      <para>The overview....</para>
+        <sect2>
+          <title>myvietnam</title>
+          <para>Introduction to myvietnam...
+          </para>
+        </sect2>
+        <sect2>
+          <title>mvnForum</title>
+          <para>Introduction to mvnforum.</para>
+         </sect2>
+    </sect1>
+    <sect1>
+      <title>User development</title>
+      <para>The overview....</para>
+        <sect2>
+          <title>myvietnam</title>
+          <para>Introduction to myvietnam...
+          </para>
+        </sect2>
+        <sect2>
+          <title>mvnForum</title>
+          <para>Introduction to mvnforum.</para>
+         </sect2>
+    </sect1>
+ </chapter>

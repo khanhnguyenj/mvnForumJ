@@ -1,0 +1,52 @@
+Step by step config JDBC Realm using MVNForum Database
+1. Go to [MVNFORUM_HOME]\contrib\jdbcRealm\build.properties change some path 
+    commons-logging.jar = [MYVIETNAM_HOME]/lib/commons-logging-1.1.jar
+    driver.jar = [MVNFORUM_HOME]/driver/mysql-connector-java-3.0.17-ga-bin.jar
+    catalina.home=[CATALINA_HOME]
+
+2. Edit this realm for database connection in file when necessary
+    [MVNFORUM_HOME]\contrib\jdbcRealm\conf\mvn-jdbc-realm.xml
+
+3. Replace Realm in [CATALINA_HOME]\conf\server.xml with a sample realm in file config/realm-server.xml
+
+    replace 
+    <Realm className="org.apache.catalina.realm.UserDatabaseRealm"
+                 debug="0" resourceName="UserDatabase"/>
+    with
+    <Realm className="com.mvnsoft.auth.realm.MVNTomcatJDBCRealmMD5Base64"
+                 debug="0" resourceName="UserDatabase"/>
+
+4. Enable single-sign-on in tomcat: go to file [CATALINA_HOME]\conf\server.xml uncomment this line:
+
+    <Valve className="org.apache.catalina.authenticator.SingleSignOn"
+                   debug="0"/>
+                   
+5. in mvnforum.xml modify:
+   - Enable this feature: "enable_login_info_in_customization".
+   - Config an authenticator: enter value "com.mvnforum.auth.SampleRealmAuthenticator"
+   into the option "authenticator_implementation"
+   - To override login_url, place the link in this tag: <redirect_login_url></redirect_login_url>
+     Example: <redirect_login_url>http://localhost:8080/mvn-jdbc-realm/realm/login.jsp</redirect_login_url>
+   - To override logout_url, place the link in this tag: <redirect_logout_url></redirect_logout_url>
+     Example: <redirect_logout_url>http://localhost:8080/mvn-jdbc-realm/realm/login.jsp?logoff=true</redirect_logout_url>
+
+6. Run 
+    [MVNFORUM_HOME]\contrib\jdbcRealm>ant deploy-all
+
+7. Deploy mvnForum or mvnForum_Enterprise if you modified mvnforum.xml in source package.
+    
+8. Start Tomcat
+
+9. Test with link: 
+http://<server_name>:<port>/mvn-jdbc-realm/realm/index.jsp or 
+http://<server_name>:<port>/mvn-jdbc-realm/realm/login.jsp
+
+10. If you want to specify redirect url after logged in, just modify redirectURL variable in [MVNFORUM_HOME]\contrib\jdbcRealm\srcweb\login.jsp (optional)
+
+NOTES:
+[CATALINA_HOME] is where Tomcat is installed
+[MVNFORUM_HOME] is where mvnforum is.
+By default, mvnforum has a only account: admin/admin.
+You can log in with this account
+
+9. After that you come to mvnforum's index page, you will see that user admin has already login into mvnforum.

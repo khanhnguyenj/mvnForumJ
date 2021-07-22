@@ -1,0 +1,60 @@
+<whirlycache>
+
+  <default-cache>member</default-cache>
+
+  <cache name="mvncorex">
+    <backend>com.whirlycott.cache.impl.ConcurrentHashMapImpl</backend>
+    <!-- 120 seconds -->
+    <tuner-sleeptime>120</tuner-sleeptime>
+    <!-- evicts least frequently used items when pruning -->
+    <policy>com.whirlycott.cache.policy.LFUMaintenancePolicy</policy>
+    <maxsize>100</maxsize>
+  </cache>
+
+  <cache name="member">
+    <backend>com.whirlycott.cache.impl.ConcurrentHashMapImpl</backend>
+    <!-- 120 seconds -->
+    <tuner-sleeptime>120</tuner-sleeptime>
+    <!-- evicts least frequently used items when pruning -->
+    <policy>com.whirlycott.cache.policy.LFUMaintenancePolicy</policy>
+    <maxsize>100</maxsize>
+  </cache>
+
+  <cache name="post">
+    <backend>com.whirlycott.cache.impl.ConcurrentHashMapImpl</backend>
+    <!-- 120 seconds -->
+    <tuner-sleeptime>120</tuner-sleeptime>
+    <!-- evicts least frequently used items when pruning -->
+    <policy>com.whirlycott.cache.policy.LFUMaintenancePolicy</policy>
+    <maxsize>100</maxsize>
+  </cache>
+
+  <cache name="thread">
+    <backend>com.whirlycott.cache.impl.ConcurrentHashMapImpl</backend>
+    <!-- 120 seconds -->
+    <tuner-sleeptime>120</tuner-sleeptime>
+    <!-- evicts least frequently used items when pruning -->
+    <policy>com.whirlycott.cache.policy.LFUMaintenancePolicy</policy>
+    <maxsize>100</maxsize>
+  </cache>
+
+  <cache name="forum">
+    <backend>com.whirlycott.cache.impl.ConcurrentHashMapImpl</backend>
+    <!-- 120 seconds -->
+    <tuner-sleeptime>120</tuner-sleeptime>
+    <!-- evicts least frequently used items when pruning -->
+    <policy>com.whirlycott.cache.policy.LFUMaintenancePolicy</policy>
+    <maxsize>100</maxsize>
+  </cache>
+  
+  <cache name="category">
+    <backend>com.whirlycott.cache.impl.ConcurrentHashMapImpl</backend>
+    <!-- 120 seconds -->
+    <tuner-sleeptime>120</tuner-sleeptime>
+    <!-- evicts least frequently used items when pruning -->
+    <policy>com.whirlycott.cache.policy.LFUMaintenancePolicy</policy>
+    <maxsize>100</maxsize>
+  </cache>
+
+</whirlycache>
+

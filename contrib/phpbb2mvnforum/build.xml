@@ -1,0 +1,53 @@
+<project name="phpbb2mvnForum" default="compile" basedir=".">
+
+  <property name="src.home" value="${basedir}/src" />
+  <property name="properties.home" value="${basedir}/properties" />
+  <property name="driver" value="${basedir}/../../driver" />
+
+  <property name="build-root.home" value="${basedir}/../../../build" />
+  <property name="build.home" value="${build-root.home}/build-mvnforum-contrib-phpbb2mvnforum" />
+  <property name="build.classes" value="${build.home}/classes" />
+
+  <property name="myvietnam.build" value="${basedir}/../../../build/build-myvietnam" />
+  <property name="myvietnam.jar" value="${myvietnam.build}/lib/myvietnam.jar" />
+
+  <property name="mvnforum.build" value="${basedir}/../../../build/build-mvnforum" />
+  <property name="mvnforum.jar" value="${mvnforum.build}/lib/mvnforum.jar" />
+
+  <path id="compile.classpath">
+    <pathelement location="${myvietnam.jar}" />
+    <pathelement location="${mvnforum.jar}" />
+  </path>
+
+  <path id="run.classpath">
+    <pathelement location="${myvietnam.jar}" />
+    <pathelement location="${mvnforum.jar}" />
+    <pathelement location="${build.classes}" />
+    <fileset dir="${driver}">
+      <include name="*.jar" />
+    </fileset>
+  </path>
+
+  <target name="clean" description="Delete build directories">
+    <delete dir="${build.home}" />
+  </target>
+
+  <target name="prepare">
+    <!-- Create build directories as needed -->
+    <mkdir dir="${build.classes}" />
+  </target>
+
+  <target name="compile" depends="prepare" description="Compile Java sources">
+    <javac srcdir="${src.home}" destdir="${build.classes}" source="1.4" target="1.4" debug="true">
+      <classpath refid="compile.classpath"></classpath>
+    </javac>
+    <copy file="${properties.home}/db.properties" todir="${build.classes}" />
+  </target>
+
+  <target name="run" depends="compile" description="Run phpbb2mvnForum">
+    <java classname="org.mvnforum.phpbb2mvnforum.PHPBBToMvnForum">
+      <classpath refid="run.classpath"></classpath>
+    </java>
+  </target>
+
+</project>

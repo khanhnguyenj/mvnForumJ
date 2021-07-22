@@ -1,0 +1,479 @@
+/*
+   $Revision: 1.3 $
+   $Date: 2008/06/13 09:31:42 $
+
+
+   ==================================================
+   ======   Global stylesheet for mvnForum.   =======
+   ==================================================
+
+*/
+
+
+
+/* Background color and font for the main window */
+html {
+}
+
+body {
+    color: #000000;
+    background: #FFFFFF;
+    font-family: "Tahoma", "Helvetica", "Arial", "sans-serif";
+    font-size: 12px;
+}
+
+a:link, a:visited, a:active { color: #333333; text-decoration: underline }
+a:hover { color: #008FD7; text-decoration:underline }
+
+/* Page description shown in some pages, below the navigation menu. */
+.pagedesc {
+    background: #E9F7FF;
+    color: #000000;
+    FONT-FAMILY: "Tahoma", "Helvetica", "Arial", "sans-serif";
+    FONT-SIZE: 12px;
+    FONT-WEIGHT: normal;
+    LINE-HEIGHT: 20px;
+    text-decoration : none;
+}
+
+.warning {
+    color: #00699D;
+}
+
+.requiredfield {
+    color: #00699D;
+}
+
+.pendingyes {
+    color: #00699D;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.pendingno {
+    color: #00699D;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Background and border styles for tables. */
+.tborder {
+    border: 1px;
+    background: #6B9AB1;
+}
+
+.command {
+    color: #000000;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 20px;
+    text-decoration : none;
+}
+a.command:link, a.command:visited, a.command:active {
+    color: #3D3D3D;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 20px;
+    text-decoration: none;
+}
+a.command:hover {
+    color: #008FD7;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 20px;
+    text-decoration: none;
+}
+
+.pager {
+    color: #000000;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 20px;
+    text-decoration : none;
+}
+.pagerCurrent {
+    color: #00699D;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 20px;
+    text-decoration : none;
+}
+a.pager:link, a.pager:visited, a.pager:active {
+    text-decoration: none;
+}
+a.pager:hover {
+    color: #008FD7;
+    text-decoration: underline;
+}
+
+.tcat {
+    color: #3D3D3D;
+    font-size: 12px;
+    background: #DCF3FF;
+    line-height: 20px;
+}
+
+/* Top-level table title rows */
+.theader {
+    color: #FFFFFF;
+    background: #028ACC;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 20px;
+    text-decoration: none;
+    background-image: url(../images/bg.gif);
+    background-repeat: repeat-x;
+}
+
+/* First post in the thread */
+.trow0 {
+    background: #E9F7FF;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+/* First alternating background color for row. */
+.trow1 {
+    background: #FFFFFF;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+/* Second alternating background color for row. */
+.trow2 {
+    background: #F6F6F6;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.trowfinal {
+    background: silver;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.memberName {
+    color: #3D3D3D;
+    font-family: "Tahoma", "Helvetica", "Arial", "sans-serif";
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 20px;
+    text-decoration: none;
+}
+a.memberName:link, a.memberName:visited, a.memberName:active {
+    color: #3D3D3D;
+    text-decoration: underline;
+}
+a.memberName:hover {
+    color: #008FD7;
+    text-decoration: underline;
+}
+
+.companyName {
+    color: #00699D;
+    font-family: "Tahoma", "Helvetica", "Arial", "sans-serif";
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 20px;
+    text-decoration: none;
+}
+a.companyName:link, a.companyName:visited, a.companyName:active {
+    color: #3D3D3D;
+    text-decoration: underline;
+}
+a.companyName:hover {
+    color: #008FD7;
+    text-decoration: underline;
+}
+
+.disabledItem {
+    color: #00699D;
+    font-family: "Tahoma", "Helvetica", "Arial", "sans-serif";
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 20px;
+    text-decoration: none;
+}
+a.disabledItem:link, a.disabledItem:visited, a.disabledItem:active {
+    color: #00699D;
+    text-decoration: underline;
+}
+a.disabledItem:hover {
+    color:#008FD7;
+    text-decoration: underline;
+}
+
+.messageTopic {
+    color: #3D3D3D;
+    font-family: "Tahoma", "Helvetica", "Arial", "sans-serif";
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 20px;
+    text-decoration: none;
+}
+a.messageTopic:link, a.messageTopic:visited, a.messageTopic:active {
+    color: #3D3D3D;
+    text-decoration: underline;
+}
+a.messageTopic:hover {
+    color: #008FD7;
+    text-decoration: underline;
+}
+
+.messageText {
+    color: #000000;
+    FONT-FAMILY: "Tahoma", "Helvetica", "Arial", "sans-serif";
+    FONT-SIZE: 12px;
+    FONT-WEIGHT: normal;
+    LINE-HEIGHT: 20px;
+    text-decoration: none;
+}
+
+.messageTextBold {
+    color: #000000;
+    FONT-FAMILY: "Tahoma", "Helvetica", "Arial", "sans-serif";
+    FONT-SIZE: 12px;
+    FONT-WEIGHT: bold;
+    LINE-HEIGHT: 20px;
+    text-decoration: none;
+}
+
+.messageTextBoldBlue {
+    color: #3D3D3D;
+    FONT-FAMILY: "Tahoma", "Helvetica", "Arial", "sans-serif";
+    FONT-SIZE: 12px;
+    FONT-WEIGHT: bold;
+    LINE-HEIGHT: 20px;
+    text-decoration: none;
+}
+
+.messageTextBoldRed {
+    color: #3D3D3D;
+    FONT-FAMILY: "Tahoma", "Helvetica", "Arial", "sans-serif";
+    FONT-SIZE: 12px;
+    FONT-WEIGHT: bold;
+    LINE-HEIGHT: 20px;
+    text-decoration: none;
+}
+
+/* These are not used anymore:
+
+.numberBlack {
+    color: Black;
+    FONT-FAMILY: "Tahoma", "Helvetica", "Arial", "sans-serif";
+    FONT-SIZE: 18px;
+    FONT-WEIGHT: bold;
+    LINE-HEIGHT: 20px;
+    text-decoration : none;
+}
+
+.numberBlueLink {
+    color: Blue;
+    FONT-FAMILY: "Tahoma", "Helvetica", "Arial", "sans-serif";
+    FONT-SIZE: 18px;
+    FONT-WEIGHT: bold;
+    LINE-HEIGHT: 20px;
+    text-decoration : none;
+}
+
+.numberRedLink {
+    color: Red;
+    FONT-FAMILY: "Tahoma", "Helvetica", "Arial", "sans-serif";
+    FONT-SIZE: 18px;
+    FONT-WEIGHT: bold;
+    LINE-HEIGHT: 20px;
+    text-decoration : none;
+}
+*/
+
+.pageTitle {
+    color: #FF9966;
+    FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 24px;
+    FONT-WEIGHT: bold;
+    LINE-HEIGHT: 26px;
+    text-decoration: none;
+}
+
+.subTitle {
+    color: #000000;
+    FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 18px;
+    FONT-WEIGHT: normal;
+    LINE-HEIGHT: 26px;
+    text-decoration: none;
+}
+
+.pageFooter {
+    color: #000000;
+    FONT-FAMILY: "Tahoma", "Helvetica", "Arial", "sans-serif";
+    FONT-SIZE: 10px;
+    FONT-WEIGHT: normal;
+    LINE-HEIGHT: 20px;
+    text-decoration: none;
+}
+
+.normal {
+    color: #000000;
+    FONT-FAMILY: "Tahoma", "Helvetica", "Arial", "sans-serif";
+    FONT-SIZE: 12px;
+    FONT-WEIGHT: normal;
+    LINE-HEIGHT: 20px;
+    text-decoration: none;
+}
+
+.bold {
+    color: #000000;
+    FONT-FAMILY: "Tahoma", "Helvetica", "Arial", "sans-serif";
+    FONT-SIZE: 12px;
+    FONT-WEIGHT: bold;
+    LINE-HEIGHT: 20px;
+    text-decoration : none;
+}
+
+.highlight {
+    color: #00699D;
+    FONT-FAMILY: "Tahoma", "Helvetica", "Arial", "sans-serif";
+    FONT-SIZE: 14px;
+    FONT-WEIGHT: bold;
+    LINE-HEIGHT: 20px;
+    text-decoration : none;
+}
+
+.welcomeHeader {
+    color: #00699D;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 20px;
+    text-decoration : none;
+}
+a.welcomeHeader:link, a.welcomeHeader:visited, a.welcomeHeader:active {
+    color: #00699D;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 20px;
+    text-decoration : none;
+}
+a.welcomeHeader:hover {
+    color: #008FD7;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 20px;
+    text-decoration : underline;
+}
+
+.topmenu {
+    color: #000000;
+    background: #F6F6F6;
+    FONT-FAMILY: "Tahoma", "Helvetica", "Arial", "sans-serif";
+    FONT-SIZE: 12px;
+    FONT-WEIGHT: bold;
+    LINE-HEIGHT: 20px;
+    text-decoration : none;
+}
+a.topmenu:link, a.topmenu:visited, a.topmenu:active { text-decoration: none }
+a.topmenu:hover { text-decoration:underline }
+
+.nav {
+    color: #000000;
+    FONT-FAMILY: "Tahoma", "Helvetica", "Arial", "sans-serif";
+    FONT-SIZE: 14px;
+    FONT-WEIGHT: bold;
+    LINE-HEIGHT: 20px;
+    text-decoration : none;
+}
+
+.zoneTitle {
+    color: #FF9900;
+    FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 24px;
+    FONT-WEIGHT: bold;
+    LINE-HEIGHT: 26px;
+    text-decoration : none;
+}
+
+.menuItemback {
+    color: #cbcbeb;
+    FONT-FAMILY: "Tahoma", "Helvetica", "Arial", "sans-serif";
+    FONT-SIZE: 12px;
+    FONT-WEIGHT: bold;
+    LINE-HEIGHT: 20px;
+    text-decoration : none;
+}
+
+input, textarea, select {
+    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    background: #F6F6F6;
+    border: 1px solid Black;
+}
+
+input {
+    text-indent : 1px;
+}
+
+input.noborder {
+    border : 0px;
+    background-color: transparent;
+}
+
+input.mainoption {
+    background-color : #DDDDDD;
+    font-weight : bold;
+}
+
+input.liteoption {
+    background-color : #E5E5E5;
+    font-weight : normal;
+}
+
+/* Quote blocks */
+span.genmed { font-size : 11px; }
+td.quote {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #444444;
+    line-height: 125%;
+    background-color: #F0FAFF;
+    border: #D1D7DC;
+    /*border-style: solid;
+    border-left-width: 1px;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px; */
+    border: 2px dotted;
+    border-color:#999;
+}
+.menuitem {
+    font-weigh: bold; 
+    background: #999999;
+    font-size: 13px; 
+    margin-left: 5px; 
+    line-height: 15px; 
+    menu: #0000CC
+}
+.selectedmenuitem {
+    font-weigh: bold; 
+    font-size: 14px; 
+    margin-left: 5px; 
+    CURSOR: default; 
+    color: #ff6600; 
+    text-decoration: none
+}
+.childmenuitem {
+    font-weigh: bold; 
+    font-size: 14px;
+    margin-left: 15px; 
+    color: #0000cc;
+    border: 2px dotted;
+    background-color: #EEE;
+    border-color:#999;
+}
+.selectedchildmenuitem {
+    font-weigh: bold; 
+    font-size: 12px; 
+    margin-left: 15px; 
+    cursor: default; 
+    color: #ff6600; 
+    text-decoration: none
+}

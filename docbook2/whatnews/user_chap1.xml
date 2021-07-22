@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<chapter>
+    <title> chapter.title </title>
+    &#x2423;
+    <sect1>
+      <title> sect1.title </title>
+      <para>  sect1.param  </para>
+      
+      <sect2>
+        <title> sect1.sect2.title </title>
+        <para> sect1.sect2.param </para>
+        <para> sect1.sect2.param </para>
+      </sect2>
+      
+      <sect2>
+        <title> sect1.sect2.title </title>
+        <para>
+            <!-- data -->
+            <itemizedlist>
+               <listitem><para> sect1.sect2.para.itemizedlist.listitem.para.listitem </para></listitem>
+               <listitem><para> sect1.sect2.para.itemizedlist.listitem.para.listitem </para></listitem>
+            </itemizedlist>
+        </para>
+      </sect2>
+      
+    </sect1>
+    
+    <sect1 id="id_1">
+      <title> sect1.title </title>
+      <para>
+         <!-- data -->
+        <itemizedlist>
+          <title> sect1.para.itemizedlist </title>
+          <listitem><para> sect1.param.itemizedlist.listitem.param </para></listitem>
+          <listitem><para> sect1.param.itemizedlist.listitem.param </para></listitem>
+        </itemizedlist>
+      </para>
+                  
+      <sect2 id="a.1">
+        <title> sect1.sect2.title </title>
+        <para>  sect1.sect2.para   </para>
+        <para>  sect1.sect2.para   </para>
+        <para>  sect1.sect2.para   </para>
+        
+        <para>
+          <mediaobject>
+              <imageobject>
+                     <imagedata fileref="figure/post.png" format="PNG"/>
+              </imageobject>
+              <textobject>
+                <phrase> text_object </phrase>
+              </textobject>
+              <caption>
+                <para>
+                   title cho buc anh 
+                </para>
+              </caption>
+          </mediaobject>
+        </para>
+        
+      </sect2>
+      
+      <sect2 id="a.2">
+        <title id="id.title"> sect1.sect2.title </title>
+        <para> see <ulink url="admin.html#admin_forum_members"> dung tag ulink de link den phan khac trong file khac </ulink>.
+        </para>
+      </sect2>
+      
+    </sect1> 
+</chapter>

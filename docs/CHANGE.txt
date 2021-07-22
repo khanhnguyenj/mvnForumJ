@@ -1,0 +1,1143 @@
+******************************************************************
+* $Id: CHANGE.txt,v 1.521 2010/08/17 04:24:25 minhnn Exp $
+******************************************************************
+
+//////////////////////////////////////////////////////////////////////////////////
+//      mvnForum Changes Log
+//////////////////////////////////////////////////////////////////////////////////
+
+
+Changes Log
+-----------------------------------------
+[1.3-dev] - $Date: 2010/08/17 04:24:25 $ 
+    - [fix] Fix bug that does not update Lucence attachment index when delete attachment/post/thread/forum
+    - Support private option in MVNForumConfig to enable/disable default email visible for remote users
+    - Support private option in MVNForumConfig to enable/disable delete cookie
+    - Only show link to split thread if have permission
+    - [fix] The reload configuration xml files does not trigger the EnvironmentService.overloadEnvironment() 
+    - Upgrade Lucene from version 2.9.2 to 2.9.3
+    - [enterprise] Fix referer check in IE when delete banned word/ip/email/username
+    - [enterprise] Fix database error when run Report thread on SQL Server 2005
+    - [enterprise] Refactor the update() of AlbumDAO and AlbumItemDAO into smaller updateXXX()
+    - Action related to album now checked with: permission.ensureIsAuthenticated()
+    - log4j.properties now configure the encoding is UTF-8
+    - Page related to log files now show canonical path instead of absolute path
+    - MVNForumConfig now show the information of mvnForumHome folder
+    - Support new favicon.ico to show in the tab of browser
+    - [enterprise] Set as album cover now supports database storage
+    - [enterprise] Download album photo now supports database storage
+    - [enterprise] implement album avatar in database via BinaryStorage
+    - Cache username existed for better performance when single sign on via Authenticator
+    - [enterprise] [fix] fix bug when run Lucene search on database via Compass
+    - [enterprise] [fix] fix bug when run in database storage (because return wrong Lucene Directory)
+    - [enterprise] [fix] fix bug resource leak in album properties
+    - Upgrade Lucene from version 2.9.0 to 2.9.2
+    - Add new MySql driver Connector/J version 5.1.12
+    - Upgrade JTDS driver from version 1.2.2 to 1.2.5
+    - Upgrade postgreSQL driver from version 8.3-603.jdbc3 to 8.4-701.jdbc3
+    - Upgrade hsqldb driver from version 1.8.0.9 to 1.8.1.2
+    - [fix] after moving a thread, the thread count in forum in the index page is not updated
+    - [fix] ignore SocketException in servlet, because in WebLogic, when loading and close the browser, SocketException is thrown
+    - [enterprise] Improve User Management so admin can now view user in LDAP that have not login before
+    - Upgrade Lucene from version 2.4.1 to 2.9.0
+    - Improve the EnvironmentService.setShouldRun, now some error could be retry (default 5 times)
+    - Improve the navigation area, page description area and menu, now use <div> instead of <table>
+    - [improvement] Localize the folder of private message
+    - Upgrade JCaptcha from version 1.0-RC6 to version 1.0 
+    - Upgrade Compass from version 2.1.0 to 2.2.0
+    - Upgrade Lucene from version 2.4.0 to 2.4.1
+    - Fix bug that language Arabic is not correctly render right to left
+    - [improvement] check deeper condition when validating username and email @ addmember page, localize error messages
+    - [fix] fix bbeditor bug (message is duplicated when user select from first character and click on bb button)
+    - [improvement] improve GUI at view thread tree view
+    - [improvement] avoid switching between 2 editors mode when submitting or previewing topic
+    - Refactor method related to permission, "Any" is changed to "AtLeastOne" for correct meaning
+    - Improve the ant build with with the prefix for each project
+    - [improvement] now all the i18n files are put into WEB-INF/classes/i18n/mvnforum
+    - [fix] Fix SQL error when run export forums feature on DB2
+    - Show help icon for all configuration keys
+    - [fix] [enterprise] now only show category in the index page if user can view at least 
+        one forum in this category
+    - [improvement] use tag <label> to improve accessibility 
+    - [enterprise] Support login with OpenID account
+    - [enterprise] [improvement] Major review of LDAP support, especially in portal environment
+    - Fix possible NPE in all XXXProcessor
+    - Implement username and email validation via ajax when user registering an account
+    - Fix bug Attach Screenshot and insert Cancel button.
+    - Localize to Hungarian language (thank Jozsef Tamas Herczeg)
+    - Change to support cookie locale for Tapestry
+    - Support WYSIWYG editor in addpost page with switch tab and resizable feature
+    - Write a tool synchronize 2 files .properties.
+    - Remove jzonic.jar because slf4j does not support this library
+    - Fix bug when posting or reply, if we choose the Priority, then when preview, it should display the icon before the post title 
+    - Fix bug when add new post and insert emotions in preview mode. 
+    - Fix add watch message when insert duplicate watch.
+    - Add "Guest Setting" page.
+    - Fix bug restore CSS.
+    - Add confirmrestorecss page. Fix processRestoreCSS method of file CssTaskWebHandler.java
+    - Fix bug: Display incorrect in forummanagement page.
+    - [Improvement] : localize the buttons (mostly in page viewthread)
+    - Add new file web.xml.servlet_2_4 , which is used for Servlet 2.4 web.xml definition 
+    - [enterprise] Add new mobile module, which is for mobile devices with limited screen size
+    - Remove 4 methods in SearchService that allow option to create a search directory
+    - Upgrade Compass from version 0.9.0 to 2.1.0
+    - Upgrade Lucene from version 2.3.2 to 2.4.0
+    - Fix bug Mantis.135 - Preview button of CSS does not work if the index page is not like portal page
+    - Fix bug that the tag [code] does not indent properly in IE
+    - Fix bug that the button to control BBCode does not work correctly in IE if we have not click 
+        mouse into the text area (fix in mvncode.js)
+    - Upgrade prettify to version 14-Jul-2008
+    - Add contrib "release", which is used to release packages of mvnForum
+    - [enterprise] When export to CSV file, now we use encoding utf-8
+    - MVNForumContextListener now add the servlet container information and time when start context
+    - [Fix bug] : Fix bug that set <send_watchmail_as_html> to true is not affect the single watch mail
+    - [Fix bug] : Fix bug that permisson of member is empty when there is no record in mvnforumMemberGroup table
+    - [Improvement] : Add to the watch mail 4 variables: threadBody, lastPostTopic, lastPostBody, lastPostUrl
+    - [Improvement] : Config the max length of the thread body and last post body in the watch mail with key
+          <max_last_post_body_in_watch> in mvnforum.xml
+    - [Improvement] : In viewthread page, add link [Jump to Last Post]
+    - [Security] : Fix XSS bug in listonlineusers 
+    - [Security] : Fix bug that not check HTTP Referer header, which could be attacked by a different domain. 
+    - [enterprise] Improve album feature by remove parameter "check"
+    - [Improvement] : When register new member, add option to reload the captcha image 
+    - [enterprise] [Fix bug] : Could not vote anonymous poll many times in hsqldb
+    - [Improvement] : Support flood control in minute time 
+    - [Fix bug] : Fatal Error in initializing MvnForumAdService and MvnForumCMSService instance
+    - [Improvement] : support highlight text in search and view thread page
+    - [enterprise] [Fix bug] Fix bug in rating Album item
+    - [enterprise] : add missing tables for Lucene searching on database
+    - [Improvement] : using cache for getting member avatar
+    - [Improvement] : improve checking message folder in postLogin
+    - [Fix bug] : Fatal Error when losing database connection 
+    
+    
+[1.2 GA] - 27 June 2008
+    - [Fix bug] : Now escape Lucene special characters so can search special characters now
+    - [enterprise] [Fix bug] Fix bug show current photo rate not correctly in Internet Explorer
+    - [enterprise] Improve layout of album
+    - [Fix bug] : fix bug related to key to show member profile and require profile when registering
+    - [enterprise] [Fix bug] : cannot down the poll answer the second time (because of #)
+    - [Improvement] : Now cache the code to get permission for group Guest to improve performance
+    - Now does not check if user Guest is in database or not, so the performance is improved
+    - [enterprise] [Improvement] : in anonymous poll vote, if user is currently login, 
+        now poll save that member name
+    - [Improvement] : When report threaten message, now show link for the thread/post
+    - [portlet] [Fix bug] Fix Preview bug when run on eXo 2.0
+    - Total review and improve CSS file
+    - Fix bug NPE in mvncode.js when run on Firefox and we click mouse on the textarea in addpost
+    - [enterprise] Support CAS single sign on
+    - Assign user A to have Forum Admin permission on forum X, now we do not show option to move up/move down in other forums
+    - [enterprise] Poll answer when created will have the increase order
+    - [enterprise] In page viewpolldetail, now we show more information: anonymous, change vote
+    - [enterprise] Many improvement to the coding of album and poll feature
+    - [portlet] Show the Portal information in the index page of ForumAdminPortlet
+    - [enterprise] Support expire date in banned words, banned username, banned email, banned IP
+    - [portlet] support use schemaMapping to change avatar and signature
+    - [enterprise] Now show alert dialog to confirm when delete poll answer 
+    - [enterprise] Add Poll button now before button Change Status 
+    - In page editthreadstatus, now we use class info for the guide of thread status (more readable)
+    - Improve GUI in configstepone for enable_image_thumbnail
+    - Separate DatabaseConfig.TABLE_PREFIX and DatabaseConfig.USER_TABLE_PREFIX
+    - [enterprise] [Improvement] : Page editcaptions now have button Reset
+    - [Improvement] : If forum in moderation mode, does not allow user to edit if there is answer
+    - [Improvement] : In header, now user can login directly 
+    - [MVNCore] [Fix bug] : Fix CompressionFilter: download attachment different between IE and FF (thread=3969), 
+        IE has problem with application/x-zip-compressed 
+        http://blogs.msdn.com/wndp/archive/2006/08/21/Content-Encoding-not-equal-Content-Type.aspx
+    - [Fix bug] : Fix bug in version 1.1 GA that cannot show the error message when login
+    - Change build.xml so it always target at JDK 1.4
+    - If a post has a very long un-break line, then we break it to many smaller lines
+    - [enterprise] [Improvement] : Support Oracle LDAP
+    - [MVNCore] URLFilter: now shorten the url if it is more than 80 characters
+    - [MVNCore] [Improvement] : Support key <use_secure_connection> in mvncore.xml so we can send email with gmail
+    - Upgrade JCaptcha from version 1.0-RC2.0.1 to version 1.0-RC6
+    - Upgrade Lucene from version 2.2.0 to 2.3.2
+    - Add MySql driver Connector/J version 5.1.6
+    - Upgrade postgreSQL driver from version 8.2-507.jdbc3 to 8.3-603.jdbc3
+    - Remove unused variable m_dirty in all DAO classes (except RankDAO)
+    - [enterprise] In page to add album : add javascript checking for AlbumName (checkGoodName)
+    - [Fix bug] : Fix bug that when users edit their posts in a moderated forum, 
+                  the messages do not go back to the moderated status
+    - [Fix bug] : when a user delete post, it shows wrongly: "You cannot edit a post which is older than 30 days."
+    - [enterprise] [New Feature] : Album now have a page to upload album avatar
+    - [New Feature] : Support database informix
+    - [enterprise] viewalbumitem : support vietnamese when add or edit caption
+    - [enterprise] Banned Username Management now supports regular expression
+    - Now consistently use inc_js_checkvalid_myvietnamlib.jsp and myvietnam.js
+    - Improve the way program the function to update xml in ConfigurationWebHandler (use class XMLUtil)
+    - Cookie now use version 1 so it can work with Tomcat 6.0.16
+    - [New Feature] : support friendly URL for page viewthread, printpost, printthread 
+        (config <enable_friendly_url> in mvnforum.xml)
+    - Fix minor bug that css in viewmessage is not correct
+    - In forummanagement, add a column to show Forum Owner
+    - [enterprise] Add banned word and edit banned word: the banned word must be different from the replacement token
+    - [enterprise] in banned email, username, word, IP, add JavaScript to ask "Are you sure to want to delete?"
+    - Add javascript Unsigned Int checking for Order in editcategory.jsp and editforum.jsp
+    - [Improvement] : automatically detect if the file for registration for a locale is existed or not
+    - After moving a thread, the option to return to the thread is the default link  
+    - [enterprise] [Fix bug] : viewthread and listthreads are not correctly tracked in listonlineusers 
+    - [enterprise] now the user get hint that album name must not contain blanks or special characters
+    - [enterprise] now the user get information about the available width and height photos
+    - [Fix bug] : Member title is cached after changing member title (thread=3763)
+    - Add link for quick jump to a page in listforums, listthreads and listrecentthreads
+    - [enterprise] : Add permission Add Own Thread Poll so only the starter of a thread 
+        can create the poll for this thread
+    - [MVNCore] [Fix bug] : Fix JavaMail JNDI issue with Sun App Server 7 (thread=3663)
+    - [Fix bug] : Fix NPE of RequestDispatcher in some cases. 
+    - [Fix bug] : Fix looping bug in MyUtil.getNewMembersInRecentDays() (improve performance a lot of index page)
+    - [enterprise] [Fix bug] : Fix bug that the width and height of album item is not loaded
+    - Support 8 additional advertisement zones in viewthread
+    - [enterprise] [Fix bug] : Fix bug in SQL script of postgreSQL
+    - [Fix bug] : Fix bug that cannot show the correct Chinese file name when download
+    - Update the Spanish translation (thank jmenend1)
+    - Add checking for current password in several pages in the admin zone
+    - Review the Event Log in actions in the admin zone
+    - [Fix bug] : Fix bug when login with wrong password in the enterprise edition 
+
+
+[1.1 GA] - 30 January 2008
+    - Add new key in mvnforum.xml <max_http_requests_per_hour_per_ip> (to prevent flood)
+    - In admin zone, add javascript to validate server_hour_offset (-13 to 13)
+    - [Improvement] : In index in admin zone, if not support image processing, then should show this warning to the admin
+    - Add key in mvnforum.xml : <enable_check_invalid_session> 
+    - [MVNCore] URLFilter now does not support jsessionid
+    - Remove method Action.getLocalizedDesc(HttpServletRequest request) (now use GenericRequest)
+    - Now use correct MailUtil.sendMail(MailMessageStruct)
+    - [New Feature] : Support send email to user and send email to admin
+    - [Fix bug] : Link to viewthread in many pages has redundant space at the end of the link
+    - [Improvement] : Add driver information in the log file (to help debugging)
+    - Upgrade Log4J from version 1.2.8 to 1.2.15
+    - Upgrade Common Logging from version 1.1 to 1.1.1
+    - Upgrade JavaMail from version 1.4 to 1.4.1
+    - Upgrade MySql driver Connector/J from version 3.1.13 to 3.1.14
+    - Upgrade JTDS driver from version 1.2.1 to 1.2.2
+    - Upgrade postgreSQL driver from version 8.2-506.jdbc3 to 8.2-507.jdbc3
+    - Upgrade hsqldb driver from version 1.8.0.7 to 1.8.0.9
+    - [New Feature] : XHTML 1.0 Compliant
+    - [New Feature] : Support max password day, now user will be reminded if he did not change password in n day
+    - [New Feature] : Support permission Moderate User (can reset avatar, reset signature, disable user, etc)
+    - When update the configuration files (mvnforum.xml, mvncore.xml), we also reload it
+    - Search post now support sorting by Relevance, Date Ascending or Date Descending
+    - Support Quick Reply in viewthread
+    - New feature (in progress): search attachment
+    - Add help of the mvnCode (BB Code)
+    - Fix fatal error in RSS page if forum/category is not existed
+    - Now can compile with JDK 1.6 (JDBC4 issue)
+    - [Fix bug] : now add timestamp for all captcha to prevent caching
+    - Add help when change thread status, now user can see help of active/disabled/locked, closed thread
+    - [New Feature] : Add new page for listing unanswered threads
+    - [Improvement] : In index page, show list of recent members in x days (previously only show the latest member)
+    - [Improvement] : Support Easy Watching: mvnForum show if you are watching thread/forum/category or not
+    - [Improvement] : after login, we redirected to the previous page
+    - [Improvement] : Internationalize the Admin area
+    - [MVNCore] [New Feature] : Support send mail using built-in SMTP Mail Server
+    - [Security Improvement] : Support checking max posts per hour per member name 
+        (previously, support max posts per hour per IP)
+    - Upgrade JTDS driver from version 1.2 to 1.2.1
+    - Upgrade postgreSQL driver from version 8.1-407.jdbc3 to 8.2-506.jdbc3
+    - Upgrade hsqldb driver from version 1.8.0.4 to 1.8.0.7
+    - [New Feature] : Admin can now edit the CSS file and see the preview of the changes
+    - [New Feature] : Add feature to split a thread into 2 threads
+    - [MVNCore] [New Feature] : Add config in mvncore.xml so that user can add customized TimerTask
+    - [Ent] [New Feature] : Add Album feature (similar to Google Picasa Web)
+    - [Ent] [New Feature] : Add Poll feature
+    - [Ent] [New Feature] : Add Banned IP Management
+    - [Ent] [New Feature] : Add Banned Username Management
+    - [Ent] [New Feature] : Add Banned Email Management
+    - [Ent] [New Feature] : Add Banned Word Management
+    - [Ent] [New Feature] : Add Event Log Management
+    - [Ent] [New Feature] : Add Report Statistics
+    - [Ent] [New Feature] : Support upload avatar/attachment/PM attachment into database (for clustering)
+    - [Improvement] : Add prettify.js to enable highlight of source code when add post 
+    - Major changes in the initialization code, now move from UserForumServlet to LifeCycleService classes
+    - Remove mvnforum.xml config parameter: 'binarystorage_implementation' (now use service model)
+    - [Ent] [New Feature] : Support Applet to upload the screenshot
+    - Add support for always activated email in some cases for integration with other systems
+    - [Improvement] : Now we can upload many attachment files at the same time
+    - [New Feature] : Add new page to list attachments
+    - [Improvement] : Add help icon to explain the combined permission
+    - [Improvement] : Add option to set ThreadPriority (please run the update sql script)
+    - [Improvement] : New button icons for page viewthread and listthread
+    - Refactor the name of template: now use underscore for all template files
+    - Now assertion use AssertionUtil.assert instead of deprecated AssertionException
+    - In user area, change link of viewmember: change parameter memberid to member (MemberID to MemberName)
+    - After addpost, jump to new post: add #postID to the link (addpostsuccess.jsp)
+    - [Fix bug] : If the forum does not has any thread, the icon should show no new thread
+    - [Improvement] : Change the command in each post in viewthread to use icon
+    - [Fix bug] : Clear MemberCache when update member avatar or signature
+    - [Improvement] : Add support for EditOwnPost for viewmemberpermissions.jsp
+    - Add new option in mvnforum.xml to enable/disable if Global and Sticky threads
+        should be rated in most active statistics.
+    - [Fix bug] : does not update the statistics of threads/posts in listforums when adding new post
+    - [Improvement] : add new parameter watch_email in mvnforum.xml, now watch email will be sent from this account
+    - [Improvement] : Add checking in the constructor of all services in mvnforum
+    - [Improvement] : Localize forum/thread status/option/type in the Admin zone
+    - [Improvement] : Add new icon legends for threads and forums
+    - [Improvement] : Show the category before forum in the index page
+    - [Ent] [New Feature] : built-in support LDAP (OpenLDAP, Active Directory), any attribute can be 
+         configured to be stored in database or LDAP
+    - [Ent] [New Feature] : Sub category, now category can be child of any other category
+    - [Ent] [New Feature] : Support Request Private Forums
+    - [Fix bug] : Now allow edit forum name and category name with different case
+    - [Ent] [New Feature] : Support Watch Email Gateway
+    - [New Feature] : Support Regulation page before registration (enable it in mvnforum.xml with key <enable_register_rule>)
+    - [New Feature] : Support Single (non-digest) Watch option
+    - [New Feature] : Support who are browsing a thread or a forum
+    - [New Feature] : support the owner of forum. The owner have full permission on his forum
+    - [Database] : add new column ForumOwnerName to table mvnforumMember
+    - Combine the code that get image of the InfoService, move to ImageUtil.getProductionImage
+    - All image encoding, decoding now use ImageIO
+    - Remove XML support in Bean classes (because it is unused)
+    - [Improvement] : Improve the legend icon for thread and forum
+    - [Improvement] : build.xml : remove duplicated jar file in mvnForum that also have in mvnCore
+    - Upgrade Java Activation Framework from version 1.0 to 1.0.2
+    - [Improvement] : Add many options in mvnforum.xml to show/hide each information of member
+    - [Improvement] : Add many options in mvnforum.xml to require or make optional each member field when registering
+    - Use rssrows tag from mvnCore
+    - Does not run mvnForum if have exception in OnlineUserFactoryImpl.getAuthenticatedUser
+    - Does not save login info in session if authenticated via realm or customization
+    - [Improvement] : Now check current password in the customized authentication is supported
+    - [API Improvement] Add method Authenticator.isCorrectCurrentPassword() to check the current password
+        with customized authentication
+    - Add MemberPhone and MemberMobile to the viewmember, editmember, myprofile (also better organized)
+    - Remove jdom.jar because WhirlyCache 1.0.1 does not need it anymore
+    - Upgrade WhirlyCache from version 0.7.1 to 1.0.1
+    - Upgrade JavaMail from version 1.3.3_01 to 1.4
+    - Upgrade MySql driver Connector/J from version 3.1.12 to 3.1.13
+    - Upgrade postgreSQL driver from version 8.1-405.jdbc3 to 8.1-407.jdbc3
+    - Upgrade hsqldb driver from version 1.8.0.2 to 1.8.0.4
+    - [Fix bug] Fix bug introduced in 1.0 GA that wrongly missing fatalerror.jsp
+        (now changed to mvnfatalerror.jsp)
+    - [Improvement] : Add javascript to enable the button when user use the Back button of browser
+    - [Improvement] : Use default relative path in mvnforum.xml and log4j.properties
+        (now if install on Tomcat, no need to config the path)
+    - [Improvement] : Support multi upload files when adding a post
+    - [Improvement] : Support image thumbnail in viewthread page
+    - [New Feature] : Support non digest watch
+    - Add option in mvnforum.xml to support default WatchType
+    - Upgrade to Lucene 1.9.1 and remove all deprecated methods result from this upgrade
+    - Change CSS on tag body for left margin and top margin
+    - [JDK] : Now require JDK 1.4
+
+
+[1.0 GA] - 14 April 2006
+    - Write the CHANGE.txt for i18n resource files
+    - Change the header of all files (copyright notice and copyright year)
+    - [MVNCore] [License] : Change the license of mvnCore from GPL to LGPL
+        (Note that mvnForum is still released under GPL)
+    - [Improvement] : fix deprecated warning in JSP files which caused by using request.getRealPath
+    - [New Feature] : Add RSS <link rel="alternate" type="application/rss+xml" />
+        to header so that Firefox can show that the page supports Live Bookmark
+    - [Improvement] When we config the step 1, if the mvnForumHome or the log file path
+        are already correct, then mvnForum does not show suggestion
+    - [Fix bug] bug in search that dont remember the search scope when move to next page
+        (Thanks jseufert) (thread=3492)
+    - [Fix bug] [MVNCore] : Fix NPE in CacheResourceBundle if cannot load the ResourceBundle
+    - Add contribution for integration with openLDAP (please look in folder 'contrib')
+    - Use Lucene's IndexWriter.setUseCompoundFile(true) only on disk's Directory
+    - Now use Directory instead of String for Lucene search index
+        (and also close the directory because it is not closed by default)
+    - Update configuration pages in Admin zone to synchronize with new config parameters
+    - Add 1 config parameter: 'binarystorage_implementation'
+    - Now attachment is implemented with new interface BinaryStorage
+    - Add 2 config parameters: 'enable_cache_forum' and 'enable_cache_category'
+    - Move config parameter 'portal_type' from mvnforum to myvietnam
+    - [Improvement] [MVNCore] : add config parameter enable_encode_url to enable/disable
+        reponse.encodeURL for all link (when enable, session can be tracked by url re-writing)
+    - Add sample log config for loging to database in file log4j.properties
+    - [Improvement] : change the cache of forum and category to use Whirly cache
+    - [New Feature] : can change forum locale on the fly by adding a parameter "lang" to url
+        ex: /mvnforum/mvnforum/index?lang=vi
+    - [Improvement] : add new permission "Edit Own Post", now user must have
+        this permission to be able to edit his own post and add attachment
+    - Rename file mvnForum_hsqldb_1.7.2.sql to mvnForum_hsqldb.sql to reduce confusion
+    - [Fix bug] : Does not show link to send mail in Admin zone even user have permission (Thanks jseufert)
+    - Upgrade Apache common IO from version 1.0 to 1.1 because FileUpload need it
+    - Upgrade PostgreSQL driver from version 7.3 to 8.1-405
+    - Upgrade jtds driver (for MS Sql Server and Sybase) from version 1.1 to 1.2
+    - Upgrade hsqldb driver from version 1.7.3_3 to 1.8.0.2
+    - Upgrade MySql driver Connector/J from version 3.1.7 to 3.1.12
+    - Upgrade MySql driver Connector/J from version 3.0.16 to 3.0.17
+    - Upgrade JavaMail from version 1.3.2 to 1.3.3_01
+    - Upgrade jcaptcha from version RC1 to RC2.0.1 (use the latest stable file)
+    - Add help docs for setup unicode in MySql 4.1.x and later (in file mvnForum_mysql.sql)
+    - [Fix bug] : wrong title in processmessagesuccess.jsp
+    - [Fix bug] : fix bug that do not include the sender when reply to all in Private Message
+    - Change configuration from "Config Step3" to "Config mvnCore"
+    - Change and improve the configuration files in Admin zone
+    - Rewrite freeMarkerConfiguration in MVNForumConfig (thread=3170) (Thanks xmvigour)
+    - [Improvement] : does not init mvnForum if use driver ODBC/JDBC because the limitation of this driver
+    - Escape forumName in rss, rss2, atom, also use DisableHtmlTagFilter instead of MyUtil (thread=3378)
+    - Add new contrib: phpbb2mvnforum to migrate from phpBB to mvnForum (thread=) (Thanks )
+    - Add new contrib: MVNTomcatJDBCRealm to load realm from mvnForum's database (thread=2782) (Thanks truk)
+    - Support new configuration parameter <redirect_login_url>, user can config the login page
+        (Need more testing on this)
+    - [Improvement] : Remote and customized Authenticator user now can logout if it is logged out externally
+        (Need more testing on this)
+    - Remove struts codes (Now mvnForum is not suitable to support Struts anymore now and in the future)
+    - Change MySql script type from BIT to INT to support MySql 5.0
+    - Begin to change the CSS
+    - [Fix bug] : wrong link in addmessagesuccess.jsp when both checkbox are selected (Thanks bluecrystal_gege)
+    - The logger in fatalerror.jsp now start with "com.mvnforum."
+    - [Improvement] : ContentInterceptor now allow modification of content instead
+        of just throw exception (Change from void method to return String of new content)
+    - Fix the typo in ForumBean (Cannnot -> Cannot)
+    - Change the behaviour of attachment: not allow to add when closed or locked
+    - Change the behaviour of attachment: allow to download when locked
+    - DisableHtmlTagFilter for forum and category in the Admin zone
+    - Upgrade JTDS driver (for MS SqlServer and Sybase) from version 1.0.2 to 1.1
+    - [Fix bug] : Fix bug save config file on Oracle
+    - Some minor improvement to OnlineUserManager
+    - [Improvement] : support parameter "url" in login page, so that
+        mvnForum can return after login successfully
+    - [Improvement] : Support double value timezone (sql script change, from INT to FLOAT)
+    - [Fix bug] : Fix bug introduce since RC4 that throw error when search in a category
+    - [Fix bug] : Now correctly update current new message count in viewmessage
+    - [Fix bug] : Fix a typo in PostIndexer and fix bug that wrongly
+        check moderator in addpost (Thank snowfall)
+    - Clear cache when moderate pending posts/threads
+    - Clear cache when change thread status, type or move thread
+    - Improve search page with escape key
+    - Escape the error page
+    - Clear cache when add/update/delete thread/post
+    - Support 3 new config parameters: enable_cache_member, enable_cache_post, enable_cache_thread
+    - Add cache information in page index in Admin zone, also support clear cache
+    - [New Feature] : Add WhirlyCache, support MemberCache, PostCache, ThreadCache
+    - Upgrade MySql driver from version 3.1.6 to 3.1.7
+    - Upgrade hsqldb (embeded dbms) from 1.7.3_2 to 1.7.3_3
+    - Upgrade JTDS driver (for MS SqlServer and Sybase) from version 1.0 to 1.0.2
+    - Change the stategy of rebuild Lucene Index, now can handle big database
+    - [Fix bug] : Fix DB2 Upgrade script (Thanks Han)
+    - Change upload stuff to use common-upload 1.0
+    - Update build.properties and build.xml, remove old encoding translation stuff
+    - Update the English language (Thanks ghpayne) (thread=2789)
+    - Add CMS Permissions to support mvnCMS module
+    - [Fix bug] : Fix reversed first_ip and last_ip in Vietnamese translation
+
+
+[1.0.0 RC4 Update 2] - 24 February 2005
+    - Some update to the Intro and Admin documentation
+    - Add link to mvnForum Professional Services in the index page of Admin zone
+    - URLEncode all the MemberName in link in all jsp files (support Chinese LoginName)
+    - Encode and decode cookie so if use Chinese username, it will work fine
+    - [Fix bug] : Fix bug in pager-taglib that output wrong encoding in search page
+    - [Fix bug] : [SQL] Change the name of index name to a short name because in DB2,
+        the max length is 18
+    - [Fix bug] : Fix bug in javascript checking for server_hour_offset in configstepthree.jsp
+    - [Fix bug] : Fix bug Ambiguous column name 'GroupID' in GroupsDAOImplJDBC.getMyGroups
+        (might affect Sql Server user) (thread=2727)
+    - Change the default guest timezone with config parameter instead of hardcode
+        (in file addmember.jsp) (Thanks huxiaonan)
+    - Localized hard coded strings in com.mvnforum.OnlineUserAction.getTimeString()
+    - Upgrade hsqldb (embeded dbms) from 1.7.2_10 to 1.7.3_2
+
+
+[1.0.0 RC4 Update 1] - 4 February 2005
+    - [Fix bug] : Bug that does not use utf-8 when load the log file in Log Management
+    - [Improvement] : Add link to viewpermision in permisionsummary
+    - Improve the delete non activated members, add link to the user in that page
+    - [Fix bug] : Bug in Oracle Update script, AttachDesc change from NOT NULL to NULL
+    - [Fix bug] : Fix bug that load the wrong currect context_path in Step 3 if on ROOT context
+    - [Fix bug] : Fix bug that use vietnamese keyboard in To, CC, BCC in addmessage
+    - [i18n] : Update translation of Japanese, Simplified Chinese, Traditional Chinese
+    - [Fix bug] : fix RC4's bug that Admin always view member as invisible
+    - [Fix bug] : fix RC4's bug that cannot show the ROOT context parameter
+        in configindex in Admin zone
+    - Log the full path of config file if there is an error to load it
+
+
+[1.0.0 RC4] - 29 January 2005
+    - [Improvement] : Admin can upload attachment with unlimited size
+    - Add icon near category name in listforums to show/hide forums in that category
+    - [MVNCore] Support spam prevention initiative by Google (rel="nofollow")
+        with parameter <enable_link_nofollow>
+        http://www.google.com/googleblog/2005/01/preventing-comment-spam.html
+    - Add link to set permissions to group in the groupmanagement
+    - Remove permission "Login" because it is unused and confuse users
+    - Download attachment now use FileUtil.popFile to avoid the memory contraint
+    - Remove mvnnav.js, move gotoPage() to myvietnam.js
+    - Add new class AbstractLocalizableAction to support localizable action. Now switch
+        to use this new class. The previous class AbstractAction is non localized action
+    - Show the color of quota bar based on percentage of usage
+    - Rename parameter from <enable_new_index_page> to <enable_portal_like_index_page>
+    - Rename parameter from <disable_passwordless_auth>true</disable_passwordless_auth>
+        to <enable_passwordless_auth>false</enable_passwordless_auth>
+    - [Fix bug] : Fix bug that does not delete cookie on Firefox
+    - New configurable <enable_site_statistics_overview> to turn on/off statistics information
+        in index and listforums (Suggested by M. Leinmueller)
+    - New configurable <default_guest_timezone> to set the default timezone for Guest (thread=2646)
+    - [New Feature] : feature to delete non activated members with no posts based on the registration day
+    - Update all xxxDAOImpl, fix all minor errors of the sql error message
+    - Update all xxxDAOImpl, change char '<' and '>' to '[' and ']' to compatible when
+        view on browser
+    - [Fix bug] : Fix issue caused by some DBMS such as Oracle, postgreSQL,
+        the comparison is case-sensitive
+    - [New Feature] : Admin can send Public Message to all members
+    - Upgrade config in Admin zone, add new configuable parameters
+    - Add these config paramters to the config page of Admin Zone:
+        <url_pattern>/mvnforumadmin</url_pattern>
+        <url_pattern>/mvnforum</url_pattern>
+    - Rename the Index name in sql script
+    - Make sure only activated members can receive watch
+    - [New Feature] : Support Sticky/Annoucement/GlobalAnnoucement thread type
+    - [New Feature] : Most active threads in the week (or last 7 days)
+    - Make sure that active threads is enable + forum is enable + user have permission to view
+    - [Fix bug] : (new bug in RC4_dev) : now use IndexReader.numDocs instead of IndexSearcher.maxDocs
+    - [Improvement] : Cannot rebuild too much posts (now get 500 posts each loop)
+    - Do not init mvnForum if no members (not know why sometimes there are no members)
+    - [Improvement] : Admin can view first Email
+    - [New Feature] : Most active users in the week (or last 7 days)
+    - [Improvement] : Improve Configuration Backup File: including 2 files: mvncore.xml, mvnforum.xml
+    - Javascript for the login form of the page "/index"
+    - [Improvement] : When register successfully and required activation, show the email of that user
+        and instruct user to login to his email for activation code
+    - When delete member, there is an option to delete private message that he sent to other users
+    - [Improvement] : In Admin zone in viewmember, show the number of watches of that user
+    - Support Flood Control for Private Message
+    - [New Feature] : View any log file in the log folder
+    - Delete private message related record when delete member, delete folder
+    - Each edit screen of configuration now have a Cancel button -
+        simply taking you back to the main list. (Thanks Cord) (thread=1972)
+    - [Fix bug] : When use Realm or Customization authentication, the method
+        MyUtil.ensureCorrectCurrentPassword work well now (thread=2226)
+    - [CSS] : change from hightlight -> highlight (correct the spelling)
+    - [Improvement] : Watch mail now use the time based on both timezone and locale (thread=2489)
+    - [New Feature] : New page in Admin area to download or delete log files
+    - [New Feature] : A new page to view cumulative permissions of any member (thread=1974)
+        (Also have information of groups that is user belong to)
+    - [Improvement] : Add legend icon to forum, thread, private message
+    - [Fix bug] : bug that show incorrect member count in group Member if Guest user does not exist.
+    - [Improvement] : Show forum type and forum moderation mode in the forummanagement
+    - [Improvement] : Admin can view IP of user in User area and Admin area
+    - Support remember Vietnamese keyboard via cookie
+    - Upgrade Dom4j from 1.4 to 1.5.2
+    - Upgrade Lucene from 1.4-final to 1.4.3
+    - Upgrade JavaMail from version 1.3.1 to 1.3.2
+    - Upgrade JTDS driver (for MS SqlServer and Sybase) from version 0.8.1 to 0.9.1
+    - Upgrade MySql driver from version 3.0.14-production to 3.0.16-ga
+    - Upgrade hsqldb (embeded dbms) from 1.7.2 final to 1.7.2_10
+    - Remove support for hsqldb 1.7.1 (Now only support version 1.7.2 and after)
+    - Remove the old mm MySql driver (mm.mysql-2.0.14-bin.jar)
+    - [New Feature] : Admin can turn on/off the access to the User area
+        (such as for maintanence or urgent situation)
+    - [New Feature] : Show Forum Uptime
+    - [New Feature] : Support RSS 2.0 + Atom (including sorting option)
+    - [Fix bug] : bug that wrong server path in email if server is behide a proxy
+        (change from ParamUtil.getSevver2 to ParamUtil.getServerPath()) (thread=2466)
+    - [New Feature] : new Logging Management page in the Admin area
+    - [Fix bug] : Fix bug that not use max_edit_days param in the editpost
+    - Show IP and time of last login in the header
+    - Live update the number of new messages every 5 minutes
+    - Show listforums in listrecentthreads if we enable NewIndexPage
+    - Remove tag <b> in messages "There are no ..."
+    - [New Feature] : Implement MemberInvisiable feature (enable with option enable_invisible_users)
+    - [New Feature] : Admin Zone: a new page to show permission summary
+    - [New Feature] : Admin Zone: a new page that admin can change password
+        (note that noone can change password of root admin)
+    - [New Feature] : Admin can Turn on/off board (only admin can view user area when is turned off)
+    - [Improvement] : add configurable parameter enable_duplicate_onlineusers
+        When set it equals false, then the duplicate session are combined (thread=1314) (thread=589)
+    - [Improvement] : If a moderator creates a thread, it means it is automatically approved. (thread=?)
+        (that is, moderator does not have to moderate his own post)
+    - [Improvement] : New page Enable/Disable user in viewmember in Admin zone.
+    - [Improvement] : Javascript checking for checkGoodName (in LoginName and FolderName)
+    - Remove a lot of warning code with the Eclipse compiler
+    - [Improvement] : Add new page in admin zone to let admin edit member information
+    - [Improvement] : Support sort by in RSS (thread=938)
+    - Add new configurable parameter (enable_guest_view_image_attachment)
+        to allow guest to view image attach (thread=2469)
+    - [Improvement] : In admin zone, add new page to edit the freemarker template files
+    - [Improvement] : Now all template files are loaded and saved with encoding utf-8
+    - [Improvement] : Support 3 new configurable parameter:
+        max_chars_in_short_summary, max_chars_in_long_summary, max_chars_in_rss
+    - Limit the post length in the index.jsp
+    - Upgrade jcaptcha from version beta2 to RC1 to support JDK 1.3
+    - [Improvement] : Support Send Mail preview
+    - [Improvement] : New option to send email to a group of members
+    - [Improvement] : Add 3 parameter to config the max char to shown in summary post, rss
+    - [Improvement] : Localize the text that inform the Flood Control
+    - [Improvement] : Support new logging library http://jlo.jzonic.org
+        (Because JRun does not support Log4J)
+    - [Improvement] : Now ObjectNotFoundException is catched and re-throw with
+        friendly message to the user (thread=2365)
+    - [Fix bug] : Support Compression Filter (by default) (also fix the encoding bug) (thread=1889)
+    - [Improvement] : Support option to show online user duplicated sessions only once (thread=1118)
+    - [Improvement] : Now support rebuild each lucene index
+    - [Improvement] : Show the lucene's index document count and compare
+        with the record count in the database
+    - [Improvement] : Support 3 option when search post:
+        [O] Both Title and body    [o] Title only    [0] Body only
+    - [Improvement] : Enable/disable search feature with parameter enable_search
+    - [Improvement] : Advanced Member Search with Lucene in the User Management
+    - [Improvement] : Support edit attachment description
+    - [Fix bug] : Fix javascript bug caused by vietuni.js when run on browser konquerer
+    - Refactor the package structure and class name of lucene search
+        (now more streamline and consistent)
+    - Add new configurable parameter : enable_search
+    - Add new task in build.xml to build the mvntools.jar
+    - Add new tasks in build.xml to checking the missing resource key in jsp and java files
+    - [Improvement] : Login page needs to login on hit of enter in password field
+        (by using Javascript) (thread=2212)
+    - [Fix bug] : Fix bug that press Enter will by bypass the Javascript checking
+    - Also, to make the forum more user friendly, i believe the error message:
+      Cannot upload. Detailed reason: the request was rejected because it's size exceeds allowed range
+      should include at a minimum the configured max limit - and, a bonus would be to provide the user
+      with the size of hte file they attempted to attach - given we know both of these things, it would be nice.
+      (thread=643)
+    - [taglib pager] : Fix for mvnForum: the offset is caculated correctly
+         if parameter lastpase=yes (this is one of the most famous bug of mvnForum)
+    - Add some new configurable parameter (enable_online_users, enable_listmembers)
+    - [MyVietnam] : In TimerUtil, catch IllegalStateException and try to reload the Timer (thread=1393)
+    - Add Place Holder for banner in the header.jsp, you can put your banner to file header.jsp
+    - In Forum Management, show disabled forum with different color
+    - Add version and date to the link to get the version image in mvnForum.com
+    - [Fix bug] : Encoding when sending email, now force utf-8
+    - [Fix bug] : [Oracle] getNumberOfMembers_inActivationStatus "IS NULL" missing (Thanks sssimon)
+        (thread=2418 and thread=2442)
+    - [Fix bug] : Problem with WebSphere (WAS 5). In the inc_pager.jsp, I had to comment this line:
+        <%@ taglib uri="http://jsptags.com/tags/navigation/pager" prefix="pg" %>
+        (thread=2442) (Thanks sssimon)
+    - Write a jsp file to test database. To use, just change testdatabase.jsp.txt to testdatabase.jsp
+    - [Fix bug] : In the Admin section, in config pages, the passwords are clear text. (thread=2206)
+    - [Database] Change the attachment description to type TEXT (Only for new database)
+    - [Fix bug] : Now the number of posts/threads/forums/categories is correctly
+        shown based current user permission (thread=2216)
+    - Refactor the DAO class, change getNumberOfBeans to getNumberOf<Table>s
+    - [Improvement] : Improve the truncate of String (split at nearest work break)
+    - In index page, if there is no posts, show a row to display that information
+    - [Improvement] : When show the addattachment page, also show the possible max size
+    - [Fix bug] : Now MAX_ATTACHMENT_SIZE = -1  means no limit on the attachment file size (thread=2196)
+    - Changes for compilable on JDK 1.3
+    - [Fix bug] : Fix bug that hard code the maxAttachDays = 1 (thread=2264) (Thanks machron1)
+    - [Improvement] : Begin to add support for localization in pages in the Admin Zone
+    - [Improvement] : validate data at server side for configuration page in Admin zone
+        (Check if class can be loaded, mvnForumHome is writable)
+    - [Improvement] : Check JavaScript for configuration page in Admin zone
+    - [Improvement] : Can search post by date.
+    - [Improvement] : Do not show category if current user cannot
+        or dont have permission to view any forums
+    - [Improvement] : Begin changing a lot of images in mvnForum
+    - [Improvement] : Several improvements and fixed bugs in post search feature
+    - [Improvement] : Now can search all posts with attachment count option
+    - Change the post search directory to compatible with Company module (need to rebuild Lucene index)
+    - Begin adding Private Message
+    - Begin localizing messages in Java files
+    - Change the CSS file in JSP files, now get from OnlineUser
+    - Add the Company module
+    - [Improvement] : Show paperclip icon if thread/post has attachment (thread=1357)
+    - [Improvement] : Change all i18n translation stuff to JSTL i18n taglib
+    - [Fix bug] : Fix bug that increase the FloodControl of login even if user logined sucessfully.
+    - [Fix bug] : Fix bug that causes NullPointerException in forgotpassword on Oracle
+    - [Improvement] : when click link sendactivationcode in MyProfile,
+        the MemberName and MemberEmail are auto filled with current user's data
+    - [Improvement] : In UserManagement, show number of Enabled/Disabled Members,
+        Activated/NonActivated Members
+    - [Fix bug] : Fix bug that delete member does not delete the avatar
+    - [Improvement] : Tags [color] and other mvnCode tag now work in rank
+         in viewthread (and other pages too) (thread=2232)
+    - [Improvement] : URL are now linkable in viewmember in Admin Zone
+    - [Improvement] : Now the Lucene's Analyzer can be configured in mvnforum.xml
+    - Review and add all items from config file to mvnForum config page in Admin Zone
+    - Dont show clear password on the Config page in Admin Zone (Thanks ???)
+
+
+[1.0.0 RC 3_01] - 22 July 2004
+    - Fix bug in build.xml that include the jdbc driver in WEB-INF/lib in the task "dist"
+    - Update jtds driver from version 0.8 to version 0.8.1
+    - Upgrade hsqldb (embeded dbms) from 1.7.2 RC6c to 1.7.2 final
+    - Upgrade Lucene from 1.3-final to 1.4-final
+    - [i18n] : Update Chinese for RC3
+    - Fix an end line bug in German i18n file
+    - [Fix bug] : Wrong web.xml.resin and web.xml.resin_on_JDK1_5
+    - [i18n] : Localize to Bulgarian (Thanks Svetoslav Tabakov)
+    - [i18n] : Localize to Norwegian (Thanks Christian Nicolaisen)
+    - Fix bug that show private forum in the list forum in the index page (thread=2180)
+    - Use Lucene's IndexWriter.setUseCompoundFile(true) to reduce the file handle
+    - Reduce lucene's mergeFactor from 100 to 20
+
+
+[1.0.0 RC 3] - 29 June 2004
+    - Uppercase the captcha first before validate it
+    - Implement the option: enable_new_index_page , default is true, if it is false,
+        then the RC2-style index page is used
+    - Update help in the send mail page
+    - [Fix bug] : In AdminZone, the viewmember page show incorrect activation status
+    - Update hsqldb driver to version 1.7.2 RC6c
+    - Update jtds driver to version 0.8
+    - Update MySql driver to version 3.0.14-production
+    - [i18n] : Localize to Turkish (Thanks Ercan Yurt)
+    - Add docs for RC3 and remove old RC2 files
+    - Move the docbook files to top level and make some improvement to its build.xml
+    - [Fix bug] : Fix several alignment issues for Arabic
+    - [New Feature] New sendmail page that let admin send mail to
+        all members, all activated members and all non-activated members
+        NOTE: Dont send email to disabled members
+    - Do not show "Reply" link in the index page if thread or forum is closed or locked
+    - [Fix bug] : Fix remaining issue with long string in Oracle
+        by using Statement.setCharacterStream (Thanks Mr.Buba)
+    - Fix bug that not process the forum specific ModerateThread permission (Thanks Cord)
+    - [New Feature] New link in UserManagement that let you
+        send activate mail to all non activated members
+    - [Improvement] Now all email content can be edited in the FreeMarker template files (freemarker 2.2.8)
+    - Add class MVNForumContextListener to listen to context events
+    - [New Feature] Support providing extension to mvnForum by place
+        the extension in folder "extension"
+    - [Improvement] Improve the build.xml and build.properties
+    - Fix bug that show the post in disable thread in the new index page (Thanks simone)
+    - Move some important elements such as javasript outside of the tag <head>
+        because when run in a portal, the portal will remove what inside tag <head>
+    - Remove redundant keys: mvnforum.user.login.name and mvnforum.user.login.password
+    - Fix small bug in emoticon in addpost.jsp that the 2 emoticon are not html escaped
+    - Implement 3 new options in the addforum.jsp
+    - In viewmember in AdminZone, show the member title, online status and activation status
+    - Fix bug the show the incorrect forum statistics (forumPostCount)
+    - Implement permission BYPASS_PRIVATE_FORUM : When a user have this permssion,
+        then he can use the global permission even the forum has option "Private Forum"
+    - Fix bug not check permission when download attachment (thread=1893)
+    - Change the home page to show more information like a portal
+    - [New Feature] New ForumType option:
+        * Normal : Enable the global permission for the forum (default)
+        * Private: Disable the global permission
+    - [New Feature] In index page in Admin zone, add 2 buttons
+        to check latest version of mvnForum and mvnCore
+    - Add method MVNForumInfo.getImage to get the image of current version of mvnForum
+    - [Fix bug] : When edit post with the Attach More option,
+        now correctly jump to the addattachment (Reported by simone)
+    - [New Feature] Moderation of threads/posts
+    - In MyProfile, show the Activation status next to the link if activate member
+    - [New Feature] Add forum Moderation Mode option:
+        * System Default            : use option default_moderation_option in mvnforum.xml
+        * No Moderation             : no threads or posts are moderated
+        * Thread and Post Moderation: all threads and posts are moderated
+        * Only Thread Moderation    : only threads are moderated
+        * Only Post Moderation      : only posts are moderated
+    - [New Feature] Add option default_moderation_option for forum with moderation mode = default
+    - Do not show option to Add to Watch in addpost.jsp if current user is not activated
+    - Change the constant of Watch Option to consistent with other options
+    - Increase the size of email text box in jsp files
+    - [Fix bug] : Correct the max length of email, change the constant from 30 to 60
+    - [New Feature] Support option ForumStatus in forummanagement in Admin Zone
+        * Disabled forum: invisible and no possible actions
+        * Locked: visible but no possible actions
+        * Closed: no new posts and threads, but all other actions are allowed
+    - Add new file testserver.jsp.txt that could be used to get the server information
+        (for security, it cannot to use, change its extention to .jsp)
+    - [Improvement] If the default Watch Option = Live,
+        then run the watch task every 5 minutes (thread=747)
+    - [Improvement] New css element "requiredfield" for all required fields
+    - When delete thread/forum, or update thread status,
+        also show statistics of current pending posts/threads
+    - [Improvement] Display warning and javascript prompt to notify
+        user about the valid and working email when register if require activation
+    - [i18n] : Localize to Greek (Thanks Theodosios Paschalidis)
+    - [Improvement] Update the memberPostCount after add new post or delete post and own thread
+    - Refactoring with new StatisticsUtil to better update
+        the statistics after add/delete/moderate posts
+    - [Improvement] Support insert mvnCode with javascript in both IE and Netscape
+        (thread=1379) and (thread=1321) (suggested by chitech)
+    - Use LoginIDInterceptor to intercept the loginID in the registration
+    - [Improvement] Add HTTP Cache-Control to cache the attached image in 30 days at client side
+    - Remove unused import in the jsp file
+    - [New Feature] MD5 Encode password in the browser before send over network
+    - Show the Activation Status in the usermanagement in the Admin Zone
+    - [New Feature] Add image (JCaptcha) to prevent automatically register member + lostpassword
+        (suggested by sdstx.de)
+    - [Fix bug] : ThreadIcon is not updated (Reported by micos) (thread=1584)
+    - [New Feature] Support intercepting email, post content, attachment description
+    - [New Feature] Support gzip filter in UserZone and AdminZone,
+        now mvnForum is faster on slow Internet connection
+    - [New Feature] User can delete his own post/thread (if no reply has been made)
+    - [New Feature] Allow a forum admin to add users and/or groups to a forum,
+        so he can control who can read and post to the forum. (Suggested by flozano) (thread=1694)
+    - [New Feature] Add option to disable login in User zone
+    - Check and not run mvnForum if Servlet Container does not support Servlet 2.3
+    - Review many resource keys in mvnForum_i18n.properties
+    - [Improvement] Change tag <img>, add attribute "title" to show tool tip on Mozilla browser (Suggested by jcott28)
+    - [New Feature] Add new page to list pending thread for the Thread Moderation feature
+    - [New Feature] Add new page to change thread status (Normal, Disabled, Locked, Closed)
+    - [Fix bug] : bug that cannot insert more than 4K in Oracle (not test if we can get more than 4K)
+    - [Fix bug] : bug that remove the wrong thread when list rss of a forum (Thanks Simone)
+    - [Improvement] Add a link [link] at the bottom right of a post that refer to the current post url (thread=1503)
+    - [New Feature] Add FloodControl option to control the maximum number of login per IP per hour
+        (to prevent entering too many password trial attempt)
+    - [Improvement] Change listforums.jsp and listonlineusers.jsp so that use singular if 0 or 1 user/guest
+       and plural if more than 1 users/guests (Thanks Jean-Guy Avelin)
+    - [Improvement] Now send activation email when pre-registering in Admin Zone and require_activation = true
+    - Refactor MemberWebHandler.sendActivationCodeEmail() to SendMailUtil.sendActivationCodeEmail()
+    - Improve the addmembersuccess.jsp, now checking email sending error
+        and provide correct link to go a head for all situation
+    - [Improvement] Update the link to report threaten message in viewthread.jsp,
+        now both threadid add postid is provided (thread=1599)
+    - [Improvement] Improve email escape with javascript in error.jsp and fatalerror.jsp
+        (To prevent email havester)
+    - [Improvement] Do not show forum in index page if user dont have permission (thread 1368)
+    - Check to make sure cannot create new member and update member's email
+        where email's length is > 30 character.
+    - Minor improvement of the content of email sent out when forgot password
+    - [Improvement] Do not regenerate the Temp Password if it is existed.
+    - Fix Safari browser bug (thread=1261) (disable vietuni on Safari)
+    - [Improvement] Do not regenerate the Activation Code if it is existed.
+    - Check to make sure cannot create new Member with LoginID's length > 30
+    - [New Feature] Configuration Tool
+    - [New Feature] Backup configuration file function
+    - [Improvement] Add footer to the watch mail to assure that watch mail is not a spam mail
+    - New config param: "enable_moderation" to moderate the thread/post (in progress)
+    - [New Feature] New config param: "default_watch_option" to change the default watch option (daily watch)
+    - [New Feature] New parameter MVNForumConfig.ENABLE_AUTO_FORUM_OWNER: if it is true,
+        then the user created that forum has the PERMISSION_FORUM_ADMIN on that forum
+    - Fix new bug introduced in RC3-dev that cannot preview signature
+    - Check all javascript in mvnForum and fix several minor javascript bugs
+    - Update session when logout
+    - Fix issue to let Guest still trying to authenticate via customized authentication (Thanks Jean-Guy)
+    - Guest should not see 'My Profile' and users already logged in should not see 'Register'.
+      (thread=1157)
+    - Fix bug introduced in RC3-dev which cause wrong encoding in header.jsp
+    - Change i18n to ${i18n.home} to solve the build.xml problem in Eclipse (thread=1515)
+    - Upgrade Lucene from 1.3 RC3 to 1.3 Final
+    - [Fix bug] : when preview signature, make sure maximum 250 chars (truncate if needed)
+    - Check javascript of all password fields to make sure at least 3 characters
+    - Split the javascript to 2 files: locale-sesitive and locale-insensitive
+    - A page to confirm delete member.
+    - Initial support for default locale settings (need to review more)
+    - Update Test System Configuration, add support for 5 new libraries
+    - Fix bug that ignore the Watch option and FavoriteThread option when edit post (Thanks simone)
+    - If AssertionException occured, it will be log with the FATAL level
+    - Add some new configurable parameter (enable_avatar, enable_new_member, rows_per_rss)
+    - Add support for flood control (new post & new member)
+    - [i18n] : Localize to Japanese (Thanks Kazuho Arita)
+    - Refactor JDBC implementation to the package com.mvnforum.db.jdbc
+    - Change the configuration from properties file to xml file
+    - [i18n] : Localize to Portuguese (Thanks AndreBernardes Pezza)
+    - [i18n] : Localize to Korean (Thanks Nohmenn BABAI & JEONG Myeong-Hoon)
+    - Change the package name to "com.mvnforum.*"
+    - Refactor all database class to DAO pattern
+    - Upgrade to Lucene 1.3 RC3
+    - [Fix bug] : add patch to fix setFetchSize() bug caused by the Sybase driver bug
+    - [Improvement] Improve all pages that has a forum selection
+    - Add new method OnlineUserFactory.ensureCorrectPassword()
+    - [Fix bug] : Fix bug that ignore the "Female" gender option when register
+    - Change all jsp, move the <link> tag into the <head> tag (make it proper html)
+    - Change all jsp, replace "while" structure with "for" structure
+    - Change all pages that use ArrayList to Collection/Iterator
+    - Some improvement on ForumCache and CategoryCache (Thanks Luis)
+    - Change new pagination for pages searchresult.jsp and usermanagement.jsp
+    - Add javascript to search box in header.jsp
+    - Add javascript to login.jsp
+    - [MyVietnam CoreLib] Add new class UserAgentFilter to filter the user agent (such as Teleport)
+    - Check the range of param in MVNForumConfig
+    - [Improvement] Guest's rowsPerPage are configurable in ROWS_PER_PAGE
+    - [Security Improvement] : Need explicit login in the Admin Zone (cookie is not allowed)
+    - [Auth New Feature] : Add method OnlineUser.getAuthenticationType()
+        to check which method user used to login
+    - [Fix bug] : Fix bug that cannot edit Member Gender in editmember
+    - [Improvement] Change printthread so that dont show link "Print all Posts" if currently view all posts
+    - [Improvement] Add option to sort member in usermanagement
+    - Change pager library to remove "pager." prefix
+
+
+[1.0.0 RC 2] - 1 November 2003
+    - Add new method OnlineUser.reloadProfile
+    - Revert to to group Guest
+    - Disable import/export and reschedule for RC3 release
+    - Major improvement on the GUI of Permision-related pages
+    - Dont show the forum in search if user dont have read permision on it
+    - Dont show post in searchprocess and rss if user dont have read permision on it
+    - Dont show attachment when viewthread if ENABLE_ATTACHMENT = false
+    - [Database] Support sql script for hsqldb 1.7.2
+    - Added configurable parameter HOT_TOPIC_THRESHOLD
+    - Add new MySql Driver: driver\mysql-connector-java-3.0.9-stable-bin.jar
+    - printthread : new link "Show all posts from this thread on one page"
+    - [New feature] User can config the number of rows per page when viewing mvnForum
+    - [Improvement] Add Page 1 2 3 trong list thread viewthread, listthreads, listrecentthreads, listmembers
+    - [New feature] Admin can reset member's signature, avatar and activation
+    - Can change the virtual Guest name
+    - Configable 7-days edit post/ 1 day attach file (coi mvnforumConfig)
+    - After activating account, if user is currently logined, go to myprofile instead of login (Thanks simone)
+    - [Realm Auth] If user is Guest and ENABLE_LOGIN_INFO_IN_REALM = true, try to login into Realm (Thanks pritpal)
+    - Add Password fields to prevent hacker to change email
+    - Added configurable parameter HOT_TOPIC_THRESHOLD
+    - Support suffixes K, KB, M, MB in the config options for the max attachment size and max import file size
+    - [New Feature] Support backup/restore database from the Admin Tool
+    - Support Post/Thread Print Friendly feature
+    - User can delete his own post (if no reply has been made)
+    - Show statistics info about the number of forums/categories in Index page
+    - [Improvement] Support Signature Preview
+    - [Improvement] 4 Assign pages: current permission settings with permission count.
+       (Assign to forum : show information of both Member and Group)
+    - [Improvement] In addpost page, added 2 checkboxes to support
+        adding parent thread to Favorites and/or My Watch
+    - [New feature] Show statistics info in home page: online users - post count -
+        member count - newest member - online record plus date info
+    - Check All Javascript for all input form: (Admin Zone)
+    - Change the error message when cannot access Lucene index to more descriptive message
+    - Support "Reply with Quote" in viewthread
+    - Dont schedule WatchTask if cannot init system (shouldRun = false)
+    - Now dont delete cookie if user does not click AutoLogin option
+        (it mean user have to click deletecookie -> better behaviour)
+    - Dont show threads in listrecentthreads if current user does not have permission
+    - Add checking ensureCanUseAvatar to all methods that update avatar
+    - Now send activation mail when register and changeemail if REQUIRE_ACTIVATION = true
+    - Now reload user permission if the user is just activated (dont have to re-login)
+        or change email (no longer valid email)
+    - Add new method OnlineUser.reloadPermission
+    - Change the log level of BadInputException to WARN (before is ERROR)
+    - Add <a name="postID"></a> so search page can jump to correct post (if in correct page)
+    - Shorten some parameter in search feature (such as "SearchText" -> "key")
+    - Limit number of favorite threads which new option MAX_FAVORITE_THREAD
+    - Admin (id = 1) dont have to activate account to login (Thanks tom)
+    - Remove all BadInputException in all database-related code
+    - [Improvement] Improve CSS
+    - [New Feature] Moderator can move thread from one forum to other forum
+    - [New Feature] Support migrate from Jive to mvnForum (Thanks Igor)
+    - [New Feature] Add links to find all posts of the member to MyProfile and ViewMember
+    - [Improvement] Now can search all posts by a member
+    - [New Feature] Support individual permissions (Thanks Igor)
+    - [Improvement] Add javascript to check user input from browser
+    - [Improvement] Male should not be the default when registering a new member
+    - [Improvement] In viewthread page, add 2 links to support
+        adding current thread to Favorites or MyWatch
+    - [New Feature] Add new table mvnforumFavoriteThread and support adding favorite threads
+    - [New Feature] Add new table mvnforumRank and support customizing member title/rank in database
+    - [Improvement] Add a link in MyProfile to delete cookie
+    - [i18n] Support VIRQ Vietnamese typing mode
+    - [i18n] Fix some bugs in the Vietnamese resource file
+    - [Improvement] Show the link to the member that edited a post in viewthread.jsp
+    - [Refactor] : remove class auth.MemberWebHelper
+    - [New Feature] Add new table MemberForum to handle the permission of a member in a forum
+    - [Improvement] When view thread that has been edited, also show the time of last edit (Suggested by  KenCochrane)
+    - [i18n] localize to Arabic language (Thanks Mohammed Al-shake)
+    - Add getter method for MVNForumInfo
+    - Add the cookie's path to value "/" (visible to all url in the domain) (thread 430)
+    - Add new sql script for Interbase Unicode (max VARCHAR size = 80) (Thanks Pavel Av)
+    - [i18n] localize to Dutch language (Thanks Everest)
+    - [Improvement] In listonlineusers, all members come above all guests
+    - [Refactor] Add new class AbstractAction which provide basic support of interface Action
+    - [Improvement] Admin can view the IP and UserAgent of online users in listonlineusers
+    - Change all remaining printStackTrace to common-loging
+    - [Refactor] Refactor some classes for better name convention
+    - [Improvement] Support customizing forum title name in all jsp files in User Zone
+    - Fix all warning about unused import in eclipse (thanks skoehler)
+    - Upgrade JavaMail from version 1.3 to 1.3.1
+    - Change the logging info in ForumUserServlet and
+        ForumAdminServlet from INFO to DEBUG (less logging in INFO level)
+    - [Database] Support DB2 database
+    - [Improvement] Enable mvnCode for signature in MyProfile
+    - [Improvement] Show homepage/coollink link as clickable link in MyProfile
+    - Filter all url in member profile
+    - [Improvement] Support 2 remained tags : [img] and [url=mailto:]
+    - [i18n Bug] Fix bug cannot attach file with Vietnamese locale
+
+
+[1.0.0 RC 1_01] - 14 June 2003
+    - Fix bug that cause an AssertionException when trying to reset password
+        with case-insesitive email
+    - Fix sql bug in postgreSQL
+    - Fully support Vietnamese keyboard tool in all pages
+    - The PostTopic are always required now (previously topic of a reply can be empty)
+    - Add option to turn on/off RSS feature
+    - Always check if user have been authenticated before he can delete
+        objects (category/forum/thread/post/attachment)
+    - Common-logging the fatalerror.jsp page (in case of serious error)
+    - Fix searching bug when search with member (Thanks simone)
+    - Dont show link to add more watch when user has watch the system globally
+    - Check database connection when starting mvnForum. If it cannot get the
+        connection, then stop running mvnForum and just out the error message
+        instead of just the blank page
+    - Change the MemberWebHelper to use the DAO pattern, integrator can
+        provides their own member implementation (Thanks Luis Miguel Hernanz)
+    - Make quite a lot of changes in package auth (Thanks Luis Miguel Hernanz)
+    - Localize the name of month (Thanks gbs)
+    - Change the ICQ's icon (get the online/offline status icon from icq.com web site)
+    - Upgrade JavaMail from version 1.2 to 1.3
+    - Upgrade Mysql Connector/J driver from 3.0.6 to 3.0.8
+    - [New feature] : Support forum/global RSS (Thanks timh)
+    - Implement the pagination in searchresult.jsp page
+    - AttachMore option now work properly
+    - Moderator can delete any attachments
+    - Improve the ant build.xml, now mvnforum is depended on
+        myvietnam when building (Thanks thomas)
+    - Delete attachment when delete post/thread/forum
+    - Improve Thread Watch support
+    - Support setting the maximum size of attachment
+    - Throw a more general error message when searching with empty index
+        (instead of throw the original exception of Lucene,
+        which include the real path of mvnForumHome)
+    - Rebuild search index file even when no posts (create empty index)
+    - Fix bug wrong description when select the url javascript control in addpost.jsp
+    - Dont show attachment icon if user dont have permission (Thanks simone)
+    - Show the file size of the attachment in viewthread
+    - Add option to turn on/off Attachment feature
+    - Add option to turn on/off Watch feature
+    - Add some code to meta tag and header response to prevent caching in
+        rare cases (suggested by ssadek) (uncomment code if you have http caching problem)
+    - After add a post, user are taken to the last page (old behaviour
+        is go to first page) (Thanks Imants Firsts)
+    - Fix bug with "good luck" similies in EnableEmotionFilter.jsp (Thanks Imants Firsts)
+    - Fix bug with "whistling" and "dancing" sililies in addpost.jsp (Thanks Imants Firsts)
+    - [l10n] mvnForum is localized/translated to Slovenian (Thanks Uro?Cernigoj)
+    - [l10n] mvnForum is localized/translated to Serbian cyrilic and latin (Thanks Dejan)
+    - [l10n] mvnForum is localized/translated to Latvian (Thanks Imants Firsts)
+    - Add a link to Activate Count in the MyProfile (thanks simone)
+    - Fix English grammar (change from "There is not any" to "There are not any") (thanks timh)
+    - In listmembers, change the Next/Previous link from text link
+        to image link for consitency with other pages
+    - Add a link to view the last page of thread in : listthreads, listrecentthreads and viewthread
+    - Show the attachment as embeded image if the mine type starts with "image/"
+    - Upgrade Vietnamese keyboard tool to version "vietuni.js V1.618 - R.11.11.01"
+    - [New feature] : Support Attachment [cool !!!]
+    - [New feature] : Support Searching (Thanks Dejan) [cool !!!]
+    - [i18n] : Review i18n keys for better convention
+    - [i18n] : Localize all addpost.jsp (thanks Gunther)
+    - [Admin] : Test System tool : add Jakarta RegEpx and Jakarta Lucene
+    - [Security] : User can now delete cookie (in login page) for better security (Thanks CEO)
+    - [Security] : Add configuration option to ensure Email Validation before the user can login
+    - Now only activated user can use the Watch feature
+    - [UserManagement] : Support setting/customize Member's Title
+    - Dont allow adding new forum if there is not any category
+    - Now user cannot change the password if the old and new password
+        are the same (suggested by ssadek )
+    - Fix bug that cannot change PostIcon when edit a post (Thanks moamoa)
+    - [l10n] mvnForum is localized/translated to Danish (Thanks Anja Lysholm & Gunther Strube)
+    - [UserManagement] : delete all watches of a member
+    - [UserManagement] : add new page: viewmember
+    - [UserManagement] : add "Find Member" feature
+    - Change the avatar path: remove the context path prefix, now mvnForum can move to
+        new context without problem (still backward compatible)
+    - [New feature] : Support Global/Category/Forum/Thread Watch (thanks cord) [cool !!!]
+    - [i18n Improvement] : Now support new locale does not need to change addmember.jsp and editmember.jsp
+    - [i18n Improvement] : Language option is displayed in the language
+    - [Fix bug] : Last edit IP is shown wrongly with creation IP (Thanks simone)
+    - [Fix bug] : Fix bug that cannot post a new thread in Oracle 9i
+    - [l10n] mvnForum is localized/translated to German (Thanks M. Leinmueller)
+    - Add online/offline status in viewthread and viewmember
+    - [Security] : Support IP matching in IPFilter (use Apache regular expression)
+    - Write short "developer's guide" in Authenticator to help implementing this interface
+    - [Fix bug] : Make mvnForum compatible with Caucho MySql driver
+        (eleminate the error : Cannot update table Thread where primary key = (#) )
+    - Change all System.out.println to common-logging
+    - Support 1 additional mnvCode: [code] [in MyVietnam CoreLib]
+    - [Fix bug] : Fix wrong birthday bug
+    - [Database] mvnForum now supports Oracle 9i
+    - [Database] mvnForum now supports SAPDB (Thanks theMK)
+    - [l10n] mvnForum is localized/translated to Italian (Thanks Enrico Donelli and Simone)
+    - [l10n] mvnForum is localized/translated to French (Thanks Stephane Mirabella (aka stephm) )
+
+
+[1.0.0 beta3] - 2 March 2003
+    - Change the session time out in web.xml to 120 minutes (before is 30 minutes)
+    - Support 1 additional mnvCode: [list] [in MyVietnam CoreLib]
+    - Add new method setTimeZone to interface OnlineUser, now the date/time are updated
+          immediately after user changes his time zone
+    - Allow mvnCode in post's topic
+    - [GUI Improvement] : Change the style sheet (css) for tags: input, textarea, option
+    - [l10n] mvnForum is localized/translated to Spanish (Thanks Javier)
+    - [Database] Support Interbase/Firebird database (Thanks Javier)
+    - [Admin] Enable/disable member (disabled member cannot login)
+    - [GUI Improvement] : Change the color of table for consistency
+    - [Fix bug] : Change the input tag type from submit to button because some versions
+          of Mozilla doesn't correctly handle the submit input tag (Thanks simone)
+    - [Fix bug] : Fix the wrong YahooID and AolID in the links in
+          viewthread, viewmember and myprofile
+    - [Security] Support IP block to prevent certain IP to access the system
+    - SystemAdmin can view the email of all members in the User Zone
+    - In admin module, only show links that user have previledge on them
+    - Change interface MVNForumPermission, change all 'new' permission to 'add' permission
+    - [New feature] : ForumAdmin can delete empty category
+    - [GUI Improvement] : Change the GUI for success pages in Admin Zone for consistency and easy to use
+    - [Improvement] : User now can choose a prefered displayed language when registering
+    - [Fix bug] : Fix bug that doesn't allow adding a new Forum which has the same name of a forum in other category
+    - [i18n] Support locale configuration (config the properties file to enable supported locales)
+    - Rewrite and improve Installation Guide/Online Documentation (Thanks cord)
+    - [i18n] Automatic enable Vietnamese keyboard input if the user chooses Vietnamese as
+        the preferred displayed language
+    - Add 6 new avatars (thanks wassup)
+    - [New feature] : Support Post Preview (thanks wassup)
+    - [Improvement] : After moderator delete a thread, all info in the forum/thread is updated
+    - [New feature] : Moderator now can delete any post
+    - [Database] Write new "limit" methods to run on database/jdbc driver that
+        doesn't support TYPE_SCROLL_INSENSITIVE
+    - [New feature] : Support showing date/time based on preferred locale on user's profile
+    - [Improvement] : Support gif/png avatars (Thanks wassup)
+    - [New feature] : Support multi-databases, currently suppport 5 dbms:
+        MySQL, Oracle, Sql Server, postgreSQL, hsqldb
+        (Thanks pritpal, cord)
+    - [New feature] : Support [url] tag (Thanks wassup) [in MyVietnam CoreLib]
+    - [New feature] : Support [quote] tag (Thanks wassup) [in MyVietnam CoreLib]
+    - [New feature] : Support Localization (currently localized to 5 languages:
+        English, Vietnamese, Russian, Traditional Chinese, Simplified Chinese)
+        (Thanks wassup for localizing to Russian)
+        (Thanks Jacky Chu for localizing to Traditional Chinese/Simplified Chinese)
+    - [New feature] : Support Internationalization (in the backend)
+    - [GUI Improvement] : Show link for AIM, Yahoo Messenger, ICQ (Thanks pritpal, romrom)
+    - [New feature] : Support automatic login (by using cookie)
+    - [New feature] : Support realm authentication
+    - [New feature] : Support passwordless/customized authentication
+    - [GUI Improvement] : Support Thread/Post icon
+    - [GUI Improvement] : Show new/nonew status of a forum
+    - [GUI Improvement] : Show hot/normal and new/nonew status of a thread
+    - [GUI Improvement] : all success pages have been relayouted for GUI consistency
+    - [Improvement] : forum description and category description now support mvnCode
+        (in listforums and forummanagement)
+    - [Improvement] : Support 2 additional mnvCode: [size] and [font] [in MyVietnam CoreLib]
+    - Change the new line from <p> to <br> (Thanks pritpal) [in MyVietnam CoreLib]
+    - [Improvement] : Add 2 alias for emoticon: [:-)] and [:-(] [in MyVietnam CoreLib]
+    - [Fix bug] : Fix bug Redirect after login (Thanks pritpal, romrom)
+    - Add title (based on post count) for member in viewthread.jsp (Thanks romrom)
+    - Add request.setCharacterEncoding("utf-8"); to 2 Servlets
+        (support unicode in getParameter) (now mvnForum requires Servlet 2.3)
+    - Add charset=utf-8 to all jsp (support unicode)
+    - [Improvement] : Show the post statistics before deleting a thread
+    - [Improvement] : Show the post and thread statistics before deleting a forum
+    - Change in Admin index (show info) (Thanks pritpal)
+    - [Fix bug] : Fix bug that cause a long underline in topmenu in Mozilla 1.x
+    - [Fix bug] : Remove the maxlength when edit Group (GroupName textbox)
+        and Forum (ForumName textbox)
+
+
+[1.0.0 beta2] - 15 December 2002
+    - [New feature] : Moderator can now delete a thread
+    - [New feature] : Admin can now delete a forum in the AdminZone
+    - [Improvement] : Some pages are automatically refresh after a successful action (eg. Add new Post)
+    - [GUI Improvement] : Change the logo for mvnForum
+    - [Improvement] : Improve the error.jsp by adding a link to go back
+    - [New feature] : Admin can now delete a group in the AdminZone
+    - [New feature] : Admin (id = 1) has SYSTEM_ADMIN privilege and is not revocable
+    - Support many types of sorting order in listthreads.jsp and listrecentthreads.jsp
+    - Disable the Upload button in changeavatar.jsp after submiting
+        (avoid upload more than once) (Thanks wassup)
+    - Disable the Register Member button in addpost.jsp after submiting
+        (avoid add more than once) (Thanks wassup)
+    - Disable the Add Post button in addpost.jsp after submiting
+        (avoid add more than once) (Thanks wassup)
+    - [GUI Improvement] : Add 1 new avatar CoolTux (Thanks wassup)
+    - Show Member Count in GroupManagement
+    - [GUI Improvement] : Show statistics of online users,
+        eg: There are 2 online users (1 Guests, 1 Members)
+    - [New feature] : System Admin can view the IP of any posts (creation time and last edit time)
+    - [GUI Improvement] : Support mvnEmotion for post's topic
+    - [GUI Improvement] : Support mvnCode and mvnEmotion for Member Signature
+    - When reply to a topic, "Re: " is added before the topic
+    - [GUI Improvement] : Add male/female symbol in viewthread.jsp
+    - [Fix bug] : Cannot set option for Datasource (Thanks romrom) [in MyVietnam CoreLib]
+    - [Fix bug] : Wrong number when viewing next/previous in viewthread.jsp
+    - [New feature] : Support most of mvnCode ([b], [i], etc)
+    - [New feature] : Support full mvnEmotion ([:)], [:D], etc)
+    - Add CVS Header to all jsp and java source code
+    - Add Ant build.xml to build the source code
+    - Forum Moderator now can edit any posts at any time
+    - [Fix bug] : fix bug that wrong menu is shown in ErrorPage in the AdminZone
+    - [Fix bug] : fix bug that cannot view next members in listmembers.jsp
+    - [Fix bug] : MailUtil.checkGoodEmail now accept character '-'
+        [in MyVietnam CoreLib] - (Thanks Per-Ake Olsson)
+    - [Fix bug] : wrong member name in "Last posts in this thread" in addpost.jsp
+    - [New feature] : User cannot view email until he login (avoid spam and email-harvest tools)
+    - [Fix bug] : wrongly escape charater with format like this : &#1234;,
+        so Vietnamese works now :) [in MyVietnam CoreLib]
+    - [Bug workaround] : The birthday is less error now with 3 combo boxes: day, month and year
+    - [Fix bug] : wrong category order in the index page (Thanks soma)
+    - [GUI Improvement] : show combo box for all time zone options
+    - [Fix bug] : Fix the first time view online users, no user is shown !!!
+
+
+[1.0.0 beta1] - 23 October 2002
+    - First beta release, and include many cool features.

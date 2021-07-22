@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <!DOCTYPE mvnforum SYSTEM "http://www.mvnforum.com/mvnforum.dtd"> -->
+
+<!--
+ $Revision: 1.1 $
+ $Date: 2003/11/30 19:42:29 $
+
+   =====================================================================
+   ===           MVN Forum empty database XML definition             ===
+   ===                                                               ===
+   ===                                                               ===
+   ===    Made by Igor Manic, mailto:imanic@users.sourceforge.net    ===
+   ===                                                               ===
+   ===                                     Donated to General Public ===
+   =====================================================================
+-->
+
+
+
+<mvnforum version="1.0" exportDate="2003/10/01 00:00:00">
+   <MemberList>
+      <Member class="Admin">
+         <MemberName>Admin</MemberName>
+         <MemberPassword>ISMvKXpXpadDiUoOSoAfww==</MemberPassword>
+         <MemberFirstEmail>admin@yourdomain.com</MemberFirstEmail>
+         <MemberEmail>admin@yourdomain.com</MemberEmail>
+         <MemberEmailVisible>0</MemberEmailVisible>
+         <MemberNameVisible>1</MemberNameVisible>
+         <!-- MemberFirstIP=MemberLastIP=127.0.0.1 -->
+         <!-- MemberViewCount=MemberPostCount=0 -->
+         <!-- MemberCreationDate=MemberModifiedDate=MemberLastLogon=now() -->
+         <!-- MemberOption=MemberStatus=0 -->
+         <!-- MemberActivateCode=MemberTempPassword="" -->
+         <!-- MemberMessageCount=MemberMessageOption=0 -->
+         <MemberPostsPerPage>10</MemberPostsPerPage>
+         <!-- MemberWarnCount=MemberVoteCount=MemberVoteTotalStars=MemberRewardPoints=0 -->
+         <!-- MemberTitle="" -->
+         <MemberTimeZone>0</MemberTimeZone>
+         <!-- MemberSignature=MemberAvatar=MemberSkin=MemberLanguage="" -->
+         <MemberFirstname>Admin</MemberFirstname>
+         <MemberLastname></MemberLastname>
+         <!-- MemberGender=1 -->
+         <!-- MemberBirthday=now() -->
+         <!-- MemberAddress=MemberCity=MemberState=MemberCountry="" -->
+         <!-- MemberPhone=MemberMobile=MemberFax="" -->
+         <!-- MemberCareer=MemberHomepage="" -->
+         <!-- MemberYahoo=MemberAol=MemberIcq=MemberMsn="" -->
+         <!-- MemberCoolLink1=MemberCoolLink2="" -->
+         <GlobalPermissionList>
+            <GlobalPermission>100</GlobalPermission>
+         </GlobalPermissionList>
+         <MessageFolderList>
+            <MessageFolder>
+               <FolderName>Inbox</FolderName>
+               <!-- FolderOrder=0 -->
+               <!-- FolderCreationDate=FolderModifiedDate=now() -->
+            </MessageFolder>
+            <MessageFolder>
+               <FolderName>Sent</FolderName>
+               <!-- FolderOrder=0 -->
+               <!-- FolderCreationDate=FolderModifiedDate=now() -->
+            </MessageFolder>
+         </MessageFolderList>
+      </Member>
+
+      <Member class="Guest">
+         <MemberName>Guest</MemberName>
+         <MemberPassword>N/A</MemberPassword>          <!-- not used -->
+         <MemberFirstEmail>N/A</MemberFirstEmail>      <!-- not used -->
+         <MemberEmail>N/A</MemberEmail>                <!-- not used -->
+         <MemberEmailVisible>0</MemberEmailVisible>
+         <MemberNameVisible>1</MemberNameVisible>
+         <!-- MemberFirstIP=MemberLastIP=127.0.0.1 -->
+         <!-- MemberViewCount=MemberPostCount=0 -->
+         <!-- MemberCreationDate=MemberModifiedDate=MemberLastLogon=now() -->
+         <!-- MemberOption=MemberStatus=0 -->
+         <!-- MemberActivateCode=MemberTempPassword="" -->
+         <!-- MemberMessageCount=MemberMessageOption=0 -->
+         <MemberPostsPerPage>10</MemberPostsPerPage>
+         <!-- MemberWarnCount=MemberVoteCount=MemberVoteTotalStars=MemberRewardPoints=0 -->
+         <!-- MemberTitle="" -->
+         <MemberTimeZone>0</MemberTimeZone>
+         <!-- MemberSignature=MemberAvatar=MemberSkin=MemberLanguage="" -->
+         <MemberFirstname>Guest</MemberFirstname>
+         <MemberLastname></MemberLastname>
+         <!-- MemberGender=1 -->
+         <!-- MemberBirthday=now() -->
+         <!-- MemberAddress=MemberCity=MemberState=MemberCountry="" -->
+         <!-- MemberPhone=MemberMobile=MemberFax="" -->
+         <!-- MemberCareer=MemberHomepage="" -->
+         <!-- MemberYahoo=MemberAol=MemberIcq=MemberMsn="" -->
+         <!-- MemberCoolLink1=MemberCoolLink2="" -->
+         <GlobalPermissionList>
+            <GlobalPermission>109</GlobalPermission>
+         </GlobalPermissionList>
+      </Member>
+   </MemberList>
+
+   <GroupList>
+      <Group class="RegisteredMembers">
+         <GroupOwnerName></GroupOwnerName>
+         <GroupName>Registered Members</GroupName>
+         <GroupDesc>All registered users belong to this group.</GroupDesc>
+         <!-- GroupOption=0 -->
+         <!-- GroupCreationDate=GroupModifiedDate=now() -->
+         <GlobalPermissionList>
+            <GlobalPermission>110</GlobalPermission>
+         </GlobalPermissionList>
+      </Group>
+   </GroupList>
+
+   <CategoryList></CategoryList>
+
+   <RankList>
+      <Rank>
+         <RankMinPosts>0</RankMinPosts>
+         <!-- RankLevel=0 -->
+         <RankTitle>Stranger</RankTitle>
+         <!-- RankImage="" -->
+         <!-- RankType=RankOption=0 -->
+      </Rank>
+      <Rank>
+         <RankMinPosts>20</RankMinPosts>
+         <!-- RankLevel=0 -->
+         <RankTitle>Newbie</RankTitle>
+         <!-- RankImage="" -->
+         <!-- RankType=RankOption=0 -->
+      </Rank>
+      <Rank>
+         <RankMinPosts>50</RankMinPosts>
+         <!-- RankLevel=0 -->
+         <RankTitle>Member</RankTitle>
+         <!-- RankImage="" -->
+         <!-- RankType=RankOption=0 -->
+      </Rank>
+      <Rank>
+         <RankMinPosts>100</RankMinPosts>
+         <!-- RankLevel=0 -->
+         <RankTitle>Advanced Member</RankTitle>
+         <!-- RankImage="" -->
+         <!-- RankType=RankOption=0 -->
+      </Rank>
+   </RankList>
+</mvnforum>
+
