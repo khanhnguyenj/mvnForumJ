@@ -10,4 +10,16 @@
 	</parent>
 
 	<artifactId>mvnforum</artifactId>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.huongdanjava</groupId>
+			<artifactId>myvietnam</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+	</dependencies>
 </project>

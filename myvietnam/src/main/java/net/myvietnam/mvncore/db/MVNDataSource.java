@@ -28,27 +28,30 @@
  * Correspondence and Marketing Questions can be sent to:
  * info at MyVietnam net
  *
- * @author: Minh Nguyen  
+ * @author: Minh Nguyen
  */
 package net.myvietnam.mvncore.db;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
+import java.util.logging.Logger;
 
 import org.apache.commons.lang.NotImplementedException;
 
 /**
  * Implementation of DataSource based on built-in connection pool
- * 
+ *
  */
 public class MVNDataSource extends AbstractDataSource {
-    
+
     private boolean autoCommit;
-    
+
     public MVNDataSource(boolean autoCommit) {
         this.autoCommit = autoCommit;
     }
 
+    @Override
     public Connection getConnection() throws SQLException {
         Connection connection = DBUtils.getConnection();
         if (connection.getAutoCommit() != autoCommit) {
@@ -57,11 +60,18 @@ public class MVNDataSource extends AbstractDataSource {
         return connection;
     }
 
+    @Override
     public Connection getConnection(String username, String password) throws SQLException {
         if (username == null) {
             return getConnection();
         }
         throw new NotImplementedException("getConnection");
+    }
+
+    @Override
+    public Logger getParentLogger() throws SQLFeatureNotSupportedException {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

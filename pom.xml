@@ -18,6 +18,22 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.huongdanjava</groupId>
+				<artifactId>myvietnam</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>1.7.32</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<repositories>
 		<repository>
 			<id>mogwai</id>
