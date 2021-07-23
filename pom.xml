@@ -6,10 +6,24 @@
 	<artifactId>mvnForumJ</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	
+
 	<modules>
 		<module>myvietnam</module>
 		<module>mvnforum</module>
 		<module>mvnad</module>
 	</modules>
+
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>mogwai</id>
+			<name>Mogwai</name>
+			<url>http://mogwai.sourceforge.net/repository/maven2/</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
 </project>
