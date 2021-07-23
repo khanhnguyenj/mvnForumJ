@@ -1,0 +1,438 @@
+<!--
+     This build script assumes that the source code of your web application
+     is organized into the following subdirectories underneath the source
+     code directory from which you execute the build script:
+
+        docs                 Static documentation files to be copied to
+                             the "docs" subdirectory of your distribution.
+
+        src                  Java source code (and associated resource files)
+                             to be compiled to the "WEB-INF/classes"
+                             subdirectory of your web applicaiton.
+
+     $Id: build.xml,v 1.24 2010/07/21 10:48:38 minhnn Exp $
+-->
+<project name="MyVietnam" default="compile" basedir=".">
+
+    <!-- ===================== Property Definitions =========================== -->
+    <property file="build.properties" />
+    <property file="${user.home}/build.properties" />
+
+    <!-- ==================== File and Directory Names ======================== -->
+    <property name="myvietnam.app.name" value="myvietnam" />
+
+    <property name="build-root.home" value="${basedir}/../build" />
+    <property name="build.home" value="${build-root.home}/build-${myvietnam.app.name}" />
+    <property name="dist.home" value="${build.home}/dist" />
+    <property name="release.home" value="${build.home}/release" />
+    <property name="javadoc.home" value="${build.home}/javadoc" />
+    <property name="mvncore.i18n.build.home" value="${build.home}/i18n/mvncore" />
+
+    <property name="docs.home" value="${basedir}/docs" />
+    <property name="src.home" value="${basedir}/src" />
+    <property name="lib.home" value="${basedir}/lib" />
+    <property name="sql.home" value="${basedir}/sql" />
+    <property name="i18n.home" value="${basedir}/i18n" />
+    <property name="properties.home" value="${basedir}/properties" />
+
+    <property name="test.home" value="${basedir}/test" />
+    <property name="test.lib.home" value="${basedir}/lib_test" />
+    <property name="test.src.home" value="${test.home}/src_test" />
+    <property name="test.build.home" value="${build.home}/test" />
+    <property name="test.build.classes" value="${test.build.home}/classes" />
+    <property name="test.build.rundir" value="${test.build.home}/rundir" />
+    
+    <property name="test.build.junit.datadir" value="${test.build.home}/junit_datadir" />
+    <property name="test.build.junit.report" value="${test.build.home}/report_junit" />
+
+    <property name="test.build.cobertura.report" value="${test.build.home}/report_cobertura" />
+    <property name="test.build.cobertura.coverage" value="${test.build.home}/coverage_cobertura" />
+    <property name="test.build.cobertura.instrument" value="${test.build.home}/instrument_cobertura" />
+
+    <!--  ==================== Compilation Control Options ==================== -->
+    <!--
+    These properties control option settings on the Javac compiler when it
+    is invoked using the <javac> task.
+    
+    compile.debug        Should compilation include the debug option?
+    
+    compile.deprecation  Should compilation include the deprecation option?
+    
+    compile.optimize     Should compilation include the optimize option?
+    -->
+    <property name="compile.debug" value="true" />
+    <property name="compile.deprecation" value="false" />
+    <property name="compile.optimize" value="true" />
+
+    <taskdef name="mvnforumfinder" classpath="${i18n.home}/tool/mvntools.jar" classname="LocalizingKeyFinder" />
+
+    <!-- ==================== Compilation Classpath =========================== -->
+    <!--
+    Rather than relying on the CLASSPATH environment variable, Ant includes
+    features that makes it easy to dynamically construct the classpath you
+    need for each compilation.  
+    -->
+    <path id="compile.classpath">
+        <fileset dir="${lib.home}">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+
+    <!-- ==================== All Target ====================================== -->
+    <!--
+    The "all" target is a shortcut for running the "clean" target followed
+    by the "compile" target, to force a complete recompile.
+    -->
+    <target name="all" depends="clean,compile" description="Clean build and dist directories, then compile" />
+
+    <!-- ==================== Clean Target ==================================== -->
+    <!--
+    The "clean" target deletes any previous "build" and "dist" directory,
+    so that you can be ensured the application can be built from scratch.
+    -->
+    <target name="clean" description="Delete old build and dist directories">
+        <delete dir="${build.home}" />
+    </target>
+
+    <!-- ==================== Prepare Target ================================== -->
+    <!--
+    The "prepare" target is used to create the "build" destination directory,
+      and copy the static contents of your web application to it.  
+    Normally, this task is executed indirectly when needed.
+    -->
+    <target name="prepare">
+        <mkdir dir="${build-root.home}" />
+        <mkdir dir="${build.home}" />
+
+        <mkdir dir="${mvncore.i18n.build.home}" />
+        <copy file="${i18n.home}/mvncore_java_i18n.properties" todir="${mvncore.i18n.build.home}" />
+        <copy file="${i18n.home}/mvncore_java_i18n.properties" tofile="${mvncore.i18n.build.home}/mvncore_java_i18n_en.properties" />
+        <native2ascii encoding="Cp1256" src="${i18n.home}" dest="${mvncore.i18n.build.home}" includes="mvncore_java_i18n_ar.properties" />
+        <native2ascii encoding="Cp1251" src="${i18n.home}" dest="${mvncore.i18n.build.home}" includes="mvncore_java_i18n_bg.properties" />
+        <native2ascii encoding="ISO8859_1" src="${i18n.home}" dest="${mvncore.i18n.build.home}" includes="mvncore_java_i18n_da.properties" />
+        <native2ascii encoding="ISO8859_1" src="${i18n.home}" dest="${mvncore.i18n.build.home}" includes="mvncore_java_i18n_de.properties" />
+        <native2ascii encoding="ISO8859_7" src="${i18n.home}" dest="${mvncore.i18n.build.home}" includes="mvncore_java_i18n_el.properties" />
+        <native2ascii encoding="Cp1252" src="${i18n.home}" dest="${mvncore.i18n.build.home}" includes="mvncore_java_i18n_es.properties" />
+        <native2ascii encoding="Cp1252" src="${i18n.home}" dest="${mvncore.i18n.build.home}" includes="mvncore_java_i18n_fr.properties" />
+        <native2ascii encoding="UTF-8" src="${i18n.home}" dest="${mvncore.i18n.build.home}" includes="mvncore_java_i18n_hu.properties" />
+        <native2ascii encoding="ISO8859_1" src="${i18n.home}" dest="${mvncore.i18n.build.home}" includes="mvncore_java_i18n_it.properties" />
+        <native2ascii encoding="MS932" src="${i18n.home}" dest="${mvncore.i18n.build.home}" includes="mvncore_java_i18n_ja.properties" />
+        <native2ascii encoding="UTF-8" src="${i18n.home}" dest="${mvncore.i18n.build.home}" includes="mvncore_java_i18n_ko.properties" />
+        <native2ascii encoding="Cp1257" src="${i18n.home}" dest="${mvncore.i18n.build.home}" includes="mvncore_java_i18n_lv.properties" />
+        <native2ascii encoding="ISO8859_1" src="${i18n.home}" dest="${mvncore.i18n.build.home}" includes="mvncore_java_i18n_nl.properties" />
+        <native2ascii encoding="ISO8859_1" src="${i18n.home}" dest="${mvncore.i18n.build.home}" includes="mvncore_java_i18n_no.properties" />
+        <native2ascii encoding="ISO8859_1" src="${i18n.home}" dest="${mvncore.i18n.build.home}" includes="mvncore_java_i18n_pt_BR.properties" />
+        <native2ascii encoding="Cp1251" src="${i18n.home}" dest="${mvncore.i18n.build.home}" includes="mvncore_java_i18n_ru.properties" />
+        <native2ascii encoding="Cp1250" src="${i18n.home}" dest="${mvncore.i18n.build.home}" includes="mvncore_java_i18n_sh.properties" />
+        <native2ascii encoding="ISO8859_2" src="${i18n.home}" dest="${mvncore.i18n.build.home}" includes="mvncore_java_i18n_si.properties" />
+        <native2ascii encoding="Cp1251" src="${i18n.home}" dest="${mvncore.i18n.build.home}" includes="mvncore_java_i18n_sr.properties" />
+        <native2ascii encoding="Cp1254" src="${i18n.home}" dest="${mvncore.i18n.build.home}" includes="mvncore_java_i18n_tr.properties" />
+        <native2ascii encoding="UTF-8" src="${i18n.home}" dest="${mvncore.i18n.build.home}" includes="mvncore_java_i18n_vi.properties" />
+        <native2ascii encoding="GB2312" src="${i18n.home}" dest="${mvncore.i18n.build.home}" includes="mvncore_java_i18n_zh_CN.properties" />
+        <native2ascii encoding="Big5" src="${i18n.home}" dest="${mvncore.i18n.build.home}" includes="mvncore_java_i18n_zh_TW.properties" />
+    </target>
+
+    <!-- ==================== Compile Target ================================== -->
+    <!--
+    The "compile" target transforms source files (from your "src" directory)
+    into object files in the appropriate location in the build directory.
+    -->
+    <target name="compile" depends="prepare" description="Compile Java sources">
+        <mkdir dir="${build.home}/classes" />
+        <javac srcdir="${src.home}" destdir="${build.home}/classes" source="1.4" target="1.4" debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}">
+            <classpath refid="compile.classpath" />
+        </javac>
+        <mkdir dir="${build.home}/lib" />
+        <jar destfile="${build.home}/lib/myvietnam.jar" basedir="${build.home}/classes" />
+    </target>
+
+    <!-- ==================== Javadoc Target ================================== -->
+    <!--
+    The "javadoc" target creates Javadoc API documentation for the Java
+    classes included in your application.  Normally, this is only required
+    when preparing a distribution release, but is available as a separate
+    target in case the developer wants to create Javadocs independently.
+    -->
+    <target name="javadoc" depends="compile" description="Create Javadoc API documentation">
+        <mkdir dir="${javadoc.home}" />
+        <javadoc sourcepath="${src.home}" destdir="${javadoc.home}" packagenames="*">
+            <classpath refid="compile.classpath" />
+        </javadoc>
+    </target>
+
+    <!-- ==================== Dist Target ===================================== -->
+    <!--
+    The "dist" target creates a binary distribution of your application
+    in a directory structure ready to be archived in a tar.gz or zip file.
+    Note that this target depends on two others:
+    
+    * "compile" so that the entire web application (including external
+    dependencies) will have been assembled
+    
+    * "javadoc" so that the application Javadocs will have been created
+    -->
+    <target name="dist" depends="compile,find-java-wrong-keys,javadoc" description="Create binary distribution">
+        <mkdir dir="${dist.home}" />
+        <mkdir dir="${dist.home}/docs" />
+        <copy todir="${dist.home}/docs">
+            <fileset dir="${docs.home}" />
+        </copy>
+        <copy todir="${dist.home}/docs/api">
+            <fileset dir="${javadoc.home}" />
+        </copy>
+        <mkdir dir="${dist.home}/sql" />
+        <copy todir="${dist.home}/sql">
+            <fileset dir="${sql.home}" />
+        </copy>
+        <mkdir dir="${dist.home}/properties" />
+        <copy todir="${dist.home}/properties">
+            <fileset dir="${properties.home}" />
+        </copy>
+        <mkdir dir="${dist.home}/lib" />
+        <copy todir="${dist.home}/lib">
+            <fileset dir="${build.home}/lib" />
+            <fileset dir="${lib.home}" />
+        </copy>
+    
+        <!-- Create application JAR file -->
+        <mkdir dir="${release.home}" />
+        <jar destfile="${release.home}/myvietnam-${myvietnam.app.version}.zip" basedir="${dist.home}" />
+    </target>
+        
+    <!-- ==================== Check Java keys Target ===================================== -->
+
+    <target name="find-java-wrong-keys" depends="prepare" description="Find wrong keys in JAVA source files">
+        <mvnforumfinder starttoken="MVNCoreResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvncore_java_i18n">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNCoreResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvncore_java_i18n_ar">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNCoreResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvncore_java_i18n_bg">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNCoreResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvncore_java_i18n_da">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNCoreResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvncore_java_i18n_de">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNCoreResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvncore_java_i18n_el">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNCoreResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvncore_java_i18n_es">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNCoreResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvncore_java_i18n_fr">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNCoreResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvncore_java_i18n_hu">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNCoreResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvncore_java_i18n_it">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNCoreResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvncore_java_i18n_ja">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNCoreResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvncore_java_i18n_ko">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNCoreResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvncore_java_i18n_lv">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNCoreResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvncore_java_i18n_nl">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNCoreResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvncore_java_i18n_no">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNCoreResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvncore_java_i18n_pt_BR">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNCoreResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvncore_java_i18n_ru">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNCoreResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvncore_java_i18n_sh">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNCoreResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvncore_java_i18n_si">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNCoreResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvncore_java_i18n_sr">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNCoreResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvncore_java_i18n_tr">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNCoreResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvncore_java_i18n_vi">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNCoreResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvncore_java_i18n_zh_CN">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+        <mvnforumfinder starttoken="MVNCoreResourceBundle.getString" endtoken=");" bundle="${i18n.home}/mvncore_java_i18n_zh_TW">
+            <fileset dir="${src.home}">
+                <include name="**/*.java" />
+            </fileset>
+        </mvnforumfinder>
+    </target>
+
+    <path id="test.classpath">
+        <pathelement location="${test.build.classes}" />
+        <pathelement location="${build.home}/lib/myvietnam.jar" />
+        
+        <fileset dir="${test.lib.home}">
+            <include name="*.jar" />
+        </fileset>
+
+        <path refid="compile.classpath" />
+    </path>
+    
+    <!-- ==================== Compile test source Target ================================== -->
+    <target name="compile-test" depends="compile" description="Compile Java sources from test folder">
+        <mkdir dir="${test.build.rundir}" />
+        <mkdir dir="${test.build.classes}" />
+        <javac srcdir="${test.src.home}" verbose="${test.verbose}" destdir="${test.build.classes}" source="1.5" target="1.5" 
+            debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}">
+            <classpath refid="test.classpath"/>
+        </javac>
+    </target>
+    
+    <!-- ==================== Test Temp Target ================================== -->
+    <target name="test-temp" depends="compile-test" description="Run test case temporarily">
+        <junit fork="true" dir="${test.build.rundir}" haltonfailure="false" printsummary="true" showoutput="true">
+            <classpath refid="test.classpath" />
+            <formatter type="plain" />
+            <test name="net.myvietnam.mvncore.filter.DisableHtmlTagFilterTest" />
+        </junit>
+    </target>
+
+    <!-- ==================== Test Target ================================== -->
+    <target name="test" depends="compile-test" description="Run test case">
+        <delete dir="${test.build.junit.report}" />
+        <delete dir="${test.build.junit.datadir}" />
+        <mkdir dir="${test.build.junit.datadir}" />
+        <junit fork="true" dir="${test.build.rundir}" haltonfailure="false" printsummary="true">
+            <classpath refid="test.classpath" />
+            <formatter type="xml" />
+            <test name="net.myvietnam.mvncore.AllTests" todir="${test.build.junit.datadir}" />
+        </junit>
+        <junitreport todir="${test.build.junit.datadir}">
+            <fileset dir="${test.build.junit.datadir}">
+                <include name="TEST-*.xml" />
+            </fileset>
+            <report format="frames" todir="${test.build.junit.report}" />
+        </junitreport>
+    </target>
+
+    <!--===================== Cobertura Code Coverage =====================-->
+    
+    <target name="prepare-code-coverage-cobertura" depends="compile-test" description="Define Cobertura's ant libs">
+        <!-- Define new task for code coverage -->
+        <taskdef resource="tasks.properties">
+            <classpath>
+                <pathelement location="${lib.home}/log4j-1.2.15.jar" />
+                <pathelement location="${test.lib.home}/cobertura.jar" />
+                <pathelement location="${test.lib.home}/asm-3.0.jar" />
+                <pathelement location="${test.lib.home}/asm-tree-3.0.jar" />
+                <pathelement location="${test.lib.home}/jakarta-oro-2.0.8.jar" />
+            </classpath>
+        </taskdef>
+    </target>
+    
+    <target name="cobertura" depends="prepare-code-coverage-cobertura" description="Turns on Cobertura instrumentation/reporting" >
+        <property name="cobertura.filter" value="org.appfuse.*" />
+    </target>
+    
+    <target name="instrument-cobertura" depends="cobertura">
+        <delete dir="${test.build.cobertura.coverage}" />
+        <delete dir="${test.build.cobertura.instrument}" />
+        <cobertura-instrument datafile="${test.build.cobertura.coverage}/cobertura.ser" todir="${test.build.cobertura.instrument}">
+            <ignore regex="${cobertura.filter}" />
+            <fileset dir="${build.home}/classes">
+                <include name="**/*.class" />
+            </fileset>
+        </cobertura-instrument>
+    </target>
+    
+    <target name="test-all-report-cobertura" depends="instrument-cobertura" description="Run test case with intrument">
+        <junit fork="true" dir="${test.build.rundir}" haltonfailure="false">
+            <classpath>
+                <!-- Instrumented classes - must be BEFORE the normal ones -->
+                <pathelement location="${test.build.cobertura.instrument}" />
+                <path refid="test.classpath"/>
+            </classpath>
+
+            <!-- cobertura-specific jvm parameter -->
+            <sysproperty key="net.sourceforge.cobertura.datafile" file="${test.build.cobertura.coverage}/cobertura.ser" />
+
+            <formatter type="plain" usefile="false" />
+            <test name="net.myvietnam.mvncore.AllTests" />
+        </junit>
+    </target>
+    
+    <target name="report-code-coverage-cobertura" depends="test-all-report-cobertura" description="Export a report for code coverage using Cobertura">
+        <!-- cobertura report task -->
+        <cobertura-report srcdir="${src.home}" 
+                          destdir="${test.build.cobertura.report}" 
+                          datafile="${test.build.cobertura.coverage}/cobertura.ser" >
+        </cobertura-report>        
+    </target>
+    
+    <!-- ==================== CVS Target ===================================== -->
+    <!--
+    Check out the CVS
+    -->
+    <target name="cvs">
+        <echo>Updating module MyVietnam</echo>
+        <cvs command="update" dest="${basedir}" />
+    </target>
+
+</project>

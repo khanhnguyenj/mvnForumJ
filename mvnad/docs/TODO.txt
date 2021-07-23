@@ -1,0 +1,125 @@
+******************************************************************
+* $Id: TODO.txt,v 1.3 2009/04/09 09:27:47 trungth Exp $
+******************************************************************
+
+                   mvnAd Todo List
+-------------------------------------------------------
+
+Last update on: $Date: 2009/04/09 09:27:47 $
+
+Note:
+- After clean all projects, build mvnad -> causes error
+- Review database schema: mvncmsWeather table (column name: rename, add prefix) 
+
+[HaHTD]
+- [i18n] new key mvnad.admin.listbanners.xxx should in the correct alphabet order (finish)
+- listbanners in admin:
+ + review colspan when there is no banner(finish)
+ + change position of "Number Linked Zones" column(finish)
+
+[XuanTL]
+- when show ads in first post,... -> not show border -> I don't know how to fix it
+
+- http://10.0.0.120:8080/mvncms/adadmin/configforum
+    layout of this page is not good
+
+Error: document.getElementById("z3_1213246554765") has no properties
+Source File: http://localhost:8080/mvnforum_enterprise/delivery/getad?zoneID=3
+Line: 8   
+   
+- Bug: when not update the country, we should not show it in the chart
+   suggestion: we could change the DAO not to select the empty country
+- Make sure when click button, the button is disabled
+- Make sure we cannot link more than xxx number of banner (check value of ZoneMaxBanner)
+- Validate all input when add/edit banner, add/edit zone (for example, the Banner width must be > 0, Zone Cell Count must be >= 1, etc)   
+- mvnCMS also have Chart for Ads, check if it is the same, then we need to remove the one in mvnCMS
+   : need to check to make sure all reference in CMS are deleted
+- Synch login page with login page of mvnForum
+   explain: the login.jsp in mvnForum is support external database, so we need to synch this feature to mvnAd
+- Add permission to use HTML Ads (because this could cause cross site script)
+- Add permission to view Chart
+- http://localhost:8080/javavn/adadmin/listzones?offset=10
+   then edit
+   after edit, it jump to 
+   http://localhost:8080/javavn/adadmin/listzones
+   ===>>> we should remember the offset (as in mvnforum)
+- Write BannerCache and use it in method 
+     DeliveryHandler.processClickAd
+     EnterpriseDeliveryHandler.processClickAd 
+- Make sure with image banner running in direct mode, the view count and click count is correct
+- List of files should order by name
+- Write page to manage the banner of any user
+- Consider config module pattern in the web.xml (as a param of Servlet)
+- Review if deleteSpareRecords work with other databases or not  
+- BannerDAO.getBannersOfUser : should combine to other method
+- getDistinctMemberNamesHasBanner : check if this method should return Collection of memberName, not memberBean
+
+[portlet]
+
+
+
+[TrungTB]
+- Support detect browser Konqueror
+- http://localhost:8080/javavn2/adadmin/addbanner : show wrongly with Konqueror
+- ad in mvnforum: should support 
+  * Support one more line in the footer for ads of mvnForum
+  * add banner for page search (search the post in mvnforum)
+- Direct Code and Auto Reload : do they conflict or not ?
+- when link a banner with zone, the association is expired but it is still show the expire status of banner (Running)
+- if the zone type is direct code, then the width and height is not effect 
+- addbanner: if user enter the url of image, we should also show preview of it
+- addbanner and editbanner share a lot of javascript code, should put it in to a js file 
+- DeliveryHandler.processBannerClicked: add code to trim string if its length is longer the maximum value in SQL
+- Make sure in all pages, after disable button, then press Back in browser, the button are enabled   -> ok
+- check fatalerror.jsp header (by compare with the file in mvnforum)   -> ok
+- Change so that the i18n file in deployed context is WEB-INF\classes\i18n\mvnad\mvnad_i18n_en.properties [done]
+
+- /adadmin/listzones : should support Order By   -> ok
+- /adadmin/listbanners : should support Order By   -> ok
+- Consider move jsp file into folder WEB-INF
+- Test mvnAd on Oracle (setup and ThoNH will do the testing)
+- /adadmin/addbannerofzone?ZoneID=58 : does not remember the bannerID in the combo box
+- mvnad.admin.editzonesuccess.jsp.title = Update Zone: this key seem to be wrong    -----> OK
+- Add Event Log to all tasks                                -----> OK
+
+- Bug: Auto Reload could not go to target page with target="_self"
+
+- Support Javascript checking in all page of Ads
+   NOTE: do not add script directly, instead, use inc_js_checkvalid_myvietnamlib.jsp (so we do not need to add new i18n key)
+
+- Can delete media even when it is used by some ads?
+- In /listbanner, when filter by username -> action is not correct. --> ok
+- ad: when add new banner, should default start date is today, end date is 1 month
+- search for "ValidateForm" or "isBlank" for localize
+ 
+[Tho]
+- Test to make sure all input are validated by javascipt
+- Make sure we cannot link more than xxx number of banner (check value of ZoneMaxBanner)
+
+ 
+[MinhNN]
+- Review AdClickLogListener
+
+
+mvnad.common.ad.zone_management
+mvnad.common.ad.upload_media
+mvnad.common.ad.media
+
+mvnad.admin.success.return_to_banner_management
+mvnad.admin.success.return_to_admin_control_panel
+mvnad.common.zone.auto_reload_time_info
+
+
+
+mvnad.admin.listbanners.unlink_banner_with_zone
+mvnad.admin.listbanners.info
+mvnad.common.ad.filter_by
+mvnad.common.ad.user
+mvnad.common.ad.all
+mvnad.admin.listbanners.link_more_banner_with_zone
+mvnad.common.ad.manage_link
+mvnad.admin.listbanners.delete_link
+mvnad.admin.listbanners.edit_link_between_banner_zone
+mvnad.admin.listbanners.edit_link
+mvnad.admin.listbanners.no_banner_here
+

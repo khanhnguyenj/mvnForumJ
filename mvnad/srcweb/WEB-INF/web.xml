@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+    <display-name>mvnForum WebApp</display-name>
+    <description>MyVietnam mvnForum Web Application</description>
+
+    <!-- filters -->
+    <filter>
+        <filter-name>CompressionFilter</filter-name>
+        <filter-class>net.myvietnam.mvncore.servlet.filter.CompressionFilter</filter-class>
+        <init-param>
+            <param-name>compressionThreshold</param-name>
+            <param-value>128</param-value>
+        </init-param>
+    </filter>
+    <!-- /filters -->
+
+    <!-- filter-mappings -->
+    <filter-mapping>
+        <filter-name>CompressionFilter</filter-name>
+        <url-pattern>/mvnforum/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>CompressionFilter</filter-name>
+        <url-pattern>/mvnforumadmin/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>CompressionFilter</filter-name>
+        <url-pattern>/m/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>CompressionFilter</filter-name>
+        <url-pattern>/delivery/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>CompressionFilter</filter-name>
+        <url-pattern>/ad/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>CompressionFilter</filter-name>
+        <url-pattern>/adadmin/*</url-pattern>
+    </filter-mapping>
+    <!-- /filter-mappings -->
+
+    <!-- listeners -->
+    <listener>
+        <listener-class>com.mvnsoft.mvnad.MvnAdContextListener</listener-class>
+    </listener>
+    <!-- /listeners -->
+
+    <!-- servlets -->
+    <servlet>
+        <servlet-name>ForumAdminServlet</servlet-name>
+        <servlet-class>com.mvnforum.admin.ForumAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ForumUserServlet</servlet-name>
+        <servlet-class>com.mvnforum.user.ForumUserServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ForumMobileServlet</servlet-name>
+        <servlet-class>com.mvnforum.mobile.ForumMobileServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>AdUserServlet</servlet-name>
+        <servlet-class>com.mvnsoft.mvnad.user.AdUserServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdAdminServlet</servlet-name>
+        <servlet-class>com.mvnsoft.mvnad.admin.AdAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeliveryServlet</servlet-name>
+        <servlet-class>com.mvnsoft.mvnad.delivery.DeliveryServlet</servlet-class>
+    </servlet>
+    <!-- /servlets -->
+
+    <!-- servlet-mappings -->
+    <servlet-mapping>
+        <servlet-name>ForumAdminServlet</servlet-name>
+        <url-pattern>/mvnforumadmin/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ForumUserServlet</servlet-name>
+        <url-pattern>/mvnforum/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ForumMobileServlet</servlet-name>
+        <url-pattern>/m/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AdUserServlet</servlet-name>
+        <url-pattern>/ad/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AdAdminServlet</servlet-name>
+        <url-pattern>/adadmin/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>DeliveryServlet</servlet-name>
+        <url-pattern>/delivery/*</url-pattern>
+    </servlet-mapping>
+    <!-- /servlet-mappings -->
+
+    <session-config>
+        <session-timeout>120</session-timeout>
+    </session-config>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <taglib>
+        <taglib-uri>http://jsptags.com/tags/navigation/pager</taglib-uri>
+        <taglib-location>/WEB-INF/pager-taglib.tld</taglib-location>
+    </taglib>
+    <taglib>
+        <taglib-uri>mvntaglib</taglib-uri>
+        <taglib-location>/WEB-INF/mvntaglib.tld</taglib-location>
+    </taglib>
+</web-app>
