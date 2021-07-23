@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<baseElement>
+
+    <adminmodule>
+        <url_pattern>/adadmin</url_pattern>
+    </adminmodule>
+
+    <usermodule>
+        <url_pattern>/ad</url_pattern>
+    </usermodule>
+    
+    <deliverymodule>
+        <url_pattern>/delivery</url_pattern>
+    </deliverymodule>
+
+    <mvnadconfig>
+        <mvnad_home>../webapps/mvnforum/WEB-INF/mvnAdHome</mvnad_home>
+    </mvnadconfig>
+    
+    <!--
+      If run with CMS, please config com.mvnsoft.mvncms.service.impl.MvnAdServiceImplCMS 
+     -->
+    <mvnadfactoryconfig>
+        <mvnad_service_implementation>com.mvnsoft.mvnad.service.impl.MvnAdServiceImplDefault</mvnad_service_implementation>
+    </mvnadfactoryconfig>
+    
+</baseElement>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<baseElement>
+
+    <dboptions>
+        <!--
+         You should NOT change the database_type below
+         By default, database_type = 0
+         NOTE: If your database/driver does not support scrollable resultset
+               (such as some OLD version of Interbase/Firebird), set database_type = 2
+        -->
+        <database_type>0</database_type>
+        <!--
+         if use_datasource = false, use the default built-in connection pool
+         if use_datasource = true,  use the connection pool that Servlet Container provides
+        -->
+        <use_datasource>false</use_datasource>
+        <!--
+         Set the below options if you want to use default connection pool
+         This is applied if you set use_datasource = false
+         minutes_between_refresh is the minutes between built-in Connection Pool refreshment
+               Some time your database server is set connection timeout too low, such as
+               5 minutes, that cause the connection auto disconnected. In this case you should
+               set minutes_between_refresh lower than the server connection timeout value
+         NOTE: These values can be obtained from the header of the
+               sql script for your database
+         NOTE: For compatible with future release of mvnForum, we highly
+               recommend that use config your database/driver to use unicode utf8 encoding
+        -->
+        <driver_class_name>com.mysql.jdbc.Driver</driver_class_name>
+        <database_url>jdbc:mysql://localhost/mvnforum?useUnicode=true&amp;characterEncoding=utf-8&amp;useOldUTF8Behavior=true&amp;emulateLocators=true</database_url>
+        <database_user>root</database_user>
+        <database_password></database_password>
+        <max_connection>20</max_connection>
+        <max_time_to_wait>2000</max_time_to_wait>
+        <minutes_between_refresh>30</minutes_between_refresh>
+        <!--
+         Set the Data source name if you want to use Servlet Container connection pool
+         This is applied if you set use_datasource = true
+        -->
+        <datasource_name/>
+    </dboptions>
+
+    <!--
+     If your server supports sending email without authentication,
+       just let the username and password empty
+     If your server requires authentication, set username and password
+        to the correct values
+    -->
+    <mailoptions>
+        <default_mail_from>webmaster@yourdomain.com</default_mail_from>
+        <receive_mail>
+           <!--
+                if mail_source = false, use the default built-in mail provider
+                if mail_source = true,  use the mail source that Servlet Container provides
+             -->
+           <enable_mail_source>false</enable_mail_source>
+           <!--
+                Set the mail source name if you want to use Servlet Container mail resource
+                This is applied if you set enable_mail_source = true
+             -->
+           <mail_source_name/>
+           <!--
+                If use_secure_connection = true, enable SSL connection when receive mail
+                you will need this option is true if you want to receive using google gmail account
+             -->
+           <use_secure_connection>false</use_secure_connection>
+           <mail_server>localhost</mail_server>
+           <username/>
+           <password/>
+           <port>110</port>
+        </receive_mail>
+
+        <send_mail>
+           <!--
+                if use_embeded_smtp_mail_server = true, use the default embeded smtp mail server
+             -->
+           <use_embeded_smtp_mail_server>true</use_embeded_smtp_mail_server>
+           <!--
+                if mail_source = false, use the default built-in mail provider
+                if mail_source = true,  use the mail source that Servlet Container provides
+             -->
+           <enable_mail_source>false</enable_mail_source>
+           <!--
+                Set the mail source name if you want to use Servlet Container mail resource
+                This is applied if you set enable_mail_source = true
+             -->
+           <mail_source_name/>
+           <!--
+                If use_secure_connection = true, enable SSL connection when sending mail
+                you will need this option is true if you want to send using google gmail account
+             -->
+           <use_secure_connection>false</use_secure_connection>
+           <mail_server>localhost</mail_server>
+           <username/>
+           <password/>
+           <port>25</port>
+           <!--
+                Note: If you meet this error below when sending email (Ubuntu problem), fix this issue by deleting the '-e' from $HOME/.mailcap
+                
+                ERROR [Timer-0] common.WatchSendTask (WatchSendTask.java:84)     - Cannot process sendMail in WatchSendTask
+                java.lang.NullPointerException
+                        at java.lang.String.concat(String.java:1827)
+                        at com.sun.activation.registries.MailcapFile.parseLine(MailcapFile.java:235)
+             -->
+        </send_mail>
+    </mailoptions>
+
+    <!--
+    If you deploy on ROOT, set context_path an empty string
+    -->
+    <paramoptions>
+        <context_path>/mvnforum_context_path</context_path>
+        <server_path>http://localhost:8080</server_path>
+    </paramoptions>
+
+    <!--
+     The timezone of the server
+     Ex: if server is in Vietnam, server_hour_offset = 7
+     Ex: if server is in Mexico , server_hour_offset = -6
+     Ex: if server is in England, server_hour_offset = 0
+    -->
+    <dateoptions>
+        <server_hour_offset>0</server_hour_offset>
+    </dateoptions>
+
+    <!--
+     If you want to block certain User Agent (such as browser), just config it here
+     Each User Agent is separated with a character ';'
+     Example: to block 2 User Agents Teleport and Massdownloader,
+     set it as below:
+     blocked_user_agent = Teleport;Mass Downloader;WebCopier;Wget;Web Downloader;WebZIP;WebStripper
+    -->
+    <useragentoptions>
+        <blocked_user_agent/>
+    </useragentoptions>
+
+    <mvncoreconfig>
+        <!--
+         Set the TimerManager DataSource name 
+         Blank means using the default built-in TimerManager
+        -->    
+        <timermanager_datasource></timermanager_datasource>
+    
+        <!--
+          Enable it to prevent spam, or set to false to compatible with RC3 and before
+          Please read http://googleblog.blogspot.com/2005/01/preventing-comment-spam.html
+        -->
+        <enable_link_nofollow>false</enable_link_nofollow>
+
+        <enable_encode_url>false</enable_encode_url>
+
+        <!--
+          The portal environment, or normal servlet (non-portal)
+          Possible values are: non-portal, uportal, jetspeed2, liferay, jboss, weblogic, exoplatform
+        -->
+        <portal_type>non-portal</portal_type>
+        
+        <!-- 
+          If you want to allow only referers from your trusted domains, just config it here
+          Each domain is separated with a character ';'
+          Example: to allow only mvnforum.com and www.mvnforum.com domain,
+          set it as below:
+          <allow_http_referer_prefix_list>http://mvnforum.com;http://www.mvnforum.com</allow_http_referer_prefix_list>
+          
+          For some rare cases, you must allow all referers, you could config this key with value 
+          <allow_http_referer_prefix_list>allow_all_referer</allow_http_referer_prefix_list> 
+        -->
+        <allow_http_referer_prefix_list>http://localhost:8080;http://127.0.0.1:8080</allow_http_referer_prefix_list>
+        
+        <mvncoreservice_implementation>com.mvnforum.service.impl.MvnCoreServiceImplMvnForum</mvncoreservice_implementation> 
+        
+        <timertaskext_implementation_list></timertaskext_implementation_list>
+    </mvncoreconfig>
+
+    <!--
+      Set the MailInterceptor and ContentInterceptor
+    -->
+    <interceptor>
+        <mailinterceptor_implementation></mailinterceptor_implementation>
+        <contentinterceptor_implementation></contentinterceptor_implementation>
+        <loginidinterceptor_implementation></loginidinterceptor_implementation>
+        <passwordinterceptor_implementation>net.myvietnam.mvncore.interceptor.sample.PasswordInterceptorImplSimple</passwordinterceptor_implementation>
+    </interceptor>
+</baseElement>

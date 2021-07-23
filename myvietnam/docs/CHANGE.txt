@@ -1,0 +1,331 @@
+******************************************************************
+* $Id: CHANGE.txt,v 1.199 2010/07/12 07:22:03 minhnn Exp $
+******************************************************************
+
+/////////////////////////////////////////////////////////////////////////////
+//                 MyVietnam WebApp Framework - Core Lib
+//                      Version 2.2
+//                      $Date: 2010/07/12 07:22:03 $
+/////////////////////////////////////////////////////////////////////////////
+
+
+Changes Log
+-----------------------------------------
+[2.3-dev] - $Date: 2010/07/12 07:22:03 $
+    - Support Cobertura coverage report (version 1.9.4.1)
+    - Support junit test
+    - Remove wrong category CATEGORY_ALBUM in interface BinaryStorageService
+    - Add new library jdbcdslog, which could be help for debug sql issue (not enable by default)
+    - Support new method GenericRequest.getContext()
+    - Upgrade SLF4J from version 1.5.6 to 1.6.0 
+    - Support receive email from Gmail account (secure connection) 
+    - Add new method to ServletUtil.printRequestAttributes()
+    - Add 2 new method to StringUtil: isNullOrEmpty() and isNotEmpty()
+    - Improve and refactor the EnvironmentService.setShouldRun to setShouldStop and setShouldRun
+    - Upgrade Commons Collection from version 2.1 to 3.2.1 (for support Hibernate)
+    - Add new class StackTraceUtil
+    - Upgrade Apache Common BeanUtils from version 1.7.1 to 1.8.0 
+    - Fix bug in HtmlTag that cannot support language Arabic
+    - Change EnableMvnCodeFilter : change some tag <font> to <span style="..."> to support XHTML
+    - Add method checkValidate for class EnableMvnCodeFilter to validate topic content, if content of topics (outside tag [code][/code]) 
+        have any open tag but don't have close tag -> throws BadInputException
+    - Change logic in method EnableMvnCodeFilter.filter: don't filter between tag [code][/code].
+    - Add method getTagName into class StringUtil.
+    - key <allow_http_referer_prefix_list> now support allow_all_referer to by pass this checking
+    - Support maven
+    - Implement taglib <mvn:securitytoken> for checking token
+    - Write new method SecurityUtil.getSessionToken()
+    - Move log4j-1.2.15.jar from mvnforum to myvietnam
+    - Add commons configuration 1.6
+    - Upgrade commons upload to version 1.2.1 (remove old upload source code in mvncore)
+    - Improve code with the help of Enerjy Score
+    - Change from commons logging to SLF4J
+    - Insert getCookies method to GenericRequest, addCookie method to GenericResponse.   
+    - Refactor method getLocale(String) from class MyUtil to I18nUtil
+    - Add new method BinaryStorageService.getBinaryStorageInfo(...) to get information of the binary storage 
+    - Add new method checkGoodEmail(String input, Locale locale) to localize the message
+    - Upgrade commons-lang from version 2.3 to 2.4 (when upgrade Tapestry from 4.1.5 to 4.1.6)
+    - Fix bug in MailQue.service() by duplicating variable mail so it send correct emails (only for embeded email server)
+    - Upgrade Java Activation Framework from version 1.0.2 to 1.1.1
+    - Fix bug no.10 - "there's no indent(spaces, tabs) shown in IE when posting in [code] tag", 
+        replace <code> tab by <pre> tag at line 153.
+    - Fix race condition bug in Aspirin library (class MailQue)
+    - Add new constructor to CSVUtil class so that we can specify output charset
+    - Add new method checkHttpReferer(request) and checkHttpReferer(genericRequest) in SecurityUtil.java class
+    - Add new method getReferer to the interface GenericRequest
+    - Add removeBBCode() method to EnableMVNCodeFilter class
+    - Fix bug in JDK that does not encode character %
+    - Add class ServletUtil to check a request whether called from include or forward
+    
+
+[2.2] - 27 June, 2008
+    - Fix NPE in ImageUtil
+    - Fix bug in ImageUtil.createThumbnail() that width or height could be 0
+    - Refactor service EnvironmentService for better support product and edition
+    - Fix CompressionFilter: download attachment different between IE and FF (thread=3969), 
+        IE has problem with application/x-zip-compressed 
+        http://blogs.msdn.com/wndp/archive/2006/08/21/Content-Encoding-not-equal-Content-Type.aspx
+    - Set the mail.smtp.localhost property if we cannot get local host name
+    - Improve source code with PDM tool
+    - Change build.xml so it always target at JDK 1.4
+    - URLResolverService.java : now support one more method for Javascript 
+    - mvnCode: [code] now use <div> and <code> instead of <pre>
+    - mvnCode: [quote] now use <div> instead of <table>
+    - URLFilter: now shorten the url if it is more than 80 characters
+    - DBUtil and DBUtil2 now support PointBase
+    - Support database information for secondary database (DBUitl2)
+    - [Improvement] : Support key <use_secure_connection> in mvncore.xml so we can send email with gmail
+    - Upgrade Jaxen from version 1.1-beta-11 to version 1.1.1 
+    - Upgrade Dom4J from version 1.5.2 to version 1.6.1 
+    - Ignore CompressionFilter if we call getOutputStream
+    - Upgrade Apache Common IO from version 1.3.2 to 1.4 
+    - Add class BrowserDetector to detect user agent
+    - Add taglib <mvn:cssrowreset/> to reset the css
+    - Add new class XMLUtil
+    - Add support for TimerManager and Worker Manager (JSR 236 and JSR 237)
+    - Remove config ipoptions in mvncore.xml (now use the Banned IP Management)
+    - Add 2 method GenericRequest.getSessionAttribute() and GenericRequest.setSessionAttribute() 
+        that support PortletSession scope 
+    - Add 2 method GenericRequest.getUserAgent() and GenericRequest.getPortalInfo()
+    - Fix JavaMail JNDI issue with Sun App Server 7 (thread=3663)
+    
+
+[2.1] - 30 January 2008
+    - Upgrade JavaMail from version 1.4 to 1.4.1
+    - URLFilter now does not support jsessionid, for example:
+        http://localhost:8080/mvnforum/listthreads;jsessionid=27C79FDABD17F6FA622AC9F79DF00307?forum=7
+    - Log the database and driver information when initialize DBUtils 
+    - Upgrade Apache Common IO from version 1.3.1 to 1.3.2 
+    - Now can compile with JDK 1.6 (JDBC4 issue)
+    - Add new config parameter in mvncore.xml <use_embeded_smtp_mail_server>
+    - LibInfo: support DNS Java
+    - LibInfo: support Aspirin embeded SMTP server
+    - Upgrade Apache Common IO from version 1.1 to 1.3.1 
+    - Upgrade Apache Common BeanUtils from version 1.4.1 to 1.7.1 
+    - Upgrade Apache Common Codec from version 1.1 to 1.3 
+    - Upgrade Apache Common Logging from version 1.0.x to 1.1 because it fix issue of multiple instance
+    - Upgrade Apache Common Lang from version 2.0 to 2.3 because Tapestry 4.1.1 need it
+    - [New Feature] : Add config in mvncore.xml so that user can add customized TimerTask
+    - Refactor common upload code, change from using factory to service model
+    - Write some new tag to support portlet
+    - Write new class with method AssertionUtil.assert(boolean, String)
+    - Upgrade Dom4J from version 1.4 to 1.5.2
+    - Upgrade JavaMail from version 1.3.3_01 to 1.4
+    - MvnCoreInfo now changed to service MvnCoreInfoService
+    - Encode and decode image now use ImageIO from JDK 1.4
+    - Add methods ParamUtil.getParameterFilter
+    - Add method in ImageUtil to create thumbnail and save to the OutputStream
+    - Add new method MailUtil.receiveEmail
+    - Support symmetric encrypt with algorithm AES: Encoder.encrypt_AES_to_HEX and
+        Encoder.decrypt_AES_from_HEX
+    - Remove support for JDK 1.3 for Encoder.encodeURL and Encoder.decodeURL
+    - Remove 2 files : jdbc2_0-stdext.jar and xmlParserAPIs.jar because this is already in JDK 1.4
+    - [JDK] : Now require JDK 1.4
+
+
+[2.0] - 14 April 2006
+    - [License] : Change the license of mvnCore from GPL to LGPL
+        (Note that mvnForum is still released under GPL)
+    - Change the header of all files (copyright notice and copyright year)
+    - Fix lower filename when we upload file (thread=3485) (Thanks Serobit)
+    - Add new config parameter in mvncore.xml <mvncoreservice_implementation>
+    - Add service EncoderService
+    - Add new class MVNCoreServiceFactory and MVNCoreService
+    - Fix NPE in CacheResourceBundle if cannot load the ResourceBundle
+    - Support access built-in connection pool via interface DataSource with class MVNDataSource
+    - Now connections return by DBUtils are ConnectionWrapper,
+        so we can use method connection.close() normally
+    - Change the block read/write in FileUtil from 1024 to 4096
+    - Add new interface 'BinaryStorage' to store the binary data, such as attachment
+    - Move config parameter 'portal_type' from mvnforum to myvietnam
+    - [Improvement] : add config parameter 'enable_encode_url' to enable/disable
+        reponse.encodeURL for all link (when enable, session can be tracked by url re-writing)
+    - Remove the old pre 1.0 FileUpload source code
+    - Upgrade Apache common IO from version 1.0 to 1.1 because FileUpload need it
+    - Upgrade source code of common FileUpload to version 1.1
+    - Upgrade JavaMail from version 1.2 to 1.3.3_01
+    - Change the interface of ContentInterceptor, now return String of new content
+        after validation
+    - Add java files for common upload 1.1_dev
+    - Change to version 2.0_dev to reflect the new great support for Portlet 168
+    - Add new classes for URLResolver stuff (interface, implementation, config)
+    - Log the exception when cannot load the JDBC driver
+    - Add GenericParamUtil to begin to support Portlet
+    - Add GenericRequest and GenericResponse to begin to support Portlet
+    - Fix the date format for Atom 0.3
+    - Implement JNDI for mail sessions (Thanks Mat)
+    - Change timezone from integer to double
+    - Add DateUtil.getViDateTimeDesc() and DateUtil.getViDateDesc()
+    - Remove old xxxOptions file
+    - Add 2 parameters <enable_mvnforum> and <enable_mvncms> to mvncore.xml
+    - Add new method Decoder.decodeURL, also support UTF-8 if run on JDK 1.4
+    - Change Encoder.encodeURL to use encoding UTF-8 if run on JDK 1.4
+    - Change StringUtil.checkGoodName() and MailUtil.checkGoodEmail()
+        to use char instead of byte (Thanks huxiaonan)
+    - Change the FileUtil.getLastLines() to use encoding UTF-8
+    - Fix bug introduce in since RC4-dev that wrongly get the GMT based datetime
+    - Fix bug introduce in since RC4-dev that cannot load ROOT context and
+        empty email username
+    - Log the full path of config file if there is an error to load it
+
+
+[1.7.0] - 28 January 2005
+    - Change comment of Encoder.removeInvalidUserInURL to make McAfee happy
+    - Support detect database Firebird and SAP DB in class DBUtils
+    - Support spam prevention initiative by Google (rel="nofollow")
+        with parameter <enable_link_nofollow>
+        http://www.google.com/googleblog/2005/01/preventing-comment-spam.html
+    - Add new class MVNCoreConfig so that configuration now can load in one file
+    - Add new class RandomGenerator
+    - Remove unneeded files (tutorial and filter)
+    - FloodControl now can update actionsPerHour
+    - Update build.xml, add native2ascii tasks to translate the i18n files
+    - Add new method DBUtils.getDatabaseTypeName()
+    - Allow char '@' in StringUtil.checkGoodName()
+    - Fix NPE in EnableEmotionFilter.java
+    - Add methods FileUtil.checkGoodFilePath() and FileUtil.checkGoodFileName()
+    - Add method DateUtil.getDateRFC822() for RSS date time
+    - Add methods FileUtil.copyFile() , FileUtil.emptyFile and FileUtil.getHumanSize()
+    - Remove a lot of warning code with the Eclipse compiler
+    - Add new methods and class to DateUtil to get the time duration
+    - Add some new methods to FileUtil: readFile, writeFile, getLine
+    - In TimerUtil, catch IllegalStateException and try to reload the Timer (thread=1393)
+    - Fix NullPointerException on FileUtil.setServletClassesPath
+    - Changes for compilable on JDK 1.3
+    - Add methods ParamUtil.getParameterUnsignedInt()
+    - [Improvement] MailUtil.getEmails() now replace all occurrence of ',' to ';'
+        before splitting the emails
+    - [Improvement] MailUtil: now send mail with encoding utf-8
+    - [Improvement] getShorterString now check the space as breakable,
+        old method/implementation is changed to getShorterStringIgnoreSpace
+    - Add support to localize text in this module (Thanks Pavel Av)
+    - Add new method ParamUtil.getParameterDateUtil()
+    - Add new method DateUtil.getDateYYYYMMDD()
+    - Add new method FileUtil.createTextFile()
+    - Add new method StringUtil.getHiddenPassword() to convert password to hidden format
+
+
+[1.6.0] - 29 June 2004
+    - Allow 10 times SendFailedException when sending email to group of users
+    - Ensure maximum number of emails per transport in MailUtil.sendMail()
+    - Add 2 new methods MailUtil.sendMail(MailMessageStruct) and MailUtil.sendMail(Collection)
+    - Add class MailMessageStruct to support MailUtil.sendMail
+    - Add class HelloWorldServlet, could be used to test servlet mapping
+    - [Improvement] Improve the build.xml and build.properties
+    - Add method MVNForumCore.getImage to get the image of current version of mnvCore
+    - Add one sample class implementing LoginIDInterceptor
+    - Add interface LoginIDInterceptor to validate loginID (such as in registration)
+    - Add one sample class implementing ContentInterceptor
+    - Add three sample classes implementing MailInterceptor
+    - Add interface ContentInterceptor to validate content (such as forum post)
+    - Add interface MailInterceptor to validate email
+    - Add new singleton service InterceptorService to provide support for interception
+    - Add new 2 servlet filter CompressionFilter.java and SetCharacterEncodingFilter.java
+        (based on Tomcat examples, change System.out to common logging)
+    - Fix the bug in FloodControl that did not remove the action when timeout
+    - Add 2 method MailUtil.getEmailUsername() and MailUtil.getEmailDomain()
+    - Patch for IE spoof url issue
+    - Relax the email and login name checking, now allow numberic char at the begining
+    - Update the copyright of MyVietnam to year 2004
+    - Fix NullPointerException in UserAgentFilter
+    - Update LibInfo, add support for 5 new library
+    - Add new class FloodControl and FloodException
+    - Add new method FileUtil.getServletClassesPath() to get the path of WEB-INF/classes
+    - Fix bug in TimerUtil (if called cancel(), then do not allow to call schedule() )
+    - Change the configuration from properties file to xml file
+    - Add new class UserAgentFilter to filter the user agent (such as Teleport)
+
+
+[1.5.0] - 1 November 2003
+    - Filter error message in BadInputException
+    - Fix bug that add http:// before an email tag (should be for url only)
+    - Introduce new config param in mvncore_db_DBOptions.properties: MINUTES_BETWEEN_REFRESH
+        This param is used to config the minutes that mvnForum should refresh the
+        built-in Connection Pool
+    - Add http:// if there is not '://' in the url (Thanks liquid)
+    - Change the built-in connection pool so that it close all connections each 15 minutes
+    - Call con.setAutoCommit(true); when get new connection for Oracle (suggested by trulore)
+    - Fix all warning about unused import in eclipse (thanks skoehler)
+    - Fix bug in SystemInfo that sometime the security policy does not allow access some info
+    - Fix bug that ignore the configuration parameter DATABASE_TYPE
+    - Support 2 remained tags : [img] and [url=mailto:]
+
+
+[1.4.0] - 11 June 2003
+    - Add new method Encoder.encodeURL() to work around the deprecation warning of URLEncoder
+    - Fix bug in MailUtil that wrongly connect to mail server used user/pass authentication
+    - Remove all printStackTrace and replace with common-logging
+    - Fix bug with "good luck" similies in EnableEmotionFilter.jsp (Thanks Imants Firsts)
+    - FileUtil: new method : String getFileName(String fullFilePath)
+    - LibInfo: support Jakarta RegExp
+    - LibInfo: support Jakarta Lucene
+    - Support new constant in NotLoginException : NOT_ACTIVATED
+    - Add 2 new methods in DateUtil to format date and datetime (use default locale)
+    - Add new option to file mvncore_util_ParamOptions.properties
+        option = SERVER_PATH (can be used to send watch email)
+    - If cannot load driver, now print the driver name with the error message
+    - Change in MailUtil so that when transport.connect() failed,
+        The debug info this out to logger.debug()
+    - Change [quote] width from 90% to 96%
+    - Add new TimerUtil, this singleton class is used to do all the schedule tasks
+    - Remove all System.out, replaced with common logging
+    - Support IP matching in IPFilter (use Apache regular expression)
+    - Add Apache regular expression to MyVietnam CoreLib
+    - Support 1 additional mnvCode: [code]
+
+
+[1.3.0] - 2 March 2003
+    - Support 1 additional mnvCode: [list]
+    - new class IPFilter, used to support IP blocking
+    - new method DBUtils.resetStatement to reset the MaxRows and FetchSize of statement
+    - Support override database type in file mvncore_db_DBOptions.properties
+    - DBUtils now automatically detects database type
+    - Add new method FileUtil.getBytes(InputStream)
+    - ImageUtil.createThumbnail now supports jpg, gif and png files
+    - ImageUtil.getScaledInstance now always load image before returing the image
+    - Support [url] tag (Thanks wassup)
+    - Support 1 additional mnvCode: [quote] (Thanks wassup)
+    - Support 2 additional mnvCode: [size] and [font]
+    - Change the new line from <p> to <br> (Thanks pritpal)
+    - Add to alias for emoticon: [:-)] and [:-(]
+    - Fix bug that causes IllegalMonitorStateException when we cannot
+        get the connection from DriverManager
+    - printStackTrace if we cannot get the connection from DriverManager
+
+
+[1.2.0] - 15 December 2002
+    - DisableHtmlTagFilter now don't escape these charater < > & " more that once
+    - [Bug fixed] : Cannot set option for Datasource (Thanks romrom)
+    - Add new class EnableMVNCodeFilter to support mvnCode ([b], [i], etc)
+    - Support customizing SMTP port (default value = 25)
+    - Use UTF-8 as the encoding of the input string in
+        net.myvietnam.mvncore.security.Encoder.getMD5_Base64 (Thanks wassup)
+    - [Bug fixed]: MailUtil.checkGoodEmail now accept character '-' (Thanks Per-Ake Olsson)
+    - [Bug fixed]: fix bug that does not return default value when input
+        is empty in ParamUtil.getParameterLong
+    - add a hack for escape character (eg. &#1234;) in DisableHtmlTagFilter
+        [still need a better solution]
+    - new method ParamUtil.getParameterDate(HttpServletRequest request, String paramDay, String paramMonth, String paramYear)
+
+
+[1.1.0] - 23 October 2002
+    - Improve FileUtil.deleteFile
+    - Add new Filter: HtmlNewLineFilter, use <p> to make a new line for outputed HTML text
+    - LibInfo: support Jakarta BeanUtils
+    - LibInfo: support Jakarta Common Logging
+    - move to new package from net.myvietnam to net.myvietnam.mvncore
+    - move ProductInfo from net.myvietnam.mvncore.info to net.myvietnam.mvncore
+
+
+[1.0.1] - 10 October 2002
+    - new method: ParamUtil.getParameterInt with default value support
+    - new method: ParamUtil.getParameterLong with default value support
+    - new method: ParamUtil.getParameterUrl
+    - new method: DateUtil.updateCurrentGMTTimestamp(Timestamp timeToUpdate)
+    - new method: ParamUtil.getParameterPassword(...)
+    - new method: ParamUtil.getParameterTimeZone(...)
+    - FileUtil.createDir and FileUtil.createDirs now support param: ignoreIfExitst
+
+
+[1.0.0] - 29 September 2002
+    - First stable release.

@@ -1,0 +1,248 @@
+******************************************************************
+* $Id: DatabaseResearch.txt,v 1.1 2008/11/20 10:18:39 minhnn Exp $
+******************************************************************
+
+                   mvnAd Database Ideas
+-------------------------------------------------------
+
+Last update on: $Date: 2008/11/20 10:18:39 $
+
+
+
+1/ Banner : should have fields as in table mvnforumAttachment 
+  - MemberName
+  - ModerationMode
+  - Name
+  - Title 
+  - Desc
+  - Keyword
+  - AltText
+  - Name
+  - MimeType
+  - Weight
+  - maximum impression, maximum click, starting date, expire date, maximum daily impression, maximum daily click,  impression frequency, click frequency,  delivery day or delivery hour
+  - Impression
+  - MaxImpression
+  - ExpectedImpression
+  - ReceivedImpression
+  - MaxClick
+  - ExpectedClick
+  - ReceivedClick
+  - ZonePosisionX
+  - ZonePosisionY
+  - TargetWindow
+  - TargetURL
+  - ImageURL
+  - Option
+  - Status
+  - Type (Text, Image, Flash, etc)
+  - Width
+  - Height
+  - Border
+  - PreText
+  - AfterText
+  - StatusText
+  - PopupType
+  - Alignment ( 0 = default = center)
+  - TargetWindow
+  - NoFollow : This command will prevent some spiders from following the link. (Add rel="nofollow")
+  - BannerHtmlCode
+  - CappingOption
+  - Sequence
+  
+1A/ BannerTypeText
+  - Font Name
+  - Font Size
+  - Font Color
+  - LinkText
+
+1B/ BannerTypeImage
+
+1C/ BannerTypeFlash
+  
+1D/ BannerClickDetail (MUST: reference: oa_data_raw_ad_click)
+  - BannerID
+  - ZoneID
+  - IP
+  - UserAgent
+  - Country
+  - City
+  - Option
+  - Status
+  - Type
+  - CreationDate
+  - ModifiedDate
+  
+
+1E/ BannerImpressionDetail (MUST: reference: oa_data_raw_ad_impression)
+  - BannerID
+  - ZoneID
+  - IP
+  - UserAgent
+  - Country
+  - City
+  - Option
+  - Status
+  - Type
+  - CreationDate
+  - ModifiedDate
+  
+1F/ BannerStatistics (MUST: reference: oa_data_raw_ad_impression)
+  - Day
+  - Hour
+  - BannerID
+  - ZoneID
+  - Source
+  - View
+  - Click
+
+2/ Zone
+  - Name
+  - Desc
+  - MaxBanner
+  - zone size
+  - ForceSize (If true, the zone will only serve banners that match the size of the zone.  All others will be ignored)
+  - DefaultBannerID
+  - DefaultCampaignID
+  - ZoneBackgroundColor
+  - ZoneBackgroundImage
+  - ForceSize (If true, the zone will only serve banners that match the size of the zone.  All others will be ignored)
+  - ZoneCellWidth
+  - ZoneCellHeight
+  - ZoneCellHorizontalCount
+  - ZoneCellVerticalCount
+  - ZoneDirection
+  - AutoRefreshMinutes
+  - DisplayOption (popup, same, etc)
+  - DeliveryOption
+  - CappingOption
+  - WeightOption ( relative based on total of weight, in sequence, etc)
+  - TargetWindow
+  - ZoneKeyWord : only banner have at least one keyword can be displayed
+  - ZoneImpressionUnit double (good zone will cost more unit)
+  - ZoneClickUnit double (good zone will cost more unit)
+  - ZoneDayUnit double (good zone will cost more unit)
+  - ZoneBorder
+  - ZoneRotationOption
+  - ModerationMode
+  - ShareOption
+  - ZoneChain
+  
+
+3/ Region (should be the same as Website table below)
+  - RegionURL ( could store website url)
+
+3A/ BannerSize
+  - Name
+  - Desc
+  - SampleImageURL
+  - Width
+  - Height
+
+4/ Popup Windows
+  - Image Width:
+  - Image Height:
+
+  [Specify the Properties of the popup/pop under window:]
+  - Window Type:
+  - Include Tool Bar:
+  - Include Status Bar:
+  - Include Menu Bar:
+  - Include Scroll Bars:
+  - Resizable Window:
+  - Window Width:
+  - Window Height:
+
+5/ CampaignZone : is a table to show n-n relationship
+  - StartDate
+  - EndDate
+  - Weight
+  - PriorityOption (could be WeightOption)
+
+
+5/ CampaignBanner : is a table to show n-n relationship
+  - StartDate
+  - EndDate
+  - Weight
+  - ChargeType (Impression, Click, FlatRate)
+  - MaxImpression
+  - MaxImpressionPerDay
+  - MaxClick
+  - MaxClickPerDay
+
+
+5/ Campaign
+  - MemberName
+  - Name
+  - Status (Active, Paused, Expired, Default)
+  - Option
+  - Type 
+  - Impression
+  - MaxImpression
+  - ExprectedImpression
+  - ReceivedImpression
+  - MaxClick
+  - ReceivedClick
+  - StartDate
+  - EndDate
+  - ExpireOption (date, impression, click)
+  - FrequencyOption( how many click/impression per hour)
+  - DistributionOption (equally distributed, evenly spread, weight, static banner, text, keyword, evenly impression, evenly remained impression)
+  - Keyword
+  - PaymentMethod
+  - CountType (CPM, etc)
+  - Quantity (Enter actual # of impressions or clicks) 
+  - Cost
+  - Track ROI
+  - Revenue
+  - RevenueType
+  - Priority (Exclusive, 1-5, Unpaid )
+  - 
+  
+6/ Advertiser
+  - Name
+  - Desc
+  - ContactName
+  - ContactDesc
+  - AdsAddress1
+  - AdsAddress2
+  - AdsCountry
+  - (Other information from mvnforumMember ???)
+  - LogoURL
+  - AdsWebsite
+  - AdsWatchOption
+  - AdsWatchStatus
+  - AdsWatchType
+  - ExpireWatchOption
+  - ExpireWatchStatus
+  - ExpireWatchType
+  - TotalImpression
+  - UsedImpression
+  - TotalClicked
+  - UsedClick
+  - TotalImpression
+  - UsedImpression
+  - ModerationMode
+
+6/ TargetBrowser
+  - 
+
+7/ CampaignTargetBrowser
+  - 
+
+8/ AdsWebsite: Ads can be a Ads Network serving many websites
+  - 
+
+9/ Publisher: 
+  - should have fields as the table Advertiser
+  - PaymentOption
+  - PaymentCurrency
+
+
+
+- Should track the click (because we dont want bot to emulate the banner click
+- Supports a frequency cap option to limit the number of times a banner is displayed to the same visitor.  The session length can be varied for each campaign. 
+- Records Impressions (Views) and Clicks on each banner for each Advertiser, Banner, Campaign, Zone, Site and Day.
+- Option to hide Target URL's for banner ads.
+- Campaigns can be set to expire based on the number of impressions, click-through or date.
+- Should have table to allow permission: which advertiser can select this zone

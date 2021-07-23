@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<baseElement>
+
+    <dboptions>
+        <!--
+         You should NOT change the database_type below
+         By default, database_type = 0
+         NOTE: If your database/driver does not support scrollable resultset
+               (such as some OLD version of Interbase/Firebird), set database_type = 2
+        -->
+        <database_type>0</database_type>
+        <!--
+         if use_datasource = false, use the default built-in connection pool
+         if use_datasource = true,  use the connection pool that Servlet Container provides
+        -->
+        <use_datasource>false</use_datasource>
+        <!--
+         Set the below options if you want to use default connection pool
+         This is applied if you set use_datasource = false
+         minutes_between_refresh is the minutes between built-in Connection Pool refreshment
+               Some time your database server is set connection timeout too low, such as
+               5 minutes, that cause the connection auto disconnected. In this case you should
+               set minutes_between_refresh lower than the server connection timeout value
+         NOTE: These values can be obtained from the header of the
+               sql script for your database
+         NOTE: For compatible with future release of mvnForum, we highly
+               recommend that use config your database/driver to use unicode utf8 encoding
+        -->
+        <driver_class_name>org.hsqldb.jdbcDriver</driver_class_name>
+        <database_url>jdbc:hsqldb:file:test</database_url>
+        <database_user>sa</database_user>
+        <database_password></database_password>
+        <max_connection>20</max_connection>
+        <max_time_to_wait>2000</max_time_to_wait>
+        <minutes_between_refresh>30</minutes_between_refresh>
+        <!--
+         Set the Data source name if you want to use Servlet Container connection pool
+         This is applied if you set use_datasource = true
+        -->
+        <datasource_name/>
+    </dboptions>
+    
+</baseElement>

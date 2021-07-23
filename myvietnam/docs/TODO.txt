@@ -1,0 +1,78 @@
+******************************************************************
+* $Id: TODO.txt,v 1.22 2008/11/19 08:01:47 minhnn Exp $
+******************************************************************
+
+/////////////////////////////////////////////////////////////////////////////
+//                 MyVietnam WebApp Framework - Core Lib
+//                      Version 2.3_dev
+//                      $Date: 2008/11/19 08:01:47 $
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+Todo List
+-----------------------------------------
+
+    - support common mvnPlugin: SessionLog, MailList, HitCount, Download
+    - support extract .jar files
+    - add a hack for escape character (eg. &#1234;) in DisableHtmlTagFilter [still need a better solution]
+
+**********************************************************************************************************
+7572906 DEBUG [TP-Processor5] admin.AdminModuleProcessor - AdminModuleProcessor : requestURI  = /sendmail
+7572906 DEBUG [TP-Processor5] admin.AdminModuleProcessor - AdminModuleProcessor : responseURI = /mvnplugin/mvnforum/admin/sendmail.jsp. (0 ms)
+7573047 DEBUG [TP-Processor5] admin.ForumAdminServlet - ForumAdminServlet processed 70 times. Took 141 milliseconds.
+
+7587531 DEBUG [TP-Processor5] admin.AdminModuleProcessor - AdminModuleProcessor : requestURI  = /sendmailprocess
+7588547 INFO  [TP-Processor5] util.MailUtil - sendMail: totalEmails = 2 sent count = 1 using Embeded SMTP Server
+7588578 ERROR [TP-Processor5] admin.AdminModuleProcessor - Exception in AdminModuleProcessor [java.lang.IllegalThreadStateException] : null
+java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:571)
+	at org.masukomi.aspirin.core.MailQue.queMail(MailQue.java:73)
+	at net.myvietnam.mvncore.util.MailUtil.sendMail(MailUtil.java:356)
+	at com.mvnforum.admin.GeneralAdminTasksWebHandler.sendMail(GeneralAdminTasksWebHandler.java:520)
+	at com.mvnforum.admin.AdminModuleProcessor.process(AdminModuleProcessor.java:406)
+	at com.mvnforum.admin.ForumAdminServlet.process(ForumAdminServlet.java:159)
+	at com.mvnforum.admin.ForumAdminServlet.doPost(ForumAdminServlet.java:102)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:709)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:802)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:237)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:157)
+	at net.myvietnam.mvncore.servlet.filter.CompressionFilter.doFilter(CompressionFilter.java:234)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:186)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:157)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:214)
+	at org.apache.catalina.core.StandardValveContext.invokeNext(StandardValveContext.java:104)
+	at org.apache.catalina.core.StandardPipeline.invoke(StandardPipeline.java:520)
+	at org.apache.catalina.core.StandardContextValve.invokeInternal(StandardContextValve.java:198)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:152)
+	at org.apache.catalina.core.StandardValveContext.invokeNext(StandardValveContext.java:104)
+	at org.apache.catalina.core.StandardPipeline.invoke(StandardPipeline.java:520)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:137)
+	at org.apache.catalina.core.StandardValveContext.invokeNext(StandardValveContext.java:104)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:118)
+	at org.apache.catalina.core.StandardValveContext.invokeNext(StandardValveContext.java:102)
+	at org.apache.catalina.core.StandardPipeline.invoke(StandardPipeline.java:520)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.core.StandardValveContext.invokeNext(StandardValveContext.java:104)
+	at org.apache.catalina.core.StandardPipeline.invoke(StandardPipeline.java:520)
+	at org.apache.catalina.core.ContainerBase.invoke(ContainerBase.java:929)
+	at org.apache.coyote.tomcat5.CoyoteAdapter.service(CoyoteAdapter.java:160)
+	at org.apache.jk.server.JkCoyoteHandler.invoke(JkCoyoteHandler.java:300)
+	at org.apache.jk.common.HandlerRequest.invoke(HandlerRequest.java:374)
+	at org.apache.jk.common.ChannelSocket.invoke(ChannelSocket.java:743)
+	at org.apache.jk.common.ChannelSocket.processConnection(ChannelSocket.java:675)
+	at org.apache.jk.common.SocketConnection.runIt(ChannelSocket.java:866)
+	at org.apache.tomcat.util.threads.ThreadPool$ControlRunnable.run(ThreadPool.java:683)
+	at java.lang.Thread.run(Thread.java:595)
+7588609 DEBUG [TP-Processor5] admin.AdminModuleProcessor - AdminModuleProcessor : responseURI = /mvnplugin/mvnforum/admin/error.jsp. (1078 ms)
+7588672 DEBUG [TP-Processor5] admin.ForumAdminServlet - ForumAdminServlet processed 71 times. Took 1141 milliseconds.
+
+7597156 DEBUG [TP-Processor5] admin.AdminModuleProcessor - AdminModuleProcessor : requestURI  = /sendmail
+7597156 DEBUG [TP-Processor5] admin.AdminModuleProcessor - AdminModuleProcessor : responseURI = /mvnplugin/mvnforum/admin/sendmail.jsp. (0 ms)
+7597172 DEBUG [TP-Processor5] admin.ForumAdminServlet - ForumAdminServlet processed 72 times. Took 16 milliseconds.
+
+7599953 DEBUG [TP-Processor5] admin.AdminModuleProcessor - AdminModuleProcessor : requestURI  = /sendmailprocess
+7600000 INFO  [TP-Processor5] util.MailUtil - sendMail: totalEmails = 2 sent count = 2 using Embeded SMTP Server
+7600000 DEBUG [TP-Processor5] admin.AdminModuleProcessor - AdminModuleProcessor : responseURI = /mvnplugin/mvnforum/admin/sendmailsuccess.jsp. (47 ms)
+7602187 DEBUG [TP-Processor5] admin.ForumAdminServlet - ForumAdminServlet processed 73 times. Took 2234 milliseconds.
+**********************************************************************************************************

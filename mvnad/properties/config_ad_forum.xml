@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+    <scrollads>
+        <left>0</left>
+        <right>0</right>
+    </scrollads>
+    
+    <adforum>
+        <header11>0</header11>
+        <header12>0</header12>
+        <header13>0</header13>
+        <header14>0</header14>
+        <header15>0</header15>
+        <header16>0</header16>
+        <header21>0</header21>
+        <header22>0</header22>
+        <header23>0</header23>
+        <header24>0</header24>
+        <header25>0</header25>
+        <header26>0</header26>
+        <header31>0</header31>
+        <header32>0</header32>
+        <header33>0</header33>
+        <footer11>0</footer11>
+        <footer12>0</footer12>
+        <footer13>0</footer13>
+        <footer14>0</footer14>
+        <footer15>0</footer15>
+        <footer16>0</footer16>
+        <heart>0</heart>
+        <firstpost>0</firstpost>
+        <firstpost2>0</firstpost2>
+        <lastoddpost>0</lastoddpost>
+        <lastevenpost>0</lastevenpost>
+        <firstattachment>0</firstattachment>
+        <viewmessage>0</viewmessage>
+        <firstnormalthread>0</firstnormalthread>
+        <firstactivethread>0</firstactivethread>
+        <firstunansweredthread>0</firstunansweredthread>
+        <firstrecentthread>0</firstrecentthread>
+    </adforum>
+</layout>

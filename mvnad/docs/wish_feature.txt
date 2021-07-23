@@ -1,0 +1,69 @@
+ 
+    * View of all campaigns or campaign slices
+    * Dynamic and reliable ad view balancing
+    * Injecting ads outside of a cycle without dirupting balanced views of other ads
+    * Ability to allow advertisers to have accounts they can upload new ads to and buy credits (via PayPal, etc) and also check their own real-time stats
+    * Admin approval of any uploaded or modified campaign
+    * Rotation rules based on: date ranges, weighting, max views, max clicks, and site regions, plus editing of campaign mid-stream to adjust these parameters
+    * Wide range of tracking statistics such as views, clicks, referral pages of clicks, geo-tracking, performance stats
+    * Flexible HTML control (rich media but without giving up tracking statistics)
+    * Preferably able to be called as a library or object. I can re-code an SSI system I suppose but I would prefer to call as a function because most pages I display are Perl-driven and will need to inject the ad into that output stream.
+
+
+
+
+#  My Paid Money 3's easy content management system makes it easy to manage your complete program through an easy and well-organized web-interface.
+
+Members Feature :(Your members are able to edit their information, request a resend of their password, receive monthly statistics and can track all their earnings, spends, pay-outs etc..)
+
+Click for Member Page snapshot.
+
+# Automated Payment Processor (Paypal, Moneybookers and e-Gold)
+# Automated pay-out option
+# Vacation mode to prevent e-mails from bouncing
+# Reward for clicks, e-mails and sign-ups
+# Account earnings/referrals overview page
+# Great redemption system with many options
+# Very complete premium membership system
+# Referral system with support for unlimited levels
+# Complete country/region database included
+# Transfer earnings page for cash and points
+# Complete transaction history
+# Advanced Trouble Ticket system
+# Account statistics page
+# Last-login information for all members
+# Number of users online counter
+# Huge list of extra settings
+
+Admin Feature :(My Paid Money 3 is easy to manage through it's admin CMS and doesn't require any knowledge of PHP or other development languages.)
+
+Click for Admin Page snapshot.
+
+# Advanced database backup system
+# Website statistics program
+# Option to add Payment method
+# Easy to change Page Design and Templates
+# Superb background mass-mailer (send 10,000 emails in single click)
+# Multiple anti-cheat solutions
+# Block e-mail/ip addresses and payment accounts
+# PHP Mail() and SMTP E-Mail support
+# Mutiple targeting options, e.g. country, gender..
+# All information can be exported from the system
+# Advanced Website statistics program
+# Advanced leads and sales campaign system
+# Easy and automated database optimization system
+# Full-featured Trouble Ticket system
+# FastPay included, to pay members with just one click
+# Members can be rewarded both Cash and Points
+# Possibility to track many details of paid click/e-mail hits
+# Support for unlimited paid links in one paid e-mail
+# Advanced Advertising Manager
+# Best News Topics Maker
+# View Top 25 Referrers
+# Huge list of extra settings
+
+Requirement :
+
+# Unix/Linux/Windows OS
+# PHP Version 4.1.x or Greater
+# Database: MySQL
