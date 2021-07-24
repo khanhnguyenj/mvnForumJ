@@ -1,2 +1,3 @@
-# mvnForumJ
-mvnForumJ is an open-source, powerful, easy-to-use/setup bulletin board (forum). Original source code was copied from https://sourceforge.net/projects/mvnforum/
+# mvnForum
+mvnForum is an open-source, powerful, easy-to-use/setup bulletin board (forum). Original source code was copied from https://sourceforge.net/projects/mvnforum/
+![mvnForum](mvnforum.png "mvnForum") 
