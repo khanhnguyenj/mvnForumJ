@@ -43,7 +43,7 @@
 <%@ page import="com.mvnforum.MVNForumConfig"%>
 <%@ page import="com.mvnforum.mobile.MobileModuleConfig" %>
 
-<fmt:bundle basename="i18n/mvnforum/mvnForum_i18n">
+<fmt:bundle basename="i18n/mvnForum_i18n">
 <script type="text/javascript">
 //<![CDATA[
 function SubmitFormSearch() {

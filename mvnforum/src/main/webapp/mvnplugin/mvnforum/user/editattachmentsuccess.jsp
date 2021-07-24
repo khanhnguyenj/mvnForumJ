@@ -44,7 +44,7 @@
 
 <%@ include file="inc_common.jsp"%>
 <%@ include file="inc_doctype.jsp"%>
-<fmt:bundle basename="i18n/mvnforum/mvnForum_i18n">
+<fmt:bundle basename="i18n/mvnForum_i18n">
 <%
 String threadID = ParamUtil.getAttribute(request, "ThreadID");
 int offset = ParamUtil.getParameterInt(request, "offset");

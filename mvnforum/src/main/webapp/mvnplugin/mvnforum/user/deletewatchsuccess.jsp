@@ -43,7 +43,7 @@
 
 <%@ include file="inc_common.jsp"%>
 <%@ include file="inc_doctype.jsp"%>
-<fmt:bundle basename="i18n/mvnforum/mvnForum_i18n">
+<fmt:bundle basename="i18n/mvnForum_i18n">
 <mvn:html locale="${currentLocale}">
 <mvn:head>
   <mvn:title><fmt:message key="mvnforum.common.forum.title_name"/> - <fmt:message key="mvnforum.user.deletewatchsuccess.title"/></mvn:title>

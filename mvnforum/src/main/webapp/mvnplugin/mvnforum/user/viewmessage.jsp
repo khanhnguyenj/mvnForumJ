@@ -53,7 +53,7 @@
 
 <%@ include file="inc_common.jsp"%>
 <%@ include file="inc_doctype.jsp"%>
-<fmt:bundle basename="i18n/mvnforum/mvnForum_i18n">
+<fmt:bundle basename="i18n/mvnForum_i18n">
 <%
 MessageBean messageBean = (MessageBean)request.getAttribute("MessageBean");
 MemberBean memberSenderBean = (MemberBean)request.getAttribute("MemberSenderBean");

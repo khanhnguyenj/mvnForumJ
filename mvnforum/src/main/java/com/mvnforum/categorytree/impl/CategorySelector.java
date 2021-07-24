@@ -43,6 +43,24 @@ package com.mvnforum.categorytree.impl;
 import java.io.IOException;
 import java.util.Locale;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.mvnforum.MVNForumResourceBundle;
+import com.mvnforum.MyUtil;
+import com.mvnforum.auth.AuthenticationException;
+import com.mvnforum.auth.MVNForumPermission;
+import com.mvnforum.auth.OnlineUser;
+import com.mvnforum.auth.OnlineUserManager;
+import com.mvnforum.categorytree.CategoryTreeEvent;
+import com.mvnforum.db.CategoryBean;
+import com.mvnforum.db.ForumBean;
+
+import freemarker.cache.ClassTemplateLoader;
+import freemarker.cache.TemplateLoader;
+import freemarker.template.Configuration;
+import freemarker.template.SimpleHash;
+import freemarker.template.Template;
 import net.myvietnam.mvncore.exception.DatabaseException;
 import net.myvietnam.mvncore.service.MvnCoreServiceFactory;
 import net.myvietnam.mvncore.service.URLResolverService;
@@ -50,20 +68,6 @@ import net.myvietnam.mvncore.util.I18nUtil;
 import net.myvietnam.mvncore.util.ParamUtil;
 import net.myvietnam.mvncore.web.GenericRequest;
 import net.myvietnam.mvncore.web.GenericResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.mvnforum.MVNForumResourceBundle;
-import com.mvnforum.MyUtil;
-import com.mvnforum.auth.*;
-import com.mvnforum.categorytree.CategoryTreeEvent;
-import com.mvnforum.db.CategoryBean;
-import com.mvnforum.db.ForumBean;
-
-import freemarker.cache.ClassTemplateLoader;
-import freemarker.cache.TemplateLoader;
-import freemarker.template.*;
 
 public class CategorySelector extends FtlCategoryTreeListener  {
 
@@ -94,8 +98,8 @@ public class CategorySelector extends FtlCategoryTreeListener  {
     private String selectName;
 
     static {
-        Configuration conf = new Configuration();
-        TemplateLoader loader = new ClassTemplateLoader(CategorySelector.class);
+        Configuration conf = new Configuration(Configuration.VERSION_2_3_31);
+        TemplateLoader loader = new ClassTemplateLoader(CategorySelector.class, "/");
         conf.setTemplateLoader(loader);
         try {
             template = conf.getTemplate("categoryselector.ftl");
@@ -191,6 +195,7 @@ public class CategorySelector extends FtlCategoryTreeListener  {
         init(template);
     }
 
+    @Override
     public String drawHeader(CategoryTreeEvent event) {
         SimpleHash row = new SimpleHash();
 
@@ -243,6 +248,7 @@ public class CategorySelector extends FtlCategoryTreeListener  {
 
     }
 
+    @Override
     public String drawFooter(CategoryTreeEvent event) {
 
         SimpleHash row = new SimpleHash();
@@ -254,6 +260,7 @@ public class CategorySelector extends FtlCategoryTreeListener  {
         return "";
     }
 
+    @Override
     public String drawCategory(CategoryTreeEvent event) {
 
         if (!checkAddCategory) {
@@ -340,6 +347,7 @@ public class CategorySelector extends FtlCategoryTreeListener  {
         return "";
     }
 
+    @Override
     public String drawForum(CategoryTreeEvent event) {
 
         SimpleHash subRoot = new SimpleHash();
@@ -402,11 +410,13 @@ public class CategorySelector extends FtlCategoryTreeListener  {
         return "";
     }
 
+    @Override
     public String drawSeparator(CategoryTreeEvent event) {
         //no need
         return "";
     }
 
+    @Override
     public void setDepthTree(int depth) {
         //noneed
     }

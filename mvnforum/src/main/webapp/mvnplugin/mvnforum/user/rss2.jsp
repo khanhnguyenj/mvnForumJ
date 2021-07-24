@@ -51,7 +51,7 @@
 <%@ page import="com.mvnforum.MVNForumResourceBundle" %>
 <% request.setAttribute("contentType", "text/xml;charset=utf-8");%>
 <%@ include file="inc_common.jsp"%>
-<fmt:bundle basename="i18n/mvnforum/mvnForum_i18n">
+<fmt:bundle basename="i18n/mvnForum_i18n">
 <% response.setContentType("text/xml;charset=utf-8");%>
 <%
 Collection threadBeans = (Collection) request.getAttribute("ThreadBeans");

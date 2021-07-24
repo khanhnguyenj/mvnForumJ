@@ -15,7 +15,7 @@
  -
  --%>
 <%@ include file="inc_js_checkvalid_myvietnamlib.jsp"%>
-<fmt:bundle basename="i18n/mvnforum/mvnForum_i18n">
+<fmt:bundle basename="i18n/mvnForum_i18n">
 <div class="topmenu" style="margin: 0pt auto; width: 100%;">  
   <a href="<%=urlResolver.encodeURL(request, response, "", URLResolverService.ACTION_URL)%>" class="topmenu"><fmt:message key="mvnforum.user.header.index"/></a>
   &nbsp;|&nbsp;<a href="<%=urlResolver.encodeURL(request, response, "listpolls")%>" class="topmenu"><fmt:message key="mvnforum.user.listpollsx.title"/></a>

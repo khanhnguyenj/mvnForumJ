@@ -42,7 +42,7 @@
 <%@ page import="net.myvietnam.mvncore.util.DateUtil" %>
 <%@ page import="net.myvietnam.mvncore.filter.DisableHtmlTagFilter" %>
 
-<fmt:bundle basename="i18n/mvnforum/mvnForum_i18n">
+<fmt:bundle basename="i18n/mvnForum_i18n">
 <script type="text/javascript" src="<%=contextPath%>/mvnplugin/mvnforum/js/md5.js"></script>
 
 <script type="text/javascript">
