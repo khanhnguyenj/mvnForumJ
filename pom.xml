@@ -25,20 +25,55 @@
 				<artifactId>myvietnam</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
 				<version>1.7.32</version>
 			</dependency>
+			<dependency>
+				<groupId>org.freemarker</groupId>
+				<artifactId>freemarker</artifactId>
+				<version>2.3.31</version>
+			</dependency>
+			<dependency>
+				<groupId>com.octo.captcha</groupId>
+				<artifactId>jcaptcha</artifactId>
+				<version>1.0</version>
+			</dependency>
+
+			<!-- Need to upgrade to latest version -->
+			<dependency>
+				<groupId>org.apache.lucene</groupId>
+				<artifactId>lucene-core</artifactId>
+				<version>2.9.4</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-maven-plugin</artifactId>
+					<version>9.4.43.v20210629</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 
 	<repositories>
 		<repository>
 			<id>mogwai</id>
 			<name>Mogwai</name>
 			<url>http://mogwai.sourceforge.net/repository/maven2/</url>
+			<layout>default</layout>
+		</repository>
+		<repository>
+			<id>liferay</id>
+			<name>liferay</name>
+			<url>https://repository.liferay.com/nexus/content/repositories/gradle-plugins/</url>
 			<layout>default</layout>
 		</repository>
 	</repositories>
