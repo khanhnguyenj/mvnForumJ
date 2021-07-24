@@ -40,8 +40,34 @@
 package com.mvnforum.categorytree.impl;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Locale;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.mvnforum.MVNForumConfig;
+import com.mvnforum.MVNForumGlobal;
+import com.mvnforum.MVNForumResourceBundle;
+import com.mvnforum.MyUtil;
+import com.mvnforum.auth.AuthenticationException;
+import com.mvnforum.auth.MVNForumPermission;
+import com.mvnforum.auth.OnlineUser;
+import com.mvnforum.auth.OnlineUserManager;
+import com.mvnforum.categorytree.CategoryTreeEvent;
+import com.mvnforum.common.ForumIconLegend;
+import com.mvnforum.common.ThreadIconUtil;
+import com.mvnforum.db.CategoryBean;
+import com.mvnforum.db.ForumBean;
+import com.mvnforum.db.PostBean;
+import com.mvnforum.db.PostCache;
+import com.mvnforum.db.WatchBean;
+import com.mvnforum.user.WatchUtil;
+
+import freemarker.cache.ClassTemplateLoader;
+import freemarker.cache.TemplateLoader;
+import freemarker.template.Configuration;
+import freemarker.template.SimpleHash;
+import freemarker.template.Template;
 import net.myvietnam.mvncore.exception.DatabaseException;
 import net.myvietnam.mvncore.security.Encoder;
 import net.myvietnam.mvncore.security.SecurityUtil;
@@ -51,21 +77,6 @@ import net.myvietnam.mvncore.util.I18nUtil;
 import net.myvietnam.mvncore.util.StringUtil;
 import net.myvietnam.mvncore.web.GenericRequest;
 import net.myvietnam.mvncore.web.GenericResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.mvnforum.*;
-import com.mvnforum.auth.*;
-import com.mvnforum.categorytree.CategoryTreeEvent;
-import com.mvnforum.common.ForumIconLegend;
-import com.mvnforum.common.ThreadIconUtil;
-import com.mvnforum.db.*;
-import com.mvnforum.user.WatchUtil;
-
-import freemarker.cache.ClassTemplateLoader;
-import freemarker.cache.TemplateLoader;
-import freemarker.template.*;
 
 public class ListForums extends FtlCategoryTreeListener {
 
@@ -88,8 +99,8 @@ public class ListForums extends FtlCategoryTreeListener {
     private CategoryBean category;
 
     static {
-        Configuration conf = new Configuration();
-        TemplateLoader loader = new ClassTemplateLoader(ListForums.class);
+        Configuration conf = new Configuration(Configuration.VERSION_2_3_31);
+        TemplateLoader loader = new ClassTemplateLoader(ListForums.class, "/");
         conf.setTemplateLoader(loader);
         try {
             template = conf.getTemplate("listforums.ftl");
@@ -119,6 +130,7 @@ public class ListForums extends FtlCategoryTreeListener {
         super.init(template);
     }
 
+    @Override
     public String drawHeader(CategoryTreeEvent event) {
 
         SimpleHash row = new SimpleHash();
@@ -139,6 +151,7 @@ public class ListForums extends FtlCategoryTreeListener {
         return "";
     }
 
+    @Override
     public String drawFooter(CategoryTreeEvent event) {
 
         SimpleHash row = new SimpleHash();
@@ -152,7 +165,7 @@ public class ListForums extends FtlCategoryTreeListener {
         } else {
 
             row.put("showIconLegend", forumIconLegend.isHasIconLegend());
-    
+
             if (forumIconLegend.isHasIconLegend()) {
                 row.put("ContextPath", request.getContextPath());
                 row.put("hasReadActiveCurrentForum", forumIconLegend.isHasReadActiveForum());
@@ -163,7 +176,7 @@ public class ListForums extends FtlCategoryTreeListener {
                 row.put("hasUnreadLockedCurrentForum", forumIconLegend.isHasUnreadLockedForum());
                 row.put("hasReadDisabledCurrentForum", forumIconLegend.isHasReadDisabledForum());
                 row.put("hasUnreadDisabledCurrentForum", forumIconLegend.isHasUnreadDisabledForum());
-    
+
                 if (forumIconLegend.isHasReadActiveForum()) {
                     String no_new = MVNForumResourceBundle.getString(locale, "mvnforum.common.legend.forum.read_active");
                     row.put("no_new", no_new);
@@ -203,6 +216,7 @@ public class ListForums extends FtlCategoryTreeListener {
         return "";
     }
 
+    @Override
     public String drawForum(CategoryTreeEvent event) throws IllegalArgumentException, DatabaseException {
 
         ForumBean forum = (ForumBean) event.getSource();
@@ -224,7 +238,7 @@ public class ListForums extends FtlCategoryTreeListener {
 
             row.put("ContextPath", request.getContextPath());
             row.put("ImagePath", request.getContextPath() + ThreadIconUtil.getImagePath(onlineUser));
-            
+
             StringBuffer filter = new StringBuffer();
             filter.append(MyUtil.filter(forum.getForumDesc(), false/*html*/, true/*emotion*/, true/*mvnCode*/, true/*newLine*/, true/*URL*/));
             row.put("filter", filter.toString());
@@ -239,27 +253,27 @@ public class ListForums extends FtlCategoryTreeListener {
 
             boolean checkCondition = (forum.getLastPostMemberName().length() == 0) || (forum.getForumThreadCount() == 0);
             row.put("checkCondition", checkCondition);
-            
+
             if (checkCondition) {
                 row.put("no_post", MVNForumResourceBundle.getString(locale, "mvnforum.user.listforums.table.no_post"));
             } else {
                 row.put("GMTTimestampFormat", onlineUser.getGMTTimestampFormat(forum.getForumLastPostDate()));
-                
+
                 PostBean lastPost = PostCache.getInstance().getLastEnablePost_inForum(forum.getForumID());
 
                 String lastPostTopicName = lastPost.getPostTopic();
                 row.put("LastPostTopicName", lastPostTopicName);
-                
+
                 String lastPostTopicName_shorter = StringUtil.getShorterString(lastPostTopicName, MVNForumGlobal.TOPIC_NAME_SHORTER_CHARACTERS);
                 row.put("LastPostTopicName_shorter", lastPostTopicName_shorter);
-                
+
                 int threadID = lastPost.getThreadID();
                 String viewLastTopicLink = urlResolver.encodeURL(request, response, "viewthread?thread=" + threadID + "&amp;lastpage=yes#lastpost");
                 row.put("ViewLastTopicLink", viewLastTopicLink);
-    
+
                 String viewmemberLink = urlResolver.encodeURL(request, response, "viewmember?member=" + Encoder.encodeURL(forum.getLastPostMemberName()));
                 row.put("viewmemberLink", viewmemberLink);
-    
+
                 row.put("by", MVNForumResourceBundle.getString(locale, "mvnforum.common.by"));
                 row.put("LastPostMemberName", forum.getLastPostMemberName());
             }
@@ -270,6 +284,7 @@ public class ListForums extends FtlCategoryTreeListener {
         return "";
     }
 
+    @Override
     public String drawSeparator(CategoryTreeEvent event) {
 
         SimpleHash row = new SimpleHash();
@@ -283,10 +298,12 @@ public class ListForums extends FtlCategoryTreeListener {
         return "";
     }
 
+    @Override
     public void setDepthTree(int depth) {
         // default
     }
 
+    @Override
     public String drawCategory(CategoryTreeEvent event) {
 
         SimpleHash row = new SimpleHash();

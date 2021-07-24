@@ -57,7 +57,7 @@
 <%@ page import="com.mvnforum.common.ThreadIconUtil" %>
 
 <%@ taglib uri="mvntaglib" prefix="mvn" %> 
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%
 // I have to comment these below line because when back a page,

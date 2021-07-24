@@ -78,7 +78,7 @@ public final class MVNForumGlobal {
     public static final int UPLOADED_ALBUM_AVATAR_MAX_WIDTH     = 160;
     public static final int UPLOADED_ALBUM_AVATAR_MAX_HEIGHT    = 160;
 
-    public static final String RESOURCE_BUNDLE_NAME       = "i18n/mvnforum/mvnForum_i18n";
+    public static final String RESOURCE_BUNDLE_NAME       = "i18n/mvnForum_i18n";
 
     public static final String MVNFORUM_JAAS_LOGIN_MODULE = "mvnforum_login";
 
@@ -106,7 +106,7 @@ public final class MVNForumGlobal {
     public static final int MIN_MINUTES_TO_RATE_ALBUM_ITEM_AGAIN = 5;
 
     public static final int MIN_MINUTES_TO_VOTE_POLL_AGAIN       = 5;
-    
+
     public static final int TOPIC_NAME_SHORTER_CHARACTERS        = 25;
 
     public static final String TEMPLATE_SENDACTIVATECODE_PREFIX  = "sendactivemailtemplate";
