@@ -71,7 +71,7 @@ function ValidateFormSearch() {
       <table width="100%" border="0" cellpadding="0" cellspacing="0">
         <tr>
           <td rowspan="2">
-            <a href="<%=MVNForumConfig.getLogoUrl()%>"><img src="<%=onlineUser.getLogoPath()%>" height="50" border="0" alt="<fmt:message key="mvnforum.common.forum.homepage"/>" title="<fmt:message key="mvnforum.common.forum.homepage"/>"/></a>
+            <a href="<c:url value="/"/>"><img src="<%=onlineUser.getLogoPath()%>" height="50" border="0" alt="<fmt:message key="mvnforum.common.forum.homepage"/>" title="<fmt:message key="mvnforum.common.forum.homepage"/>"/></a>
           </td>
           <td rowspan="2" align="center" valign="top">
             <%@ include file="adheart.jsp"%>
