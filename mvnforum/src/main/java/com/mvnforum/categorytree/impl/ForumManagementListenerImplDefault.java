@@ -42,17 +42,13 @@ package com.mvnforum.categorytree.impl;
 import java.io.IOException;
 import java.util.Locale;
 
-import net.myvietnam.mvncore.exception.DatabaseException;
-import net.myvietnam.mvncore.security.SecurityUtil;
-import net.myvietnam.mvncore.service.MvnCoreServiceFactory;
-import net.myvietnam.mvncore.service.URLResolverService;
-import net.myvietnam.mvncore.util.I18nUtil;
-import net.myvietnam.mvncore.util.StringUtil;
-import net.myvietnam.mvncore.web.GenericRequest;
-import net.myvietnam.mvncore.web.GenericResponse;
-
-import com.mvnforum.*;
-import com.mvnforum.auth.*;
+import com.mvnforum.LocaleMessageUtil;
+import com.mvnforum.MVNForumResourceBundle;
+import com.mvnforum.MyUtil;
+import com.mvnforum.auth.AuthenticationException;
+import com.mvnforum.auth.MVNForumPermission;
+import com.mvnforum.auth.OnlineUser;
+import com.mvnforum.auth.OnlineUserManager;
 import com.mvnforum.categorytree.CategoryTreeEvent;
 import com.mvnforum.common.ForumIconLegend;
 import com.mvnforum.common.ThreadIconUtil;
@@ -61,7 +57,17 @@ import com.mvnforum.db.ForumBean;
 
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.TemplateLoader;
-import freemarker.template.*;
+import freemarker.template.Configuration;
+import freemarker.template.SimpleHash;
+import freemarker.template.Template;
+import net.myvietnam.mvncore.exception.DatabaseException;
+import net.myvietnam.mvncore.security.SecurityUtil;
+import net.myvietnam.mvncore.service.MvnCoreServiceFactory;
+import net.myvietnam.mvncore.service.URLResolverService;
+import net.myvietnam.mvncore.util.I18nUtil;
+import net.myvietnam.mvncore.util.StringUtil;
+import net.myvietnam.mvncore.web.GenericRequest;
+import net.myvietnam.mvncore.web.GenericResponse;
 
 public class ForumManagementListenerImplDefault extends FtlCategoryTreeListener {
 
@@ -81,8 +87,8 @@ public class ForumManagementListenerImplDefault extends FtlCategoryTreeListener 
     static {
         // we want to load template only once but process more times
         try {
-            Configuration conf = new Configuration();
-            TemplateLoader loader = new ClassTemplateLoader(ForumManagementListenerImplDefault.class);
+            Configuration conf = new Configuration(Configuration.VERSION_2_3_31);
+            TemplateLoader loader = new ClassTemplateLoader(ForumManagementListenerImplDefault.class, "/");
             conf.setTemplateLoader(loader);
             template = conf.getTemplate("forummanagement.ftl");
         } catch (IOException e) {
@@ -92,7 +98,7 @@ public class ForumManagementListenerImplDefault extends FtlCategoryTreeListener 
 
     public ForumManagementListenerImplDefault(GenericRequest request, GenericResponse response)
         throws AuthenticationException, DatabaseException {
-        
+
         this.request = request;
         this.response = response;
         onlineUser = OnlineUserManager.getInstance().getOnlineUser(request);
@@ -101,6 +107,7 @@ public class ForumManagementListenerImplDefault extends FtlCategoryTreeListener 
         init(template);
     }
 
+    @Override
     public String drawHeader(CategoryTreeEvent event) {
         SimpleHash subRoot = new SimpleHash();
 
@@ -144,6 +151,7 @@ public class ForumManagementListenerImplDefault extends FtlCategoryTreeListener 
         return "";
     }
 
+    @Override
     public String drawFooter(CategoryTreeEvent event) {
 
         SimpleHash row = new SimpleHash();
@@ -155,9 +163,9 @@ public class ForumManagementListenerImplDefault extends FtlCategoryTreeListener 
             row.put("no_category", no_category);
         } else {
             row.put("showIconLegend", forumIconLegend.isHasIconLegend());
-    
+
             if (forumIconLegend.isHasIconLegend()) {
-                
+
                 row.put("ContextPath", request.getContextPath());
                 row.put("hasReadActiveCurrentForum", forumIconLegend.isHasReadActiveForum());
                 row.put("hasUnreadActiveCurrentForum", forumIconLegend.isHasUnreadActiveForum());
@@ -167,7 +175,7 @@ public class ForumManagementListenerImplDefault extends FtlCategoryTreeListener 
                 row.put("hasUnreadLockedCurrentForum", forumIconLegend.isHasUnreadLockedForum());
                 row.put("hasReadDisabledCurrentForum", forumIconLegend.isHasReadDisabledForum());
                 row.put("hasUnreadDisabledCurrentForum", forumIconLegend.isHasUnreadDisabledForum());
-    
+
                 if (forumIconLegend.isHasReadActiveForum()) {
                     String no_new = MVNForumResourceBundle.getString(locale, "mvnforum.common.legend.forum.read_active");
                     row.put("no_new", no_new);
@@ -208,6 +216,7 @@ public class ForumManagementListenerImplDefault extends FtlCategoryTreeListener 
         return "";
     }
 
+    @Override
     public String drawCategory(CategoryTreeEvent event) {
         SimpleHash subRoot = new SimpleHash();
         CategoryBean category = (CategoryBean)event.getSource();
@@ -218,7 +227,7 @@ public class ForumManagementListenerImplDefault extends FtlCategoryTreeListener 
             String no_forum_in_category = MVNForumResourceBundle.getString(locale, "mvnforum.admin.forummanagement.no_forum");
             subRoot.put("no_forum_in_category", no_forum_in_category);
         }
-        
+
         boolean canEditCategory = permission.canEditCategory();
         subRoot.put("CanEditCat", canEditCategory);
         if (canEditCategory) {
@@ -229,7 +238,7 @@ public class ForumManagementListenerImplDefault extends FtlCategoryTreeListener 
             String catDownLink = urlResolver.encodeURL(request, response, "updatecategoryorder?category=" + category.getCategoryID() + "&amp;action=down&amp;mvncoreSecurityToken=" + SecurityUtil.getSessionToken(request), URLResolverService.ACTION_URL);
             subRoot.put("CatDownLink", catDownLink);
             subRoot.put("moveDown", MVNForumResourceBundle.getString(locale, "mvnforum.common.order.move_down"));
-            
+
             String editCatLink = urlResolver.encodeURL(request, response, "editcategory?category=" + category.getCategoryID());
             subRoot.put("EditCatLink", editCatLink);
         }
@@ -269,6 +278,7 @@ public class ForumManagementListenerImplDefault extends FtlCategoryTreeListener 
         return "";
     }
 
+    @Override
     public String drawForum(CategoryTreeEvent event) {
 
         SimpleHash subRoot = new SimpleHash();
@@ -299,7 +309,7 @@ public class ForumManagementListenerImplDefault extends FtlCategoryTreeListener 
             if (canDeleteForum) {
                 String deleteForumLink = urlResolver.encodeURL(request, response, "deleteforum?forum=" + forum.getForumID());
                 subRoot.put("DeleteForumLink", deleteForumLink);
-        
+
                 String delete = MVNForumResourceBundle.getString(locale, "mvnforum.common.action.delete");
                 subRoot.put("delete", delete);
             }
@@ -309,25 +319,25 @@ public class ForumManagementListenerImplDefault extends FtlCategoryTreeListener 
             if (canAssignForum) {
                 String groupAssignLink = urlResolver.encodeURL(request, response, "assigngrouptoforum?forum=" + forum.getForumID());
                 subRoot.put("GroupAssignLink", groupAssignLink);
-        
+
                 String memberAssignLink = urlResolver.encodeURL(request, response, "assignmembertoforum?forum=" + forum.getForumID());
                 subRoot.put("MemberAssignLink", memberAssignLink);
             }
-            
+
             subRoot.put("ContextPath", request.getContextPath());
             subRoot.put("ImagePath", request.getContextPath() + ThreadIconUtil.getImagePath(onlineUser));
             subRoot.put("Disabled", (forum.getForumStatus() == ForumBean.FORUM_STATUS_DISABLED));
             subRoot.put("ForumName", forum.getForumName());
-    
+
             String forumIcon = MyUtil.getForumIconName(onlineUser.getLastLogonTimestamp().getTime(), forum.getForumLastPostDate().getTime(), forum.getForumStatus(), forum.getForumThreadCount());
             subRoot.put("forumIcon", forumIcon);
-    
+
             forumIconLegend.updateIconLegend(forumIcon);
-    
+
             String filteredForumDesc = MyUtil.filter(forum.getForumDesc(), false/*html*/, true/*emotion*/, true/*mvnCode*/, true/*newLine*/, true/*URL*/);
             subRoot.put("FilteredForumDesc", filteredForumDesc);
             subRoot.put("ForumOrder", new Integer(forum.getForumOrder()));
-    
+
             String gmtForumCreationDate = onlineUser.getGMTTimestampFormat(forum.getForumCreationDate());
             subRoot.put("GMTForumCreationDate", gmtForumCreationDate);
             subRoot.put("ForumOwnerName", StringUtil.getEmptyStringIfNull(forum.getForumOwnerName()));
@@ -339,10 +349,12 @@ public class ForumManagementListenerImplDefault extends FtlCategoryTreeListener 
         return "";
     }
 
+    @Override
     public String drawSeparator(CategoryTreeEvent event) {
         return "";
     }
 
+    @Override
     public void setDepthTree(int depth) {
         //this.depth = depth;
     }

@@ -42,9 +42,6 @@ package com.mvnforum.categorytree.impl;
 import java.io.IOException;
 import java.util.Locale;
 
-import net.myvietnam.mvncore.util.I18nUtil;
-import net.myvietnam.mvncore.web.GenericRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,12 +53,16 @@ import com.mvnforum.db.ForumBean;
 
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.TemplateLoader;
-import freemarker.template.*;
+import freemarker.template.Configuration;
+import freemarker.template.SimpleHash;
+import freemarker.template.Template;
+import net.myvietnam.mvncore.util.I18nUtil;
+import net.myvietnam.mvncore.web.GenericRequest;
 
 public class ViewMemberPermissionsImpl extends FtlCategoryTreeListener {
 
     private static final Logger log = LoggerFactory.getLogger(ViewMemberPermissionsImpl.class);
-    
+
     // template can be shared between users after loaded
     private static Template template;
 
@@ -69,8 +70,8 @@ public class ViewMemberPermissionsImpl extends FtlCategoryTreeListener {
     private Locale locale;
     private int forumCountInCurrentCategory = 0;
     static {
-        Configuration conf = new Configuration();
-        TemplateLoader loader = new ClassTemplateLoader(ViewMemberPermissionsImpl.class);
+        Configuration conf = new Configuration(Configuration.VERSION_2_3_31);
+        TemplateLoader loader = new ClassTemplateLoader(ViewMemberPermissionsImpl.class, "/");
         conf.setTemplateLoader(loader);
         try {
             template = conf.getTemplate("viewmemberpermissions.ftl");
@@ -78,19 +79,19 @@ public class ViewMemberPermissionsImpl extends FtlCategoryTreeListener {
             log.error("Cannot load template for View Member Permission", e);
         }
     }
-    
+
     public ViewMemberPermissionsImpl(GenericRequest request) {
 
         permission = (MVNForumPermission)request.getAttribute("Permissions");
         locale = I18nUtil.getLocaleInRequest(request);
         init(template);
-        
+
         String yesValue = MVNForumResourceBundle.getString(locale, "mvnforum.common.yes");
         root.put("YesValue", yesValue);
 
         String noValue = MVNForumResourceBundle.getString(locale, "mvnforum.common.no");
         root.put("NoValue", noValue);
-        
+
     }
 
     private void addCommonValue(SimpleHash row) {
@@ -110,7 +111,8 @@ public class ViewMemberPermissionsImpl extends FtlCategoryTreeListener {
         String pollTitle = MVNForumResourceBundle.getString(locale, "mvnforum.common.poll");
         row.put("PollTitle", pollTitle);
     }
-    
+
+    @Override
     public String drawHeader(CategoryTreeEvent event) {
         SimpleHash row = new SimpleHash();
 
@@ -121,6 +123,7 @@ public class ViewMemberPermissionsImpl extends FtlCategoryTreeListener {
         return "";
     }
 
+    @Override
     public String drawFooter(CategoryTreeEvent event) {
         SimpleHash row = new SimpleHash();
 
@@ -137,6 +140,7 @@ public class ViewMemberPermissionsImpl extends FtlCategoryTreeListener {
         return "";
     }
 
+    @Override
     public String drawCategory(CategoryTreeEvent event) {
         forumCountInCurrentCategory = 0;
 
@@ -154,6 +158,7 @@ public class ViewMemberPermissionsImpl extends FtlCategoryTreeListener {
         return "";
     }
 
+    @Override
     public String drawForum(CategoryTreeEvent event) {
         SimpleHash row = new SimpleHash();
         ForumBean forum = (ForumBean) event.getSource();
@@ -162,14 +167,14 @@ public class ViewMemberPermissionsImpl extends FtlCategoryTreeListener {
         row.put("RowType", "Forum");
         row.put("ForumID", String.valueOf(forumID));
         row.put("ForumName", forum.getForumName());
-        
+
         row.put("EditForum", permission.canEditForum(forumID));
         row.put("DeleteForum", permission.canDeleteForum(forumID));
         row.put("AssignForum", permission.canAssignToForum(forumID));
-        
+
         row.put("AddThread", permission.canAddThread(forumID));
         row.put("ModerateThread", permission.canModerateThread(forumID));
-        
+
         row.put("ReadPost", permission.canReadPost(forumID));
         row.put("AddPost", permission.canAddPost(forumID));
         row.put("EditOwnPost", permission.canEditOwnPost(forumID));
@@ -178,7 +183,7 @@ public class ViewMemberPermissionsImpl extends FtlCategoryTreeListener {
 
         row.put("AddAttachment", permission.canAddAttachment(forumID));
         row.put("GetAttachment", permission.canGetAttachment(forumID));
-        
+
         row.put("AddPoll", permission.canAddPoll(forumID));
         row.put("EditOwnPoll", permission.canEditOwnPoll(forumID));
         row.put("EditAnyPoll", permission.canEditPoll(forumID));
@@ -194,10 +199,12 @@ public class ViewMemberPermissionsImpl extends FtlCategoryTreeListener {
         return "";
     }
 
+    @Override
     public String drawSeparator(CategoryTreeEvent event) {
         return "";
     }
 
+    @Override
     public void setDepthTree(int depth) {
         // this.depth = depth;
     }
