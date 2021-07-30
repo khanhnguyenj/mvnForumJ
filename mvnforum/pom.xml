@@ -57,6 +57,33 @@
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>com.google.code.maven-replacer-plugin</groupId>
+				<artifactId>replacer</artifactId>
+				<executions>
+					<execution>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>replace</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<includes>
+						<include>${project.basedir}/**/footer.jsp</include>
+					</includes>
+					<replacements>
+						<replacement>
+							<token>%PROJECT_VERSION%</token>
+							<value>${project.version}</value>
+						</replacement>
+						<replacement>
+							<token>%PROJECT_BUILD_DATE%</token>
+							<value>${maven.build.timestamp}</value>
+						</replacement>
+					</replacements>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>

@@ -77,8 +77,8 @@
 
   MyVietnam.net Group
   -->
-  Powered by <a href="http://www.mvnForum.com" target="_blank"><%= mvnForumInfo.getProductDesc()%></a> (Build: <%= mvnForumInfo.getProductReleaseDate()%>)<br/>
-  Copyright &copy; 2002-2010 by <a href="http://www.MyVietnam.net" target="_blank">MyVietnam.net</a>
+  Powered by <a href="https://github.com/huongdanjavacom/mvnForumJ" target="_blank">mvnForum %PROJECT_VERSION%</a> (Build: %PROJECT_BUILD_DATE%)<br/>
+  Copyright &copy; 2021-2021 by <a href="https://huongdanjava.com" target="_blank">https://huongdanjava.com</a>. Developed from mvnForum.
   <p>&nbsp;</p>
 </div>
 <% } %>

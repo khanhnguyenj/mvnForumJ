@@ -41,6 +41,10 @@
 package com.mvnforum.service.impl;
 
 import java.awt.image.BufferedImage;
+import java.io.InputStream;
+import java.util.Properties;
+
+import javax.servlet.http.HttpServletRequest;
 
 import net.myvietnam.mvncore.util.AssertionUtil;
 import net.myvietnam.mvncore.util.ImageUtil;
@@ -58,7 +62,7 @@ public class MvnForumInfoServiceImplDefault implements MvnForumInfoService {
 
     private static String PRODUCT_NAME         = "mvnForum";
 
-    private static String PRODUCT_DESC         = "mvnForum 1.3-dev";
+    private static String PRODUCT_DESC         = "mvnForum ";
 
     private static String PRODUCT_VERSION      = "1.3-dev";
 
@@ -71,11 +75,11 @@ public class MvnForumInfoServiceImplDefault implements MvnForumInfoService {
     }
 
     public String getProductDesc() {
-        return PRODUCT_DESC;
+        return PRODUCT_DESC + getVersion();
     }
 
     public String getProductVersion() {
-        return PRODUCT_VERSION;
+        return getVersion();
     }
 
     public String getProductReleaseDate() {
@@ -89,5 +93,26 @@ public class MvnForumInfoServiceImplDefault implements MvnForumInfoService {
     public BufferedImage getImage() {
         return ImageUtil.getProductionImage(PRODUCT_VERSION, PRODUCT_RELEASE_DATE);
     }
+    
+	private String getVersion() {
+		String version = null;
+
+		try {
+			Properties p = new Properties();
+			InputStream is = getClass().getResourceAsStream("/META-INF/maven/com.huongdanjava/mvnforum/pom.properties");
+			if (is != null) {
+				p.load(is);
+				version = p.getProperty("version", "");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		if (version == null) {
+			version = "SNAPSHOT";
+		}
+
+		return version;
+	}
 
 }
