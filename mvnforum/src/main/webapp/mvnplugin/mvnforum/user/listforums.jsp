@@ -51,9 +51,11 @@
 
 <%@ include file="inc_common.jsp"%>
 <%@ include file="inc_doctype.jsp"%>
+
 <fmt:bundle basename="i18n/mvnForum_i18n">
 <mvn:html locale="${currentLocale}">
 <mvn:head>
+    <base href="<%=pageContext.getRequest().getScheme()%>://<%=pageContext.getRequest().getServerName()%>:<%=pageContext.getRequest().getServerPort()%>">
   <mvn:title><fmt:message key="mvnforum.common.forum.title_name"/> - <fmt:message key="mvnforum.user.listforums.title"/></mvn:title>
 <%@ include file="/mvnplugin/mvnforum/meta.jsp"%>
 <link href="<%=onlineUser.getCssPath(request)%>" rel="stylesheet" type="text/css" />

@@ -59,6 +59,7 @@
 
 <%@ taglib uri="mvntaglib" prefix="mvn" %> 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
 // I have to comment these below line because when back a page,
