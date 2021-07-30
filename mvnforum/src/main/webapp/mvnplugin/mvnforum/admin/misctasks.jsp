@@ -57,6 +57,7 @@ boolean atLeastOneIndexRebuilding = RebuildPostIndexTask.isRebuilding() || Rebui
 %>
 <mvn:html locale="${currentLocale}">
 <mvn:head>
+	<base href="<%=pageContext.getRequest().getScheme()%>://<%=pageContext.getRequest().getServerName()%>:<%=pageContext.getRequest().getServerPort()%>">
   <mvn:title><fmt:message key="mvnforum.common.forum.title_name"/> - <fmt:message key="mvnforum.admin.misctasks.title"/></mvn:title>
 <%@ include file="/mvnplugin/mvnforum/meta.jsp"%>
 
