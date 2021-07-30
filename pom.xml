@@ -93,6 +93,12 @@
 					<artifactId>replacer</artifactId>
 					<version>1.5.3</version>
 				</plugin>
+				<plugin>
+					<groupId>org.projectlombok</groupId>
+					<artifactId>lombok-maven-plugin</artifactId>
+					<version>1.18.20.0</version>
+					<scope>provided</scope>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
