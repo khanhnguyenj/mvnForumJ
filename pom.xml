@@ -10,7 +10,7 @@
 	<modules>
 		<module>myvietnam</module>
 		<module>mvnforum</module>
-		<module>mvnad</module>
+<!-- 		<module>mvnad</module> -->
 	</modules>
 
 	<properties>

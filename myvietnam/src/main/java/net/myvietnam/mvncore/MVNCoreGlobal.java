@@ -42,7 +42,7 @@ public final class MVNCoreGlobal {
  * NOTE: below constants can be changed for each build,
  *       these constant MUST NOT break the compatibility
  *************************************************************************/
-    public static final String RESOURCE_BUNDLE_NAME   = "i18n.mvncore.mvncore_java_i18n";
+    public static final String RESOURCE_BUNDLE_NAME   = "i18n/mvncore_java_i18n";
 
     public static final String MVNCORE_REQUEST_LOCALE = "mvncore.request.locale";
     
