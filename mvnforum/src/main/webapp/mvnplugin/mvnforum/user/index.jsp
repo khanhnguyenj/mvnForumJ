@@ -56,7 +56,6 @@
 <fmt:bundle basename="i18n/mvnForum_i18n">
 <mvn:html locale="${currentLocale}">
 <mvn:head>
-	<base href="<%=pageContext.getRequest().getScheme()%>://<%=pageContext.getRequest().getServerName()%>:<%=pageContext.getRequest().getServerPort()%>">
   <mvn:title><fmt:message key="mvnforum.common.forum.title_name"/> - <fmt:message key="mvnforum.common.forum.homepage"/></mvn:title>
 <%@ include file="/mvnplugin/mvnforum/meta.jsp"%>
 <script src="<%=contextPath%>/mvnplugin/mvnforum/js/listforums.js" type="text/javascript"></script>

@@ -343,24 +343,24 @@ domMenu_settings.set('domMenu_main', new Hash(
       <a href="<%=urlResolver.encodeURL(request, response, "index", URLResolverService.RENDER_URL, "view" /*portlet mode */)%>" class="topmenu"><fmt:message key="mvnforum.admin.header.forum_index"/></a>
       &nbsp;|&nbsp;
    <%}%>
-      <a href="<c:url value="mvnforumadmin/index" />" class="topmenu"><fmt:message key="mvnforum.admin.header.admin_index"/></a>
+      <a href="<%=urlResolver.encodeURL(request, response, "index")%>" class="topmenu"><fmt:message key="mvnforum.admin.header.admin_index"/></a>
    <%if (permission.canAdminSystem()) {%>
-      &nbsp;|&nbsp;<a href="<c:url value="mvnforumadmin/misctasks" />" class="topmenu"><fmt:message key="mvnforum.admin.misctasks.title"/></a>
+      &nbsp;|&nbsp;<a href="<%=urlResolver.encodeURL(request, response, "misctasks")%>" class="topmenu"><fmt:message key="mvnforum.admin.misctasks.title"/></a>
    <%}%>
    <%if ( permission.canEditAtLeastOneForum() || permission.canAddForum() ) {%>
-      &nbsp;|&nbsp;<a href="<c:url value="mvnforumadmin/forummanagement" />" class="topmenu"><fmt:message key="mvnforum.admin.forummanagement.title"/></a>
+      &nbsp;|&nbsp;<a href="<%=urlResolver.encodeURL(request, response, "forummanagement")%>" class="topmenu"><fmt:message key="mvnforum.admin.forummanagement.title"/></a>
    <%}%>
    <%if (permission.canModerateUser()) {%>
-      &nbsp;|&nbsp;<a href="<c:url value="mvnforumadmin/usermanagement" />" class="topmenu"><fmt:message key="mvnforum.admin.usermanagement.title"/></a>
+      &nbsp;|&nbsp;<a href="<%=urlResolver.encodeURL(request, response, "usermanagement")%>" class="topmenu"><fmt:message key="mvnforum.admin.usermanagement.title"/></a>
    <%}%>
    <%if (permission.canAdminSystem()) {%>
-      &nbsp;|&nbsp;<a href="<c:url value="mvnforumadmin/groupmanagement" />" class="topmenu"><fmt:message key="mvnforum.admin.groupmanagement.title"/></a>
+      &nbsp;|&nbsp;<a href="<%=urlResolver.encodeURL(request, response, "groupmanagement")%>" class="topmenu"><fmt:message key="mvnforum.admin.groupmanagement.title"/></a>
    <%}%>
    <%if (MVNForumConfig.getEnableVote() && permission.canManageVote() && (environmentService.getForumRunMode() == EnvironmentService.PRODUCT_ENTERPRISE) && isServlet) {%>
-      &nbsp;|&nbsp;<a href="<c:url value="mvnforumadmin/listperiod" />" class="topmenu"><fmt:message key="mvnforum.admin.listperiodx.title"/></a>
+      &nbsp;|&nbsp;<a href="<%=urlResolver.encodeURL(request, response, "listperiod")%>" class="topmenu"><fmt:message key="mvnforum.admin.listperiodx.title"/></a>
    <%}%>
    <%if (permission.canSendMail()) {%>
-      &nbsp;|&nbsp;<a href="<c:url value="mvnforumadmin/sendmail" />" class="topmenu"><fmt:message key="mvnforum.admin.sendmail.title"/></a>
+      &nbsp;|&nbsp;<a href="<%=urlResolver.encodeURL(request, response, "sendmail")%>" class="topmenu"><fmt:message key="mvnforum.admin.sendmail.title"/></a>
    <%}%>
 </div>
 <%}%>

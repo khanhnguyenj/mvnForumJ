@@ -43,8 +43,9 @@ public class MvnForumLifeCycleServiceImplDefault implements MvnForumLifeCycleSer
   }
 
   public void contextInitialized(ServletContextEvent event) {
-
-    log.debug("Begin calling contextInitialized()");
+    if (log.isDebugEnabled()) {
+      log.debug("Begin calling contextInitialized()");
+    }
     called = true;
 
     EnvironmentService environmentService =
