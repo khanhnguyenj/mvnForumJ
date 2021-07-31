@@ -1,11 +1,14 @@
 package com.mvnforum.service.impl;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.*;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 
 import net.myvietnam.mvncore.MVNCoreConfig;
+import net.myvietnam.mvncore.db.ConnectionWrapper;
 import net.myvietnam.mvncore.db.DBUtils;
 import net.myvietnam.mvncore.exception.DatabaseException;
 import net.myvietnam.mvncore.exception.ObjectNotFoundException;
@@ -14,6 +17,7 @@ import net.myvietnam.mvncore.service.EnvironmentService;
 import net.myvietnam.mvncore.service.MvnCoreServiceFactory;
 import net.myvietnam.mvncore.util.*;
 
+import org.flywaydb.core.Flyway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,6 +72,9 @@ public class MvnForumLifeCycleServiceImplDefault implements MvnForumLifeCycleSer
         return;
       }
     }
+    
+    // Do database migration
+    runDatabaseMigration();
 
     // now check the database
     try {
@@ -143,6 +150,19 @@ public class MvnForumLifeCycleServiceImplDefault implements MvnForumLifeCycleSer
 
     MvnForumServiceFactory.getMvnForumService().getMvnForumAdService();
     MvnForumServiceFactory.getMvnForumService().getMvnForumCMSService();
+  }
+
+  private void runDatabaseMigration() {
+    String url = MVNCoreConfig.getDatabaseURL();
+    String user = MVNCoreConfig.getDatabaseUser();
+    String password = MVNCoreConfig.getDatabasePassword();
+    
+    Flyway flyway = Flyway.configure()
+        .dataSource(url, user, password)
+        .failOnMissingLocations(true)
+        .load();
+    
+    flyway.migrate();
   }
 
   public void contextDestroyed(ServletContextEvent event) {
