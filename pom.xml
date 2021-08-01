@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.huongdanjava</groupId>
 	<artifactId>mvnForumJ</artifactId>
-	<version>0.0.1</version>
+	<version>${global.version}</version>
 	<packaging>pom</packaging>
 
 	<modules>
@@ -15,6 +15,8 @@
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		
+		<global.version>0.0.1</global.version>
 	</properties>
 
 	<dependencyManagement>
@@ -22,7 +24,7 @@
 			<dependency>
 				<groupId>com.huongdanjava</groupId>
 				<artifactId>myvietnam</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
