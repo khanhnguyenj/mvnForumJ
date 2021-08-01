@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.huongdanjava</groupId>
 	<artifactId>mvnForumJ</artifactId>
-	<version>${global.version}</version>
+	<version>0.0.2</version>
 	<packaging>pom</packaging>
 
 	<modules>
@@ -15,8 +15,6 @@
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		
-		<global.version>0.0.1</global.version>
 	</properties>
 
 	<dependencyManagement>
@@ -70,6 +68,11 @@
 				<groupId>jsptags</groupId>
 				<artifactId>pager-taglib</artifactId>
 				<version>2.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.glassfish.web</groupId>
+				<artifactId>jstl-impl</artifactId>
+				<version>1.2</version>
 			</dependency>
 
 			<dependency>
