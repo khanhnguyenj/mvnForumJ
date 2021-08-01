@@ -41,23 +41,28 @@
  */
 package com.mvnforum;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Locale;
-
-import net.myvietnam.mvncore.configuration.DOM4JConfiguration;
-import net.myvietnam.mvncore.security.FloodControlHour;
-import net.myvietnam.mvncore.security.FloodControlMinute;
-import net.myvietnam.mvncore.service.MvnCoreServiceFactory;
-import net.myvietnam.mvncore.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.mvnforum.db.*;
+import com.mvnforum.db.ForumBean;
+import com.mvnforum.db.MemberBean;
+import com.mvnforum.db.WatchBean;
 import com.mvnforum.service.MvnForumServiceFactory;
 
-import freemarker.cache.FileTemplateLoader;
 import freemarker.template.Configuration;
+import net.myvietnam.mvncore.configuration.DOM4JConfiguration;
+import net.myvietnam.mvncore.security.FloodControlHour;
+import net.myvietnam.mvncore.security.FloodControlMinute;
+import net.myvietnam.mvncore.service.MvnCoreServiceFactory;
+import net.myvietnam.mvncore.util.DateUtil;
+import net.myvietnam.mvncore.util.FileUtil;
+import net.myvietnam.mvncore.util.I18nUtil;
+import net.myvietnam.mvncore.util.StringUtil;
 
 public final class MVNForumConfig {
 
@@ -68,7 +73,7 @@ public final class MVNForumConfig {
 
     private static final String OPTION_FILE_NAME = "mvnforum.xml";
     public static final String DEFAULT = "default";
-    
+
     private static boolean enableBrandName = true;
     public static boolean getEnableBrandName() {
         return enableBrandName;
@@ -89,7 +94,7 @@ public final class MVNForumConfig {
     public static final int CMS_NEWS_VIEW_MODE_DISABLED = 0;
     public static final int CMS_NEWS_VIEW_MODE_LIST     = 1;
     public static final int CMS_NEWS_VIEW_MODE_TAB      = 2;
-    
+
     private static int cmsNewsViewMode = CMS_NEWS_VIEW_MODE_DISABLED;
     public static int getCMSNewsViewMode() {
         return cmsNewsViewMode;
@@ -102,7 +107,7 @@ public final class MVNForumConfig {
         }
         cmsNewsViewMode = viewMode;
     }
-    
+
     private static int cmsNewsTableWidth = 100;
     public static int getCMSNewsTableWidth() {
         return cmsNewsTableWidth;
@@ -113,7 +118,7 @@ public final class MVNForumConfig {
         }
         cmsNewsTableWidth = tableWidth;
     }
-    
+
     private static boolean enablePrivateAlbum = false;
     public static boolean getEnablePrivateAlbum() {
         return enablePrivateAlbum;
@@ -145,7 +150,7 @@ public final class MVNForumConfig {
     public static void setEnablePoll(boolean enable) {
         enablePoll = enable;
     }
-    
+
     private static boolean enableVote = false;
     public static boolean getEnableVote() {
         return enableVote;
@@ -153,7 +158,7 @@ public final class MVNForumConfig {
     public static void setEnableVote(boolean enable) {
         enableVote = enable;
     }
-    
+
     private static boolean enableRevote = false;
     public static boolean getEnableRevote() {
         return enableRevote;
@@ -161,7 +166,7 @@ public final class MVNForumConfig {
     public static void setEnableRevote(boolean enable) {
         enableRevote = enable;
     }
-    
+
     private static boolean enableViewVoteResult = false;
     public static boolean getEnableViewVoteResult() {
         return enableViewVoteResult;
@@ -250,7 +255,7 @@ public final class MVNForumConfig {
             File homeFile = new File(home);
             log.info("Absolute  mvnForumHome folder = " + homeFile.getAbsolutePath());
             log.info("Canonical mvnForumHome folder = " + homeFile.getCanonicalPath());
-            
+
             // always create a directory, if the directory already existed, nothing happen
             FileUtil.createDirs(home, true);
 
@@ -438,16 +443,16 @@ public final class MVNForumConfig {
     public static String[] getSupportedLocaleNames() {
         return supportedLocaleNames;
     }
-    
+
     public static Locale[] getSupportedLocales() {
         return supportedLocales;
     }
-    
+
     private static String[] supportedImageLocaleNames = new String[0];
     public static String[] getSupportedImageLocaleNames() {
         return supportedImageLocaleNames;
     }
-    
+
     private static String defaultLocaleName = "en";
     public static String getDefaultLocaleName() {
         return defaultLocaleName;
@@ -698,7 +703,7 @@ public final class MVNForumConfig {
     }
     public static void setDefaultSearchOrderBy(int searchOrderBy) {
         defaultSearchOrderBy = searchOrderBy;
-    }    
+    }
 
     private static boolean enableWatch = true;
     public static boolean getEnableWatch() {
@@ -723,7 +728,7 @@ public final class MVNForumConfig {
     public static void setEnableMessageAttachment(boolean enable) {
         enableMessageAttachment = enable;
     }
-    
+
     private static boolean enableMostActiveThreads = true;
     public static boolean getEnableMostActiveThreads() {
         return enableMostActiveThreads;
@@ -900,7 +905,7 @@ public final class MVNForumConfig {
     public static void setEnableShowLastLogin(boolean enable) {
         enableShowLastLogin = enable;
     }
-    
+
     private static boolean enableShowModifiedDate = true;
     public static boolean getEnableShowModifiedDate() {
         return enableShowModifiedDate;
@@ -916,7 +921,7 @@ public final class MVNForumConfig {
     public static void setEnableShowEmail(boolean enable) {
         enableShowEmail = enable;
     }
-    
+
     private static boolean enableShowNameVisible = true;
     public static boolean getEnableShowNameVisible() {
         return enableShowNameVisible;
@@ -924,7 +929,7 @@ public final class MVNForumConfig {
     public static void setEnableShowNameVisible(boolean enable) {
         enableShowNameVisible = enable;
     }
-    
+
     private static boolean enableShowEmailVisible = true;
     public static boolean getEnableShowEmailVisible() {
         return enableShowNameVisible;
@@ -1084,7 +1089,7 @@ public final class MVNForumConfig {
     public static void setEnableShowViewCount(boolean enable) {
         enableShowViewCount = enable;
     }
-    
+
     private static boolean enableShowSignature = true;
     public static boolean getEnableShowSignature() {
         return enableShowSignature;
@@ -1092,7 +1097,7 @@ public final class MVNForumConfig {
     public static void setEnableShowSignature(boolean enable) {
         enableShowSignature = enable;
     }
-    
+
     private static boolean enableShowPostsPerPage = true;
     public static boolean getEnableShowPostsPerPage() {
         return enableShowPostsPerPage;
@@ -1108,7 +1113,7 @@ public final class MVNForumConfig {
     public static void setEnableUsePopupMenuInViewThread(boolean enable) {
         enableUsePopupMenuInViewThread = enable;
     }
-    
+
     private static boolean enableRichTextEditor = false;
     public static boolean getEnableRichTextEditor() {
         return enableRichTextEditor;
@@ -1766,7 +1771,7 @@ public final class MVNForumConfig {
     public static void setRequireRegisterYahoo(boolean requireRegisterYahoo) {
         MVNForumConfig.requireRegisterYahoo = requireRegisterYahoo;
     }
-    
+
     private static int captchaImageMinWordLength = 6;
     public static int getCaptchaImageMinWordLength() {
         return captchaImageMinWordLength;
@@ -1774,7 +1779,7 @@ public final class MVNForumConfig {
     public static void setCaptchaImageMinWordLength(int minLength) {
         captchaImageMinWordLength = minLength;
     }
-    
+
     private static int captchaImageMaxWordLength = 8;
     public static int getCaptchaImageMaxWordLength() {
         return captchaImageMaxWordLength;
@@ -1817,16 +1822,14 @@ public final class MVNForumConfig {
         }
     }
     */
-    
+
     static {
         try {
             load();
 
             // Load FreeMarker configuration
-            freeMarkerConfiguration = new Configuration();
-            FileTemplateLoader templateLoader = new FileTemplateLoader(new File(MVNForumConfig.getTemplateDir()));
-            log.debug("Template directory = " + MVNForumConfig.getTemplateDir());
-            freeMarkerConfiguration.setTemplateLoader(templateLoader);
+            freeMarkerConfiguration = new Configuration(Configuration.VERSION_2_3_31);
+            freeMarkerConfiguration.setClassForTemplateLoading(MVNForumConfig.class, "/template");
         } catch (Exception e) {
             String message = "com.mvnforum.MVNForumConfig: Can't read the configuration file: '" + OPTION_FILE_NAME + "'. Make sure the file is in your CLASSPATH";
             log.error(message, e);
@@ -1856,14 +1859,14 @@ public final class MVNForumConfig {
             logoURL            = conf.getString("mvnforumconfig.logo_url", logoURL);
 
             logFile = conf.getString("mvnforumconfig.mvnforum_log", "");
-            
+
             String supportedImageLocalesConfig = conf.getString("mvnforumconfig.supported_locales_for_images", "");
             supportedImageLocaleNames = StringUtil.getStringArray(supportedImageLocalesConfig, ";");
-            
+
             String supportedLocalesConfig = conf.getString("mvnforumconfig.supported_locales", "");
             supportedLocaleNames = StringUtil.getStringArray(supportedLocalesConfig, ";");
             supportedLocales = new Locale[supportedLocaleNames.length];
-            
+
             for (int i = 0; i < supportedLocaleNames.length; i++) {
                 String localeName = supportedLocaleNames[i];
                 supportedLocales[i] = I18nUtil.getLocale(localeName);
@@ -1890,7 +1893,7 @@ public final class MVNForumConfig {
             if (Math.abs(defaultGuestTimeZone) > 12) {
                 defaultGuestTimeZone = 0;
             }
-            
+
             redirectLoginURL = conf.getString("mvnforumconfig.redirect_login_url", redirectLoginURL);
             redirectLogoutURL = conf.getString("mvnforumconfig.redirect_logout_url", redirectLogoutURL);
             localeParameterName = conf.getString("mvnforumconfig.locale_parameter_name", localeParameterName);
@@ -1901,7 +1904,7 @@ public final class MVNForumConfig {
             enableLoginInfoInSession = conf.getBoolean("mvnforumconfig.enable_login_info_in_session", true);
             enableLoginInfoInRealm = conf.getBoolean("mvnforumconfig.enable_login_info_in_realm", false);
             enableLoginInfoInCustomization = conf.getBoolean("mvnforumconfig.enable_login_info_in_customization", false);
-            
+
             enableCheckInvalidSession = conf.getBoolean("mvnforumconfig.enable_check_invalid_session", true);
 
             enableCacheMember = conf.getBoolean("mvnforumconfig.enable_cache_member", true);
@@ -1921,7 +1924,7 @@ public final class MVNForumConfig {
 
             enableSearch = conf.getBoolean("mvnforumconfig.enable_search", true);
             defaultSearchOrderBy = conf.getInt("mvnforumconfig.default_search_order_by", defaultSearchOrderBy);
-            
+
             enableWatch = conf.getBoolean("mvnforumconfig.enable_watch", true);
             enableAttachment = conf.getBoolean("mvnforumconfig.enable_attachment", true);
             enableMessageAttachment = conf.getBoolean("mvnforumconfig.enable_message_attachment", true);
@@ -2144,7 +2147,7 @@ public final class MVNForumConfig {
             if (maxHttpRequestsPerHourPerIP < 0) {
                 maxHttpRequestsPerHourPerIP = 0;
             }
-            
+
             maxHttpRequestsPerMinutePerIP = conf.getInt("mvnforumconfig.max_http_requests_per_minute_per_ip", maxHttpRequestsPerMinutePerIP);
             if (maxHttpRequestsPerMinutePerIP < 0) {
                 maxHttpRequestsPerMinutePerIP = 0;

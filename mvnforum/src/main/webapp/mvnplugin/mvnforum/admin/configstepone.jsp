@@ -49,7 +49,7 @@
 
 <%@ include file="inc_common.jsp"%>
 <%@ include file="inc_doctype.jsp"%>
-<fmt:setBundle basename="i18n/mvnforum/guide_mvnForum_i18n" scope="request" var="guide" />
+<fmt:setBundle basename="i18n/guide_mvnForum_i18n" scope="request" var="guide" />
 <fmt:bundle basename="i18n/mvnForum_i18n">
 <mvn:html locale="${currentLocale}">
 <mvn:head>
