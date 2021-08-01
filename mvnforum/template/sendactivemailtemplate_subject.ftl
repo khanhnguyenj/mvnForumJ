@@ -1,1 +1,0 @@
-Your Member Activation Code of website ${serverName}
