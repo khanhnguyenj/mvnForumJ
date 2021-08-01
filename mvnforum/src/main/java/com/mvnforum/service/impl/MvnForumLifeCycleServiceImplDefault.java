@@ -1,34 +1,37 @@
 package com.mvnforum.service.impl;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 
-import net.myvietnam.mvncore.MVNCoreConfig;
-import net.myvietnam.mvncore.db.ConnectionWrapper;
-import net.myvietnam.mvncore.db.DBUtils;
-import net.myvietnam.mvncore.exception.DatabaseException;
-import net.myvietnam.mvncore.exception.ObjectNotFoundException;
-import net.myvietnam.mvncore.info.DatabaseInfo;
-import net.myvietnam.mvncore.service.EnvironmentService;
-import net.myvietnam.mvncore.service.MvnCoreServiceFactory;
-import net.myvietnam.mvncore.util.*;
-
 import org.flywaydb.core.Flyway;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import com.mvnforum.*;
-import com.mvnforum.common.*;
+import com.mvnforum.MVNForumConfig;
+import com.mvnforum.MVNForumConstant;
+import com.mvnforum.MVNForumGlobal;
+import com.mvnforum.common.DeleteExpiredMemberInGroupTask;
+import com.mvnforum.common.DeleteOrphanPmAttachmentTask;
+import com.mvnforum.common.WatchSendTask;
 import com.mvnforum.db.DAOFactory;
 import com.mvnforum.db.WatchBean;
 import com.mvnforum.service.MvnForumLifeCycleService;
 import com.mvnforum.service.MvnForumServiceFactory;
 
 import lombok.extern.slf4j.Slf4j;
+import net.myvietnam.mvncore.MVNCoreConfig;
+import net.myvietnam.mvncore.db.DBUtils;
+import net.myvietnam.mvncore.exception.DatabaseException;
+import net.myvietnam.mvncore.exception.ObjectNotFoundException;
+import net.myvietnam.mvncore.info.DatabaseInfo;
+import net.myvietnam.mvncore.service.EnvironmentService;
+import net.myvietnam.mvncore.service.MvnCoreServiceFactory;
+import net.myvietnam.mvncore.util.AssertionUtil;
+import net.myvietnam.mvncore.util.DateUtil;
+import net.myvietnam.mvncore.util.TimerTaskExt;
 
 @Slf4j
 public class MvnForumLifeCycleServiceImplDefault implements MvnForumLifeCycleService {
@@ -46,6 +49,7 @@ public class MvnForumLifeCycleServiceImplDefault implements MvnForumLifeCycleSer
     return called;
   }
 
+  @Override
   public void contextInitialized(ServletContextEvent event) {
     if (log.isDebugEnabled()) {
       log.debug("Begin calling contextInitialized()");
@@ -72,7 +76,7 @@ public class MvnForumLifeCycleServiceImplDefault implements MvnForumLifeCycleSer
         return;
       }
     }
-    
+
     // Do database migration
     runDatabaseMigration();
 
@@ -156,15 +160,16 @@ public class MvnForumLifeCycleServiceImplDefault implements MvnForumLifeCycleSer
     String url = MVNCoreConfig.getDatabaseURL();
     String user = MVNCoreConfig.getDatabaseUser();
     String password = MVNCoreConfig.getDatabasePassword();
-    
+
     Flyway flyway = Flyway.configure()
         .dataSource(url, user, password)
         .failOnMissingLocations(true)
         .load();
-    
+
     flyway.migrate();
   }
 
+  @Override
   public void contextDestroyed(ServletContextEvent event) {
     log.debug("Begin calling contextDestroyed()");
   }
