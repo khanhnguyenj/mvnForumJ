@@ -172,30 +172,6 @@ function ValidateForm() {
     if (isBlank(document.submitform.MemberHomepage, "<fmt:message key="mvnforum.common.member.homepage"/>")) return false;
 <%}%>
 
-<%if (MVNForumConfig.getEnableShowYahoo() && MVNForumConfig.isRequireRegisterYahoo()) {%>
-    if (isBlank(document.submitform.MemberYahoo, "<fmt:message key="mvnforum.common.member.yahoo"/>")) return false;
-<%}%>
-
-<%if (MVNForumConfig.getEnableShowAOL() && MVNForumConfig.isRequireRegisterAol()) {%>
-    if (isBlank(document.submitform.MemberAol, "<fmt:message key="mvnforum.common.member.aol"/>")) return false;
-<%}%>
-
-<%if (MVNForumConfig.getEnableShowICQ() && MVNForumConfig.isRequireRegisterIcq()) {%>
-    if (isBlank(document.submitform.MemberIcq, "<fmt:message key="mvnforum.common.member.icq"/>")) return false;
-<%}%>
-
-<%if (MVNForumConfig.getEnableShowMSN() && MVNForumConfig.isRequireRegisterMsn()) {%>
-    if (isBlank(document.submitform.MemberMsn, "<fmt:message key="mvnforum.common.member.msn"/>")) return false;
-<%}%>
-
-<%if (MVNForumConfig.getEnableShowCoolLink1() && MVNForumConfig.isRequireRegisterLink1()) {%>
-    if (isBlank(document.submitform.MemberCoolLink1, "<fmt:message key="mvnforum.common.member.cool_link"/> 1")) return false;
-<%}%>
-
-<%if (MVNForumConfig.getEnableShowCoolLink2() && MVNForumConfig.isRequireRegisterLink2()) {%>
-    if (isBlank(document.submitform.MemberCoolLink2, "<fmt:message key="mvnforum.common.member.cool_link"/> 2")) return false;
-<%}%>
-
 <%if (MVNForumConfig.getEnableCaptcha()) {%>
     if (isBlank(document.submitform.CaptchaResponse, "<fmt:message key="mvnforum.common.captcha.response"/>")) return false;
 <%}%>
@@ -486,54 +462,6 @@ String timeZoneSelectName = "MemberTimeZone";
       <label for="MemberHomepage"><fmt:message key="mvnforum.common.member.homepage"/><% if (MVNForumConfig.isRequireRegisterHomepage()) { %><span class="requiredfield"> *</span><% } %></label>
     </td>
     <td><input type="text" size="60" id="MemberHomepage" name="MemberHomepage" value="http://" /></td>
-  </tr>
-<% } %>
-<% if (MVNForumConfig.getEnableShowYahoo()) { %>
-  <tr class="<mvn:cssrow/>">
-    <td nowrap="nowrap">
-      <label for="MemberYahoo"><fmt:message key="mvnforum.common.member.yahoo"/><% if (MVNForumConfig.isRequireRegisterYahoo()) { %><span class="requiredfield"> *</span><% } %></label>
-    </td>
-    <td><input type="text" size="60" id="MemberYahoo" name="MemberYahoo" /></td>
-  </tr>
-<% } %>
-<% if (MVNForumConfig.getEnableShowAOL()) { %>
-  <tr class="<mvn:cssrow/>">
-    <td nowrap="nowrap">
-      <label for="MemberAol"><fmt:message key="mvnforum.common.member.aol"/><% if (MVNForumConfig.isRequireRegisterAol()) { %><span class="requiredfield"> *</span><% } %></label>
-    </td>
-    <td><input type="text" size="60" id="MemberAol" name="MemberAol" /></td>
-  </tr>
-<% } %>
-<% if (MVNForumConfig.getEnableShowICQ()) { %>
-  <tr class="<mvn:cssrow/>">
-    <td nowrap="nowrap">
-      <label for="MemberIcq"><fmt:message key="mvnforum.common.member.icq"/><% if (MVNForumConfig.isRequireRegisterIcq()) { %><span class="requiredfield"> *</span><% } %></label>
-    </td>
-    <td><input type="text" size="60" id="MemberIcq" name="MemberIcq" /></td>
-  </tr>
-<% } %>
-<% if (MVNForumConfig.getEnableShowMSN()) { %>
-  <tr class="<mvn:cssrow/>">
-    <td nowrap="nowrap">
-      <label for="MemberMsn"><fmt:message key="mvnforum.common.member.msn"/><% if (MVNForumConfig.isRequireRegisterMsn()) { %><span class="requiredfield"> *</span><% } %></label>
-    </td>
-    <td><input type="text" size="60" id="MemberMsn" name="MemberMsn" /></td>
-  </tr>
-<% } %>
-<% if (MVNForumConfig.getEnableShowCoolLink1()) { %>
-  <tr class="<mvn:cssrow/>">
-    <td nowrap="nowrap">
-      <label for="MemberCoolLink1"><fmt:message key="mvnforum.common.member.cool_link"/> 1<% if (MVNForumConfig.isRequireRegisterLink1()) { %><span class="requiredfield"> *</span><% } %></label>
-    </td>
-    <td><input type="text" size="60" id="MemberCoolLink1" name="MemberCoolLink1" value="http://" /></td>
-  </tr>
-<% } %>
-<% if (MVNForumConfig.getEnableShowCoolLink2()) { %>
-  <tr class="<mvn:cssrow/>">
-    <td nowrap="nowrap">
-      <label for="MemberCoolLink2"><fmt:message key="mvnforum.common.member.cool_link"/> 2<% if (MVNForumConfig.isRequireRegisterLink2()) { %><span class="requiredfield"> *</span><% } %></label>
-    </td>
-    <td><input type="text" size="60" id="MemberCoolLink2" name="MemberCoolLink2" value="http://" /></td>
   </tr>
 <% } %>
 <%if (MVNForumConfig.getEnableCaptcha()) {%>

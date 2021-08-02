@@ -8,10 +8,10 @@
  *
  * Copyright (C) 2002-2007 by MyVietnam.net
  *
- * All copyright notices regarding mvnForum MUST remain 
+ * All copyright notices regarding mvnForum MUST remain
  * intact in the scripts and in the outputted HTML.
  * The "powered by" text/logo with a link back to
- * http://www.mvnForum.com and http://www.MyVietnam.net in 
+ * http://www.mvnForum.com and http://www.MyVietnam.net in
  * the footer of the pages MUST remain visible when the pages
  * are viewed on the internet or intranet.
  *
@@ -35,18 +35,23 @@
  * Correspondence and Marketing Questions can be sent to:
  * info at MyVietnam net
  *
- * @author: Igor Manic   
+ * @author: Igor Manic
  */
 package com.mvnforum.admin.importexport.jive;
-
-import net.myvietnam.mvncore.exception.*;
-import net.myvietnam.mvncore.util.DateUtil;
-import net.myvietnam.mvncore.util.StringUtil;
 
 import com.mvnforum.MVNForumConstant;
 import com.mvnforum.admin.MemberXML;
 import com.mvnforum.admin.importexport.XMLUtil;
 import com.mvnforum.db.DAOFactory;
+
+import net.myvietnam.mvncore.exception.BadInputException;
+import net.myvietnam.mvncore.exception.CreateException;
+import net.myvietnam.mvncore.exception.DatabaseException;
+import net.myvietnam.mvncore.exception.DuplicateKeyException;
+import net.myvietnam.mvncore.exception.ForeignKeyNotFoundException;
+import net.myvietnam.mvncore.exception.ObjectNotFoundException;
+import net.myvietnam.mvncore.util.DateUtil;
+import net.myvietnam.mvncore.util.StringUtil;
 
 /**
  * @author Igor Manic
@@ -89,7 +94,7 @@ public class JiveUserXML {
                             String rewardPoints)
         throws CreateException, DuplicateKeyException, ObjectNotFoundException,
         DatabaseException, ForeignKeyNotFoundException {
-        
+
         /* First check if the digester already called this method.
          * It will happen even under normal circumstances, if this user has
          * subelements that need it already be defined, so they first call
@@ -115,7 +120,7 @@ public class JiveUserXML {
                 memberFirstName=name.substring(0, i);
                 memberLastName=name.substring(i+1, name.length());
             }
-            
+
             if (emailVisible == null) {
                 emailVisible = "true";
             }
@@ -142,25 +147,25 @@ public class JiveUserXML {
                     username = newUsername;
                 }
             }
-            
+
             if (newEmail.length() > 58) {
                 newEmail = newEmail.substring(0, 58);
             }
-            
+
             newEmail = ImportJive.getAvailableMemberEmail(newEmail);
-            
+
             if ( username.equals(newUsername) == false &&
                 email.equals(newEmail) == false ) {
                 logMessage += " and";
             }
-            
+
             if (email.equals(newEmail) == false) {
                 logMessage += " with new email \""+newEmail+"\"";
                 ImportJive.getMemberEmailMap().put(email, newEmail);
                 email = newEmail;
             }
             logMessage += ".\n";
-            
+
             if (username.equalsIgnoreCase(JiveXML.adminName)) {
                 /* This user will become an admin.
                  * NO MATTER WHETHER HE HAD SYSTEM_ADMIN PERMISSIONS IN JIVE OR NOT,
@@ -171,7 +176,7 @@ public class JiveUserXML {
                             memberFirstName, memberLastName);
             } else {
                 ImportJive.addMessage(logMessage);
-                
+
                 memberXML.addMember(username/*memberName*/, mvnPassword/*memberPassword*/,
                       email/*memberFirstEmail*/, email/*memberEmail*/,
                       emailVisible/*memberEmailVisible*/, nameVisible/*memberNameVisible*/,
@@ -220,7 +225,7 @@ public class JiveUserXML {
                              String rewardPoints,
                              String memberFirstName, String memberLastName)
         throws CreateException, DuplicateKeyException, ObjectNotFoundException, DatabaseException {
-        
+
         int memberID = MVNForumConstant.MEMBER_ID_OF_ADMIN;
         memberXML.setMemberID(Integer.toString(memberID));
         //for later use (to call memberXML.addMessageFolder)
@@ -251,9 +256,7 @@ public class JiveUserXML {
                      ""/*memberAddress*/, ""/*memberCity*/, ""/*memberState*/,
                      ""/*memberCountry*/, ""/*memberPhone*/,
                      ""/*memberMobile*/, ""/*memberFax*/,
-                     ""/*memberCareer*/, ""/*memberHomepage*/, ""/*memberYahoo*/,
-                     ""/*memberAol*/, ""/*memberIcq*/, ""/*memberMsn*/,
-                     ""/*memberCoolLink1*/, ""/*memberCoolLink2*/);
+                     ""/*memberCareer*/, ""/*memberHomepage*/);
         //todo Igor: not available: DAOFactory.getMemberDAO().updateMemberName(memberID, username);
         DAOFactory.getMemberDAO().updatePassword(memberID, mvnPassword, null);
         DAOFactory.getMemberDAO().updateEmail(memberID, email);

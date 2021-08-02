@@ -43,28 +43,37 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Locale;
 
-import net.myvietnam.mvncore.exception.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.mvnforum.MVNForumConfig;
+import com.mvnforum.MVNForumConstant;
+import com.mvnforum.MVNForumResourceBundle;
+import com.mvnforum.auth.OnlineUserManager;
+import com.mvnforum.db.DAOFactory;
+import com.mvnforum.db.MemberBean;
+import com.mvnforum.db.MemberCache;
+import com.mvnforum.search.member.MemberIndexer;
+
+import net.myvietnam.mvncore.exception.BadInputException;
+import net.myvietnam.mvncore.exception.CreateException;
+import net.myvietnam.mvncore.exception.DatabaseException;
+import net.myvietnam.mvncore.exception.DuplicateKeyException;
+import net.myvietnam.mvncore.exception.ForeignKeyNotFoundException;
+import net.myvietnam.mvncore.exception.ObjectNotFoundException;
 import net.myvietnam.mvncore.util.DateUtil;
 import net.myvietnam.mvncore.util.ParamUtil;
 import net.myvietnam.mvncore.web.GenericRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.mvnforum.*;
-import com.mvnforum.auth.OnlineUserManager;
-import com.mvnforum.db.*;
-import com.mvnforum.search.member.MemberIndexer;
-
 public final class MemberUtil {
 
     private static final Logger log = LoggerFactory.getLogger(MemberUtil.class);
-    
+
     private static final String MVNFORUM_SESSION_EXISTED_USERNAME = "mvnforum.session.existed.username";
 
     private MemberUtil() {
     }
-    
+
     /**
      * This method is used to check the reserved username, that user should never allowed to register.
      * @param memberName
@@ -83,10 +92,10 @@ public final class MemberUtil {
             //throw new BadInputException("Cannot register member with a reserved name : " + memberName);
         }
     }
-    
+
     /**
      * This method to store the username in the session so we dont have to check if username in database or not
-     * 
+     *
      * @param genericRequest
      * @param username
      */
@@ -99,7 +108,7 @@ public final class MemberUtil {
 
     /**
      * Return true if this username already store in session before by method storeUsernameExistedInSession
-     * 
+     *
      * @param genericRequest
      * @param username
      * @return
@@ -114,7 +123,7 @@ public final class MemberUtil {
 
     /**
      * This method is usually be used to create new user account in the Authenticator sub-class
-     * 
+     *
      * @param memberName
      * @param request
      * @throws ObjectNotFoundException
@@ -146,9 +155,7 @@ public final class MemberUtil {
                         MemberBean.MEMBER_GENDER_MALE/* memberGender */, memberBirthday, ""/* memberAddress */,
                         ""/* memberCity */, ""/* memberState */, ""/* memberCountry */,
                         ""/* memberPhone */, ""/* memberMobile */, ""/* memberFax */,
-                        ""/* memberCareer */, ""/* memberHomepage */, ""/* memberYahoo */,
-                        ""/* memberAol */, ""/* memberIcq */, ""/* memberMsn */,
-                        ""/* memberCoolLink1 */, ""/* memberCoolLink2 */);
+                        ""/* memberCareer */, ""/* memberHomepage */);
 
         // Now, create 4 default folders for each member
         int memberID = MemberCache.getInstance().getMemberIDFromMemberName(memberName);
@@ -187,5 +194,5 @@ public final class MemberUtil {
             }
         }
     }
-    
+
 }

@@ -40,18 +40,30 @@
 package com.mvnforum.admin;
 
 import java.io.IOException;
-import java.util.*;
-
-import net.myvietnam.mvncore.db.DBUtils;
-import net.myvietnam.mvncore.exception.*;
-import net.myvietnam.mvncore.filter.DisableHtmlTagFilter;
-import net.myvietnam.mvncore.filter.EnableHtmlTagFilter;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import com.mvnforum.MVNForumConstant;
 import com.mvnforum.admin.importexport.XMLUtil;
 import com.mvnforum.admin.importexport.XMLWriter;
 import com.mvnforum.auth.MVNForumPermission;
-import com.mvnforum.db.*;
+import com.mvnforum.db.DAOFactory;
+import com.mvnforum.db.MemberDAO;
+import com.mvnforum.db.MemberPermissionDAO;
+import com.mvnforum.db.MessageFolderDAO;
+import com.mvnforum.db.WatchDAO;
+
+import net.myvietnam.mvncore.db.DBUtils;
+import net.myvietnam.mvncore.exception.BadInputException;
+import net.myvietnam.mvncore.exception.CreateException;
+import net.myvietnam.mvncore.exception.DatabaseException;
+import net.myvietnam.mvncore.exception.DuplicateKeyException;
+import net.myvietnam.mvncore.exception.ExportException;
+import net.myvietnam.mvncore.exception.ForeignKeyNotFoundException;
+import net.myvietnam.mvncore.exception.ObjectNotFoundException;
+import net.myvietnam.mvncore.filter.DisableHtmlTagFilter;
+import net.myvietnam.mvncore.filter.EnableHtmlTagFilter;
 
 /**
  * @author Igor Manic
@@ -69,8 +81,8 @@ public class MemberXML {
     private int memberID;
     /** Returns <code>MemberID</code> of this member or
       * <code>-1</code> if member is not created yet. */
-    public int getMemberID() { 
-        return memberID; 
+    public int getMemberID() {
+        return memberID;
     }
 
     public void setMemberID(String id) {
@@ -170,7 +182,7 @@ public class MemberXML {
         if (memberID >= 0) {
             strMemberID = Integer.toString(memberID);
         }
-        
+
         addMember(strMemberID,
                 memberName, memberPassword,
                 memberFirstEmail, memberEmail,
@@ -192,8 +204,8 @@ public class MemberXML {
                 memberFirstname, memberLastname,
                 memberGender, memberBirthday,
                 memberAddress, memberCity,
-                memberState, memberCountry, 
-                memberPhone, memberMobile, 
+                memberState, memberCountry,
+                memberPhone, memberMobile,
                 memberFax, memberCareer,
                 memberHomepage, memberYahoo,
                 memberAol, memberIcq, memberMsn,
@@ -447,7 +459,7 @@ public class MemberXML {
             memberMsn = EnableHtmlTagFilter.filter(memberMsn);
             memberCoolLink1 = EnableHtmlTagFilter.filter(memberCoolLink1);
             memberCoolLink2 = EnableHtmlTagFilter.filter(memberCoolLink2);
-            
+
             if (strMemberID == null) {
                 DAOFactory.getMemberDAO().create(
                    memberName, memberPassword, memberFirstEmail,
@@ -463,8 +475,7 @@ public class MemberXML {
                    memberBirthday1, memberAddress, memberCity,
                    memberState, memberCountry, memberPhone,
                    memberMobile, memberFax, memberCareer,
-                   memberHomepage, memberYahoo, memberAol,
-                   memberIcq, memberMsn, memberCoolLink1, memberCoolLink2);
+                   memberHomepage);
             } else {
                 //I must change all possible nulls into "", so I don't get "'null'" in sql query
                 String memberEmailVisible2 = (XMLUtil.stringToBooleanDef(memberEmailVisible, false)?"1":"0");
@@ -790,7 +801,7 @@ public class MemberXML {
 
     public static void exportGlobalWatchesForMember(XMLWriter xmlWriter, int memberID)
         throws IOException, DatabaseException, ExportException {
-        
+
         Collection globalWatches=ExportWebHelper.execSqlQuery(
                    "SELECT WatchType, WatchOption, WatchStatus, WatchCreationDate, WatchLastSentDate, WatchEndDate"+
                    " FROM "+WatchDAO.TABLE_NAME+

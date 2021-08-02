@@ -1026,54 +1026,6 @@ public final class MVNForumConfig {
         enableShowHomepage = enable;
     }
 
-    private static boolean enableShowCoolLink_1 = true;
-    public static boolean getEnableShowCoolLink1() {
-        return enableShowCoolLink_1;
-    }
-    public static void setEnableShowCoolLink1(boolean enable) {
-        enableShowCoolLink_1 = enable;
-    }
-
-    private static boolean enableShowCoolLink_2 = true;
-    public static boolean getEnableShowCoolLink2() {
-        return enableShowCoolLink_2;
-    }
-    public static void setEnableShowCoolLink2(boolean enable) {
-        enableShowCoolLink_2 = enable;
-    }
-
-    private static boolean enableShowYahoo = true;
-    public static boolean getEnableShowYahoo() {
-        return enableShowYahoo;
-    }
-    public static void setEnableShowYahoo(boolean enable) {
-        enableShowYahoo = enable;
-    }
-
-    private static boolean enableShowAOL = true;
-    public static boolean getEnableShowAOL() {
-        return enableShowAOL;
-    }
-    public static void setEnableShowAOL(boolean enable) {
-        enableShowAOL = enable;
-    }
-
-    private static boolean enableShowICQ = true;
-    public static boolean getEnableShowICQ() {
-        return enableShowICQ;
-    }
-    public static void setEnableShowICQ(boolean enable) {
-        enableShowICQ = enable;
-    }
-
-    private static boolean enableShowMSN = true;
-    public static boolean getEnableShowMSN() {
-        return enableShowMSN;
-    }
-    public static void setEnableShowMSN(boolean enable) {
-        enableShowMSN = enable;
-    }
-
     private static boolean enableShowJoinDate = true;
     public static boolean getEnableShowJoinDate() {
         return enableShowJoinDate;
@@ -1940,21 +1892,15 @@ public final class MVNForumConfig {
             enableShowBirthday       = conf.getBoolean("mvnforumconfig.enable_show_birthday", true);
             enableShowGender         = conf.getBoolean("mvnforumconfig.enable_show_gender", true);
             enableShowAddress        = conf.getBoolean("mvnforumconfig.enable_show_address", true);
-            enableShowAOL            = conf.getBoolean("mvnforumconfig.enable_show_aol", true);
             enableShowCareer         = conf.getBoolean("mvnforumconfig.enable_show_career", true);
             enableShowCity           = conf.getBoolean("mvnforumconfig.enable_show_city", true);
-            enableShowCoolLink_1     = conf.getBoolean("mvnforumconfig.enable_show_cool_link_1", true);
-            enableShowCoolLink_2     = conf.getBoolean("mvnforumconfig.enable_show_cool_link_2", true);
             enableShowCountry        = conf.getBoolean("mvnforumconfig.enable_show_country", true);
             enableShowHomepage       = conf.getBoolean("mvnforumconfig.enable_show_homepage", true);
-            enableShowICQ            = conf.getBoolean("mvnforumconfig.enable_show_icq", true);
             enableShowJoinDate       = conf.getBoolean("mvnforumconfig.enable_show_join_date", true);
             enableShowMobile         = conf.getBoolean("mvnforumconfig.enable_show_mobile", true);
             enableShowFax            = conf.getBoolean("mvnforumconfig.enable_show_fax", true);
-            enableShowMSN            = conf.getBoolean("mvnforumconfig.enable_show_msn", true);
             enableShowPhone          = conf.getBoolean("mvnforumconfig.enable_show_phone", true);
             enableShowState          = conf.getBoolean("mvnforumconfig.enable_show_state", true);
-            enableShowYahoo          = conf.getBoolean("mvnforumconfig.enable_show_yahoo", true);
             enableShowPostCount      = conf.getBoolean("mvnforumconfig.enable_show_post_count", true);
             enableShowOnlineStatus   = conf.getBoolean("mvnforumconfig.enable_show_online_status", true);
             enableShowFirstName      = conf.getBoolean("mvnforumconfig.enable_show_firstname", true);

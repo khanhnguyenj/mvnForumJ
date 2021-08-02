@@ -40,25 +40,28 @@
  */
 package com.mvnforum.user;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletConfig;
-import javax.servlet.http.*;
-
-import net.myvietnam.mvncore.MVNCoreGlobal;
-import net.myvietnam.mvncore.exception.*;
-import net.myvietnam.mvncore.filter.DisableHtmlTagFilter;
-import net.myvietnam.mvncore.interceptor.InterceptorService;
-import net.myvietnam.mvncore.security.*;
-import net.myvietnam.mvncore.service.*;
-import net.myvietnam.mvncore.util.*;
-import net.myvietnam.mvncore.web.GenericRequest;
-import net.myvietnam.mvncore.web.GenericResponse;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -66,15 +69,66 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.mvnforum.*;
-import com.mvnforum.auth.*;
-import com.mvnforum.common.*;
-import com.mvnforum.db.*;
+import com.mvnforum.MVNForumConfig;
+import com.mvnforum.MVNForumConstant;
+import com.mvnforum.MVNForumGlobal;
+import com.mvnforum.MVNForumResourceBundle;
+import com.mvnforum.MyUtil;
+import com.mvnforum.auth.AuthenticationException;
+import com.mvnforum.auth.MVNForumPermission;
+import com.mvnforum.auth.OnlineUser;
+import com.mvnforum.auth.OnlineUserImpl;
+import com.mvnforum.auth.OnlineUserManager;
+import com.mvnforum.common.MemberAvatarTimeTracking;
+import com.mvnforum.common.MemberMapping;
+import com.mvnforum.common.MemberUtil;
+import com.mvnforum.common.OnlineUserUtil;
+import com.mvnforum.common.SendMailUtil;
+import com.mvnforum.db.DAOFactory;
+import com.mvnforum.db.MemberBean;
+import com.mvnforum.db.MemberCache;
+import com.mvnforum.db.MemberDAO;
 import com.mvnforum.search.member.MemberIndexer;
 import com.mvnforum.service.MvnForumInfoService;
 import com.mvnforum.service.MvnForumServiceFactory;
 
-import freemarker.template.*;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import net.myvietnam.mvncore.MVNCoreGlobal;
+import net.myvietnam.mvncore.exception.BadInputException;
+import net.myvietnam.mvncore.exception.CreateException;
+import net.myvietnam.mvncore.exception.DatabaseException;
+import net.myvietnam.mvncore.exception.DuplicateKeyException;
+import net.myvietnam.mvncore.exception.FloodException;
+import net.myvietnam.mvncore.exception.ForeignKeyNotFoundException;
+import net.myvietnam.mvncore.exception.InterceptorException;
+import net.myvietnam.mvncore.exception.MissingURLMapEntryException;
+import net.myvietnam.mvncore.exception.ObjectNotFoundException;
+import net.myvietnam.mvncore.filter.DisableHtmlTagFilter;
+import net.myvietnam.mvncore.interceptor.InterceptorService;
+import net.myvietnam.mvncore.security.Encoder;
+import net.myvietnam.mvncore.security.FloodControlHour;
+import net.myvietnam.mvncore.security.RandomGenerator;
+import net.myvietnam.mvncore.security.SecurityUtil;
+import net.myvietnam.mvncore.service.BinaryStorageInfo;
+import net.myvietnam.mvncore.service.BinaryStorageService;
+import net.myvietnam.mvncore.service.EventLogService;
+import net.myvietnam.mvncore.service.FileUploadParserService;
+import net.myvietnam.mvncore.service.MvnCoreServiceFactory;
+import net.myvietnam.mvncore.service.URLResolverService;
+import net.myvietnam.mvncore.util.AssertionUtil;
+import net.myvietnam.mvncore.util.DateUtil;
+import net.myvietnam.mvncore.util.FileUtil;
+import net.myvietnam.mvncore.util.GenericParamUtil;
+import net.myvietnam.mvncore.util.I18nUtil;
+import net.myvietnam.mvncore.util.ImageUtil;
+import net.myvietnam.mvncore.util.MailMessageStruct;
+import net.myvietnam.mvncore.util.MailUtil;
+import net.myvietnam.mvncore.util.ParamUtil;
+import net.myvietnam.mvncore.util.StringUtil;
+import net.myvietnam.mvncore.web.GenericRequest;
+import net.myvietnam.mvncore.web.GenericResponse;
 
 public class MemberWebHandler {
 
@@ -109,13 +163,13 @@ public class MemberWebHandler {
             throw new IllegalStateException(localizedMessage);
             //throw new IllegalStateException("Cannot register new member because NEW_MEMBER feature is disabled by administrator.");
         }
-        
+
         boolean agree = GenericParamUtil.getParameterBoolean(request, "agree");
         if (agree) {
             // we need to check this to make sure user not use link: /mvnforum/registermember?agree=true
             SecurityUtil.checkHttpPostMethod(request);
         }
-        
+
         if ((MVNForumConfig.getEnableRegisterRule()) && (agree == false)) {
             //repare to load file rule_xx.html
             String fileNameDefault = "rule_en.html";
@@ -283,22 +337,6 @@ public class MemberWebHandler {
         if (MVNForumConfig.getEnableShowCareer()) {
             memberCareer            = GenericParamUtil.getParameterFilter(request, "MemberCareer", MVNForumConfig.isRequireRegisterCareer());
         }
-        String memberYahoo          = "";
-        if (MVNForumConfig.getEnableShowYahoo()) {
-            memberYahoo             = GenericParamUtil.getParameterFilter(request, "MemberYahoo", MVNForumConfig.isRequireRegisterYahoo());
-        }
-        String memberAol            = "";
-        if (MVNForumConfig.getEnableShowAOL()) {
-            memberAol               = GenericParamUtil.getParameterFilter(request, "MemberAol", MVNForumConfig.isRequireRegisterAol());
-        }
-        String memberIcq            = "";
-        if (MVNForumConfig.getEnableShowICQ()) {
-            memberIcq               = GenericParamUtil.getParameterFilter(request, "MemberIcq", MVNForumConfig.isRequireRegisterIcq());
-        }
-        String memberMsn            = "";
-        if (MVNForumConfig.getEnableShowMSN()) {
-            memberMsn               = GenericParamUtil.getParameterFilter(request, "MemberMsn", MVNForumConfig.isRequireRegisterMsn());
-        }
 
         String memberLanguage       = GenericParamUtil.getParameterFilter(request, "MemberLanguage", false);
 
@@ -319,21 +357,6 @@ public class MemberWebHandler {
             }
         }
         String memberCoolLink1      = "";
-        if (MVNForumConfig.getEnableShowCoolLink1()) {
-            memberCoolLink1 = GenericParamUtil.getParameter(request, "MemberCoolLink1");
-            if ( MVNForumConfig.isRequireRegisterLink1() ||
-                 memberCoolLink1.length() > 0 ) {
-                memberCoolLink1 = GenericParamUtil.getParameterUrl(request, "MemberCoolLink1");
-            }
-        }
-        String memberCoolLink2      = "";
-        if (MVNForumConfig.getEnableShowCoolLink2()) {
-            memberCoolLink2 = GenericParamUtil.getParameter(request, "MemberCoolLink2");
-            if ( MVNForumConfig.isRequireRegisterLink2() ||
-                 memberCoolLink2.length() > 0 ) {
-                memberCoolLink2 = GenericParamUtil.getParameterUrl(request, "MemberCoolLink2");
-            }
-        }
         Date memberBirthday         = MemberBean.MEMBER_NOT_REQUIRE_BIRTHDAY;
         if (MVNForumConfig.getEnableShowBirthday()) {
             String day = GenericParamUtil.getParameter(request, "day");
@@ -364,14 +387,14 @@ public class MemberWebHandler {
             String localizedMessage = MVNForumResourceBundle.getString(locale, "mvncore.exception.BadInputException.email_exists", new Object[] {memberName, memberEmail});
             throw new DuplicateKeyException(localizedMessage);
         } catch (ObjectNotFoundException ex) {
-            
+
         }
         try {
             DAOFactory.getMemberDAO().findByAlternateKey_MemberName(memberName);
             String localizedMessage = MVNForumResourceBundle.getString(locale, "mvncore.exception.BadInputException.account_exists", new Object[] {memberName});
             throw new DuplicateKeyException(localizedMessage);
         } catch (ObjectNotFoundException ex) {
-            
+
         }
         DAOFactory.getMemberDAO().create(memberName, memberPassword, memberFirstEmail,
                                memberEmail, memberEmailVisible, memberNameVisible,
@@ -387,11 +410,9 @@ public class MemberWebHandler {
                                memberBirthday, memberAddress, memberCity,
                                memberState, memberCountry, memberPhone,
                                memberMobile, memberFax, memberCareer,
-                               memberHomepage, memberYahoo, memberAol,
-                               memberIcq, memberMsn, memberCoolLink1,
-                               memberCoolLink2);
+                               memberHomepage);
         // Now, create 4 default folders for each member
-       
+
         int memberID = 0;
         try {
             // NOTE: please note that we cannot get it from the MemberCache, because we have
@@ -490,12 +511,6 @@ public class MemberWebHandler {
         String memberFax            = memberBean.getMemberFax();
         String memberCareer         = memberBean.getMemberCareer();
         String memberHomepage       = memberBean.getMemberHomepage();
-        String memberYahoo          = memberBean.getMemberYahoo();
-        String memberAol            = memberBean.getMemberAol();
-        String memberIcq            = memberBean.getMemberIcq();
-        String memberMsn            = memberBean.getMemberMsn();
-        String memberCoolLink1      = memberBean.getMemberCoolLink1();
-        String memberCoolLink2      = memberBean.getMemberCoolLink2();
 
         // column(s) to update
         if (internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberEmailVisible())) {
@@ -580,38 +595,6 @@ public class MemberWebHandler {
                 memberHomepage = GenericParamUtil.getParameterUrl(request, "MemberHomepage");
             }
         }
-        if ( (internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberYahoo())) &&
-                MVNForumConfig.getEnableShowYahoo() ) {
-            memberYahoo = GenericParamUtil.getParameterFilter(request, "MemberYahoo", MVNForumConfig.isRequireRegisterYahoo());
-        }
-        if ( (internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberAol())) &&
-                MVNForumConfig.getEnableShowAOL() ) {
-            memberAol = GenericParamUtil.getParameterFilter(request, "MemberAol", MVNForumConfig.isRequireRegisterAol());
-        }
-        if ( (internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberIcq())) &&
-                MVNForumConfig.getEnableShowICQ() ) {
-            memberIcq = GenericParamUtil.getParameterFilter(request, "MemberIcq", MVNForumConfig.isRequireRegisterIcq());
-        }
-        if ( (internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberMsn())) &&
-                MVNForumConfig.getEnableShowMSN() ) {
-            memberMsn = GenericParamUtil.getParameterFilter(request, "MemberMsn", MVNForumConfig.isRequireRegisterMsn());
-        }
-        if ( (internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberCoolLink1())) &&
-                MVNForumConfig.getEnableShowCoolLink1() ) {
-            String memberCoolLink1Str = GenericParamUtil.getParameter(request, "MemberCoolLink1");
-            if ( MVNForumConfig.isRequireRegisterLink1() ||
-                 memberCoolLink1Str.length() > 0 ) {
-                memberCoolLink1 = GenericParamUtil.getParameterUrl(request, "MemberCoolLink1");
-            }
-        }
-        if ( (internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberCoolLink2())) &&
-                MVNForumConfig.getEnableShowCoolLink2() ) {
-            String memberCoolLink2Str = GenericParamUtil.getParameter(request, "MemberCoolLink2");
-            if ( MVNForumConfig.isRequireRegisterLink2() ||
-                 memberCoolLink2Str.length() > 0 ) {
-                memberCoolLink2 = GenericParamUtil.getParameterUrl(request, "MemberCoolLink2");
-            }
-        }
 
         DAOFactory.getMemberDAO().update(memberID, // primary key
                                memberEmailVisible, memberNameVisible, now/*memberModifiedDate*/,
@@ -621,9 +604,7 @@ public class MemberWebHandler {
                                memberGender, memberBirthday, memberAddress,
                                memberCity, memberState, memberCountry,
                                memberPhone, memberMobile, memberFax,
-                               memberCareer, memberHomepage, memberYahoo,
-                               memberAol, memberIcq, memberMsn,
-                               memberCoolLink1, memberCoolLink2);
+                               memberCareer, memberHomepage);
 
         // now, update the new displayed language option
         onlineUser.reloadProfile(request, response);
@@ -642,9 +623,9 @@ public class MemberWebHandler {
 
     public void processGuestSetting(GenericRequest request, GenericResponse response)
         throws BadInputException, DatabaseException, AuthenticationException {
-    
+
         SecurityUtil.checkHttpPostMethod(request);
-       
+
         OnlineUserImpl onlineUserImpl = (OnlineUserImpl) onlineUserManager.getOnlineUser(request);
         if (onlineUserImpl.isMember()) {
             return;
@@ -655,7 +636,7 @@ public class MemberWebHandler {
         int postsPerPage    = GenericParamUtil.getParameterInt(request, "GuestPostsPerPage");
         boolean saveCookie  = GenericParamUtil.getParameterBoolean(request, "SaveCookie");
         String localeName   = GenericParamUtil.getParameterSafe(request, "GuestLanguage", false);
-        
+
         if (MVNForumConfig.supportLocale(localeName) == false) {
             localeName = MVNForumConfig.getDefaultLocaleName();
         }
@@ -665,27 +646,27 @@ public class MemberWebHandler {
         onlineUserImpl.setPostsPerPage( postsPerPage);
 
         request.setAttribute("SettingSuccsess", "true");
-        
+
         if (saveCookie) {
             int guestCookiesTimeOut = (60 * 60 * 24) * 30; // 30 day
             String sTimeZone = Double.toString(timeZone);
-            String sPostsPerPage = Integer.toString(postsPerPage); 
-            
+            String sPostsPerPage = Integer.toString(postsPerPage);
+
             Cookie guestLanguageCK = new Cookie(MVNForumConstant.MVNFORUM_COOKIE_GUEST_LANGUAGE, localeName);
             guestLanguageCK.setVersion(COOKIE_VERSION);
             guestLanguageCK.setMaxAge(guestCookiesTimeOut);
             guestLanguageCK.setPath(OnlineUserManager.MVNFORUM_COOKIE_PATH);
-            
+
             Cookie guestTimeZoneCK =  new Cookie(MVNForumConstant.MVNFORUM_COOKIE_GUEST_TIMEZONE, sTimeZone);
             guestTimeZoneCK.setVersion(COOKIE_VERSION);
             guestTimeZoneCK.setMaxAge(guestCookiesTimeOut);
             guestTimeZoneCK.setPath(OnlineUserManager.MVNFORUM_COOKIE_PATH);
-            
-            Cookie guestPostsPerPageCK =  new Cookie(MVNForumConstant.MVNFORUM_COOKIE_GUEST_POSTS_PER_PAGE, sPostsPerPage);  
+
+            Cookie guestPostsPerPageCK =  new Cookie(MVNForumConstant.MVNFORUM_COOKIE_GUEST_POSTS_PER_PAGE, sPostsPerPage);
             guestPostsPerPageCK.setVersion(COOKIE_VERSION);
             guestPostsPerPageCK.setMaxAge(guestCookiesTimeOut);
             guestPostsPerPageCK.setPath(OnlineUserManager.MVNFORUM_COOKIE_PATH);
-            
+
             response.addCookie(guestLanguageCK);
             response.addCookie(guestTimeZoneCK);
             response.addCookie(guestPostsPerPageCK);
@@ -694,22 +675,22 @@ public class MemberWebHandler {
             guestLanguageCK.setVersion(COOKIE_VERSION);
             guestLanguageCK.setMaxAge(0);// delete this cookie
             guestLanguageCK.setPath(OnlineUserManager.MVNFORUM_COOKIE_PATH);
-            
+
             Cookie guestTimeZoneCK =  new Cookie(MVNForumConstant.MVNFORUM_COOKIE_GUEST_TIMEZONE, "");
             guestTimeZoneCK.setVersion(COOKIE_VERSION);
             guestTimeZoneCK.setMaxAge(0);// delete this cookie
             guestTimeZoneCK.setPath(OnlineUserManager.MVNFORUM_COOKIE_PATH);
-            
+
             Cookie guestPostsPerPageCK =  new Cookie(MVNForumConstant.MVNFORUM_COOKIE_GUEST_POSTS_PER_PAGE, "");
             guestPostsPerPageCK.setVersion(COOKIE_VERSION);
             guestPostsPerPageCK.setMaxAge(0);// delete this cookie
             guestPostsPerPageCK.setPath(OnlineUserManager.MVNFORUM_COOKIE_PATH);
-            
+
             response.addCookie(guestLanguageCK);
             response.addCookie(guestTimeZoneCK);
             response.addCookie(guestPostsPerPageCK);
-        } 
-    } 
+        }
+    }
 
     /*
      * @todo: use new method of WebHelper
@@ -970,9 +951,9 @@ public class MemberWebHandler {
      */
     public void processUploadAvatar(ServletConfig config, GenericRequest request)
         throws AuthenticationException, IOException, DatabaseException {
-        
+
         SecurityUtil.checkHttpPostMethod(request, true, true);
-        
+
         Locale locale = I18nUtil.getLocaleInRequest(request);
 
         if (MVNForumConfig.getEnableAvatar() == false) {
@@ -987,7 +968,7 @@ public class MemberWebHandler {
         permission.ensureCanUseAvatar();
 
         URLResolverService urlResolverService = MvnCoreServiceFactory.getMvnCoreService().getURLResolverService();
-        
+
         int memberID      = onlineUser.getMemberID();
         //String memberName = onlineUser.getMemberName();
 
@@ -1012,10 +993,8 @@ public class MemberWebHandler {
             FileItem currentFileItem = (FileItem)fileItems.get(i);
             String fieldName = currentFileItem.getFieldName();
            // myFile = (FileItem)fileItems.get(i);
-            if (fieldName.equals("submitbutton")) {
+            if (fieldName.equals("submitbutton") || fieldName.equals(urlResolverService.getActionParam())) {
                 //ignore
-            } else if (fieldName.equals(urlResolverService.getActionParam())) {
-                //ignore ACTION_PARAM if exists
             } else if (fieldName.equals("PictureFile")) {
                 if (currentFileItem.isFormField()) {
                     String localizedMessage = MVNForumResourceBundle.getString(locale, "java.lang.AssertionError.cannot_process_uploaded_attach_file_with_form_field");
@@ -1039,7 +1018,7 @@ public class MemberWebHandler {
         }
 
         SecurityUtil.checkSecurityTokenMethod(request, receivedToken);
-        
+
         if ( (myFile == null) || myFile.isFormField() ) {
             String localizedMessage = MVNForumResourceBundle.getString(locale, "java.lang.AssertionError.cannot_process_upload_avatar_with_form_field");
             throw new AssertionError(localizedMessage);
@@ -1051,7 +1030,7 @@ public class MemberWebHandler {
         ByteArrayOutputStream os = new ByteArrayOutputStream(60000);
         ImageUtil.createThumbnail(is, os, MVNForumGlobal.UPLOADED_MEMBER_AVATAR_MAX_WIDTH, MVNForumGlobal.UPLOADED_MEMBER_AVATAR_MAX_HEIGHT, locale);
         byte[] imageBinary = os.toByteArray();
-        
+
         String binaryMimeType = "image/jpeg";// because method ImageUtil.createThumbnail create thumbnail of jpeg
         int binaryFileSize = imageBinary.length; //(int)myFile.getSize();
         String fullFilePath = myFile.getName();
@@ -1061,10 +1040,10 @@ public class MemberWebHandler {
 
         binaryStorageService.storeData(BinaryStorageService.CATEGORY_AVATAR, String.valueOf(memberID), binaryFilename,
                                 imageBinary, binaryFileSize, 0, 0, binaryMimeType, binaryCreationIP);
-        
+
         // track the time of avatar to prevent cache in web proxy
         MemberAvatarTimeTracking.getInstance().putTimeTracking(memberID, System.currentTimeMillis());
-        
+
         // clear the member cache
         MemberCache.getInstance().clear();
     }
@@ -1189,7 +1168,7 @@ public class MemberWebHandler {
             mailMessageStruct.setTo(memberEmail);
             mailMessageStruct.setSubject(subject);
             mailMessageStruct.setMessage(body);
-            
+
             MailUtil.sendMail(mailMessageStruct);
         } catch (UnsupportedEncodingException e) {
             log.error("Cannot support encoding", e);
@@ -1479,7 +1458,7 @@ public class MemberWebHandler {
         } else {
             //don't handle
         }*/
-        
+
         long lastModified = 0;
         try {
             BinaryStorageInfo binaryStorageInfo = binaryStorageService.getBinaryStorageInfo(BinaryStorageService.CATEGORY_AVATAR, String.valueOf(memberID), null);
@@ -1493,7 +1472,7 @@ public class MemberWebHandler {
             }
             return;
         }
-        
+
         long ifModifiedSince = request.getDateHeader("If-Modified-Since");
         //log.debug("\n ** Last Modified : " + lastModified + " If Modified Since : " + ifModifiedSince + " **");
         if (ifModifiedSince != -1) {
@@ -1501,9 +1480,9 @@ public class MemberWebHandler {
                 && */(lastModified <= ifModifiedSince )) {
                 // The entity has not been modified since the date
                 // specified by the client. This is not an error case.
-                
+
                 log.debug("MemberWebHandler.getAvatar() succeed with a status HttpServletResponse.SC_NOT_MODIFIED");
-                
+
                 response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
                 return;
             }
@@ -1583,7 +1562,7 @@ public class MemberWebHandler {
         eventLogService.logEvent(onlineUser.getMemberName(), request.getRemoteAddr(),MVNForumConstant.EVENT_LOG_MAIN_MODULE, MVNForumConstant.EVENT_LOG_SUB_MODULE_USER,"change password", actionDesc, EventLogService.MEDIUM);
 
     }
-    
+
     public void prepareListOnlineUsers(GenericRequest request, String requestURI) throws AuthenticationException, DatabaseException, MissingURLMapEntryException {
 
         Locale locale = I18nUtil.getLocaleInRequest(request);

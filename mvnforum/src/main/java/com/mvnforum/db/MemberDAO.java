@@ -44,7 +44,10 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Collection;
 
-import net.myvietnam.mvncore.exception.*;
+import net.myvietnam.mvncore.exception.CreateException;
+import net.myvietnam.mvncore.exception.DatabaseException;
+import net.myvietnam.mvncore.exception.DuplicateKeyException;
+import net.myvietnam.mvncore.exception.ObjectNotFoundException;
 
 /**
  * Interface to access to the user data.
@@ -124,13 +127,7 @@ public interface MemberDAO {
                        String memberMobile,
                        String memberFax,
                        String memberCareer,
-                       String memberHomepage,
-                       String memberYahoo,
-                       String memberAol,
-                       String memberIcq,
-                       String memberMsn,
-                       String memberCoolLink1,
-                       String memberCoolLink2)
+                       String memberHomepage)
         throws CreateException, DatabaseException, DuplicateKeyException;
 
     public boolean isSupportUpdate();
@@ -157,13 +154,7 @@ public interface MemberDAO {
                        String memberMobile,
                        String memberFax,
                        String memberCareer,
-                       String memberHomepage,
-                       String memberYahoo,
-                       String memberAol,
-                       String memberIcq,
-                       String memberMsn,
-                       String memberCoolLink1,
-                       String memberCoolLink2)
+                       String memberHomepage)
         throws ObjectNotFoundException, DatabaseException;
 
     public boolean isSupportUpdateEmail();

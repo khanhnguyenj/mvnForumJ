@@ -598,32 +598,8 @@ DOM4JConfiguration mvncoreConfig  = (DOM4JConfiguration)request.getAttribute("mv
     <td><%=mvnforumConfig.getString("mvnforumconfig.enable_show_career", "")%></td>
   </tr>
    <tr class="<mvn:cssrow/>">
-    <td><img src="<%=contextPath%>/mvnplugin/mvnforum/images/icon/icon_help.gif" onmouseover="return overlib('<fmt:message key="mvnforum.help.enable_show_cool_link_1" bundle="${guide}" />')" onmouseout="return nd();" alt=""/>enable_show_cool_link_1 <span class="requiredfield">*</span></td>
-    <td><%=mvnforumConfig.getString("mvnforumconfig.enable_show_cool_link_1", "")%></td>
-  </tr>
-   <tr class="<mvn:cssrow/>">
-    <td><img src="<%=contextPath%>/mvnplugin/mvnforum/images/icon/icon_help.gif" onmouseover="return overlib('<fmt:message key="mvnforum.help.enable_show_cool_link_2" bundle="${guide}" />')" onmouseout="return nd();" alt=""/>enable_show_cool_link_2 <span class="requiredfield">*</span></td>
-    <td><%=mvnforumConfig.getString("mvnforumconfig.enable_show_cool_link_2", "")%></td>
-  </tr>
-   <tr class="<mvn:cssrow/>">
-    <td><img src="<%=contextPath%>/mvnplugin/mvnforum/images/icon/icon_help.gif" onmouseover="return overlib('<fmt:message key="mvnforum.help.enable_show_yahoo" bundle="${guide}" />')" onmouseout="return nd();" alt=""/>enable_show_yahoo <span class="requiredfield">*</span></td>
-    <td><%=mvnforumConfig.getString("mvnforumconfig.enable_show_yahoo", "")%></td>
-  </tr>
-   <tr class="<mvn:cssrow/>">
-    <td><img src="<%=contextPath%>/mvnplugin/mvnforum/images/icon/icon_help.gif" onmouseover="return overlib('<fmt:message key="mvnforum.help.enable_show_aol" bundle="${guide}" />')" onmouseout="return nd();" alt=""/>enable_show_aol <span class="requiredfield">*</span></td>
-    <td><%=mvnforumConfig.getString("mvnforumconfig.enable_show_aol", "")%></td>
-  </tr>
-   <tr class="<mvn:cssrow/>">
     <td><img src="<%=contextPath%>/mvnplugin/mvnforum/images/icon/icon_help.gif" onmouseover="return overlib('<fmt:message key="mvnforum.help.enable_show_career" bundle="${guide}" />')" onmouseout="return nd();" alt=""/>enable_show_career <span class="requiredfield">*</span></td>
     <td><%=mvnforumConfig.getString("mvnforumconfig.enable_show_career", "")%></td>
-  </tr>
-   <tr class="<mvn:cssrow/>">
-    <td><img src="<%=contextPath%>/mvnplugin/mvnforum/images/icon/icon_help.gif" onmouseover="return overlib('<fmt:message key="mvnforum.help.enable_show_icq" bundle="${guide}" />')" onmouseout="return nd();" alt=""/>enable_show_icq <span class="requiredfield">*</span></td>
-    <td><%=mvnforumConfig.getString("mvnforumconfig.enable_show_icq", "")%></td>
-  </tr>
-   <tr class="<mvn:cssrow/>">
-    <td><img src="<%=contextPath%>/mvnplugin/mvnforum/images/icon/icon_help.gif" onmouseover="return overlib('<fmt:message key="mvnforum.help.enable_show_msn" bundle="${guide}" />')" onmouseout="return nd();" alt=""/>enable_show_msn <span class="requiredfield">*</span></td>
-    <td><%=mvnforumConfig.getString("mvnforumconfig.enable_show_msn", "")%></td>
   </tr>
   <tr class="<mvn:cssrow/>">
     <td><img src="<%=contextPath%>/mvnplugin/mvnforum/images/icon/icon_help.gif" onmouseover="return overlib('<fmt:message key="mvnforum.help.enable_show_join_date" bundle="${guide}" />')" onmouseout="return nd();" alt=""/>enable_show_join_date <span class="requiredfield">*</span></td>

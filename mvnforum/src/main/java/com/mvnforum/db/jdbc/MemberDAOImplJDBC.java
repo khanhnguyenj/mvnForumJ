@@ -40,19 +40,32 @@
  */
 package com.mvnforum.db.jdbc;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import net.myvietnam.mvncore.db.DBUtils;
-import net.myvietnam.mvncore.exception.*;
-import net.myvietnam.mvncore.util.AssertionUtil;
-import net.myvietnam.mvncore.util.StringUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.mvnforum.db.*;
+import com.mvnforum.db.MemberBean;
+import com.mvnforum.db.MemberDAO;
+import com.mvnforum.db.MemberForumDAO;
+import com.mvnforum.db.MemberGroupDAO;
+import com.mvnforum.db.MemberPermissionDAO;
+
+import net.myvietnam.mvncore.db.DBUtils;
+import net.myvietnam.mvncore.exception.CreateException;
+import net.myvietnam.mvncore.exception.DatabaseException;
+import net.myvietnam.mvncore.exception.DuplicateKeyException;
+import net.myvietnam.mvncore.exception.ObjectNotFoundException;
+import net.myvietnam.mvncore.util.AssertionUtil;
+import net.myvietnam.mvncore.util.StringUtil;
 
 public class MemberDAOImplJDBC implements MemberDAO {
 
@@ -61,9 +74,11 @@ public class MemberDAOImplJDBC implements MemberDAO {
     public MemberDAOImplJDBC() {
     }
 
+    @Override
     public boolean isSupportFindByPrimaryKey() {
         return true;
     }
+    @Override
     public void findByPrimaryKey(int memberID)
         throws ObjectNotFoundException, DatabaseException {
 
@@ -92,9 +107,11 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportFindByPrimaryKey2() {
         return true;
     }
+    @Override
     public void findByPrimaryKey2(int memberID, String memberName)
         throws ObjectNotFoundException, DatabaseException {
 
@@ -124,9 +141,11 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportFindByAlternateKey_MemberName() {
         return true;
     }
+    @Override
     public String findByAlternateKey_MemberName(String memberName)
         throws ObjectNotFoundException, DatabaseException {
 
@@ -160,10 +179,12 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportFindByAlternateKey_MemberEmail() {
         return true;
     }
-    
+
+    @Override
     public void findByAlternateKey_MemberEmail(String memberEmail)
         throws ObjectNotFoundException, DatabaseException {
 
@@ -196,6 +217,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportDeleteByPrimaryKey() {
         return true;
     }
@@ -206,6 +228,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
      * @param memberID an <code>int</code> value
      * @exception DatabaseException if an error occurs
      */
+    @Override
     public void deleteByPrimaryKey(int memberID) throws DatabaseException {
 
         Connection connection = null;
@@ -230,6 +253,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportCreate() {
         return true;
     }
@@ -246,6 +270,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
      *                   MemberIcq, MemberMsn, MemberCoolLink1, MemberCoolLink2
      * Excluded columns: MemberID
      */
+    @Override
     public void create(String memberName, String memberPassword, String memberFirstEmail,
                         String memberEmail, int memberEmailVisible, int memberNameVisible,
                         String memberFirstIP, String memberLastIP, int memberViewCount,
@@ -260,9 +285,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
                         Date memberBirthday, String memberAddress, String memberCity,
                         String memberState, String memberCountry, String memberPhone,
                         String memberMobile, String memberFax, String memberCareer,
-                        String memberHomepage, String memberYahoo, String memberAol,
-                        String memberIcq, String memberMsn, String memberCoolLink1,
-                        String memberCoolLink2)
+                        String memberHomepage)
                         throws CreateException, DatabaseException, DuplicateKeyException, IllegalArgumentException {
 
         // @todo: Comment this try-catch block if the needed columns don't have attribute 'include'
@@ -345,12 +368,6 @@ public class MemberDAOImplJDBC implements MemberDAO {
             statement.setString(43, memberFax);
             statement.setString(44, memberCareer);
             statement.setString(45, memberHomepage);
-            statement.setString(46, memberYahoo);
-            statement.setString(47, memberAol);
-            statement.setString(48, memberIcq);
-            statement.setString(49, memberMsn);
-            statement.setString(50, memberCoolLink1);
-            statement.setString(51, memberCoolLink2);
 
             if (statement.executeUpdate() != 1) {
                 throw new CreateException("Error adding a row into table 'Member'.");
@@ -364,6 +381,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportUpdate() {
         return true;
     }
@@ -380,6 +398,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
      *                   MemberVoteCount, MemberVoteTotalStars, MemberRewardPoints, MemberTitle, MemberSignature,
      *                   MemberAvatar
      */
+    @Override
     public void update(int memberID, // primary key
                         int memberEmailVisible, int memberNameVisible, Timestamp memberModifiedDate,
                         int memberOption, int memberStatus, int memberMessageOption,
@@ -388,9 +407,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
                         int memberGender, Date memberBirthday, String memberAddress,
                         String memberCity, String memberState, String memberCountry,
                         String memberPhone, String memberMobile, String memberFax,
-                        String memberCareer, String memberHomepage, String memberYahoo,
-                        String memberAol, String memberIcq, String memberMsn,
-                        String memberCoolLink1, String memberCoolLink2)
+                        String memberCareer, String memberHomepage)
                         throws ObjectNotFoundException, DatabaseException {
 
         Connection connection = null;
@@ -426,12 +443,6 @@ public class MemberDAOImplJDBC implements MemberDAO {
             statement.setString(21, memberFax);
             statement.setString(22, memberCareer);
             statement.setString(23, memberHomepage);
-            statement.setString(24, memberYahoo);
-            statement.setString(25, memberAol);
-            statement.setString(26, memberIcq);
-            statement.setString(27, memberMsn);
-            statement.setString(28, memberCoolLink1);
-            statement.setString(29, memberCoolLink2);
 
             // primary key column(s)
             statement.setInt(30, memberID);
@@ -448,6 +459,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportUpdateEmail() {
         return true;
     }
@@ -464,6 +476,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
      *                   MemberFax, MemberCareer, MemberHomepage, MemberYahoo, MemberAol,
      *                   MemberIcq, MemberMsn, MemberCoolLink1, MemberCoolLink2
      */
+    @Override
     public void updateEmail(int memberID, // primary key
                         String memberEmail)
                         throws ObjectNotFoundException, DatabaseException, DuplicateKeyException {
@@ -508,6 +521,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportUpdatePassword() {
         return true;
     }
@@ -524,6 +538,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
      *                   MemberFax, MemberCareer, MemberHomepage, MemberYahoo, MemberAol,
      *                   MemberIcq, MemberMsn, MemberCoolLink1, MemberCoolLink2
      */
+    @Override
     public void updatePassword(int memberID, // primary key
                                String memberPassword, Timestamp memberPasswordExpireDate)
         throws ObjectNotFoundException, DatabaseException {
@@ -533,11 +548,10 @@ public class MemberDAOImplJDBC implements MemberDAO {
         StringBuffer sql = new StringBuffer(512);
         if (memberPasswordExpireDate == null) {
             sql.append("UPDATE " + TABLE_NAME + " SET MemberPassword = ?");
-            sql.append(" WHERE MemberID = ?");
         } else {
             sql.append("UPDATE " + TABLE_NAME + " SET MemberPassword = ?, MemberPasswordExpireDate = ?");
-            sql.append(" WHERE MemberID = ?");
         }
+        sql.append(" WHERE MemberID = ?");
         try {
             connection = DBUtils.getConnection();
             statement = connection.prepareStatement(sql.toString());
@@ -569,6 +583,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportUpdateTempPassword() {
         return true;
     }
@@ -585,6 +600,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
      *                   MemberFax, MemberCareer, MemberHomepage, MemberYahoo, MemberAol,
      *                   MemberIcq, MemberMsn, MemberCoolLink1, MemberCoolLink2
      */
+    @Override
     public void updateTempPassword(int memberID, // primary key
                                    String memberTempPassword)
         throws ObjectNotFoundException, DatabaseException {
@@ -616,6 +632,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportUpdateActivateCode() {
         return true;
     }
@@ -632,6 +649,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
      *                   MemberFax, MemberCareer, MemberHomepage, MemberYahoo, MemberAol,
      *                   MemberIcq, MemberMsn, MemberCoolLink1, MemberCoolLink2
      */
+    @Override
     public void updateActivateCode(int memberID, // primary key
                                    String memberActivateCode)
         throws ObjectNotFoundException, DatabaseException {
@@ -663,6 +681,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportUpdateAvatar() {
         return true;
     }
@@ -679,6 +698,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
      *                   MemberFax, MemberCareer, MemberHomepage, MemberYahoo, MemberAol,
      *                   MemberIcq, MemberMsn, MemberCoolLink1, MemberCoolLink2
      */
+    @Override
     public void updateAvatar(int memberID, // primary key
                              String memberAvatar)
         throws ObjectNotFoundException, DatabaseException {
@@ -710,6 +730,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportUpdateSignature() {
         return true;
     }
@@ -726,6 +747,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
      *                   MemberFax, MemberCareer, MemberHomepage, MemberYahoo, MemberAol,
      *                   MemberIcq, MemberMsn, MemberCoolLink1, MemberCoolLink2
      */
+    @Override
     public void updateSignature(int memberID, // primary key
                                 String memberSignature)
         throws ObjectNotFoundException, DatabaseException {
@@ -757,6 +779,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportUpdateTitle() {
         return true;
     }
@@ -773,6 +796,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
      *                   MemberFax, MemberCareer, MemberHomepage, MemberYahoo, MemberAol,
      *                   MemberIcq, MemberMsn, MemberCoolLink1, MemberCoolLink2
      */
+    @Override
     public void updateTitle(int memberID, // primary key
                             String memberTitle)
         throws ObjectNotFoundException, DatabaseException {
@@ -804,6 +828,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportUpdateLastLogon() {
         return true;
     }
@@ -820,6 +845,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
      *                   MemberFax, MemberCareer, MemberHomepage, MemberYahoo, MemberAol,
      *                   MemberIcq, MemberMsn, MemberCoolLink1, MemberCoolLink2
      */
+    @Override
     public void updateLastLogon(int memberID, // primary key
                                 Timestamp memberLastLogon, String memberLastIP)
         throws ObjectNotFoundException, DatabaseException {
@@ -852,6 +878,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportGetPassword() {
         return true;
     }
@@ -868,6 +895,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
      *                   MemberFax, MemberCareer, MemberHomepage, MemberYahoo, MemberAol,
      *                   MemberIcq, MemberMsn, MemberCoolLink1, MemberCoolLink2
      */
+    @Override
     public String getPassword(int memberID)
         throws ObjectNotFoundException, DatabaseException {
 
@@ -902,6 +930,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportGetTempPassword() {
         return true;
     }
@@ -918,6 +947,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
      *                   MemberFax, MemberCareer, MemberHomepage, MemberYahoo, MemberAol,
      *                   MemberIcq, MemberMsn, MemberCoolLink1, MemberCoolLink2
      */
+    @Override
     public String getTempPassword(int memberID)
         throws ObjectNotFoundException, DatabaseException {
 
@@ -948,6 +978,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportGetActivateCode() {
         return true;
     }
@@ -965,6 +996,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
      *                   MemberFax, MemberCareer, MemberHomepage, MemberYahoo, MemberAol,
      *                   MemberIcq, MemberMsn, MemberCoolLink1, MemberCoolLink2
      */
+    @Override
     public String getActivateCode(int memberID)
         throws ObjectNotFoundException, DatabaseException {
 
@@ -1167,6 +1199,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
 //        }
 //    }
 
+    @Override
     public boolean isSupportGetMember() {
         return true;
     }
@@ -1188,6 +1221,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
      *                   MemberTempPassword, MemberMessageCount, MemberMessageOption, MemberPostsPerPage,
      *                   MemberTimeZone, MemberSkin
      */
+    @Override
     public MemberBean getMember(int memberID)
         throws ObjectNotFoundException, DatabaseException {
 
@@ -1270,6 +1304,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
             DBUtils.closeConnection(connection);
         }
     }
+    @Override
     public boolean isSupportGetNumberOfMembers() {
         return true;
     }
@@ -1278,6 +1313,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
      * @return number of members
      * @throws DatabaseException
      */
+    @Override
     public int getNumberOfMembers()
         throws DatabaseException {
 
@@ -1303,6 +1339,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportGetNumberOfMembers_inMemberStatus() {
         return true;
     }
@@ -1311,6 +1348,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
      * @return number of members, based on the memberStatus
      * @throws DatabaseException
      */
+    @Override
     public int getNumberOfMembers_inMemberStatus(int memberStatus)
         throws DatabaseException {
 
@@ -1338,6 +1376,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportGetNumberOfMembers_inActivationStatus() {
         return true;
     }
@@ -1346,6 +1385,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
      * @return number of members, based on the memberActivateCode
      * @throws DatabaseException
      */
+    @Override
     public int getNumberOfMembers_inActivationStatus(boolean activated)
         throws DatabaseException {
 
@@ -1382,9 +1422,11 @@ public class MemberDAOImplJDBC implements MemberDAO {
  * Customized methods come below
  ************************************************/
 
+    @Override
     public boolean isSupportGetMemberIDFromMemberName() {
         return true;
     }
+    @Override
     public final int getMemberIDFromMemberName(String memberName)
         throws ObjectNotFoundException, DatabaseException {
 
@@ -1418,10 +1460,12 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportGetMemberIDFromMemberEmail() {
         return true;
     }
     /* @todo check if this method work with other DBMS other than MySql (check case-sensitive) */
+    @Override
     public final int getMemberIDFromMemberEmail(String memberEmail)
         throws ObjectNotFoundException, DatabaseException {
 
@@ -1448,9 +1492,11 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportGetMembers_withSortSupport_limit() {
         return true;
     }
+    @Override
     public Collection getMembers_withSortSupport_limit(int offset, int rowsToReturn, String sort, String order, int memberStatus)
         throws IllegalArgumentException, DatabaseException {
         if (DBUtils.getDatabaseType() == DBUtils.DATABASE_MYSQL) {
@@ -1620,7 +1666,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
     /* @todo fix bug that cannot prepare sort and order */
     private Collection getBeans_withSortSupport_limit_noscroll(int offset, int rowsToReturn, String sort, String order, int memberStatus)
         throws IllegalArgumentException, DatabaseException {
-        
+
         if (offset < 0) {
             throw new IllegalArgumentException("The offset < 0 is not allowed.");
         }
@@ -1903,12 +1949,14 @@ public class MemberDAOImplJDBC implements MemberDAO {
      *                   MemberTempPassword, MemberMessageCount, MemberMessageOption, MemberPostsPerPage,
      *                   MemberTimeZone, MemberSkin, MemberLanguage
      */
+    @Override
     public boolean isSupportGetEnableMembers_inActivationStatus() {
         return true;
     }
     /**
      * This method support sorting and for PUBLIC view
      */
+    @Override
     public Collection getEnableMembers_inActivationStatus(String kind)
         throws IllegalArgumentException, DatabaseException {
 
@@ -1990,6 +2038,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportUpdateStatus() {
         return true;
     }
@@ -2006,6 +2055,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
      *                   MemberFax, MemberCareer, MemberHomepage, MemberYahoo, MemberAol,
      *                   MemberIcq, MemberMsn, MemberCoolLink1, MemberCoolLink2
      */
+    @Override
     public void updateStatus(int memberID, // primary key
                              int memberStatus)
         throws ObjectNotFoundException, DatabaseException {
@@ -2037,9 +2087,11 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportUpdatePostCount() {
         return true;
     }
+    @Override
     public void updatePostCount(int memberID, // primary key
                                 int memberPostCount)
         throws ObjectNotFoundException, DatabaseException {
@@ -2071,12 +2123,14 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportIncreaseViewCount() {
         return true;
     }
     /**
      * This method should be call only when we can make sure that memberID is in database
      */
+    @Override
     public void increaseViewCount(int memberID)
         throws DatabaseException, ObjectNotFoundException {
 
@@ -2099,12 +2153,14 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportIncreasePostCount() {
         return true;
     }
     /**
      * This method should be call only when we can make sure that memberID is in database
      */
+    @Override
     public void increasePostCount(int memberID)
         throws DatabaseException, ObjectNotFoundException {
 
@@ -2127,12 +2183,14 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportGetMembers_inExpire_limit() {
         return true;
     }
+    @Override
     public Collection getMembers_inExpire_limit(Timestamp expireDate, int offset, int rowsToReturn, String sort, String order)
         throws IllegalArgumentException, DatabaseException {
-        
+
         if (offset < 0) {
             throw new IllegalArgumentException("The offset < 0 is not allowed.");
         }
@@ -2212,9 +2270,11 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportGetNumberOfMembers_inExpire() {
         return true;
     }
+    @Override
     public int getNumberOfMembers_inExpire(Timestamp expireDate)
         throws DatabaseException {
 
@@ -2242,9 +2302,11 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportUpdateMember_expireDate() {
         return true;
     }
+    @Override
     public void updateMember_expireDate(int memberID, // primary key
                                         Timestamp expireDate)
         throws ObjectNotFoundException, DatabaseException {
@@ -2276,9 +2338,11 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportGetMembers() {
         return true;
     }
+    @Override
     public Collection getMembers()
         throws DatabaseException {
 
@@ -2347,9 +2411,11 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportGetMaxMemberID() {
         return true;
     }
+    @Override
     public int getMaxMemberID() throws DatabaseException {
 
         Connection connection = null;
@@ -2374,9 +2440,11 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportGetMembersFromIDRange() {
         return true;
     }
+    @Override
     public Collection getMembers_fromIDRange(int fromID, int toID) throws IllegalArgumentException, DatabaseException {
 
         if (fromID < 0) {
@@ -2454,9 +2522,11 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportGetEnableMembers_inGroup() {
         return true;
     }
+    @Override
     public Collection getEnableMembers_inGroup(int groupID)
         throws DatabaseException {
 
@@ -2528,9 +2598,11 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportGetForumsAuthorizedMembers() {
         return true;
     }
+    @Override
     public Collection getForumsAuthorizedMembers() throws DatabaseException {
 
         Connection connection = null;
@@ -2569,9 +2641,11 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportGetAuthorizedMembers() {
         return true;
     }
+    @Override
     public Collection getAuthorizedMembers() throws DatabaseException {
 
         Connection connection = null;
@@ -2610,9 +2684,11 @@ public class MemberDAOImplJDBC implements MemberDAO {
         }
     }
 
+    @Override
     public boolean isSupportGetNonActivatedNoPostMembers() {
         return true;
     }
+    @Override
     public Collection getNonActivatedNoPostMembers(Timestamp before)
         throws DatabaseException {
 

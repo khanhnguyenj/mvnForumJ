@@ -47,19 +47,33 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.myvietnam.mvncore.exception.*;
-import net.myvietnam.mvncore.interceptor.InterceptorService;
-import net.myvietnam.mvncore.security.Encoder;
-import net.myvietnam.mvncore.util.*;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.mvnforum.*;
+import com.mvnforum.MVNForumConfig;
+import com.mvnforum.MVNForumConstant;
+import com.mvnforum.MVNForumGlobal;
+import com.mvnforum.MVNForumResourceBundle;
 import com.mvnforum.auth.MVNForumPermission;
 import com.mvnforum.common.SendMailUtil;
-import com.mvnforum.db.*;
+import com.mvnforum.db.DAOFactory;
+import com.mvnforum.db.MemberBean;
+import com.mvnforum.db.MemberCache;
 import com.mvnforum.search.member.MemberIndexer;
+
+import net.myvietnam.mvncore.exception.BadInputException;
+import net.myvietnam.mvncore.exception.CreateException;
+import net.myvietnam.mvncore.exception.DatabaseException;
+import net.myvietnam.mvncore.exception.DuplicateKeyException;
+import net.myvietnam.mvncore.exception.ForeignKeyNotFoundException;
+import net.myvietnam.mvncore.exception.InterceptorException;
+import net.myvietnam.mvncore.exception.ObjectNotFoundException;
+import net.myvietnam.mvncore.interceptor.InterceptorService;
+import net.myvietnam.mvncore.security.Encoder;
+import net.myvietnam.mvncore.util.DateUtil;
+import net.myvietnam.mvncore.util.I18nUtil;
+import net.myvietnam.mvncore.util.ParamUtil;
+import net.myvietnam.mvncore.util.StringUtil;
 
 /**
  * NOTE for KG
@@ -71,7 +85,7 @@ import com.mvnforum.search.member.MemberIndexer;
  * - Rss = false
  */
 public final class KGUtils {
-    
+
     private static final Logger log = LoggerFactory.getLogger(KGUtils.class);
 
     public static final String KG_PREFIX = "kg_";
@@ -138,9 +152,7 @@ public final class KGUtils {
                                    memberBirthday, ""/*memberAddress*/, ""/*memberCity*/,
                                    ""/*memberState*/, ""/*memberCountry*/, ""/*memberPhone*/,
                                    ""/*memberMobile*/, ""/*memberFax*/, ""/*memberCareer*/,
-                                   ""/*memberHomepage*/, ""/*memberYahoo*/, ""/*memberAol*/,
-                                   ""/*memberIcq*/, ""/*memberMsn*/, ""/*memberCoolLink1*/,
-                                   ""/*memberCoolLink2*/);
+                                   ""/*memberHomepage*/);
 
         // Now, create 2 default folders for each member
         int memberID = MemberCache.getInstance().getMemberIDFromMemberName(memberName);
