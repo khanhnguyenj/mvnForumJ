@@ -8,10 +8,10 @@
  *
  * Copyright (C) 2002-2007 by MyVietnam.net
  *
- * All copyright notices regarding mvnForum MUST remain 
+ * All copyright notices regarding mvnForum MUST remain
  * intact in the scripts and in the outputted HTML.
  * The "powered by" text/logo with a link back to
- * http://www.mvnForum.com and http://www.MyVietnam.net in 
+ * http://www.mvnForum.com and http://www.MyVietnam.net in
  * the footer of the pages MUST remain visible when the pages
  * are viewed on the internet or intranet.
  *
@@ -35,14 +35,18 @@
  * Correspondence and Marketing Questions can be sent to:
  * info at MyVietnam net
  *
- * @author: Igor Manic   
+ * @author: Igor Manic
  */
 package com.mvnforum.admin.importexport.mvnforum;
 
-import net.myvietnam.mvncore.exception.*;
-
 import com.mvnforum.MVNForumConstant;
 import com.mvnforum.admin.MemberXML;
+
+import net.myvietnam.mvncore.exception.CreateException;
+import net.myvietnam.mvncore.exception.DatabaseException;
+import net.myvietnam.mvncore.exception.DuplicateKeyException;
+import net.myvietnam.mvncore.exception.ForeignKeyNotFoundException;
+import net.myvietnam.mvncore.exception.ObjectNotFoundException;
 
 /**
  * @author Igor Manic
@@ -354,9 +358,9 @@ public class MvnForumMemberXML {
         memberCoolLink2=value;
     }
 
-    public void addMember() 
+    public void addMember()
         throws CreateException, DuplicateKeyException, ObjectNotFoundException, DatabaseException, ForeignKeyNotFoundException {
-        
+
         /* First, check if the digester already called this method.
          * It will happen even under normal circumstances, if this member has
          * subelements that need it already be defined, so they first call
@@ -393,9 +397,7 @@ public class MvnForumMemberXML {
                             memberBirthday, memberAddress, memberCity,
                             memberState, memberCountry, memberPhone,
                             memberMobile, memberFax, memberCareer,
-                            memberHomepage, memberYahoo, memberAol,
-                            memberIcq, memberMsn, memberCoolLink1,
-                            memberCoolLink2);
+                            memberHomepage);
         memberCreated = true;
         if (isAdmin) {
             MvnForumXML.addedAdminMember = true;
@@ -404,9 +406,9 @@ public class MvnForumMemberXML {
         }
     }
 
-    public void addMemberPermission(String permission) 
+    public void addMemberPermission(String permission)
         throws CreateException, DuplicateKeyException, ObjectNotFoundException, DatabaseException, ForeignKeyNotFoundException {
-        
+
         if ( (!memberCreated) || (memberXML.getMemberID()<0) ) {
             addMember();
         }
@@ -417,7 +419,7 @@ public class MvnForumMemberXML {
     public void addMessageFolder(String folderName, String folderOrder,
                                  String folderCreationDate, String folderModifiedDate)
         throws CreateException, DuplicateKeyException, ObjectNotFoundException, DatabaseException, ForeignKeyNotFoundException {
-        
+
         if ( (!memberCreated) || (memberXML.getMemberID()<0) ) {
             addMember();
         }
@@ -430,7 +432,7 @@ public class MvnForumMemberXML {
                                String watchStatus, String watchCreationDate,
                                String watchLastSentDate, String watchEndDate)
         throws CreateException, DuplicateKeyException, ObjectNotFoundException, DatabaseException, ForeignKeyNotFoundException {
-        
+
         if ( (!memberCreated) || (memberXML.getMemberID()<0) ) {
             addMember();
         }

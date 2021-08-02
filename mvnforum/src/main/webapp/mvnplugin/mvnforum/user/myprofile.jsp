@@ -269,42 +269,6 @@ MemberBean memberBean = (MemberBean)request.getAttribute("MemberBean");
     <td><a href="<%=memberBean.getMemberHomepage_http()%>"><%=memberBean.getMemberHomepage()%></a></td>
   </tr>
   <% } %>
-  <% if (MVNForumConfig.getEnableShowCoolLink1()) { %>
-  <tr class="<mvn:cssrow/>">
-    <td><fmt:message key="mvnforum.common.member.cool_link"/> 1</td>
-    <td><a href="<%=memberBean.getMemberCoolLink1_http()%>"><%=memberBean.getMemberCoolLink1()%></a></td>
-  </tr>
-  <% } %>
-  <% if (MVNForumConfig.getEnableShowCoolLink2()) { %>
-  <tr class="<mvn:cssrow/>">
-    <td><fmt:message key="mvnforum.common.member.cool_link"/> 2</td>
-    <td><a href="<%=memberBean.getMemberCoolLink2_http()%>"><%=memberBean.getMemberCoolLink2()%></a></td>
-  </tr>
-  <% } %>
-  <% if (MVNForumConfig.getEnableShowYahoo()) { %>
-  <tr class="<mvn:cssrow/>">
-    <td><fmt:message key="mvnforum.common.member.yahoo" /></td>
-    <td><%if (memberBean.getMemberYahoo().length() > 0) {%><a href="http://edit.yahoo.com/config/send_webmesg?.target=<%=memberBean.getMemberYahoo()%>&amp;.src=pg"><%if (MVNForumConfig.getHaveInternet()) { %><img src="http://mail.opi.yahoo.com/online?u=<%=memberBean.getMemberYahoo()%>&m=g&t=0" border="0" alt="<%=memberBean.getMemberYahoo()%>"<% } else { %><img src="<%=contextPath%>/mvnplugin/mvnforum/images/icon/yim.gif" border="0" alt="<%=memberBean.getMemberYahoo()%>" title="<%=memberBean.getMemberYahoo()%>"/><%} %></a>&nbsp;&nbsp;&nbsp;<%=memberBean.getMemberYahoo()%><%}%></td>
-  </tr>
-  <% } %>
-  <% if (MVNForumConfig.getEnableShowAOL()) { %>
-  <tr class="<mvn:cssrow/>">
-    <td><fmt:message key="mvnforum.common.member.aol" /></td>
-    <td><%if (memberBean.getMemberAol().length() > 0) {%><a href="aim:goim?screenname=<%=memberBean.getMemberAol()%>&amp;message=Hello+Are+you+there?"><%if (MVNForumConfig.getHaveInternet()) {%><img src="http://big.oscar.aol.com/<%=memberBean.getMemberAol()%>?on_url=http://www.aol.com:80/aim/gr/online.gif&off_url=http://www.aol.com:80/aim/gr/offline.gif" border="0" alt="<%=memberBean.getMemberAol()%>" title="<%=memberBean.getMemberAol()%>"/><%} else {%><img src="<%=contextPath%>/mvnplugin/mvnforum/images/icon/aim.gif" border="0" alt="<%=memberBean.getMemberAol()%>" title="<%=memberBean.getMemberAol()%>"/><%}%></a>&nbsp;&nbsp;&nbsp;<%=memberBean.getMemberAol()%><%}%></td>
-  </tr>
-  <% } %>
-  <% if (MVNForumConfig.getEnableShowICQ()) { %>
-  <tr class="<mvn:cssrow/>">
-    <td><fmt:message key="mvnforum.common.member.icq" /></td>
-    <td><%if (memberBean.getMemberIcq().length() > 0) {%><a href="http://wwp.icq.com/scripts/search.dll?to=<%=memberBean.getMemberIcq()%>"><img src="<%=contextPath%>/mvnplugin/mvnforum/images/icon/icq.gif" border="0" alt="<%=memberBean.getMemberIcq()%>" title="<%=memberBean.getMemberIcq()%>"/></a>&nbsp;&nbsp;&nbsp;<%=memberBean.getMemberIcq()%><%}%></td>
-  </tr>
-  <% } %>
-  <% if (MVNForumConfig.getEnableShowMSN()) { %>
-  <tr class="<mvn:cssrow/>">
-    <td><fmt:message key="mvnforum.common.member.msn" /></td>
-    <td><%if (memberBean.getMemberMsn().length() > 0) {%><%if (MVNForumConfig.getHaveInternet()) {%><img src="http://osi.techno-st.net:8000/msn/<%=memberBean.getMemberMsn()%>" border="0" alt="<%=memberBean.getMemberMsn()%>" title="<%=memberBean.getMemberMsn()%>"/><%} else {%><img src="<%=contextPath%>/mvnplugin/mvnforum/images/icon/msn.gif" border="0" alt="<%=memberBean.getMemberMsn()%>" title="<%=memberBean.getMemberMsn()%>"/><%}%>&nbsp;&nbsp;&nbsp;<%=memberBean.getMemberMsn()%><%}%></td>
-  </tr>
-  <% } %>
 <% if (MVNForumConfig.getEnableShowJoinDate()) { %>
   <tr class="<mvn:cssrow/>">
     <td><fmt:message key="mvnforum.common.member.join_date"/></td>

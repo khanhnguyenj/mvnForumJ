@@ -197,9 +197,7 @@ public class JiveUserXML {
                       null/*memberGender*/, null/*memberBirthday*/, null/*memberAddress*/,
                       null/*memberCity*/, null/*memberState*/, null/*memberCountry*/,
                       null/*memberPhone*/, null/*memberMobile*/, null/*memberFax*/,
-                      null/*memberCareer*/, null/*memberHomepage*/, null/*memberYahoo*/,
-                      null/*memberAol*/, null/*memberIcq*/, null/*memberMsn*/,
-                      null/*memberCoolLink1*/, null/*memberCoolLink2*/);
+                      null/*memberCareer*/, null/*memberHomepage*/);
                 //ImportWebHelper.addMessage("Adding message folders \""+...+"\".");
                 memberXML.addMessageFolder(MVNForumConstant.MESSAGE_FOLDER_INBOX,
                           null/*folderOrder*/,

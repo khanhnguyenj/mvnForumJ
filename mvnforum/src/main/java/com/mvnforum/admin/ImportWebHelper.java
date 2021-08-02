@@ -39,25 +39,51 @@
  */
 package com.mvnforum.admin;
 
-import java.io.*;
-import java.sql.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
-import net.myvietnam.mvncore.db.DBUtils;
-import net.myvietnam.mvncore.exception.*;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.mvnforum.*;
+import com.mvnforum.MVNForumConfig;
+import com.mvnforum.MVNForumConstant;
+import com.mvnforum.MVNForumGlobal;
 import com.mvnforum.auth.MVNForumPermission;
-import com.mvnforum.db.*;
+import com.mvnforum.db.AttachmentDAO;
+import com.mvnforum.db.CategoryDAO;
+import com.mvnforum.db.FavoriteThreadDAO;
+import com.mvnforum.db.ForumDAO;
+import com.mvnforum.db.GroupForumDAO;
+import com.mvnforum.db.GroupPermissionDAO;
+import com.mvnforum.db.GroupsDAO;
+import com.mvnforum.db.MemberDAO;
+import com.mvnforum.db.MemberForumDAO;
+import com.mvnforum.db.MemberGroupDAO;
+import com.mvnforum.db.MemberPermissionDAO;
+import com.mvnforum.db.MessageFolderDAO;
+import com.mvnforum.db.PostDAO;
+import com.mvnforum.db.RankDAO;
+import com.mvnforum.db.ThreadDAO;
+import com.mvnforum.db.WatchDAO;
 import com.mvnforum.service.MvnForumServiceFactory;
 import com.mvnforum.service.SearchService;
+
+import net.myvietnam.mvncore.db.DBUtils;
+import net.myvietnam.mvncore.exception.CreateException;
+import net.myvietnam.mvncore.exception.DatabaseException;
+import net.myvietnam.mvncore.exception.DuplicateKeyException;
+import net.myvietnam.mvncore.exception.ForeignKeyNotFoundException;
+import net.myvietnam.mvncore.exception.ObjectNotFoundException;
 
 /**
  * @author Igor Manic
@@ -102,7 +128,7 @@ public class ImportWebHelper {
         }
     }
 
-    private static void clearTable(String tableName) throws DatabaseException {        
+    private static void clearTable(String tableName) throws DatabaseException {
         execUpdateQuery("DELETE FROM " + tableName);
     }
 
@@ -184,7 +210,7 @@ public class ImportWebHelper {
        createDefaultRanks();
    }
 
-   public static void createDefaultGuestMember() 
+   public static void createDefaultGuestMember()
        throws DuplicateKeyException, ObjectNotFoundException, CreateException, DatabaseException, ForeignKeyNotFoundException {
        createDefaultGuestMember(MVNForumConfig.getDefaultGuestName());
    }
@@ -213,9 +239,7 @@ public class ImportWebHelper {
               "" /*memberLanguage*/, guestName /*memberFirstname*/, "" /*memberLastname*/,
               "1" /*memberGender*/, null /*memberBirthday*/, "" /*memberAddress*/,
               "" /*memberCity*/, "" /*memberState*/, "" /*memberCountry*/, "" /*memberPhone*/,
-              "" /*memberMobile*/, "" /*memberFax*/, "" /*memberCareer*/, "" /*memberHomepage*/,
-              "" /*memberYahoo*/, "" /*memberAol*/, "" /*memberIcq*/, "" /*memberMsn*/,
-              "" /*memberCoolLink1*/, "" /*memberCoolLink2*/);
+              "" /*memberMobile*/, "" /*memberFax*/, "" /*memberCareer*/, "" /*memberHomepage*/);
         memberXML.addMemberPermission(Integer.toString(MVNForumPermission.PERMISSION_LIMITED_USER));
         //todo Igor: replace previous permission with an array of individual perms
     }
@@ -249,9 +273,7 @@ public class ImportWebHelper {
                   "" /*memberLanguage*/, adminName /*memberFirstname*/, "" /*memberLastname*/,
                   "1" /*memberGender*/, null /*memberBirthday*/, "" /*memberAddress*/,
                   "" /*memberCity*/, "" /*memberState*/, "" /*memberCountry*/, "" /*memberPhone*/,
-                  "" /*memberMobile*/, "" /*memberFax*/, "" /*memberCareer*/, "" /*memberHomepage*/,
-                  "" /*memberYahoo*/, "" /*memberAol*/, "" /*memberIcq*/, "" /*memberMsn*/,
-                  "" /*memberCoolLink1*/, "" /*memberCoolLink2*/);
+                  "" /*memberMobile*/, "" /*memberFax*/, "" /*memberCareer*/, "" /*memberHomepage*/);
         memberXML.addMemberPermission(Integer.toString(MVNForumPermission.PERMISSION_SYSTEM_ADMIN));
         memberXML.addMessageFolder("Inbox", "0" /*folderOrder*/,
                    null /*folderCreationDate*/, null /*folderModifiedDate*/);
@@ -276,10 +298,10 @@ public class ImportWebHelper {
         groupXML.addGroupPermission(Integer.toString(MVNForumPermission.PERMISSION_NORMAL_USER));
         //todo Igor: replace previous permission with an array of individual perms
     }
-    
+
     public static void createDefaultGuestGroup()
         throws CreateException, DuplicateKeyException, ObjectNotFoundException, DatabaseException, ForeignKeyNotFoundException {
-        
+
         addImportantMessage("Adding default virtual group of all guest members...");
         GroupXML groupXML = new GroupXML();
         groupXML.addGroup(Integer.toString(MVNForumConstant.GROUP_ID_OF_GUEST),
@@ -290,9 +312,9 @@ public class ImportWebHelper {
         groupXML.addGroupPermission(Integer.toString(MVNForumPermission.PERMISSION_LIMITED_USER));
     }
 
-    public static void createDefaultRanks() 
+    public static void createDefaultRanks()
         throws CreateException, DuplicateKeyException, ObjectNotFoundException, DatabaseException {
-        
+
         addImportantMessage("Adding default rank titles \"Stranger\", \"Newbie\", \"Member\" and \"Advanced Member\"...");
         (new RankXML()).addRank("0", "0", "Stranger", "", "0", "0");
         (new RankXML()).addRank("20", "0", "Newbie", "", "0", "0");

@@ -317,8 +317,8 @@ public class MemberDAOImplJDBC implements MemberDAO {
         Connection connection = null;
         PreparedStatement statement = null;
         StringBuffer sql = new StringBuffer(512);
-        sql.append("INSERT INTO " + TABLE_NAME + " (MemberName, MemberPassword, MemberFirstEmail, MemberEmail, MemberEmailVisible, MemberNameVisible, MemberFirstIP, MemberLastIP, MemberViewCount, MemberPostCount, MemberCreationDate, MemberModifiedDate, MemberExpireDate, MemberPasswordExpireDate, MemberLastLogon, MemberOption, MemberStatus, MemberActivateCode, MemberTempPassword, MemberMessageCount, MemberMessageOption, MemberPostsPerPage, MemberWarnCount, MemberVoteCount, MemberVoteTotalStars, MemberRewardPoints, MemberTitle, MemberTimeZone, MemberSignature, MemberAvatar, MemberSkin, MemberLanguage, MemberFirstname, MemberLastname, MemberGender, MemberBirthday, MemberAddress, MemberCity, MemberState, MemberCountry, MemberPhone, MemberMobile, MemberFax, MemberCareer, MemberHomepage, MemberYahoo, MemberAol, MemberIcq, MemberMsn, MemberCoolLink1, MemberCoolLink2)");
-        sql.append(" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        sql.append("INSERT INTO " + TABLE_NAME + " (MemberName, MemberPassword, MemberFirstEmail, MemberEmail, MemberEmailVisible, MemberNameVisible, MemberFirstIP, MemberLastIP, MemberViewCount, MemberPostCount, MemberCreationDate, MemberModifiedDate, MemberExpireDate, MemberPasswordExpireDate, MemberLastLogon, MemberOption, MemberStatus, MemberActivateCode, MemberTempPassword, MemberMessageCount, MemberMessageOption, MemberPostsPerPage, MemberWarnCount, MemberVoteCount, MemberVoteTotalStars, MemberRewardPoints, MemberTitle, MemberTimeZone, MemberSignature, MemberAvatar, MemberSkin, MemberLanguage, MemberFirstname, MemberLastname, MemberGender, MemberBirthday, MemberAddress, MemberCity, MemberState, MemberCountry, MemberPhone, MemberMobile, MemberFax, MemberCareer, MemberHomepage)");
+        sql.append(" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         try {
             connection = DBUtils.getConnection();
             statement = connection.prepareStatement(sql.toString());
@@ -413,7 +413,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
         Connection connection = null;
         PreparedStatement statement = null;
         StringBuffer sql = new StringBuffer(512);
-        sql.append("UPDATE " + TABLE_NAME + " SET MemberEmailVisible = ?, MemberNameVisible = ?, MemberModifiedDate = ?, MemberOption = ?, MemberStatus = ?, MemberMessageOption = ?, MemberPostsPerPage = ?, MemberTimeZone = ?, MemberSkin = ?, MemberLanguage = ?, MemberFirstname = ?, MemberLastname = ?, MemberGender = ?, MemberBirthday = ?, MemberAddress = ?, MemberCity = ?, MemberState = ?, MemberCountry = ?, MemberPhone = ?, MemberMobile = ?, MemberFax = ?, MemberCareer = ?, MemberHomepage = ?, MemberYahoo = ?, MemberAol = ?, MemberIcq = ?, MemberMsn = ?, MemberCoolLink1 = ?, MemberCoolLink2 = ?");
+        sql.append("UPDATE " + TABLE_NAME + " SET MemberEmailVisible = ?, MemberNameVisible = ?, MemberModifiedDate = ?, MemberOption = ?, MemberStatus = ?, MemberMessageOption = ?, MemberPostsPerPage = ?, MemberTimeZone = ?, MemberSkin = ?, MemberLanguage = ?, MemberFirstname = ?, MemberLastname = ?, MemberGender = ?, MemberBirthday = ?, MemberAddress = ?, MemberCity = ?, MemberState = ?, MemberCountry = ?, MemberPhone = ?, MemberMobile = ?, MemberFax = ?, MemberCareer = ?, MemberHomepage = ?");
         sql.append(" WHERE MemberID = ?");
         try {
             connection = DBUtils.getConnection();
@@ -1229,7 +1229,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         StringBuffer sql = new StringBuffer(512);
-        sql.append("SELECT MemberID, MemberName, MemberFirstEmail, MemberEmail, MemberEmailVisible, MemberNameVisible, MemberViewCount, MemberPostCount, MemberCreationDate, MemberModifiedDate, MemberExpireDate, MemberPasswordExpireDate, MemberLastLogon, MemberOption, MemberMessageOption, MemberPostsPerPage, MemberTimeZone, MemberSkin, MemberStatus, MemberMessageCount, MemberWarnCount, MemberVoteCount, MemberVoteTotalStars, MemberRewardPoints, MemberTitle, MemberSignature, MemberAvatar, MemberFirstname, MemberLastname, MemberGender, MemberBirthday, MemberAddress, MemberCity, MemberState, MemberCountry, MemberPhone, MemberMobile, MemberFax, MemberCareer, MemberHomepage, MemberYahoo, MemberAol, MemberIcq, MemberMsn, MemberCoolLink1, MemberCoolLink2, MemberActivateCode, MemberFirstIP, MemberLastIP, MemberLanguage");
+        sql.append("SELECT MemberID, MemberName, MemberFirstEmail, MemberEmail, MemberEmailVisible, MemberNameVisible, MemberViewCount, MemberPostCount, MemberCreationDate, MemberModifiedDate, MemberExpireDate, MemberPasswordExpireDate, MemberLastLogon, MemberOption, MemberMessageOption, MemberPostsPerPage, MemberTimeZone, MemberSkin, MemberStatus, MemberMessageCount, MemberWarnCount, MemberVoteCount, MemberVoteTotalStars, MemberRewardPoints, MemberTitle, MemberSignature, MemberAvatar, MemberFirstname, MemberLastname, MemberGender, MemberBirthday, MemberAddress, MemberCity, MemberState, MemberCountry, MemberPhone, MemberMobile, MemberFax, MemberCareer, MemberHomepage, MemberActivateCode, MemberFirstIP, MemberLastIP, MemberLanguage");
         sql.append(" FROM " + TABLE_NAME);
         sql.append(" WHERE MemberID = ?");
         try {
@@ -1285,12 +1285,6 @@ public class MemberDAOImplJDBC implements MemberDAO {
             bean.setMemberFax(resultSet.getString("MemberFax"));
             bean.setMemberCareer(resultSet.getString("MemberCareer"));
             bean.setMemberHomepage(resultSet.getString("MemberHomepage"));
-            bean.setMemberYahoo(resultSet.getString("MemberYahoo"));
-            bean.setMemberAol(resultSet.getString("MemberAol"));
-            bean.setMemberIcq(resultSet.getString("MemberIcq"));
-            bean.setMemberMsn(resultSet.getString("MemberMsn"));
-            bean.setMemberCoolLink1(resultSet.getString("MemberCoolLink1"));
-            bean.setMemberCoolLink2(resultSet.getString("MemberCoolLink2"));
             bean.setMemberActivateCode(resultSet.getString("MemberActivateCode"));
             bean.setMemberFirstIP(resultSet.getString("MemberFirstIP"));
             bean.setMemberLastIP(resultSet.getString("MemberLastIP"));
@@ -1569,7 +1563,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
         ResultSet resultSet = null;
         Collection retValue = new ArrayList();
         StringBuffer sql = new StringBuffer(512);
-        sql.append("SELECT MemberID, MemberName, MemberEmail, MemberFirstEmail, MemberEmailVisible, MemberNameVisible, MemberFirstIP, MemberLastIP, MemberViewCount, MemberPostCount, MemberCreationDate, MemberModifiedDate, MemberLastLogon, MemberOption, MemberStatus, MemberWarnCount, MemberVoteCount, MemberVoteTotalStars, MemberRewardPoints, MemberTitle, MemberSignature, MemberAvatar, MemberFirstname, MemberLastname, MemberGender, MemberBirthday, MemberAddress, MemberCity, MemberState, MemberCountry, MemberPhone, MemberMobile, MemberFax, MemberCareer, MemberHomepage, MemberYahoo, MemberAol, MemberIcq, MemberMsn, MemberCoolLink1, MemberCoolLink2, MemberActivateCode, MemberLanguage");
+        sql.append("SELECT MemberID, MemberName, MemberEmail, MemberFirstEmail, MemberEmailVisible, MemberNameVisible, MemberFirstIP, MemberLastIP, MemberViewCount, MemberPostCount, MemberCreationDate, MemberModifiedDate, MemberLastLogon, MemberOption, MemberStatus, MemberWarnCount, MemberVoteCount, MemberVoteTotalStars, MemberRewardPoints, MemberTitle, MemberSignature, MemberAvatar, MemberFirstname, MemberLastname, MemberGender, MemberBirthday, MemberAddress, MemberCity, MemberState, MemberCountry, MemberPhone, MemberMobile, MemberFax, MemberCareer, MemberHomepage, MemberActivateCode, MemberLanguage");
         sql.append(" FROM " + TABLE_NAME);
         if (memberStatus == MemberDAO.ALL_MEMBER_STATUS) {
             // do nothing
@@ -1624,12 +1618,6 @@ public class MemberDAOImplJDBC implements MemberDAO {
                 bean.setMemberFax(resultSet.getString("MemberFax"));
                 bean.setMemberCareer(resultSet.getString("MemberCareer"));
                 bean.setMemberHomepage(resultSet.getString("MemberHomepage"));
-                bean.setMemberYahoo(resultSet.getString("MemberYahoo"));
-                bean.setMemberAol(resultSet.getString("MemberAol"));
-                bean.setMemberIcq(resultSet.getString("MemberIcq"));
-                bean.setMemberMsn(resultSet.getString("MemberMsn"));
-                bean.setMemberCoolLink1(resultSet.getString("MemberCoolLink1"));
-                bean.setMemberCoolLink2(resultSet.getString("MemberCoolLink2"));
                 bean.setMemberActivateCode(resultSet.getString("MemberActivateCode"));
                 bean.setMemberLanguage(resultSet.getString("MemberLanguage"));
                 retValue.add(bean);
@@ -1706,7 +1694,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
         ResultSet resultSet = null;
         Collection retValue = new ArrayList();
         StringBuffer sql = new StringBuffer(512);
-        sql.append("SELECT MemberID, MemberName, MemberEmail, MemberFirstEmail, MemberEmailVisible, MemberNameVisible, MemberFirstIP, MemberLastIP, MemberViewCount, MemberPostCount, MemberCreationDate, MemberModifiedDate, MemberLastLogon, MemberOption, MemberStatus, MemberWarnCount, MemberVoteCount, MemberVoteTotalStars, MemberRewardPoints, MemberTitle, MemberSignature, MemberAvatar, MemberFirstname, MemberLastname, MemberGender, MemberBirthday, MemberAddress, MemberCity, MemberState, MemberCountry, MemberPhone, MemberMobile, MemberFax, MemberCareer, MemberHomepage, MemberYahoo, MemberAol, MemberIcq, MemberMsn, MemberCoolLink1, MemberCoolLink2, MemberActivateCode, MemberLanguage");
+        sql.append("SELECT MemberID, MemberName, MemberEmail, MemberFirstEmail, MemberEmailVisible, MemberNameVisible, MemberFirstIP, MemberLastIP, MemberViewCount, MemberPostCount, MemberCreationDate, MemberModifiedDate, MemberLastLogon, MemberOption, MemberStatus, MemberWarnCount, MemberVoteCount, MemberVoteTotalStars, MemberRewardPoints, MemberTitle, MemberSignature, MemberAvatar, MemberFirstname, MemberLastname, MemberGender, MemberBirthday, MemberAddress, MemberCity, MemberState, MemberCountry, MemberPhone, MemberMobile, MemberFax, MemberCareer, MemberHomepage, MemberActivateCode, MemberLanguage");
         sql.append(" FROM " + TABLE_NAME);
         if (memberStatus == MemberDAO.ALL_MEMBER_STATUS) {
             // do nothing
@@ -1764,12 +1752,6 @@ public class MemberDAOImplJDBC implements MemberDAO {
                 bean.setMemberFax(resultSet.getString("MemberFax"));
                 bean.setMemberCareer(resultSet.getString("MemberCareer"));
                 bean.setMemberHomepage(resultSet.getString("MemberHomepage"));
-                bean.setMemberYahoo(resultSet.getString("MemberYahoo"));
-                bean.setMemberAol(resultSet.getString("MemberAol"));
-                bean.setMemberIcq(resultSet.getString("MemberIcq"));
-                bean.setMemberMsn(resultSet.getString("MemberMsn"));
-                bean.setMemberCoolLink1(resultSet.getString("MemberCoolLink1"));
-                bean.setMemberCoolLink2(resultSet.getString("MemberCoolLink2"));
                 bean.setMemberActivateCode(resultSet.getString("MemberActivateCode"));
                 bean.setMemberLanguage(resultSet.getString("MemberLanguage"));
                 retValue.add(bean);
@@ -1850,7 +1832,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
         ResultSet resultSet = null;
         Collection retValue = new ArrayList();
         StringBuffer sql = new StringBuffer(512);
-        sql.append("SELECT MemberID, MemberName, MemberEmail, MemberFirstEmail, MemberEmailVisible, MemberNameVisible, MemberFirstIP, MemberLastIP, MemberViewCount, MemberPostCount, MemberCreationDate, MemberModifiedDate, MemberLastLogon, MemberOption, MemberStatus, MemberWarnCount, MemberVoteCount, MemberVoteTotalStars, MemberRewardPoints, MemberTitle, MemberSignature, MemberAvatar, MemberFirstname, MemberLastname, MemberGender, MemberBirthday, MemberAddress, MemberCity, MemberState, MemberCountry, MemberPhone, MemberMobile, MemberFax, MemberCareer, MemberHomepage, MemberYahoo, MemberAol, MemberIcq, MemberMsn, MemberCoolLink1, MemberCoolLink2, MemberActivateCode, MemberLanguage");
+        sql.append("SELECT MemberID, MemberName, MemberEmail, MemberFirstEmail, MemberEmailVisible, MemberNameVisible, MemberFirstIP, MemberLastIP, MemberViewCount, MemberPostCount, MemberCreationDate, MemberModifiedDate, MemberLastLogon, MemberOption, MemberStatus, MemberWarnCount, MemberVoteCount, MemberVoteTotalStars, MemberRewardPoints, MemberTitle, MemberSignature, MemberAvatar, MemberFirstname, MemberLastname, MemberGender, MemberBirthday, MemberAddress, MemberCity, MemberState, MemberCountry, MemberPhone, MemberMobile, MemberFax, MemberCareer, MemberHomepage, MemberActivateCode, MemberLanguage");
         sql.append(" FROM " + TABLE_NAME);
         if (memberStatus == MemberDAO.ALL_MEMBER_STATUS) {
             // do nothing
@@ -1909,12 +1891,6 @@ public class MemberDAOImplJDBC implements MemberDAO {
                 bean.setMemberFax(resultSet.getString("MemberFax"));
                 bean.setMemberCareer(resultSet.getString("MemberCareer"));
                 bean.setMemberHomepage(resultSet.getString("MemberHomepage"));
-                bean.setMemberYahoo(resultSet.getString("MemberYahoo"));
-                bean.setMemberAol(resultSet.getString("MemberAol"));
-                bean.setMemberIcq(resultSet.getString("MemberIcq"));
-                bean.setMemberMsn(resultSet.getString("MemberMsn"));
-                bean.setMemberCoolLink1(resultSet.getString("MemberCoolLink1"));
-                bean.setMemberCoolLink2(resultSet.getString("MemberCoolLink2"));
                 bean.setMemberActivateCode(resultSet.getString("MemberActivateCode"));
                 bean.setMemberLanguage(resultSet.getString("MemberLanguage"));
                 retValue.add(bean);
@@ -1966,7 +1942,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
         Collection retValue = new ArrayList();
         StringBuffer sql = new StringBuffer(512);
 
-        sql.append("SELECT MemberID, MemberName, MemberEmail, MemberEmailVisible, MemberNameVisible, MemberViewCount, MemberPostCount, MemberCreationDate, MemberLastLogon, MemberOption, MemberStatus, MemberWarnCount, MemberVoteCount, MemberVoteTotalStars, MemberRewardPoints, MemberTitle, MemberSignature, MemberAvatar, MemberFirstname, MemberLastname, MemberGender, MemberBirthday, MemberAddress, MemberCity, MemberState, MemberCountry, MemberPhone, MemberMobile, MemberFax, MemberCareer, MemberHomepage, MemberYahoo, MemberAol, MemberIcq, MemberMsn, MemberCoolLink1, MemberCoolLink2, MemberActivateCode");
+        sql.append("SELECT MemberID, MemberName, MemberEmail, MemberEmailVisible, MemberNameVisible, MemberViewCount, MemberPostCount, MemberCreationDate, MemberLastLogon, MemberOption, MemberStatus, MemberWarnCount, MemberVoteCount, MemberVoteTotalStars, MemberRewardPoints, MemberTitle, MemberSignature, MemberAvatar, MemberFirstname, MemberLastname, MemberGender, MemberBirthday, MemberAddress, MemberCity, MemberState, MemberCountry, MemberPhone, MemberMobile, MemberFax, MemberCareer, MemberHomepage, MemberActivateCode");
         sql.append(" FROM " + TABLE_NAME);
         if (kind.equals("activated")) {
             sql.append(" WHERE (MemberStatus = " + MemberBean.MEMBER_STATUS_ENABLE + ") AND (MemberActivateCode = 'activated') ");
@@ -2017,12 +1993,6 @@ public class MemberDAOImplJDBC implements MemberDAO {
                 bean.setMemberFax(resultSet.getString("MemberFax"));
                 bean.setMemberCareer(resultSet.getString("MemberCareer"));
                 bean.setMemberHomepage(resultSet.getString("MemberHomepage"));
-                bean.setMemberYahoo(resultSet.getString("MemberYahoo"));
-                bean.setMemberAol(resultSet.getString("MemberAol"));
-                bean.setMemberIcq(resultSet.getString("MemberIcq"));
-                bean.setMemberMsn(resultSet.getString("MemberMsn"));
-                bean.setMemberCoolLink1(resultSet.getString("MemberCoolLink1"));
-                bean.setMemberCoolLink2(resultSet.getString("MemberCoolLink2"));
                 bean.setMemberActivateCode(resultSet.getString("MemberActivateCode"));
                 retValue.add(bean);
             }//while
@@ -2351,7 +2321,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
         ResultSet resultSet = null;
         Collection retValue = new ArrayList();
         StringBuffer sql = new StringBuffer(512);
-        sql.append("SELECT MemberID, MemberName, MemberEmail, MemberEmailVisible, MemberNameVisible, MemberViewCount, MemberPostCount, MemberCreationDate, MemberLastLogon, MemberOption, MemberStatus, MemberWarnCount, MemberVoteCount, MemberVoteTotalStars, MemberRewardPoints, MemberTitle, MemberSignature, MemberAvatar, MemberFirstname, MemberLastname, MemberGender, MemberBirthday, MemberAddress, MemberCity, MemberState, MemberCountry, MemberPhone, MemberMobile, MemberFax, MemberCareer, MemberHomepage, MemberYahoo, MemberAol, MemberIcq, MemberMsn, MemberCoolLink1, MemberCoolLink2, MemberActivateCode");
+        sql.append("SELECT MemberID, MemberName, MemberEmail, MemberEmailVisible, MemberNameVisible, MemberViewCount, MemberPostCount, MemberCreationDate, MemberLastLogon, MemberOption, MemberStatus, MemberWarnCount, MemberVoteCount, MemberVoteTotalStars, MemberRewardPoints, MemberTitle, MemberSignature, MemberAvatar, MemberFirstname, MemberLastname, MemberGender, MemberBirthday, MemberAddress, MemberCity, MemberState, MemberCountry, MemberPhone, MemberMobile, MemberFax, MemberCareer, MemberHomepage, MemberActivateCode");
         sql.append(" FROM " + TABLE_NAME);
 
         try {
@@ -2391,12 +2361,6 @@ public class MemberDAOImplJDBC implements MemberDAO {
                 bean.setMemberFax(resultSet.getString("MemberFax"));
                 bean.setMemberCareer(resultSet.getString("MemberCareer"));
                 bean.setMemberHomepage(resultSet.getString("MemberHomepage"));
-                bean.setMemberYahoo(resultSet.getString("MemberYahoo"));
-                bean.setMemberAol(resultSet.getString("MemberAol"));
-                bean.setMemberIcq(resultSet.getString("MemberIcq"));
-                bean.setMemberMsn(resultSet.getString("MemberMsn"));
-                bean.setMemberCoolLink1(resultSet.getString("MemberCoolLink1"));
-                bean.setMemberCoolLink2(resultSet.getString("MemberCoolLink2"));
                 bean.setMemberActivateCode(resultSet.getString("MemberActivateCode"));
                 retValue.add(bean);
             }
@@ -2459,7 +2423,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
         ResultSet resultSet = null;
         Collection retValue = new ArrayList();
         StringBuffer sql = new StringBuffer(512);
-        sql.append("SELECT MemberID, MemberName, MemberEmail, MemberEmailVisible, MemberNameVisible, MemberViewCount, MemberPostCount, MemberCreationDate, MemberLastLogon, MemberOption, MemberStatus, MemberWarnCount, MemberVoteCount, MemberVoteTotalStars, MemberRewardPoints, MemberTitle, MemberSignature, MemberAvatar, MemberFirstname, MemberLastname, MemberGender, MemberBirthday, MemberAddress, MemberCity, MemberState, MemberCountry, MemberPhone, MemberMobile, MemberFax, MemberCareer, MemberHomepage, MemberYahoo, MemberAol, MemberIcq, MemberMsn, MemberCoolLink1, MemberCoolLink2, MemberActivateCode");
+        sql.append("SELECT MemberID, MemberName, MemberEmail, MemberEmailVisible, MemberNameVisible, MemberViewCount, MemberPostCount, MemberCreationDate, MemberLastLogon, MemberOption, MemberStatus, MemberWarnCount, MemberVoteCount, MemberVoteTotalStars, MemberRewardPoints, MemberTitle, MemberSignature, MemberAvatar, MemberFirstname, MemberLastname, MemberGender, MemberBirthday, MemberAddress, MemberCity, MemberState, MemberCountry, MemberPhone, MemberMobile, MemberFax, MemberCareer, MemberHomepage, MemberActivateCode");
         sql.append(" FROM " + TABLE_NAME);
         sql.append(" WHERE (MemberID >= ?) AND (MemberID <= ?)");
         sql.append(" ORDER BY MemberID ASC ");
@@ -2502,12 +2466,6 @@ public class MemberDAOImplJDBC implements MemberDAO {
                 bean.setMemberFax(resultSet.getString("MemberFax"));
                 bean.setMemberCareer(resultSet.getString("MemberCareer"));
                 bean.setMemberHomepage(resultSet.getString("MemberHomepage"));
-                bean.setMemberYahoo(resultSet.getString("MemberYahoo"));
-                bean.setMemberAol(resultSet.getString("MemberAol"));
-                bean.setMemberIcq(resultSet.getString("MemberIcq"));
-                bean.setMemberMsn(resultSet.getString("MemberMsn"));
-                bean.setMemberCoolLink1(resultSet.getString("MemberCoolLink1"));
-                bean.setMemberCoolLink2(resultSet.getString("MemberCoolLink2"));
                 bean.setMemberActivateCode(resultSet.getString("MemberActivateCode"));
                 retValue.add(bean);
             }
@@ -2536,7 +2494,7 @@ public class MemberDAOImplJDBC implements MemberDAO {
         Collection retValue = new ArrayList();
         StringBuffer sql = new StringBuffer(512);
 
-        sql.append("SELECT m.MemberID, m.MemberName, MemberEmail, MemberEmailVisible, MemberNameVisible, MemberViewCount, MemberPostCount, MemberCreationDate, MemberLastLogon, MemberOption, MemberStatus, MemberWarnCount, MemberVoteCount, MemberVoteTotalStars, MemberRewardPoints, MemberTitle, MemberSignature, MemberAvatar, MemberFirstname, MemberLastname, MemberGender, MemberBirthday, MemberAddress, MemberCity, MemberState, MemberCountry, MemberPhone, MemberMobile, MemberFax, MemberCareer, MemberHomepage, MemberYahoo, MemberAol, MemberIcq, MemberMsn, MemberCoolLink1, MemberCoolLink2, MemberActivateCode");
+        sql.append("SELECT m.MemberID, m.MemberName, MemberEmail, MemberEmailVisible, MemberNameVisible, MemberViewCount, MemberPostCount, MemberCreationDate, MemberLastLogon, MemberOption, MemberStatus, MemberWarnCount, MemberVoteCount, MemberVoteTotalStars, MemberRewardPoints, MemberTitle, MemberSignature, MemberAvatar, MemberFirstname, MemberLastname, MemberGender, MemberBirthday, MemberAddress, MemberCity, MemberState, MemberCountry, MemberPhone, MemberMobile, MemberFax, MemberCareer, MemberHomepage, MemberActivateCode");
         sql.append(" FROM " + TABLE_NAME + " m , " + MemberGroupDAO.TABLE_NAME + " mg");
         sql.append(" WHERE (MemberStatus = " + MemberBean.MEMBER_STATUS_ENABLE + ") AND (mg.MemberID = m.MemberID) AND GroupID = ?");
         try {
@@ -2577,12 +2535,6 @@ public class MemberDAOImplJDBC implements MemberDAO {
                 bean.setMemberFax(resultSet.getString("MemberFax"));
                 bean.setMemberCareer(resultSet.getString("MemberCareer"));
                 bean.setMemberHomepage(resultSet.getString("MemberHomepage"));
-                bean.setMemberYahoo(resultSet.getString("MemberYahoo"));
-                bean.setMemberAol(resultSet.getString("MemberAol"));
-                bean.setMemberIcq(resultSet.getString("MemberIcq"));
-                bean.setMemberMsn(resultSet.getString("MemberMsn"));
-                bean.setMemberCoolLink1(resultSet.getString("MemberCoolLink1"));
-                bean.setMemberCoolLink2(resultSet.getString("MemberCoolLink2"));
                 bean.setMemberActivateCode(resultSet.getString("MemberActivateCode"));
                 retValue.add(bean);
             }//while

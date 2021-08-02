@@ -391,12 +391,6 @@ public class MemberWebHandler {
         String memberFax            = memberBean.getMemberFax();
         String memberCareer         = memberBean.getMemberCareer();
         String memberHomepage       = memberBean.getMemberHomepage();
-        String memberYahoo          = memberBean.getMemberYahoo();
-        String memberAol            = memberBean.getMemberAol();
-        String memberIcq            = memberBean.getMemberIcq();
-        String memberMsn            = memberBean.getMemberMsn();
-        String memberCoolLink1      = memberBean.getMemberCoolLink1();
-        String memberCoolLink2      = memberBean.getMemberCoolLink2();
 
         // column(s) to update
         if (internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberEmailVisible())) {

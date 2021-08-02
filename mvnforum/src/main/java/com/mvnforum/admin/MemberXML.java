@@ -174,9 +174,7 @@ public class MemberXML {
                       String memberState, String memberCountry,
                       String memberPhone, String memberMobile,
                       String memberFax, String memberCareer,
-                      String memberHomepage, String memberYahoo,
-                      String memberAol, String memberIcq, String memberMsn,
-                      String memberCoolLink1, String memberCoolLink2)
+                      String memberHomepage)
     throws CreateException, DuplicateKeyException, ObjectNotFoundException, DatabaseException {
         String strMemberID=null;
         if (memberID >= 0) {
@@ -207,9 +205,7 @@ public class MemberXML {
                 memberState, memberCountry,
                 memberPhone, memberMobile,
                 memberFax, memberCareer,
-                memberHomepage, memberYahoo,
-                memberAol, memberIcq, memberMsn,
-                memberCoolLink1, memberCoolLink2);
+                memberHomepage);
     }
 
     /**
@@ -300,9 +296,7 @@ public class MemberXML {
                           String memberState, String memberCountry,
                           String memberPhone, String memberMobile,
                           String memberFax, String memberCareer,
-                          String memberHomepage, String memberYahoo,
-                          String memberAol, String memberIcq, String memberMsn,
-                          String memberCoolLink1, String memberCoolLink2)
+                          String memberHomepage)
     throws CreateException, DuplicateKeyException, ObjectNotFoundException, DatabaseException {
         if ((memberName==null) || (memberName.equals("")) ||
             (memberPassword==null) || (memberPassword.equals("")) ||
@@ -410,24 +404,6 @@ public class MemberXML {
                 if (memberHomepage == null) {
                     memberHomepage = "";
                 }
-                if (memberYahoo == null) {
-                    memberYahoo = "";
-                }
-                if (memberAol == null) {
-                    memberAol="";
-                }
-                if (memberIcq == null) {
-                    memberIcq = "";
-                }
-                if (memberMsn == null) {
-                    memberMsn = "";
-                }
-                if (memberCoolLink1 == null) {
-                    memberCoolLink1 = "";
-                }
-                if (memberCoolLink2 == null) {
-                    memberCoolLink2 = "";
-                }
             } catch (NumberFormatException e) {
                 throw new CreateException("Invalid data for a member. Expected a number.");
             }
@@ -453,12 +429,6 @@ public class MemberXML {
             memberAddress = EnableHtmlTagFilter.filter(memberAddress);
             memberCountry = EnableHtmlTagFilter.filter(memberCountry);
             memberHomepage = EnableHtmlTagFilter.filter(memberHomepage);
-            memberYahoo = EnableHtmlTagFilter.filter(memberYahoo);
-            memberAol = EnableHtmlTagFilter.filter(memberAol);
-            memberIcq = EnableHtmlTagFilter.filter(memberIcq);
-            memberMsn = EnableHtmlTagFilter.filter(memberMsn);
-            memberCoolLink1 = EnableHtmlTagFilter.filter(memberCoolLink1);
-            memberCoolLink2 = EnableHtmlTagFilter.filter(memberCoolLink2);
 
             if (strMemberID == null) {
                 DAOFactory.getMemberDAO().create(
@@ -495,9 +465,7 @@ public class MemberXML {
                     " MemberTimeZone, MemberSignature, MemberAvatar, MemberSkin," +
                     " MemberLanguage, MemberFirstname, MemberLastname, MemberGender," +
                     " MemberBirthday, MemberAddress, MemberCity, MemberState, MemberCountry," +
-                    " MemberPhone, MemberMobile, MemberFax, MemberCareer, MemberHomepage," +
-                    " MemberYahoo, MemberAol, MemberIcq, MemberMsn," +
-                    " MemberCoolLink1, MemberCoolLink2)" +
+                    " MemberPhone, MemberMobile, MemberFax, MemberCareer, MemberHomepage)" +
                     " VALUES (" +strMemberID+ ", '"+memberName +"', '" +memberPassword+ "', '" +memberFirstEmail+
                     "', '" +memberEmail+ "', " +memberEmailVisible2+ ", " +memberNameVisible2+
                     ", '" +memberFirstIP+ "', '" +memberLastIP+ "', " +memberViewCount1+
@@ -512,9 +480,7 @@ public class MemberXML {
                     ", '" +memberBirthday2+ "', '" +memberAddress+ "', '" +memberCity+
                     "', '" +memberState+ "', '" +memberCountry+ "', '" +memberPhone+
                     "', '" +memberMobile+ "', '" +memberFax+ "', '" +memberCareer+
-                    "', '" +memberHomepage+ "', '" +memberYahoo+ "', '" +memberAol+
-                    "', '" +memberIcq+ "', '" +memberMsn+
-                    "', '" +memberCoolLink1+ "', '" +memberCoolLink2+ "')";
+                    "', '" +memberHomepage+ "')";
                 if (DBUtils.getDatabaseType() == DBUtils.DATABASE_SQLSERVER) {
                     query = "SET IDENTITY_INSERT " + MemberDAO.TABLE_NAME + " ON;" + query + ";SET IDENTITY_INSERT " + MemberDAO.TABLE_NAME + " OFF;";
                 }
@@ -867,9 +833,8 @@ public class MemberXML {
                    " MemberSkin, MemberLanguage, MemberFirstname, MemberLastname,"+
                    " MemberGender, MemberBirthday, MemberAddress, MemberCity,"+
                    " MemberState, MemberCountry, MemberPhone, MemberMobile,"+
-                   " MemberFax, MemberCareer, MemberHomepage, MemberYahoo,"+
-                   " MemberAol, MemberIcq, MemberMsn, MemberCoolLink1,"+
-                   " MemberCoolLink2 FROM "+
+                   " MemberFax, MemberCareer, MemberHomepage,"+
+                   " FROM "+
                    MemberDAO.TABLE_NAME+
                    " WHERE MemberID="+Integer.toString(memberID));
         Iterator iter=member1.iterator();

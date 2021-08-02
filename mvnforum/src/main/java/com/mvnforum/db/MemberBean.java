@@ -47,14 +47,14 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.mvnforum.MVNForumGlobal;
+import com.mvnforum.common.MemberAvatarTimeTracking;
+
 import net.myvietnam.mvncore.security.Encoder;
 import net.myvietnam.mvncore.service.BinaryStorageService;
 import net.myvietnam.mvncore.service.MvnCoreServiceFactory;
 import net.myvietnam.mvncore.util.DateUtil;
 import net.myvietnam.mvncore.util.StringUtil;
-
-import com.mvnforum.MVNForumGlobal;
-import com.mvnforum.common.MemberAvatarTimeTracking;
 
 /*
  * Included columns: MemberID, MemberName, MemberFirstEmail, MemberEmail, MemberEmailVisible,
@@ -88,7 +88,7 @@ public class MemberBean {
     public static final String MEMBER_ACTIVATECODE_ACTIVATED    = "activated";
 
     public static final String MEMBER_AVATAR_USING_UPLOAD       = "uploaded";
-    
+
     public static final Date   MEMBER_NOT_REQUIRE_BIRTHDAY      = new Date(0);
 
     private int memberID;
@@ -135,12 +135,6 @@ public class MemberBean {
     private String memberFax;
     private String memberCareer;
     private String memberHomepage;
-    private String memberYahoo;
-    private String memberAol;
-    private String memberIcq;
-    private String memberMsn;
-    private String memberCoolLink1;
-    private String memberCoolLink2;
 
     public int getMemberID() {
         return memberID;
@@ -450,48 +444,6 @@ public class MemberBean {
         this.memberHomepage = StringUtil.getEmptyStringIfNull(memberHomepage);
     }
 
-    public String getMemberYahoo() {
-        return memberYahoo;
-    }
-    public void setMemberYahoo(String memberYahoo) {
-        this.memberYahoo = StringUtil.getEmptyStringIfNull(memberYahoo);
-    }
-
-    public String getMemberAol() {
-        return memberAol;
-    }
-    public void setMemberAol(String memberAol) {
-        this.memberAol = StringUtil.getEmptyStringIfNull(memberAol);
-    }
-
-    public String getMemberIcq() {
-        return memberIcq;
-    }
-    public void setMemberIcq(String memberIcq) {
-        this.memberIcq = StringUtil.getEmptyStringIfNull(memberIcq);
-    }
-
-    public String getMemberMsn() {
-        return memberMsn;
-    }
-    public void setMemberMsn(String memberMsn) {
-        this.memberMsn = StringUtil.getEmptyStringIfNull(memberMsn);
-    }
-
-    public String getMemberCoolLink1() {
-        return memberCoolLink1;
-    }
-    public void setMemberCoolLink1(String memberCoolLink1) {
-        this.memberCoolLink1 = StringUtil.getEmptyStringIfNull(memberCoolLink1);
-    }
-
-    public String getMemberCoolLink2() {
-        return memberCoolLink2;
-    }
-    public void setMemberCoolLink2(String memberCoolLink2) {
-        this.memberCoolLink2 = StringUtil.getEmptyStringIfNull(memberCoolLink2);
-    }
-
     /////////////////////////////////////////////////////////////////
     // property methods
     HashMap properties = new HashMap();
@@ -501,7 +453,7 @@ public class MemberBean {
     public Object getProperty(String key) {
         return properties.get(key);
     }
-    
+
     /////////////////////////////////////////////////////////////////
     // utility methods
     /*
@@ -524,10 +476,10 @@ public class MemberBean {
             retMemberAvatar.startsWith(MVNForumGlobal.UPLOADED_AVATAR_DIR)) {
             //relative path
             long timeTracking =  MemberAvatarTimeTracking.getInstance().getTimeTracking(memberID);
-            if (timeTracking != 0) {     
+            if (timeTracking != 0) {
                 retMemberAvatar = "getavatar?memberid=" + memberID + "&time=" + timeTracking;
             } else {
-                retMemberAvatar = "getavatar?memberid=" + memberID; 
+                retMemberAvatar = "getavatar?memberid=" + memberID;
             }
             retMemberAvatar = MvnCoreServiceFactory.getMvnCoreService().getURLResolverService().encodeURL(request, response, retMemberAvatar);
         } else {
@@ -554,33 +506,6 @@ public class MemberBean {
         */
     }
 
-    public String getMemberCoolLink1_http() {
-        if (memberCoolLink1 == null) {
-            memberCoolLink1 = "";
-        }
-        return Encoder.filterUrl(memberCoolLink1);
-        /*
-        String ret = memberCoolLink1.toLowerCase();
-        if ( (ret.length() > 0) && (!ret.startsWith("http://")) ) {
-            ret = "http://" + ret;
-        }
-        return ret;
-        */
-    }
-
-    public String getMemberCoolLink2_http() {
-        if (memberCoolLink2 == null) {
-            memberCoolLink2 = "";
-        }
-        return Encoder.filterUrl(memberCoolLink2);
-        /*
-        String ret = memberCoolLink2.toLowerCase();
-        if ( (ret.length() > 0) && (!ret.startsWith("http://")) ) {
-            ret = "http://" + ret;
-        }
-        return ret;
-        */
-    }
 
     public String getMemberCreationDate_short() {
         return DateUtil.getDateDDMMYYYY(memberCreationDate);
@@ -633,12 +558,6 @@ public class MemberBean {
         setMemberFax("");
         setMemberCareer("");
         setMemberHomepage("");
-        setMemberYahoo("");
-        setMemberAol("");
-        setMemberIcq("");
-        setMemberMsn("");
-        setMemberCoolLink1("");
-        setMemberCoolLink2("");
         setMemberActivateCode("");
     }
 
@@ -647,5 +566,5 @@ public class MemberBean {
             throw new IllegalArgumentException("Invalid MemberStatus = " + status);
         }
     }
-    
+
 } //end of class MemberBean
