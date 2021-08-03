@@ -59,7 +59,7 @@ public final class MVNForumGlobal {
 
     public static final String CSS_BACKUP_FULLPATH       = "/mvnplugin/mvnforum/css/style_backup.css";
 
-    public static final String LOGO_FULLPATH             = "/mvnplugin/mvnforum/images/logo.gif";
+    public static final String LOGO_FULLPATH             = "/mvnplugin/mvnforum/images/logo.svg";
 
     // Note that we cannot put / at the end because getRealPath will remove it in Tomcat 4.1.7 :((
     // minhnn: on 30 Dec 2008, I checked and this variable should not be used any where, because now
