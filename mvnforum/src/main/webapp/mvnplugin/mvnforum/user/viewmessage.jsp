@@ -273,9 +273,6 @@ Collection messageFolderBeans = (Collection) request.getAttribute("MessageFolder
               &nbsp;&nbsp;&nbsp;<a href="mailto:<%=memberSenderBean.getMemberEmail()%>"><img src="<%=imagePath%>/button_email.gif" border="0" alt="<%=memberSenderBean.getMemberEmail()%>" title="<%=memberSenderBean.getMemberEmail()%>" /></a>
             <%}%>
             <%if ((memberSenderBean.getMemberHomepage().length() > 0) && (memberSenderBean.getMemberHomepage().equals("http://")==false)) {%>&nbsp;&nbsp;&nbsp;<a href="<%=memberSenderBean.getMemberHomepage_http()%>"><img src="<%=contextPath%>/mvnplugin/mvnforum/images/icon/www.gif" border="0" alt="<%=memberSenderBean.getMemberHomepage()%>" title="<%=memberSenderBean.getMemberHomepage()%>" /></a><%}%>
-            <%if (memberSenderBean.getMemberYahoo().length() > 0) {%>&nbsp;&nbsp;&nbsp;<a href="http://edit.yahoo.com/config/send_webmesg?.target=<%=memberSenderBean.getMemberYahoo()%>&amp;.src=pg"><img src="<%=contextPath%>/mvnplugin/mvnforum/images/icon/yim.gif" border="0" alt="<%=memberSenderBean.getMemberYahoo()%>" title="<%=memberSenderBean.getMemberYahoo()%>" /></a><%}%>
-            <%if (memberSenderBean.getMemberAol().length() > 0) {%>&nbsp;&nbsp;&nbsp;<a href="aim:goim?screenname=<%=memberSenderBean.getMemberAol()%>&amp;message=Hello+Are+you+there?"><img src="<%=contextPath%>/mvnplugin/mvnforum/images/icon/aim.gif" border="0" alt="<%=memberSenderBean.getMemberAol()%>" title="<%=memberSenderBean.getMemberAol()%>" /></a><%}%>
-            <%if (memberSenderBean.getMemberIcq().length() > 0) {%>&nbsp;&nbsp;&nbsp;<a href="http://wwp.icq.com/scripts/search.dll?to=<%=memberSenderBean.getMemberIcq()%>"><img src="http://web.icq.com/whitepages/online?icq=<%=memberSenderBean.getMemberIcq()%>&amp;img=5" border="0" alt="<%=memberSenderBean.getMemberIcq()%>" title="<%=memberSenderBean.getMemberIcq()%>" /></a><%}%>
           <%}%>
           </td>
           <td nowrap="nowrap">

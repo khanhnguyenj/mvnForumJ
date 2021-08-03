@@ -418,54 +418,6 @@ String timeZoneSelectName = "MemberTimeZone";
   </tr>
   <%} %>
 <% } %>
-<% if (MVNForumConfig.getEnableShowCoolLink1()) { %>
-  <%if (internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberCoolLink1())) {%>
-  <tr class="<mvn:cssrow/>">
-    <td><label for="MemberCoolLink1"><fmt:message key="mvnforum.common.member.cool_link"/> 1<% if (MVNForumConfig.isRequireRegisterLink1()) { %><span class="requiredfield"> *</span><% } %></label></td>
-    <td><input type="text" size="60" id="MemberCoolLink1" name="MemberCoolLink1" value="<%=memberBean.getMemberCoolLink1()%>"/></td>
-  </tr>
-  <%} %>
-<% } %>
-<% if (MVNForumConfig.getEnableShowCoolLink2()) { %>
-  <%if (internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberCoolLink2())) {%>
-  <tr class="<mvn:cssrow/>">
-    <td><label for="MemberCoolLink2"><fmt:message key="mvnforum.common.member.cool_link"/> 2<% if (MVNForumConfig.isRequireRegisterLink2()) { %><span class="requiredfield"> *</span><% } %></label></td>
-    <td><input type="text" size="60" id="MemberCoolLink2" name="MemberCoolLink2" value="<%=memberBean.getMemberCoolLink2()%>"/></td>
-  </tr>
-  <%} %>
-<% } %>
-<% if (MVNForumConfig.getEnableShowYahoo()) { %>
-  <%if (internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberYahoo())) {%>
-  <tr class="<mvn:cssrow/>">
-    <td><label for="MemberYahoo"><fmt:message key="mvnforum.common.member.yahoo"/><% if (MVNForumConfig.isRequireRegisterYahoo()) { %><span class="requiredfield"> *</span><% } %></label></td>
-    <td><input type="text" size="60" id="MemberYahoo" name="MemberYahoo" value="<%=memberBean.getMemberYahoo()%>"/></td>
-  </tr>
-  <%} %>
-<% } %>
-<% if (MVNForumConfig.getEnableShowAOL()) { %>
-  <%if (internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberAol())) {%>
-  <tr class="<mvn:cssrow/>">
-    <td><label for="MemberAol"><fmt:message key="mvnforum.common.member.aol"/><% if (MVNForumConfig.isRequireRegisterAol()) { %><span class="requiredfield"> *</span><% } %></label></td>
-    <td><input type="text" size="60" id="MemberAol" name="MemberAol" value="<%=memberBean.getMemberAol()%>"/></td>
-  </tr>
-  <%} %>
-<% } %>
-<% if (MVNForumConfig.getEnableShowICQ()) { %>
-  <%if (internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberIcq())) {%>
-  <tr class="<mvn:cssrow/>">
-    <td><label for="MemberIcq"><fmt:message key="mvnforum.common.member.icq"/><% if (MVNForumConfig.isRequireRegisterIcq()) { %><span class="requiredfield"> *</span><% } %></label></td>
-    <td><input type="text" size="60" id="MemberIcq" name="MemberIcq" value="<%=memberBean.getMemberIcq()%>"/></td>
-  </tr>
-  <%} %>
-<% } %>
-<% if (MVNForumConfig.getEnableShowMSN()) { %>
-  <%if (internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberMsn())) {%>
-  <tr class="<mvn:cssrow/>">
-    <td><label for="MemberMsn"><fmt:message key="mvnforum.common.member.msn"/><% if (MVNForumConfig.isRequireRegisterMsn()) { %><span class="requiredfield"> *</span><% } %></label></td>
-    <td><input type="text" size="60" id="MemberMsn" name="MemberMsn" value="<%=memberBean.getMemberMsn()%>"/></td>
-  </tr>
-  <%} %>
-<% } %>
 <%if (currentLocale.equals("vi")) {/*vietnamese here*/%>
   <tr class="<mvn:cssrow/>">
     <td valign="top" nowrap="nowrap"><fmt:message key="mvnforum.common.vietnamese_type"/>:</td>
