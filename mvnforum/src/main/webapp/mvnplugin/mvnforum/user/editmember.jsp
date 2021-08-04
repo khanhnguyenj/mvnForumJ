@@ -144,36 +144,6 @@ function ValidateForm() {
     if (isBlank(document.submitform.MemberHomepage, "<fmt:message key="mvnforum.common.member.homepage"/>")) return false;
 <%}%>
 
-<%if ( MVNForumConfig.getEnableShowYahoo() && MVNForumConfig.isRequireRegisterYahoo() &&
-       (internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberYahoo())) ) {%>
-    if (isBlank(document.submitform.MemberYahoo, "<fmt:message key="mvnforum.common.member.yahoo"/>")) return false;
-<%}%>
-
-<%if ( MVNForumConfig.getEnableShowAOL() && MVNForumConfig.isRequireRegisterAol() &&
-       (internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberAol())) ) {%>
-    if (isBlank(document.submitform.MemberAol, "<fmt:message key="mvnforum.common.member.aol"/>")) return false;
-<%}%>
-
-<%if ( MVNForumConfig.getEnableShowICQ() && MVNForumConfig.isRequireRegisterIcq() &&
-       (internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberIcq())) ) {%>
-    if (isBlank(document.submitform.MemberIcq, "<fmt:message key="mvnforum.common.member.icq"/>")) return false;
-<%}%>
-
-<%if ( MVNForumConfig.getEnableShowMSN() && MVNForumConfig.isRequireRegisterMsn() &&
-       (internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberMsn())) ) {%>
-    if (isBlank(document.submitform.MemberMsn, "<fmt:message key="mvnforum.common.member.msn"/>")) return false;
-<%}%>
-
-<%if ( MVNForumConfig.getEnableShowCoolLink1() && MVNForumConfig.isRequireRegisterLink1() &&
-       (internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberCoolLink1())) ) {%>
-    if (isBlank(document.submitform.MemberCoolLink1, "<fmt:message key="mvnforum.common.member.cool_link"/> 1")) return false;
-<%}%>
-
-<%if ( MVNForumConfig.getEnableShowCoolLink2() && MVNForumConfig.isRequireRegisterLink2() &&
-       (internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberCoolLink2())) ) {%>
-    if (isBlank(document.submitform.MemberCoolLink2, "<fmt:message key="mvnforum.common.member.cool_link"/> 2")) return false;
-<%}%>
-  
   return true;
 }
 //]]>
