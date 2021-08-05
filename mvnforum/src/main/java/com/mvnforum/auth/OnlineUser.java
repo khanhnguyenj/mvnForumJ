@@ -54,277 +54,276 @@ import net.myvietnam.mvncore.web.GenericResponse;
 
 public interface OnlineUser {
 
-    /**************************************************************
-     * Constants
-     **************************************************************/
-    public static final int AUTHENTICATION_TYPE_UNAUTHENTICATED = 0;
+  /**
+   * ************************************************************ Constants
+   * ************************************************************
+   */
+  public static final int AUTHENTICATION_TYPE_UNAUTHENTICATED = 0;
 
-    public static final int AUTHENTICATION_TYPE_HTML_FORM       = 1;
+  public static final int AUTHENTICATION_TYPE_HTML_FORM = 1;
 
-    public static final int AUTHENTICATION_TYPE_SESSION         = 2;
+  public static final int AUTHENTICATION_TYPE_SESSION = 2;
 
-    public static final int AUTHENTICATION_TYPE_COOKIE          = 3;
+  public static final int AUTHENTICATION_TYPE_COOKIE = 3;
 
-    public static final int AUTHENTICATION_TYPE_REALM           = 4;
+  public static final int AUTHENTICATION_TYPE_REALM = 4;
 
-    public static final int AUTHENTICATION_TYPE_CUSTOMIZATION   = 5;
-    
-    public static final int AUTHENTICATION_TYPE_CAS             = 6;
+  public static final int AUTHENTICATION_TYPE_CUSTOMIZATION = 5;
 
-    public static final int AUTHENTICATION_TYPE_OPENID          = 7;
+  public static final int AUTHENTICATION_TYPE_CAS = 6;
 
-    /**************************************************************
-     * Methods
-     **************************************************************/
-    /**
-     * Get the numeric member id of this user
-     *
-     * @return int the numeric member id of this user
-     */
-    public int getMemberID();
+  public static final int AUTHENTICATION_TYPE_OPENID = 7;
 
-    /**
-     * Get the memberName that is used to login
-     *
-     * @return String the memberName that is used to login
-     */
-    public String getMemberName();
+  /**
+   * ************************************************************ Methods
+   * ************************************************************
+   */
+  /**
+   * Get the numeric member id of this user
+   *
+   * @return int the numeric member id of this user
+   */
+  public int getMemberID();
 
-    /**
-     * Get the alternate identity that is used to login, such as login with OpenID
-     *
-     * @return String the identity, or null if there is no identity
-     */
-    public String getAlternateIdentity();
+  /**
+   * Get the memberName that is used to login
+   *
+   * @return String the memberName that is used to login
+   */
+  public String getMemberName();
 
-    /**
-     * Check if this user is guest (not login yet) or already authenticated
-     *
-     * @return boolean true if this user is guest (not login yet)
-     */
-    public boolean isGuest();
+  /**
+   * Get the alternate identity that is used to login, such as login with OpenID
+   *
+   * @return String the identity, or null if there is no identity
+   */
+  public String getAlternateIdentity();
 
-    /**
-     * Check if this user is already authenticated
-     *
-     * @return boolean true if this user is already authenticated
-     */
-    public boolean isMember();
+  /**
+   * Check if this user is guest (not login yet) or already authenticated
+   *
+   * @return boolean true if this user is guest (not login yet)
+   */
+  public boolean isGuest();
 
-    /**
-     * Check if this user prefer the invisible mode
-     *
-     * @return boolean true if this user prefer the invisible mode
-     */
-    public boolean isInvisibleMember();
+  /**
+   * Check if this user is already authenticated
+   *
+   * @return boolean true if this user is already authenticated
+   */
+  public boolean isMember();
 
-    /**
-     * Check if this member's password is expired. For single sign on, this method should always return false
-     *
-     * @return boolean true if password is expired
-     */
-    public boolean isPasswordExpired();
+  /**
+   * Check if this user prefer the invisible mode
+   *
+   * @return boolean true if this user prefer the invisible mode
+   */
+  public boolean isInvisibleMember();
 
-    /**
-     * Get the authentication type that user did used to login
-     *
-     * @return int the authentication type
-     */
-    public int getAuthenticationType();
+  /**
+   * Check if this member's password is expired. For single sign on, this method should always
+   * return false
+   *
+   * @return boolean true if password is expired
+   */
+  public boolean isPasswordExpired();
 
-    /**
-     * Get the permission that this user currently has
-     *
-     * @return MVNForumPermission
-     */
-    public MVNForumPermission getPermission();
+  /**
+   * Get the authentication type that user did used to login
+   *
+   * @return int the authentication type
+   */
+  public int getAuthenticationType();
 
-    /**
-     * Reload the permission from the underlying database
-     */
-    public void reloadPermission();
+  /**
+   * Get the permission that this user currently has
+   *
+   * @return MVNForumPermission
+   */
+  public MVNForumPermission getPermission();
 
-    /**
-     * Reload the user's profile from the underlying database
-     */
-    public void reloadProfile(GenericRequest request, GenericResponse response);
+  /** Reload the permission from the underlying database */
+  public void reloadPermission();
 
-    /**
-     * Get the current action of this user in the system
-     *
-     * @return OnlineUserAction
-     */
-    public OnlineUserAction getOnlineUserAction();
+  /** Reload the user's profile from the underlying database */
+  public void reloadProfile(GenericRequest request, GenericResponse response);
 
-    public java.util.Date convertGMTDate(java.util.Date gmtDate);
+  /**
+   * Get the current action of this user in the system
+   *
+   * @return OnlineUserAction
+   */
+  public OnlineUserAction getOnlineUserAction();
 
-    public Timestamp convertGMTTimestamp(Timestamp gmtTimestamp);
+  public java.util.Date convertGMTDate(java.util.Date gmtDate);
 
-    public String getGMTDateFormat(java.util.Date gmtDate);
+  public Timestamp convertGMTTimestamp(Timestamp gmtTimestamp);
 
-    public String getGMTDateFormat(java.util.Date gmtDate, boolean adjustTimeZone);
+  public String getGMTDateFormat(java.util.Date gmtDate);
 
-    public String getGMTTimestampFormat(Timestamp gmtTimestamp);
+  public String getGMTDateFormat(java.util.Date gmtDate, boolean adjustTimeZone);
 
-    public String getGMTTimestampFormat(Timestamp gmtTimestamp, boolean adjustTimeZone);
+  public String getGMTTimestampFormat(Timestamp gmtTimestamp);
 
-    public String getTimeZoneFormat();
+  public String getGMTTimestampFormat(Timestamp gmtTimestamp, boolean adjustTimeZone);
 
-    /**
-     * Get the current timezone of this user
-     * @return current timezone of this user
-     */
-    public double getTimeZone();
+  public String getTimeZoneFormat();
 
-    /**
-     * Get the current locale of this user
-     *
-     * @return Locale the current locale of this user
-     */
-    public Locale getLocale();
+  /**
+   * Get the current timezone of this user
+   *
+   * @return current timezone of this user
+   */
+  public double getTimeZone();
 
-    /**
-     * Get the current locale name of this user
-     *
-     * @return String the current locale name of this user
-     */
-    public String getLocaleName();
+  /**
+   * Get the current locale of this user
+   *
+   * @return Locale the current locale of this user
+   */
+  public Locale getLocale();
 
-    public void setLocaleName(String localeName, HttpServletRequest request, HttpServletResponse response);
-    
-    /**
-     * Set the locale name for the current online user, this method also 
-     * try to save any cookie if it want to.
-     *
-     * @param localeName
-     * @param request
-     * @param response
-     */
-    public void setLocaleName(String localeName, GenericRequest request, GenericResponse response);
+  /**
+   * Get the current locale name of this user
+   *
+   * @return String the current locale name of this user
+   */
+  public String getLocaleName();
 
-    //public boolean getGender();
+  public void setLocaleName(
+      String localeName, HttpServletRequest request, HttpServletResponse response);
 
-    /**
-     * Get the timestampt of the last time this user login
-     *
-     * @return Timestamp
-     */
-    public Timestamp getLastLogonTimestamp();
+  /**
+   * Set the locale name for the current online user, this method also try to save any cookie if it
+   * want to.
+   *
+   * @param localeName
+   * @param request
+   * @param response
+   */
+  public void setLocaleName(String localeName, GenericRequest request, GenericResponse response);
 
-    /**
-     * Get the IP of the last time this user login
-     *
-     * @return String
-     */
-    public String getLastLogonIP();
+  // public boolean getGender();
 
-    /**
-     * Get the number of items that shown in one page for this user
-     *
-     * @return int the number of items that shown in one page
-     */
-    public int getPostsPerPage();
+  /**
+   * Get the timestampt of the last time this user login
+   *
+   * @return Timestamp
+   */
+  public Timestamp getLastLogonTimestamp();
 
-    /**
-     * Get the number of new private messages of this user.
-     * @return int the number of new private messages of this user
-     */
-    public int getNewMessageCount();
+  /**
+   * Get the IP of the last time this user login
+   *
+   * @return String
+   */
+  public String getLastLogonIP();
 
-    /**
-     * Update the new message count value. The implementation
-     * should provide an effectively method if parameter force is false
-     * since this method is called many time.<p>
-     * In case force is true, update it immediately
-     * @return boolean values. It's true if the new message count
-     *         greater than the current message count
-     */
-    public boolean updateNewMessageCount(boolean force);
+  /**
+   * Get the number of items that shown in one page for this user
+   *
+   * @return int the number of items that shown in one page
+   */
+  public int getPostsPerPage();
 
-    /**
-     * Get the number of private messages that shown in one page for this user
-     *
-     * @return int the number of items that shown in one page
-     */
-    public int getMessagesPerPage();
+  /**
+   * Get the number of new private messages of this user.
+   *
+   * @return int the number of new private messages of this user
+   */
+  public int getNewMessageCount();
 
-    /**
-     * Get the full ABSOLUTE path of the css file
-     *
-     * @return String the full ABSOLUTE path of the css file
-     */
-    public String getCssPath();
+  /**
+   * Update the new message count value. The implementation should provide an effectively method if
+   * parameter force is false since this method is called many time.
+   *
+   * <p>In case force is true, update it immediately
+   *
+   * @return boolean values. It's true if the new message count greater than the current message
+   *     count
+   */
+  public boolean updateNewMessageCount(boolean force);
 
-    /**
-     * Get the full ABSOLUTE path of the css file
-     *
-     * @return String the full ABSOLUTE path of the css file,
-     *         this method can customize the path based on parameter in request
-     */
-    public String getCssPath(HttpServletRequest request);
+  /**
+   * Get the number of private messages that shown in one page for this user
+   *
+   * @return int the number of items that shown in one page
+   */
+  public int getMessagesPerPage();
 
-    /**
-     * Get the full ABSOLUTE path of the logo file
-     *
-     * @return String the full ABSOLUTE path of the logo file
-     */
-    public String getLogoPath();
+  /**
+   * Get the full ABSOLUTE path of the css file
+   *
+   * @return String the full ABSOLUTE path of the css file
+   */
+  public String getCssPath();
 
-    /**
-     * Build a new captcha, this method must be called before using some
-     * action that need captcha validation.
-     */
-    public void buildNewCaptcha();
+  /**
+   * Get the full ABSOLUTE path of the css file
+   *
+   * @return String the full ABSOLUTE path of the css file, this method can customize the path based
+   *     on parameter in request
+   */
+  public String getCssPath(HttpServletRequest request);
 
-    /**
-     * Destroy the current captcha, this method must be called after validate
-     * the captcha
-     */
-    public void destroyCurrentCaptcha();
+  /**
+   * Get the full ABSOLUTE path of the logo file
+   *
+   * @return String the full ABSOLUTE path of the logo file
+   */
+  public String getLogoPath();
 
-    /**
-     * Get the captcha image to challenge the user
-     *
-     * @return BufferedImage the captcha image to challenge the user
-     */
-    public BufferedImage getCurrentCaptchaImage();
+  /**
+   * Build a new captcha, this method must be called before using some action that need captcha
+   * validation.
+   */
+  public void buildNewCaptcha();
 
-    /**
-     * Validate the anwser of the captcha from user
-     *
-     * @param anwser String the captcha anwser from user
-     * @return boolean true if the answer is valid, otherwise return false
-     */
-    public boolean validateCaptchaResponse(String anwser);
+  /** Destroy the current captcha, this method must be called after validate the captcha */
+  public void destroyCurrentCaptcha();
 
-    /**
-     * Check to make sure that the captcha answer is correct
-     *
-     * @param answer String the captcha answer to check
-     * @throws BadInputException in case the captcha answer is not correct
-     */
-    public void ensureCorrectCaptchaResponse(String answer) throws BadInputException;
+  /**
+   * Get the captcha image to challenge the user
+   *
+   * @return BufferedImage the captcha image to challenge the user
+   */
+  public BufferedImage getCurrentCaptchaImage();
 
-    public void setCssPath(String path);
+  /**
+   * Validate the anwser of the captcha from user
+   *
+   * @param anwser String the captcha anwser from user
+   * @return boolean true if the answer is valid, otherwise return false
+   */
+  public boolean validateCaptchaResponse(String anwser);
 
-    public void setLogoPath(String path);
+  /**
+   * Check to make sure that the captcha answer is correct
+   *
+   * @param answer String the captcha answer to check
+   * @throws BadInputException in case the captcha answer is not correct
+   */
+  public void ensureCorrectCaptchaResponse(String answer) throws BadInputException;
 
-    public void setXMPPConnection(Object conn);
+  public void setCssPath(String path);
 
-    public Object getXMPPConnection();
+  public void setLogoPath(String path);
 
-    public void setParticipants(Object conn);
+  public void setXMPPConnection(Object conn);
 
-    public Set getParticipants();
+  public Object getXMPPConnection();
 
-    public void setWaitingList(Object conn);
+  public void setParticipants(Object conn);
 
-    public Set getWaitingList();
+  public Set getParticipants();
 
-    public void removeParticipant(Object conn);
+  public void setWaitingList(Object conn);
 
-    public void removeWaiting(Object conn);
-    
-    public boolean isMobileAgent();
-    
+  public Set getWaitingList();
+
+  public void removeParticipant(Object conn);
+
+  public void removeWaiting(Object conn);
+
+  public boolean isMobileAgent();
 }
