@@ -50,7 +50,7 @@
 For the original Tomcat home, click here <a href="/index.jsp">Original Tomcat home</a>
 
 <hr>
-<a href="http://www.mvnforum.com"><img src="/mvnforum/mvnplugin/mvnforum/images/logo.gif" alt="" width="141" height="50" border="0"></a>
+<a href="http://www.mvnforum.com"><img src="/mvnforum/mvnplugin/mvnforum/images/logo.svg" alt="" width="141" height="50" border="0"></a>
 <% if (false /* mvnAd */) {%>
 <a href="http://www.mvnforum.com"><img src="/mvnforum/mvnplugin/mvnad/images/logo.gif" alt="" width="140" height="50" border="0"></a>
 <% } %>
@@ -69,7 +69,7 @@ Please use username <font color="#FF0000">admin</font> and password <font color=
 
 <% if (false /* mvnForum enterprise */) {%>
 <hr>
-<a href="http://www.mvnforum.com"><img src="/mvnforum_enterprise/mvnplugin/mvnforum/images/logo.gif" alt="" width="141" height="50" border="0"></a>
+<a href="http://www.mvnforum.com"><img src="/mvnforum_enterprise/mvnplugin/mvnforum/images/logo.svg" alt="" width="141" height="50" border="0"></a>
 <% if (true /* mvnAd */) {%>
 <a href="http://www.mvnforum.com"><img src="/mvnforum_enterprise/mvnplugin/mvnad/images/logo.gif" alt="" width="140" height="50" border="0"></a>
 <% } %>
@@ -89,8 +89,7 @@ Please use username <font color="#FF0000">admin</font> and password <font color=
 
 <% if (false /* mvnForum portlet */) {%>
 <hr>
-<a href="http://www.mvnforum.com"><img src="/mvncms_portlet/mvnplugin/mvnforum/images/logo.gif" alt="" width="141" height="50" border="0"></a>
-<a href="http://www.mvnforum.com"><img src="/mvncms_portlet/mvnplugin/mvnad/images/logo.gif" alt="" width="140" height="50" border="0"></a>
+<a href="http://www.mvnforum.com"><img src="/mvncms_portlet/mvnplugin/mvnforum/images/logo.svg" alt="" width="141" height="50" border="0"></a>
 <a href="http://www.mvnforum.com"><img src="/mvncms_portlet/mvnplugin/mvncms/images/logo_portlet.gif" alt="" width="140" height="50" border="0"></a>
 <p>
 For Apache Pluto Portal, click <a href="/pluto/portal">Pluto Portal</a>
@@ -102,9 +101,9 @@ Please use username <font color="#FF0000">admin</font> and password <font color=
 <hr>
 <b>MVN Collaboration Suite</b> includes <b>mvnPublish</b>, <b>mvnForum Enterprise</b> and <b>mvnAd Enterprise</b>
 <p>
-<a href="http://www.mvnforum.com"><img src="/mvncms/mvnplugin/mvncms/images/logo.gif" alt="" width="140" height="50" border="0"></a>
-<a href="http://www.mvnforum.com"><img src="/mvncms/mvnplugin/mvnforum/images/logo.gif" alt="" width="141" height="50" border="0"></a>
-<a href="http://www.mvnforum.com"><img src="/mvncms/mvnplugin/mvnad/images/logo.gif" alt="" width="140" height="50" border="0"></a>
+<a href="http://www.mvnforum.com"><img src="/mvncms/mvnplugin/mvncms/images/logo.svg" alt="" width="140" height="50" border="0"></a>
+<a href="http://www.mvnforum.com"><img src="/mvncms/mvnplugin/mvnforum/images/logo.svg" alt="" width="141" height="50" border="0"></a>
+<a href="http://www.mvnforum.com"><img src="/mvncms/mvnplugin/mvnad/images/logo.svg" alt="" width="140" height="50" border="0"></a>
 <p>
 For mvnForum Enterprise Index page, click <a href="/mvncms/mvnforum">mvnForum Index page</a>
 <p>

@@ -69,7 +69,7 @@ PostBean postBean = (PostBean)request.getAttribute("PostBean");
 <table width="98%" class="noborder" cellspacing="0" cellpadding="0" align="center">
   <tr>
     <td>
-    <img src="<%=contextPath%>/mvnplugin/mvnforum/images/logo.gif" height="50" border="0" alt="<fmt:message key="mvnforum.common.forum.homepage"/>" title="<fmt:message key="mvnforum.common.forum.homepage"/>" />
+    <img src="<%=contextPath%>/mvnplugin/mvnforum/images/logo.svg" height="50" border="0" alt="<fmt:message key="mvnforum.common.forum.homepage"/>" title="<fmt:message key="mvnforum.common.forum.homepage"/>" />
     </td>
   </tr>
 </table>

@@ -16,7 +16,7 @@
 Collection threadBeans = (Collection) request.getAttribute("ThreadBeans");
 int forumID = ((Integer)request.getAttribute("ForumID")).intValue();
 String prefix = ParamUtil.getServerPath() + contextPath + UserModuleConfig.getUrlPattern();
-String logoUrl = ParamUtil.getServerPath() + contextPath + "/mvnplugin/mvnforum/images/logo.gif";
+String logoUrl = ParamUtil.getServerPath() + contextPath + "/mvnplugin/mvnforum/images/logo.svg";
 Timestamp now = DateUtil.getCurrentGMTTimestamp();
 String modified = DateUtil.getDateISO8601(now);
 String link = prefix + "/index";
