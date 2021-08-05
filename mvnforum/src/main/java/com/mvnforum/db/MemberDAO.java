@@ -57,264 +57,295 @@ import net.myvietnam.mvncore.exception.ObjectNotFoundException;
  */
 public interface MemberDAO {
 
-    public static final String TABLE_NAME = DatabaseConfig.USER_TABLE_PREFIX + "Member";
+  public static final String TABLE_NAME = DatabaseConfig.USER_TABLE_PREFIX + "Member";
 
-    public static final int ALL_MEMBER_STATUS = -1;
-    public static final int ALL_OFFSET = 0;
+  public static final int ALL_MEMBER_STATUS = -1;
+  public static final int ALL_OFFSET = 0;
 
-    public boolean isSupportFindByPrimaryKey();
-    public void findByPrimaryKey(int memberID)
-        throws ObjectNotFoundException, DatabaseException;
+  public boolean isSupportFindByPrimaryKey();
 
-    public boolean isSupportFindByPrimaryKey2();
-    public void findByPrimaryKey2(int memberID, String memberName)
-        throws ObjectNotFoundException, DatabaseException;
+  public void findByPrimaryKey(int memberID) throws ObjectNotFoundException, DatabaseException;
 
-    public boolean isSupportFindByAlternateKey_MemberName();
-    public String findByAlternateKey_MemberName(String memberName)
-        throws ObjectNotFoundException, DatabaseException;
+  public boolean isSupportFindByPrimaryKey2();
 
-    public boolean isSupportFindByAlternateKey_MemberEmail();
-    public void findByAlternateKey_MemberEmail(String memberEmail)
-        throws ObjectNotFoundException, DatabaseException;
+  public void findByPrimaryKey2(int memberID, String memberName)
+      throws ObjectNotFoundException, DatabaseException;
 
-    public boolean isSupportDeleteByPrimaryKey();
-    public void deleteByPrimaryKey(int memberID)
-        throws DatabaseException;
+  public boolean isSupportFindByAlternateKey_MemberName();
 
-    public boolean isSupportCreate();
-    public void create(String memberName,
-                       String memberPassword,
-                       String memberFirstEmail,
-                       String memberEmail,
-                       int memberEmailVisible,
-                       int memberNameVisible,
-                       String memberFirstIP,
-                       String memberLastIP,
-                       int memberViewCount,
-                       int memberPostCount,
-                       Timestamp memberCreationDate,
-                       Timestamp memberModifiedDate,
-                       Timestamp memberExpireDate,
-                       Timestamp memberPasswordExpireDate,
-                       Timestamp memberLastLogon,
-                       int memberOption,
-                       int memberStatus,
-                       String memberActivateCode,
-                       String memberTempPassword,
-                       int memberMessageCount,
-                       int memberMessageOption,
-                       int memberPostsPerPage,
-                       int memberWarnCount,
-                       int memberVoteCount,
-                       int memberVoteTotalStars,
-                       int memberRewardPoints,
-                       String memberTitle,
-                       double memberTimeZone,
-                       String memberSignature,
-                       String memberAvatar,
-                       String memberSkin,
-                       String memberLanguage,
-                       String memberFirstname,
-                       String memberLastname,
-                       int memberGender,
-                       Date memberBirthday,
-                       String memberAddress,
-                       String memberCity,
-                       String memberState,
-                       String memberCountry,
-                       String memberPhone,
-                       String memberMobile,
-                       String memberFax,
-                       String memberCareer,
-                       String memberHomepage)
-        throws CreateException, DatabaseException, DuplicateKeyException;
+  public String findByAlternateKey_MemberName(String memberName)
+      throws ObjectNotFoundException, DatabaseException;
 
-    public boolean isSupportUpdate();
-    public void update(int memberID, // primary key
-                       int memberEmailVisible,
-                       int memberNameVisible,
-                       Timestamp memberModifiedDate,
-                       int memberOption,
-                       int memberStatus,
-                       int memberMessageOption,
-                       int memberPostsPerPage,
-                       double memberTimeZone,
-                       String memberSkin,
-                       String memberLanguage,
-                       String memberFirstname,
-                       String memberLastname,
-                       int memberGender,
-                       Date memberBirthday,
-                       String memberAddress,
-                       String memberCity,
-                       String memberState,
-                       String memberCountry,
-                       String memberPhone,
-                       String memberMobile,
-                       String memberFax,
-                       String memberCareer,
-                       String memberHomepage)
-        throws ObjectNotFoundException, DatabaseException;
+  public boolean isSupportFindByAlternateKey_MemberEmail();
 
-    public boolean isSupportUpdateEmail();
-    public void updateEmail(int memberID, // primary key
-                            String memberEmail)
-        throws ObjectNotFoundException, DatabaseException, DuplicateKeyException;
+  public void findByAlternateKey_MemberEmail(String memberEmail)
+      throws ObjectNotFoundException, DatabaseException;
 
-    public boolean isSupportUpdatePassword();
-    public void updatePassword(int memberID, // primary key
-                               String memberPassword, Timestamp memberPasswordExpireDate)
-        throws ObjectNotFoundException, DatabaseException;
+  public boolean isSupportDeleteByPrimaryKey();
 
-    public boolean isSupportUpdateTempPassword();
-    public void updateTempPassword(int memberID, // primary key
-                                   String memberTempPassword)
-        throws ObjectNotFoundException, DatabaseException;
+  public void deleteByPrimaryKey(int memberID) throws DatabaseException;
 
-    public boolean isSupportUpdateActivateCode();
-    public void updateActivateCode(int memberID, // primary key
-                                   String memberActivateCode)
-        throws ObjectNotFoundException, DatabaseException;
+  public boolean isSupportCreate();
 
-    public boolean isSupportUpdateAvatar();
-    public void updateAvatar(int memberID, // primary key
-                             String memberAvatar)
-        throws ObjectNotFoundException, DatabaseException;
+  public void create(
+      String memberName,
+      String memberPassword,
+      String memberFirstEmail,
+      String memberEmail,
+      int memberEmailVisible,
+      int memberNameVisible,
+      String memberFirstIP,
+      String memberLastIP,
+      int memberViewCount,
+      int memberPostCount,
+      Timestamp memberCreationDate,
+      Timestamp memberModifiedDate,
+      Timestamp memberExpireDate,
+      Timestamp memberPasswordExpireDate,
+      Timestamp memberLastLogon,
+      int memberOption,
+      int memberStatus,
+      String memberActivateCode,
+      String memberTempPassword,
+      int memberMessageCount,
+      int memberMessageOption,
+      int memberPostsPerPage,
+      int memberWarnCount,
+      int memberVoteCount,
+      int memberVoteTotalStars,
+      int memberRewardPoints,
+      String memberTitle,
+      double memberTimeZone,
+      String memberSignature,
+      String memberAvatar,
+      String memberSkin,
+      String memberLanguage,
+      String memberFirstname,
+      String memberLastname,
+      int memberGender,
+      Date memberBirthday,
+      String memberAddress,
+      String memberCity,
+      String memberState,
+      String memberCountry,
+      String memberPhone,
+      String memberMobile,
+      String memberFax,
+      String memberCareer,
+      String memberHomepage)
+      throws CreateException, DatabaseException, DuplicateKeyException;
 
-    public boolean isSupportUpdateSignature();
-    public void updateSignature(int memberID, // primary key
-                                String memberSignature)
-        throws ObjectNotFoundException, DatabaseException;
+  public boolean isSupportUpdate();
 
-    public boolean isSupportUpdateTitle();
-    public void updateTitle(int memberID, // primary key
-                            String memberTitle)
-        throws ObjectNotFoundException, DatabaseException;
+  public void update(
+      int memberID, // primary key
+      int memberEmailVisible,
+      int memberNameVisible,
+      Timestamp memberModifiedDate,
+      int memberOption,
+      int memberStatus,
+      int memberMessageOption,
+      int memberPostsPerPage,
+      double memberTimeZone,
+      String memberSkin,
+      String memberLanguage,
+      String memberFirstname,
+      String memberLastname,
+      int memberGender,
+      Date memberBirthday,
+      String memberAddress,
+      String memberCity,
+      String memberState,
+      String memberCountry,
+      String memberPhone,
+      String memberMobile,
+      String memberFax,
+      String memberCareer,
+      String memberHomepage)
+      throws ObjectNotFoundException, DatabaseException;
 
-    public boolean isSupportUpdateLastLogon();
-    public void updateLastLogon(int memberID, // primary key
-                                Timestamp memberLastLogon, String lastIP)
-        throws ObjectNotFoundException, DatabaseException;
+  public boolean isSupportUpdateEmail();
 
-    public boolean isSupportGetPassword();
-    public String getPassword(int memberID)
-        throws ObjectNotFoundException, DatabaseException;
+  public void updateEmail(
+      int memberID, // primary key
+      String memberEmail)
+      throws ObjectNotFoundException, DatabaseException, DuplicateKeyException;
 
-    public boolean isSupportGetTempPassword();
-    public String getTempPassword(int memberID)
-        throws ObjectNotFoundException, DatabaseException;
+  public boolean isSupportUpdatePassword();
 
-    public boolean isSupportGetActivateCode();
-    public String getActivateCode(int memberID)
-        throws ObjectNotFoundException, DatabaseException;
+  public void updatePassword(
+      int memberID, // primary key
+      String memberPassword,
+      Timestamp memberPasswordExpireDate)
+      throws ObjectNotFoundException, DatabaseException;
 
-    public boolean isSupportGetMember();
-    public MemberBean getMember(int memberID)
-        throws ObjectNotFoundException, DatabaseException;
+  public boolean isSupportUpdateTempPassword();
 
-    public boolean isSupportGetNumberOfMembers();
-    public int getNumberOfMembers()
-        throws DatabaseException;
+  public void updateTempPassword(
+      int memberID, // primary key
+      String memberTempPassword)
+      throws ObjectNotFoundException, DatabaseException;
 
-    public boolean isSupportGetNumberOfMembers_inMemberStatus();
-    public int getNumberOfMembers_inMemberStatus(int memberStatus)
-        throws DatabaseException;
+  public boolean isSupportUpdateActivateCode();
 
-    public boolean isSupportGetNumberOfMembers_inActivationStatus();
+  public void updateActivateCode(
+      int memberID, // primary key
+      String memberActivateCode)
+      throws ObjectNotFoundException, DatabaseException;
 
-    public int getNumberOfMembers_inActivationStatus(boolean activationStatus)
-        throws DatabaseException;
+  public boolean isSupportUpdateAvatar();
 
-    /************************************************
-     * Customized methods come below
-     ************************************************/
-    public boolean isSupportGetMemberIDFromMemberName();
-    public int getMemberIDFromMemberName(String memberName)
-        throws ObjectNotFoundException, DatabaseException;
+  public void updateAvatar(
+      int memberID, // primary key
+      String memberAvatar)
+      throws ObjectNotFoundException, DatabaseException;
 
-    public boolean isSupportGetMemberIDFromMemberEmail();
-    /* @todo check if this method work with other DBMS other than MySql (check case-sensitive) */
-    public int getMemberIDFromMemberEmail(String memberEmail)
-        throws ObjectNotFoundException, DatabaseException;
+  public boolean isSupportUpdateSignature();
 
-    public boolean isSupportGetMembers_withSortSupport_limit();
-    public Collection getMembers_withSortSupport_limit(int offset, int rowsToReturn, String sort, String order, int memberStatus)
-        throws IllegalArgumentException, DatabaseException;
+  public void updateSignature(
+      int memberID, // primary key
+      String memberSignature)
+      throws ObjectNotFoundException, DatabaseException;
 
-    public boolean isSupportGetEnableMembers_inActivationStatus();
-    /**
-     * Get all members that based on the activation status criteria
-     * @param kind String can be one of three values: all, activated, nonactivated
-     * @throws DatabaseException
-     * @return Collection
-     */
-    public Collection getEnableMembers_inActivationStatus(String kind)
-        throws DatabaseException;
+  public boolean isSupportUpdateTitle();
 
-    public boolean isSupportGetMaxMemberID();
-    public int getMaxMemberID()
-        throws DatabaseException;
+  public void updateTitle(
+      int memberID, // primary key
+      String memberTitle)
+      throws ObjectNotFoundException, DatabaseException;
 
-    public boolean isSupportGetMembersFromIDRange();
-    public Collection getMembers_fromIDRange(int fromID, int toID)
-        throws IllegalArgumentException, DatabaseException;
+  public boolean isSupportUpdateLastLogon();
 
-    public boolean isSupportUpdateStatus();
-    public void updateStatus(int memberID, // primary key
-                             int memberStatus)
-        throws ObjectNotFoundException, DatabaseException;
+  public void updateLastLogon(
+      int memberID, // primary key
+      Timestamp memberLastLogon,
+      String lastIP)
+      throws ObjectNotFoundException, DatabaseException;
 
-    public boolean isSupportUpdatePostCount();
-    public void updatePostCount(int memberID, // primary key
-                                int memberPostCount)
-        throws ObjectNotFoundException, DatabaseException;
+  public boolean isSupportGetPassword();
 
-    public boolean isSupportIncreaseViewCount();
-    /**
-     * This method should be call only when we can make sure that memberID is in database
-     */
-    public void increaseViewCount(int memberID)
-        throws DatabaseException, ObjectNotFoundException;
+  public String getPassword(int memberID) throws ObjectNotFoundException, DatabaseException;
 
-    public boolean isSupportIncreasePostCount();
-    /**
-     * This method should be call only when we can make sure that memberID is in database
-     */
-    public void increasePostCount(int memberID)
-        throws DatabaseException, ObjectNotFoundException;
+  public boolean isSupportGetTempPassword();
 
-    public boolean isSupportGetMembers_inExpire_limit();
-    public Collection getMembers_inExpire_limit(Timestamp expireDate, int offset, int rowsToReturn, String sort, String order)
-        throws IllegalArgumentException, DatabaseException;
+  public String getTempPassword(int memberID) throws ObjectNotFoundException, DatabaseException;
 
-    public boolean isSupportGetNumberOfMembers_inExpire();
-    public int getNumberOfMembers_inExpire(Timestamp expireDate)
-        throws DatabaseException;
+  public boolean isSupportGetActivateCode();
 
-    public boolean isSupportUpdateMember_expireDate();
-    public void updateMember_expireDate(int memberID, // primary key
-                                        Timestamp expireDate)
-        throws ObjectNotFoundException, DatabaseException;
+  public String getActivateCode(int memberID) throws ObjectNotFoundException, DatabaseException;
 
-    public boolean isSupportGetMembers();
-    public Collection getMembers()
-        throws DatabaseException;
+  public boolean isSupportGetMember();
 
-    public boolean isSupportGetEnableMembers_inGroup();
-    public Collection getEnableMembers_inGroup(int groupID)
-        throws DatabaseException;
+  public MemberBean getMember(int memberID) throws ObjectNotFoundException, DatabaseException;
 
-    public boolean isSupportGetForumsAuthorizedMembers();
-    public Collection getForumsAuthorizedMembers()
-        throws DatabaseException;
+  public boolean isSupportGetNumberOfMembers();
 
-    public boolean isSupportGetAuthorizedMembers();
-    public Collection getAuthorizedMembers()
-        throws DatabaseException;
+  public int getNumberOfMembers() throws DatabaseException;
 
-    public boolean isSupportGetNonActivatedNoPostMembers();
-    public Collection getNonActivatedNoPostMembers(Timestamp before)
-        throws DatabaseException;
+  public boolean isSupportGetNumberOfMembers_inMemberStatus();
 
+  public int getNumberOfMembers_inMemberStatus(int memberStatus) throws DatabaseException;
+
+  public boolean isSupportGetNumberOfMembers_inActivationStatus();
+
+  public int getNumberOfMembers_inActivationStatus(boolean activationStatus)
+      throws DatabaseException;
+
+  /**
+   * ********************************************** Customized methods come below
+   * **********************************************
+   */
+  public boolean isSupportGetMemberIDFromMemberName();
+
+  public int getMemberIDFromMemberName(String memberName)
+      throws ObjectNotFoundException, DatabaseException;
+
+  public boolean isSupportGetMemberIDFromMemberEmail();
+  /* @todo check if this method work with other DBMS other than MySql (check case-sensitive) */
+  public int getMemberIDFromMemberEmail(String memberEmail)
+      throws ObjectNotFoundException, DatabaseException;
+
+  public boolean isSupportGetMembers_withSortSupport_limit();
+
+  public Collection getMembers_withSortSupport_limit(
+      int offset, int rowsToReturn, String sort, String order, int memberStatus)
+      throws IllegalArgumentException, DatabaseException;
+
+  public boolean isSupportGetEnableMembers_inActivationStatus();
+  /**
+   * Get all members that based on the activation status criteria
+   *
+   * @param kind String can be one of three values: all, activated, nonactivated
+   * @throws DatabaseException
+   * @return Collection
+   */
+  public Collection getEnableMembers_inActivationStatus(String kind) throws DatabaseException;
+
+  public boolean isSupportGetMaxMemberID();
+
+  public int getMaxMemberID() throws DatabaseException;
+
+  public boolean isSupportGetMembersFromIDRange();
+
+  public Collection getMembers_fromIDRange(int fromID, int toID)
+      throws IllegalArgumentException, DatabaseException;
+
+  public boolean isSupportUpdateStatus();
+
+  public void updateStatus(
+      int memberID, // primary key
+      int memberStatus)
+      throws ObjectNotFoundException, DatabaseException;
+
+  public boolean isSupportUpdatePostCount();
+
+  public void updatePostCount(
+      int memberID, // primary key
+      int memberPostCount)
+      throws ObjectNotFoundException, DatabaseException;
+
+  public boolean isSupportIncreaseViewCount();
+  /** This method should be call only when we can make sure that memberID is in database */
+  public void increaseViewCount(int memberID) throws DatabaseException, ObjectNotFoundException;
+
+  public boolean isSupportIncreasePostCount();
+  /** This method should be call only when we can make sure that memberID is in database */
+  public void increasePostCount(int memberID) throws DatabaseException, ObjectNotFoundException;
+
+  public boolean isSupportGetMembers_inExpire_limit();
+
+  public Collection getMembers_inExpire_limit(
+      Timestamp expireDate, int offset, int rowsToReturn, String sort, String order)
+      throws IllegalArgumentException, DatabaseException;
+
+  public boolean isSupportGetNumberOfMembers_inExpire();
+
+  public int getNumberOfMembers_inExpire(Timestamp expireDate) throws DatabaseException;
+
+  public boolean isSupportUpdateMember_expireDate();
+
+  public void updateMember_expireDate(
+      int memberID, // primary key
+      Timestamp expireDate)
+      throws ObjectNotFoundException, DatabaseException;
+
+  public boolean isSupportGetMembers();
+
+  public Collection getMembers() throws DatabaseException;
+
+  public boolean isSupportGetEnableMembers_inGroup();
+
+  public Collection getEnableMembers_inGroup(int groupID) throws DatabaseException;
+
+  public boolean isSupportGetForumsAuthorizedMembers();
+
+  public Collection getForumsAuthorizedMembers() throws DatabaseException;
+
+  public boolean isSupportGetAuthorizedMembers();
+
+  public Collection getAuthorizedMembers() throws DatabaseException;
+
+  public boolean isSupportGetNonActivatedNoPostMembers();
+
+  public Collection getNonActivatedNoPostMembers(Timestamp before) throws DatabaseException;
 }
