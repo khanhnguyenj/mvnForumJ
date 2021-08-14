@@ -145,29 +145,29 @@
         <enable_list_new_members_in_recent_days>true</enable_list_new_members_in_recent_days>
         <days_to_show_recent_members>7</days_to_show_recent_members>
 
-        <enable_show_birthday>true</enable_show_birthday>
-        <enable_show_gender>true</enable_show_gender>
-        <enable_show_email>true</enable_show_email>
-        <enable_show_email_visible>true</enable_show_email_visible>
-        <enable_show_name_visible>true</enable_show_name_visible>
-        <enable_show_online_status>true</enable_show_online_status>
-        <enable_show_firstname>true</enable_show_firstname>
-        <enable_show_lastname>true</enable_show_lastname>
-        <enable_show_address>true</enable_show_address>
-        <enable_show_city>true</enable_show_city>
-        <enable_show_state>true</enable_show_state>
-        <enable_show_country>true</enable_show_country>
-        <enable_show_phone>true</enable_show_phone>
-        <enable_show_mobile>true</enable_show_mobile>
-        <enable_show_fax>true</enable_show_fax>
-        <enable_show_career>true</enable_show_career>
-        <enable_show_homepage>true</enable_show_homepage>
-        <enable_show_cool_link_1>true</enable_show_cool_link_1>
-        <enable_show_cool_link_2>true</enable_show_cool_link_2>
-        <enable_show_yahoo>true</enable_show_yahoo>
-        <enable_show_aol>true</enable_show_aol>
-        <enable_show_icq>true</enable_show_icq>
-        <enable_show_msn>true</enable_show_msn>
+        <enable_show_birthday>false</enable_show_birthday>
+        <enable_show_gender>false</enable_show_gender>
+        <enable_show_email>false</enable_show_email>
+        <enable_show_email_visible>false</enable_show_email_visible>
+        <enable_show_name_visible>false</enable_show_name_visible>
+        <enable_show_online_status>false</enable_show_online_status>
+        <enable_show_firstname>false</enable_show_firstname>
+        <enable_show_lastname>false</enable_show_lastname>
+        <enable_show_address>false</enable_show_address>
+        <enable_show_city>false</enable_show_city>
+        <enable_show_state>false</enable_show_state>
+        <enable_show_country>false</enable_show_country>
+        <enable_show_phone>false</enable_show_phone>
+        <enable_show_mobile>false</enable_show_mobile>
+        <enable_show_fax>false</enable_show_fax>
+        <enable_show_career>false</enable_show_career>
+        <enable_show_homepage>false</enable_show_homepage>
+        <enable_show_cool_link_1>false</enable_show_cool_link_1>
+        <enable_show_cool_link_2>false</enable_show_cool_link_2>
+        <enable_show_yahoo>false</enable_show_yahoo>
+        <enable_show_aol>false</enable_show_aol>
+        <enable_show_icq>false</enable_show_icq>
+        <enable_show_msn>false</enable_show_msn>
         <enable_show_join_date>true</enable_show_join_date>
         <enable_show_last_login>true</enable_show_last_login>
         <enable_show_post_count>true</enable_show_post_count>
@@ -176,10 +176,10 @@
         <enable_show_posts_per_page>true</enable_show_posts_per_page>
         <enable_show_modified_date>true</enable_show_modified_date>
 
-        <require_register_firstname>true</require_register_firstname>
-        <require_register_lastname>true</require_register_lastname>
-        <require_register_gender>true</require_register_gender>
-        <require_register_birthday>true</require_register_birthday>
+        <require_register_firstname>false</require_register_firstname>
+        <require_register_lastname>false</require_register_lastname>
+        <require_register_gender>false</require_register_gender>
+        <require_register_birthday>false</require_register_birthday>
         <require_register_address>false</require_register_address>
         <require_register_city>false</require_register_city>
         <require_register_state>false</require_register_state>

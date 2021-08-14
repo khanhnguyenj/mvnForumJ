@@ -97,15 +97,6 @@ function ValidateForm() {
   temp=field.value
   if (isBlank(field, "<fmt:message key="mvnforum.common.member.email"/>")) return false;
   if (!isEmail(field, "<fmt:message key="mvnforum.common.member.email"/>")) return false;
-
-  field=document.submitform.MemberEmailConfirm;
-  if (isBlank(field, "<fmt:message key="mvnforum.common.member.email"/> (<fmt:message key="mvnforum.common.retype"/>)")) return false;
-  if (!isEmail(field, "<fmt:message key="mvnforum.common.member.email"/>")) return false;
-
-  if (temp!=field.value) {
-    alert("<fmt:message key="mvnforum.common.member.email"/> <fmt:message key="mvnforum.common.js.prompt.notmatch"/>");
-    return false;
-  }
 <%if (MVNForumConfig.getEnableShowFirstName() && MVNForumConfig.isRequireRegisterFirstname()) {%>
     if (isBlank(document.submitform.MemberFirstname, "<fmt:message key="mvnforum.common.member.first_name"/>")) return false;
 <%}%>
@@ -298,172 +289,6 @@ jQuery(document).ready(function($){
     <% } %>
     </td>
   </tr>
-  <tr class="<mvn:cssrow/>">
-    <td nowrap="nowrap"><label for="MemberEmailConfirm"><fmt:message key="mvnforum.common.member.email"/> (<fmt:message key="mvnforum.common.retype"/>)<span class="requiredfield"> *</span></label></td>
-    <td><input type="text" size="60" id="MemberEmailConfirm" name="MemberEmailConfirm" /></td>
-  </tr>
-<% if (MVNForumConfig.getEnableShowFirstName()) { %>
-  <tr class="<mvn:cssrow/>">
-    <td nowrap="nowrap">
-      <label for="MemberFirstname"><fmt:message key="mvnforum.common.member.first_name"/><% if (MVNForumConfig.isRequireRegisterFirstname()) { %><span class="requiredfield"> *</span><% } %></label>
-    </td>
-    <td><input type="text" size="60" id="MemberFirstname" name="MemberFirstname" onkeyup="initTyper(this);" /></td>
-  </tr>
-<% } %>
-<% if (MVNForumConfig.getEnableShowLastName()) { %>
-  <tr class="<mvn:cssrow/>">
-    <td nowrap="nowrap">
-      <label for="MemberLastname"><fmt:message key="mvnforum.common.member.last_name"/><% if (MVNForumConfig.isRequireRegisterLastname()) { %><span class="requiredfield"> *</span><% } %></label>
-    </td>
-    <td><input type="text" size="60" id="MemberLastname" name="MemberLastname" onkeyup="initTyper(this);" /></td>
-  </tr>
-<% } %>
-<% if (MVNForumConfig.getEnableShowGender()) { %>
-  <tr class="<mvn:cssrow/>">
-    <td nowrap="nowrap">
-      <label for="MemberGender"><fmt:message key="mvnforum.common.member.gender"/><% if (MVNForumConfig.isRequireRegisterGender()) { %><span class="requiredfield"> *</span><% } %></label>
-    </td>
-    <td>
-    <select id="MemberGender" name="MemberGender" size="1">
-      <option value="-1"></option>
-      <option value="1"><fmt:message key="mvnforum.common.member.male"/></option>
-      <option value="0"><fmt:message key="mvnforum.common.member.female"/></option>
-    </select>
-    </td>
-  </tr>
-<% } %>
-<% if (MVNForumConfig.getEnableShowBirthday()) { %>
-  <tr class="<mvn:cssrow/>">
-    <td nowrap="nowrap">
-      <fmt:message key="mvnforum.common.member.birthday"/> (dd/mm/yyyy)<% if (MVNForumConfig.isRequireRegisterBirthday()) { %><span class="requiredfield"> *</span><% } %>
-    </td>
-    <td>
-<%@ include file="inc_date_option.jsp"%>
-    </td>
-  </tr>
-<% } %>
-  <tr class="<mvn:cssrow/>">
-    <td nowrap="nowrap"><label for="MemberEmailVisible"><fmt:message key="mvnforum.common.member.show_email"/></label></td>
-    <td><input type="checkbox" checked="checked" size="60" id="MemberEmailVisible" name="MemberEmailVisible" value="yes" class="noborder" /></td>
-  </tr>
-  <tr class="<mvn:cssrow/>">
-    <td nowrap="nowrap"><label for="MemberNameVisible"><fmt:message key="mvnforum.common.member.name_visible"/></label></td>
-    <td><input type="checkbox" checked="checked" size="60" id="MemberNameVisible" name="MemberNameVisible" value="yes" class="noborder" <%if (MVNForumConfig.getEnableInvisibleUsers()==false) {%> disabled="disabled"<%}%> /></td>
-  </tr>
-  <tr class="<mvn:cssrow/>">
-    <td nowrap="nowrap"><label for="MemberPostsPerPage"><fmt:message key="mvnforum.common.member.posts_per_page"/></label></td>
-    <td>
-      <select id="MemberPostsPerPage" name="MemberPostsPerPage">
-        <option value="5">5</option>
-        <option value="10" selected="selected">10</option>
-        <option value="15">15</option>
-        <option value="20">20</option>
-        <option value="30">30</option>
-        <option value="50">50</option>
-      </select>
-    </td>
-  </tr>
-  <tr class="<mvn:cssrow/>">
-    <td nowrap="nowrap"><label for="MemberLanguage"><fmt:message key="mvnforum.common.member.language"/></label></td>
-    <td>
-      <select id="MemberLanguage" name="MemberLanguage" size="1">
-        <option value=""><fmt:message key="mvnforum.common.member.default_language"/></option>
-<%
-Locale[] locales = MVNForumConfig.getSupportedLocales();
-for (int i = 0; i < locales.length; i++) {
-    Locale locale = locales[i]; %>
-        <option value="<%=locale.toString()%>"><%=locale.getDisplayName(locale)%></option>
-<% } %>
-      </select>
-    </td>
-  </tr>
-  <tr class="<mvn:cssrow/>">
-    <td nowrap="nowrap"><label for="timeZoneSelectName"><fmt:message key="mvnforum.common.member.time_zone"/></label></td>
-    <td>
-<%
-double selectedTimeZone = MVNForumConfig.getDefaultGuestTimeZone();
-String timeZoneSelectName = "MemberTimeZone";
-%>
-<%@ include file="inc_timezone_option.jsp"%>
-    </td>
-  </tr>
-<%-- @todo: Should we add the following row:
-  <tr class="portlet-section-header">
-    <td colspan="2">Personal data (will not be revealed or given to third parties... or some similiar message? And maybe a link to some privacy statement?</td>
-  </tr>
---%>
-<% if (MVNForumConfig.getEnableShowAddress()) { %>
-  <tr class="<mvn:cssrow/>">
-    <td nowrap="nowrap">
-      <label for="MemberAddress"><fmt:message key="mvnforum.common.member.address"/><% if (MVNForumConfig.isRequireRegisterAddress()) { %><span class="requiredfield"> *</span><% } %></label>
-    </td>
-    <td><input type="text" size="60" id="MemberAddress" name="MemberAddress" onkeyup="initTyper(this);" /></td>
-  </tr>
-<% } %>
-<% if (MVNForumConfig.getEnableShowCity()) { %>
-  <tr class="<mvn:cssrow/>">
-    <td nowrap="nowrap">
-      <label for="MemberCity"><fmt:message key="mvnforum.common.member.city"/><% if (MVNForumConfig.isRequireRegisterCity()) { %><span class="requiredfield"> *</span><% } %></label>
-    </td>
-    <td><input type="text" size="60" id="MemberCity" name="MemberCity" onkeyup="initTyper(this);" /></td>
-  </tr>
-<% } %>
-<% if (MVNForumConfig.getEnableShowState()) { %>
-  <tr class="<mvn:cssrow/>">
-    <td nowrap="nowrap">
-      <label for="MemberState"><fmt:message key="mvnforum.common.member.state"/><% if (MVNForumConfig.isRequireRegisterState()) { %><span class="requiredfield"> *</span><% } %></label>
-    </td>
-    <td><input type="text" size="60" id="MemberState" name="MemberState" onkeyup="initTyper(this);" /></td>
-  </tr>
-<% } %>
-<% if (MVNForumConfig.getEnableShowCountry()) { %>
-  <tr class="<mvn:cssrow/>">
-    <td nowrap="nowrap">
-      <label for="MemberCountry"><fmt:message key="mvnforum.common.member.country"/><% if (MVNForumConfig.isRequireRegisterCountry()) { %><span class="requiredfield"> *</span><% } %></label>
-    </td>
-    <td><input type="text" size="60" id="MemberCountry" name="MemberCountry" onkeyup="initTyper(this);" /></td>
-  </tr>
-<% } %>
-<% if (MVNForumConfig.getEnableShowPhone()) { %>
-  <tr class="<mvn:cssrow/>">
-    <td nowrap="nowrap">
-      <label for="MemberPhone"><fmt:message key="mvnforum.common.member.phone"/><% if (MVNForumConfig.isRequireRegisterPhone()) { %><span class="requiredfield"> *</span><% } %></label>
-    </td>
-    <td><input type="text" size="60" id="MemberPhone" name="MemberPhone" /></td>
-  </tr>
-<% } %>
-<% if (MVNForumConfig.getEnableShowMobile()) { %>
-  <tr class="<mvn:cssrow/>">
-    <td nowrap="nowrap">
-      <label for="MemberMobile"><fmt:message key="mvnforum.common.member.mobile"/><% if (MVNForumConfig.isRequireRegisterMobile()) { %><span class="requiredfield"> *</span><% } %></label>
-    </td>
-    <td><input type="text" size="60" id="MemberMobile" name="MemberMobile" /></td>
-  </tr>
-<% } %>
-<% if (MVNForumConfig.getEnableShowFax()) { %>
-  <tr class="<mvn:cssrow/>">
-    <td nowrap="nowrap">
-      <label for="MemberFax"><fmt:message key="mvnforum.common.member.fax"/><% if (MVNForumConfig.isRequireRegisterFax()) { %><span class="requiredfield"> *</span><% } %></label>
-    </td>
-    <td><input type="text" size="60" id="MemberFax" name="MemberFax" /></td>
-  </tr>
-<% } %>
-<% if (MVNForumConfig.getEnableShowCareer()) { %>
-  <tr class="<mvn:cssrow/>">
-    <td nowrap="nowrap">
-      <label for="MemberCareer"><fmt:message key="mvnforum.common.member.career"/><% if (MVNForumConfig.isRequireRegisterCareer()) { %><span class="requiredfield"> *</span><% } %></label>
-    </td>
-    <td><input type="text" size="60" id="MemberCareer" name="MemberCareer" onkeyup="initTyper(this);" /></td>
-  </tr>
-<% } %>
-<% if (MVNForumConfig.getEnableShowHomepage()) { %>
-  <tr class="<mvn:cssrow/>">
-    <td nowrap="nowrap">
-      <label for="MemberHomepage"><fmt:message key="mvnforum.common.member.homepage"/><% if (MVNForumConfig.isRequireRegisterHomepage()) { %><span class="requiredfield"> *</span><% } %></label>
-    </td>
-    <td><input type="text" size="60" id="MemberHomepage" name="MemberHomepage" value="http://" /></td>
-  </tr>
-<% } %>
 <%if (MVNForumConfig.getEnableCaptcha()) {%>
   <tr class="<mvn:cssrow/>">
     <td nowrap="nowrap"><fmt:message key="mvnforum.common.captcha.challenge"/></td>
@@ -478,24 +303,7 @@ String timeZoneSelectName = "MemberTimeZone";
       <input type="text" size="60" id="CaptchaResponse" name="CaptchaResponse" value="" />
     </td>
   </tr>
-
 <%}// end if captcha%>
-<%if (currentLocale.equals("vi")) {/*vietnamese here*/%>
-  <tr class="<mvn:cssrow/>">
-    <td valign="top" nowrap="nowrap"><fmt:message key="mvnforum.common.vietnamese_type"/>:</td>
-    <td>
-      <input type="radio" name="vnselector" id="TELEX" value="TELEX" onclick="setTypingMode(1);" class="noborder"/> <fmt:message key="mvnforum.common.vietnamese_type.telex"/>&nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="vnselector" id="VNI" value="VNI" onclick="setTypingMode(2);" class="noborder"/> <fmt:message key="mvnforum.common.vietnamese_type.vni"/>&nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="radio" name="vnselector" id="VIQR" value="VIQR" onclick="setTypingMode(3);" class="noborder"/> <fmt:message key="mvnforum.common.vietnamese_type.VIQR"/><br/>
-      <input type="radio" name="vnselector" id="NOVN" value="NOVN" onclick="setTypingMode(0);" class="noborder"/> <fmt:message key="mvnforum.common.vietnamese_type.not_use"/>
-      <script type="text/javascript">
-      //<![CDATA[
-      initVNTyperMode();
-      //]]>
-      </script>
-    </td>
-  </tr>
-<%}// end if vietnamese%>
   <tr class="portlet-section-footer">
     <td colspan="2" align="center">
     <input type="button" name="submitbutton" class="portlet-form-button" value="<fmt:message key="mvnforum.common.action.register"/>" onclick="javascript:SubmitForm();" />
