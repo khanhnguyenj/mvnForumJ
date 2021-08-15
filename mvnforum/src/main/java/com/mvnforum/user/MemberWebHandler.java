@@ -189,7 +189,7 @@ public class MemberWebHandler {
     }
 
     if (MVNForumConfig.getEnableCaptcha()) {
-      onlineUser.buildNewCaptcha();
+      // TODO check captcha
     }
   }
 
@@ -390,7 +390,8 @@ public class MemberWebHandler {
     }
 
     if (MVNForumConfig.getEnableCaptcha()) {
-      String captchaResponse = GenericParamUtil.getParameterSafe(request, "CaptchaResponse", true);
+      String captchaResponse =
+          GenericParamUtil.getParameterSafe(request, "g-recaptcha-response", true);
       onlineUser.ensureCorrectCaptchaResponse(captchaResponse);
     }
     Timestamp memberExpireDate = memberCreationDate;// equal Creation Date mean no expiration
@@ -451,10 +452,6 @@ public class MemberWebHandler {
         3/* order */, folderStatus, folderOption, folderType, now, now);
 
     FloodControlHour.increaseCount(MVNForumGlobal.FLOOD_ID_NEW_MEMBER_PER_IP, currentIP);
-
-    if (MVNForumConfig.getEnableCaptcha()) {
-      onlineUser.destroyCurrentCaptcha();
-    }
 
     // Add member to the Lucene index
     MemberBean memberBean = null;
@@ -1112,7 +1109,7 @@ public class MemberWebHandler {
 
     OnlineUser onlineUser = onlineUserManager.getOnlineUser(request);
     if (MVNForumConfig.getEnableCaptcha()) {
-      onlineUser.buildNewCaptcha();
+      // TODO: add captcha
     }
   }
 
@@ -1237,11 +1234,6 @@ public class MemberWebHandler {
       MailUtil.sendMail(mailMessageStruct);
     } catch (UnsupportedEncodingException e) {
       log.error("Cannot support encoding", e);
-    }
-
-    // Only destroy captcha when send mail successfully
-    if (MVNForumConfig.getEnableCaptcha()) {
-      onlineUser.destroyCurrentCaptcha();
     }
   }
 

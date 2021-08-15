@@ -307,6 +307,8 @@
         <enable_backup_on_server>true</enable_backup_on_server>
         <max_import_size>4096000</max_import_size>
 
+        <googleRecaptchaSiteKey>...</googleRecaptchaSiteKey>
+        <googleRecaptchaSecretKey>...</googleRecaptchaSecretKey>
     </mvnforumconfig>
 
     <mvnforumfactoryconfig>

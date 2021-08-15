@@ -1,70 +1,59 @@
 /*
- * $Header: /cvsroot/mvnforum/mvnforum/src/com/mvnforum/auth/OnlineUserImpl.java,v 1.92 2009/07/17 06:56:00 lexuanttkhtn Exp $
- * $Author: lexuanttkhtn $
- * $Revision: 1.92 $
- * $Date: 2009/07/17 06:56:00 $
+ * $Header: /cvsroot/mvnforum/mvnforum/src/com/mvnforum/auth/OnlineUserImpl.java,v 1.92 2009/07/17
+ * 06:56:00 lexuanttkhtn Exp $ $Author: lexuanttkhtn $ $Revision: 1.92 $ $Date: 2009/07/17 06:56:00
+ * $
  *
  * ====================================================================
  *
  * Copyright (C) 2002-2007 by MyVietnam.net
  *
- * All copyright notices regarding mvnForum MUST remain
- * intact in the scripts and in the outputted HTML.
- * The "powered by" text/logo with a link back to
- * http://www.mvnForum.com and http://www.MyVietnam.net in
- * the footer of the pages MUST remain visible when the pages
- * are viewed on the internet or intranet.
+ * All copyright notices regarding mvnForum MUST remain intact in the scripts and in the outputted
+ * HTML. The "powered by" text/logo with a link back to http://www.mvnForum.com and
+ * http://www.MyVietnam.net in the footer of the pages MUST remain visible when the pages are viewed
+ * on the internet or intranet.
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * any later version.
+ * This program is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation; either version 2 of the
+ * License, or any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * You should have received a copy of the GNU General Public License along with this program; if
+ * not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
+ * 02111-1307 USA
  *
- * Support can be obtained from support forums at:
- * http://www.mvnForum.com/mvnforum/index
+ * Support can be obtained from support forums at: http://www.mvnForum.com/mvnforum/index
  *
- * Correspondence and Marketing Questions can be sent to:
- * info at MyVietnam net
+ * Correspondence and Marketing Questions can be sent to: info at MyVietnam net
  *
  * @author: Minh Nguyen
- * @author: Mai  Nguyen
+ *
+ * @author: Mai Nguyen
  */
 package com.mvnforum.auth;
 
-import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.huongdanjava.mvnforum.http.GoogleReCaptchaAdapterImpl;
+import com.huongdanjava.mvnforum.usecases.adapter.GoogleReCaptchaAdapter;
 import com.mvnforum.MVNForumConfig;
 import com.mvnforum.MVNForumConstant;
 import com.mvnforum.MVNForumGlobal;
 import com.mvnforum.MVNForumResourceBundle;
 import com.mvnforum.MyUtil;
-import com.mvnforum.common.MVNCaptchaService;
 import com.mvnforum.db.DAOFactory;
 import com.mvnforum.db.MemberBean;
 import com.mvnforum.db.MemberCache;
-import com.octo.captcha.image.ImageCaptcha;
-
+import lombok.extern.slf4j.Slf4j;
 import net.myvietnam.mvncore.exception.BadInputException;
 import net.myvietnam.mvncore.util.DateUtil;
 import net.myvietnam.mvncore.util.I18nUtil;
@@ -74,9 +63,8 @@ import net.myvietnam.mvncore.web.GenericResponse;
 import net.myvietnam.mvncore.web.impl.GenericRequestServletImpl;
 import net.myvietnam.mvncore.web.impl.GenericResponseServletImpl;
 
+@Slf4j
 public class OnlineUserImpl implements OnlineUser {
-
-  private static final Logger log = LoggerFactory.getLogger(OnlineUserImpl.class);
 
   private static final long CHECK_NEW_MESSAGE_INTERVAL = 5 * DateUtil.MINUTE; // five minutes
 
@@ -102,9 +90,10 @@ public class OnlineUserImpl implements OnlineUser {
   private String memberLogoPath = null;
 
   private double timezone = 0;
-  /* private DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-   * Igor: previous line should be: new SimpleDateFormat(..., Locale.US)
-   * Otherwise won't work for users who don't have en/US as default.
+  /*
+   * private DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); Igor: previous
+   * line should be: new SimpleDateFormat(..., Locale.US) Otherwise won't work for users who don't
+   * have en/US as default.
    */
   private DateFormat timestampFormatter = null;
   private DateFormat dateFormatter = null;
@@ -125,7 +114,6 @@ public class OnlineUserImpl implements OnlineUser {
 
   private boolean isMobileAgent = false;
 
-  private ImageCaptcha imageCaptcha = null;
   private Object conn = null;
   private Set participants = new HashSet();
   private Set waitingList = new HashSet();
@@ -256,15 +244,13 @@ public class OnlineUserImpl implements OnlineUser {
     if (lastCheckNewMessageTimestamp != null) {
       lastRequest = lastCheckNewMessageTimestamp.getTime();
     }
-    if ((lastCheckNewMessageTimestamp == null)
-        || forceUpdate
+    if ((lastCheckNewMessageTimestamp == null) || forceUpdate
         || ((lastRequest + CHECK_NEW_MESSAGE_INTERVAL) <= now.getTime())) {
       try {
         lastCheckNewMessageTimestamp = now;
         newMessageCount =
-            DAOFactory.getMessageDAO()
-                .getNumberOfUnreadNonPublicMessages_inMember_inFolder(
-                    memberID, MVNForumConstant.MESSAGE_FOLDER_INBOX);
+            DAOFactory.getMessageDAO().getNumberOfUnreadNonPublicMessages_inMember_inFolder(
+                memberID, MVNForumConstant.MESSAGE_FOLDER_INBOX);
         if (currentMessageCount < newMessageCount) {
           return true;
         }
@@ -333,8 +319,8 @@ public class OnlineUserImpl implements OnlineUser {
   }
 
   @Override
-  public void setLocaleName(
-      String localeName, HttpServletRequest request, HttpServletResponse response) {
+  public void setLocaleName(String localeName, HttpServletRequest request,
+      HttpServletResponse response) {
 
     GenericRequest genericRequest = new GenericRequestServletImpl(request);
     GenericResponse genericResponse = new GenericResponseServletImpl(response);
@@ -401,10 +387,8 @@ public class OnlineUserImpl implements OnlineUser {
   }
 
   /*
-      public boolean getGender() {
-          return gender;
-      }
-  */
+   * public boolean getGender() { return gender; }
+   */
   @Override
   public int getPostsPerPage() {
     return memberPostsPerPage;
@@ -441,61 +425,23 @@ public class OnlineUserImpl implements OnlineUser {
   }
 
   /**
-   * Build a new captcha, this method must be called before using some action that need captcha
-   * validation.
-   */
-  @Override
-  public void buildNewCaptcha() {
-    destroyCurrentCaptcha();
-
-    // this line of code could throw Exception in case the captcha image
-    // is small to hold the whole captcha
-    imageCaptcha = MVNCaptchaService.getInstance().getNextImageCaptcha();
-    if (imageCaptcha == null) {
-      log.error("MVNCaptchaService.getInstance().getNextImageCaptcha() returns null");
-    }
-  }
-
-  /** Destroy the current captcha, this method must be called after validate the captcha */
-  @Override
-  public void destroyCurrentCaptcha() {
-    imageCaptcha = null;
-  }
-
-  /**
-   * Get the captcha image to challenge the user
-   *
-   * @return BufferedImage the captcha image to challenge the user
-   */
-  @Override
-  public BufferedImage getCurrentCaptchaImage() {
-    if (imageCaptcha == null) {
-      return null;
-    }
-    return (BufferedImage) (imageCaptcha.getChallenge());
-  }
-
-  /**
    * Validate the anwser of the captcha from user
    *
    * @param anwser String the captcha anwser from user
    * @return boolean true if the answer is valid, otherwise return false
    */
   @Override
-  public boolean validateCaptchaResponse(String anwser) {
-    if (imageCaptcha == null) {
-      log.info("validateCaptchaResponse returned false due to imageCaptcha is null");
+  public boolean validateCaptchaResponse(String gRecaptchaResponse) {
+    String googleRecaptchaSecretKey = MVNForumConfig.getGoogleRecaptchaSecretKey();
+
+    GoogleReCaptchaAdapter googleReCaptchaAdapter = new GoogleReCaptchaAdapterImpl();
+
+    try {
+      return googleReCaptchaAdapter.verify(gRecaptchaResponse, googleRecaptchaSecretKey);
+    } catch (IOException e) {
+      log.error(e.getMessage(), e);
       return false;
     }
-    anwser = anwser.toUpperCase(); // use upper case for easier usage
-    boolean result = (imageCaptcha.validateResponse(anwser)).booleanValue();
-    if (result == false) {
-      // minhnn: I comment the below code because cannot get private variable 'response' from class
-      // Gimpy
-      // log.info("validateCaptchaResponse returned false due to wrong answer. The input is '" +
-      // anwser + "' but expect '" + imageCaptcha.getQuestion() + "'");
-    }
-    return result;
   }
 
   /**
@@ -506,11 +452,9 @@ public class OnlineUserImpl implements OnlineUser {
    */
   @Override
   public void ensureCorrectCaptchaResponse(String answer) throws BadInputException {
-
     if (validateCaptchaResponse(answer) == false) {
-      throw new BadInputException(
-          MVNForumResourceBundle.getString(
-              locale, "mvncore.exception.BadInputException.wrong_captcha"));
+      throw new BadInputException(MVNForumResourceBundle.getString(locale,
+          "mvncore.exception.BadInputException.wrong_captcha"));
     }
   }
 

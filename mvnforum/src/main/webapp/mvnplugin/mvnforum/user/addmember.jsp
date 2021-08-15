@@ -289,21 +289,10 @@ jQuery(document).ready(function($){
     <% } %>
     </td>
   </tr>
-<%if (MVNForumConfig.getEnableCaptcha()) {%>
   <tr class="<mvn:cssrow/>">
     <td nowrap="nowrap"><fmt:message key="mvnforum.common.captcha.challenge"/></td>
-    <td>
-      <img id="captchaimg" src="<%=urlResolver.encodeURL(request, response, "captchaimage?time="+System.currentTimeMillis())%>" alt="<fmt:message key="mvnforum.common.captcha.desc"/>" title="<fmt:message key="mvnforum.common.captcha.desc"/>" border="0" />
-      &nbsp;<img src="<%=contextPath%>/mvnplugin/mvnforum/images/icon/icon_refresh.gif" alt="<fmt:message key="mvnforum.common.captcha.refresh"/>" title="<fmt:message key="mvnforum.common.captcha.refresh"/>" border="0" id="reloadCaptchaButton" />
-    </td>
+    <td><div class="g-recaptcha" data-sitekey="<%=MVNForumConfig.getGoogleRecaptchaSiteKey()%>"></div></td>
   </tr>
-  <tr class="<mvn:cssrow/>">
-    <td nowrap="nowrap"><label for="CaptchaResponse"><fmt:message key="mvnforum.common.captcha.response"/><span class="requiredfield"> *</span></label></td>
-    <td>
-      <input type="text" size="60" id="CaptchaResponse" name="CaptchaResponse" value="" />
-    </td>
-  </tr>
-<%}// end if captcha%>
   <tr class="portlet-section-footer">
     <td colspan="2" align="center">
     <input type="button" name="submitbutton" class="portlet-form-button" value="<fmt:message key="mvnforum.common.action.register"/>" onclick="javascript:SubmitForm();" />
@@ -315,6 +304,7 @@ jQuery(document).ready(function($){
 </form>
 
 <br/>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <%@ include file="footer.jsp"%>
 </mvn:body>
 </mvn:html>
