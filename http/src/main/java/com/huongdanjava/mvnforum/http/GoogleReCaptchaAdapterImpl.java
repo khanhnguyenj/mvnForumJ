@@ -35,7 +35,6 @@ public class GoogleReCaptchaAdapterImpl implements GoogleReCaptchaAdapter {
         httpPost.setEntity(formEntity);
 
         try (CloseableHttpResponse response = httpclient.execute(httpPost)) {
-          System.out.println(response.getCode() + " " + response.getReasonPhrase());
           if (response.getCode() != 200) {
             return false;
           }
