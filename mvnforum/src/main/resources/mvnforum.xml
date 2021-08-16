@@ -100,7 +100,7 @@
         <enable_attachment>true</enable_attachment>
         <enable_avatar>true</enable_avatar>
         <enable_emoticon>true</enable_emoticon>
-        <enable_captcha>false</enable_captcha>
+        <enable_captcha>true</enable_captcha>
         <enable_listmembers>true</enable_listmembers>
         <enable_listunansweredthreads>true</enable_listunansweredthreads>
         <enable_show_last_login_of_current_member>true</enable_show_last_login_of_current_member>

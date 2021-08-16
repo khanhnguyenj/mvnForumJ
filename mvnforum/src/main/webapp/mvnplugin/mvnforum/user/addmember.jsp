@@ -163,10 +163,6 @@ function ValidateForm() {
     if (isBlank(document.submitform.MemberHomepage, "<fmt:message key="mvnforum.common.member.homepage"/>")) return false;
 <%}%>
 
-<%if (MVNForumConfig.getEnableCaptcha()) {%>
-    if (isBlank(document.submitform.CaptchaResponse, "<fmt:message key="mvnforum.common.captcha.response"/>")) return false;
-<%}%>
-
   return true;
 }
 
@@ -289,10 +285,12 @@ jQuery(document).ready(function($){
     <% } %>
     </td>
   </tr>
+<% if (MVNForumConfig.getEnableCaptcha()) { %>
   <tr class="<mvn:cssrow/>">
     <td nowrap="nowrap"><fmt:message key="mvnforum.common.captcha.challenge"/></td>
     <td><div class="g-recaptcha" data-sitekey="<%=MVNForumConfig.getGoogleRecaptchaSiteKey()%>"></div></td>
   </tr>
+<% } %>
   <tr class="portlet-section-footer">
     <td colspan="2" align="center">
     <input type="button" name="submitbutton" class="portlet-form-button" value="<fmt:message key="mvnforum.common.action.register"/>" onclick="javascript:SubmitForm();" />
@@ -307,5 +305,17 @@ jQuery(document).ready(function($){
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <%@ include file="footer.jsp"%>
 </mvn:body>
+<script type="text/javascript">
+	Array.prototype.reduce = function(callback, initialVal) {
+	    var accumulator = (initialVal === undefined) ? undefined : initialVal;
+	    for (var i = 0; i < this.length; i++) {
+	        if (accumulator !== undefined)
+	            accumulator = callback.call(undefined, accumulator, this[i], i, this);
+	        else
+	            accumulator = this[i];
+	    }
+	    return accumulator;
+	};
+</script>
 </mvn:html>
 </fmt:bundle>
