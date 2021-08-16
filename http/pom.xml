@@ -8,12 +8,25 @@
     <version>${global.version}</version>
   </parent>
 
-  <artifactId>usecases</artifactId>
-  
+  <artifactId>http</artifactId>
+
   <dependencies>
     <dependency>
       <groupId>com.huongdanjava.mvnforum</groupId>
-      <artifactId>entities</artifactId>
+      <artifactId>usecases</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.httpcomponents.client5</groupId>
+      <artifactId>httpclient5</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
     </dependency>
   </dependencies>
 </project>

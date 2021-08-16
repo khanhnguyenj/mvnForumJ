@@ -1,53 +1,44 @@
 /*
- * $Header: /cvsroot/mvnforum/mvnforum/src/com/mvnforum/auth/OnlineUser.java,v 1.43 2009/07/17 02:27:09 lexuanttkhtn Exp $
- * $Author: lexuanttkhtn $
- * $Revision: 1.43 $
- * $Date: 2009/07/17 02:27:09 $
+ * $Header: /cvsroot/mvnforum/mvnforum/src/com/mvnforum/auth/OnlineUser.java,v 1.43 2009/07/17
+ * 02:27:09 lexuanttkhtn Exp $ $Author: lexuanttkhtn $ $Revision: 1.43 $ $Date: 2009/07/17 02:27:09
+ * $
  *
  * ====================================================================
  *
  * Copyright (C) 2002-2007 by MyVietnam.net
  *
- * All copyright notices regarding mvnForum MUST remain
- * intact in the scripts and in the outputted HTML.
- * The "powered by" text/logo with a link back to
- * http://www.mvnForum.com and http://www.MyVietnam.net in
- * the footer of the pages MUST remain visible when the pages
- * are viewed on the internet or intranet.
+ * All copyright notices regarding mvnForum MUST remain intact in the scripts and in the outputted
+ * HTML. The "powered by" text/logo with a link back to http://www.mvnForum.com and
+ * http://www.MyVietnam.net in the footer of the pages MUST remain visible when the pages are viewed
+ * on the internet or intranet.
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * any later version.
+ * This program is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation; either version 2 of the
+ * License, or any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * You should have received a copy of the GNU General Public License along with this program; if
+ * not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
+ * 02111-1307 USA
  *
- * Support can be obtained from support forums at:
- * http://www.mvnForum.com/mvnforum/index
+ * Support can be obtained from support forums at: http://www.mvnForum.com/mvnforum/index
  *
- * Correspondence and Marketing Questions can be sent to:
- * info at MyVietnam net
+ * Correspondence and Marketing Questions can be sent to: info at MyVietnam net
  *
  * @author: Minh Nguyen
- * @author: Mai  Nguyen
+ *
+ * @author: Mai Nguyen
  */
 package com.mvnforum.auth;
 
-import java.awt.image.BufferedImage;
 import java.sql.Timestamp;
 import java.util.Locale;
 import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import net.myvietnam.mvncore.exception.BadInputException;
 import net.myvietnam.mvncore.web.GenericRequest;
 import net.myvietnam.mvncore.web.GenericResponse;
@@ -190,8 +181,8 @@ public interface OnlineUser {
    */
   public String getLocaleName();
 
-  public void setLocaleName(
-      String localeName, HttpServletRequest request, HttpServletResponse response);
+  public void setLocaleName(String localeName, HttpServletRequest request,
+      HttpServletResponse response);
 
   /**
    * Set the locale name for the current online user, this method also try to save any cookie if it
@@ -237,10 +228,11 @@ public interface OnlineUser {
    * Update the new message count value. The implementation should provide an effectively method if
    * parameter force is false since this method is called many time.
    *
-   * <p>In case force is true, update it immediately
+   * <p>
+   * In case force is true, update it immediately
    *
    * @return boolean values. It's true if the new message count greater than the current message
-   *     count
+   *         count
    */
   public boolean updateNewMessageCount(boolean force);
 
@@ -262,7 +254,7 @@ public interface OnlineUser {
    * Get the full ABSOLUTE path of the css file
    *
    * @return String the full ABSOLUTE path of the css file, this method can customize the path based
-   *     on parameter in request
+   *         on parameter in request
    */
   public String getCssPath(HttpServletRequest request);
 
@@ -272,22 +264,6 @@ public interface OnlineUser {
    * @return String the full ABSOLUTE path of the logo file
    */
   public String getLogoPath();
-
-  /**
-   * Build a new captcha, this method must be called before using some action that need captcha
-   * validation.
-   */
-  public void buildNewCaptcha();
-
-  /** Destroy the current captcha, this method must be called after validate the captcha */
-  public void destroyCurrentCaptcha();
-
-  /**
-   * Get the captcha image to challenge the user
-   *
-   * @return BufferedImage the captcha image to challenge the user
-   */
-  public BufferedImage getCurrentCaptchaImage();
 
   /**
    * Validate the anwser of the captcha from user
@@ -303,7 +279,7 @@ public interface OnlineUser {
    * @param answer String the captcha answer to check
    * @throws BadInputException in case the captcha answer is not correct
    */
-  public void ensureCorrectCaptchaResponse(String answer) throws BadInputException;
+  public void ensureCorrectCaptchaResponse(String gRecaptchaResponse) throws BadInputException;
 
   public void setCssPath(String path);
 

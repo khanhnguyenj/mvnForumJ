@@ -1,42 +1,37 @@
 /*
- * $Header: /cvsroot/mvnforum/mvnforum/src/com/mvnforum/admin/MemberWebHandler.java,v 1.186 2009/10/02 08:03:49 lexuanttkhtn Exp $
- * $Author: lexuanttkhtn $
- * $Revision: 1.186 $
- * $Date: 2009/10/02 08:03:49 $
+ * $Header: /cvsroot/mvnforum/mvnforum/src/com/mvnforum/admin/MemberWebHandler.java,v 1.186
+ * 2009/10/02 08:03:49 lexuanttkhtn Exp $ $Author: lexuanttkhtn $ $Revision: 1.186 $ $Date:
+ * 2009/10/02 08:03:49 $
  *
  * ====================================================================
  *
  * Copyright (C) 2002-2007 by MyVietnam.net
  *
- * All copyright notices regarding mvnForum MUST remain
- * intact in the scripts and in the outputted HTML.
- * The "powered by" text/logo with a link back to
- * http://www.mvnForum.com and http://www.MyVietnam.net in
- * the footer of the pages MUST remain visible when the pages
- * are viewed on the internet or intranet.
+ * All copyright notices regarding mvnForum MUST remain intact in the scripts and in the outputted
+ * HTML. The "powered by" text/logo with a link back to http://www.mvnForum.com and
+ * http://www.MyVietnam.net in the footer of the pages MUST remain visible when the pages are viewed
+ * on the internet or intranet.
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * any later version.
+ * This program is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation; either version 2 of the
+ * License, or any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * You should have received a copy of the GNU General Public License along with this program; if
+ * not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
+ * 02111-1307 USA
  *
- * Support can be obtained from support forums at:
- * http://www.mvnForum.com/mvnforum/index
+ * Support can be obtained from support forums at: http://www.mvnForum.com/mvnforum/index
  *
- * Correspondence and Marketing Questions can be sent to:
- * info at MyVietnam net
+ * Correspondence and Marketing Questions can be sent to: info at MyVietnam net
  *
  * @author: Minh Nguyen
- * @author: Mai  Nguyen
+ *
+ * @author: Mai Nguyen
+ *
  * @author: Igor Manic
  */
 package com.mvnforum.admin;
@@ -50,10 +45,8 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Locale;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.mvnforum.MVNForumConfig;
 import com.mvnforum.MVNForumConstant;
 import com.mvnforum.MVNForumGlobal;
@@ -84,7 +77,6 @@ import com.mvnforum.search.member.MemberSearchQuery;
 import com.mvnforum.service.CategoryBuilderService;
 import com.mvnforum.service.CategoryService;
 import com.mvnforum.service.MvnForumServiceFactory;
-
 import net.myvietnam.mvncore.MVNCoreResourceBundle;
 import net.myvietnam.mvncore.exception.BadInputException;
 import net.myvietnam.mvncore.exception.CreateException;
@@ -129,9 +121,8 @@ public class MemberWebHandler {
     if (MVNForumConfig.getEnableExternalUserDatabase()) {
       Locale locale = I18nUtil.getLocaleInRequest(request);
 
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale, "java.lang.IllegalStateException.create_user_is_disabled");
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "java.lang.IllegalStateException.create_user_is_disabled");
       throw new IllegalStateException(localizedMessage);
       // throw new IllegalStateException("Cannot create user if we enable external user database.");
     }
@@ -141,17 +132,15 @@ public class MemberWebHandler {
     permission.ensureCanAdminSystem();
   }
 
-  public void processAdd(GenericRequest request)
-      throws BadInputException, ObjectNotFoundException, CreateException, DatabaseException,
-          DuplicateKeyException, ForeignKeyNotFoundException, AuthenticationException,
-          InterceptorException {
+  public void processAdd(GenericRequest request) throws BadInputException, ObjectNotFoundException,
+      CreateException, DatabaseException, DuplicateKeyException, ForeignKeyNotFoundException,
+      AuthenticationException, InterceptorException {
 
     Locale locale = I18nUtil.getLocaleInRequest(request);
 
     if (MVNForumConfig.getEnableExternalUserDatabase()) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale, "java.lang.IllegalStateException.create_user_is_disabled");
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "java.lang.IllegalStateException.create_user_is_disabled");
       throw new IllegalStateException(localizedMessage);
       // throw new IllegalStateException("Cannot create user if we enable external user database.");
     }
@@ -164,8 +153,8 @@ public class MemberWebHandler {
 
     Timestamp now = DateUtil.getCurrentGMTTimestamp();
 
-    String memberName =
-        GenericParamUtil.getParameterSafe(request, "MemberName", true); // check good name
+    String memberName = GenericParamUtil.getParameterSafe(request, "MemberName", true); // check
+                                                                                        // good name
     StringUtil.checkGoodName(memberName, locale);
 
     MemberUtil.checkReservedUsername(memberName, locale);
@@ -173,9 +162,8 @@ public class MemberWebHandler {
     InterceptorService.getInstance().validateLoginID(memberName);
 
     if (memberName.length() > MVNForumGlobal.MAX_MEMBER_LOGIN_LENGTH) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale, "mvncore.exception.BadInputException.member_name_too_long");
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "mvncore.exception.BadInputException.member_name_too_long");
       throw new BadInputException(localizedMessage);
       // throw new BadInputException("MemberName cannot be longer than 30 characters.");
     }
@@ -187,9 +175,8 @@ public class MemberWebHandler {
     InterceptorService.getInstance().validatePassword(memberPassword1);
 
     if (!memberPassword1.equals(memberPassword2)) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale, "mvncore.exception.BadInputException.confirmed_password_is_not_match");
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "mvncore.exception.BadInputException.confirmed_password_is_not_match");
       throw new BadInputException(localizedMessage);
       // throw new BadInputException("Password and confirmed password are not the same, please try
       // again.");
@@ -197,19 +184,9 @@ public class MemberWebHandler {
     String memberPassword = Encoder.getMD5_Base64(memberPassword1);
 
     String memberEmail = GenericParamUtil.getParameterEmail(request, "MemberEmail");
-    String memberEmailConfirm = GenericParamUtil.getParameterEmail(request, "MemberEmailConfirm");
-    if (!memberEmail.equals(memberEmailConfirm)) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale, "mvncore.exception.BadInputException.confirmed_email_is_not_match");
-      throw new BadInputException(localizedMessage);
-      // throw new BadInputException("Email and confirmed email are not the same, please try
-      // again.");
-    }
     if (memberEmail.length() > MVNForumGlobal.MAX_MEMBER_EMAIL_LENGTH) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale, "mvncore.exception.BadInputException.member_email_too_long");
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "mvncore.exception.BadInputException.member_email_too_long");
       throw new BadInputException(localizedMessage);
       // throw new BadInputException("MemberEmail cannot be longer than 60 characters.");
     }
@@ -221,9 +198,8 @@ public class MemberWebHandler {
     String memberFirstIP = request.getRemoteAddr();
     String memberLastIP = memberFirstIP;
     int memberOption = 0; // @todo review and support it later
-    int memberStatus =
-        MemberBean
-            .MEMBER_STATUS_ENABLE; // MemberBean.MEMBER_STATUS_PENDING;// @todo review and support
+    int memberStatus = MemberBean.MEMBER_STATUS_ENABLE; // MemberBean.MEMBER_STATUS_PENDING;// @todo
+                                                        // review and support
     // it later, ex: should it be active or not?
     String memberActivateCode = ""; // @todo review and support it later
     int memberMessageOption = 0; // @todo review and support it later
@@ -232,71 +208,32 @@ public class MemberWebHandler {
     Timestamp memberCreationDate = now;
     Timestamp memberModifiedDate = now;
     Timestamp memberExpireDate = memberCreationDate; // equal Creation Date mean no expiration
-    Timestamp memberPasswordExpireDate =
-        memberCreationDate; // equal Creation Date mean no password expiration
+    Timestamp memberPasswordExpireDate = memberCreationDate; // equal Creation Date mean no password
+                                                             // expiration
 
     try {
-      DAOFactory.getMemberDAO()
-          .create(
-              memberName,
-              memberPassword,
-              memberFirstEmail,
-              memberEmail,
-              memberEmailVisible,
-              memberNameVisible,
-              memberFirstIP,
-              memberLastIP,
-              0 /*memberViewCount*/,
-              0 /*memberPostCount*/,
-              memberCreationDate,
-              memberModifiedDate,
-              memberExpireDate,
-              memberPasswordExpireDate,
-              now /*memberLastLogon*/,
-              memberOption,
-              memberStatus,
-              memberActivateCode,
-              "" /*memberTempPassword*/,
-              0 /*memberMessageCount*/,
-              memberMessageOption,
-              memberPostsPerPage,
-              0 /*memberWarnCount*/,
-              0 /*memberVoteCount*/,
-              0 /*memberVoteTotalStars*/,
-              0 /*memberRewardPoints*/,
-              "" /*memberTitle*/,
-              0 /*memberTimeZone*/,
-              "" /*memberSignature*/,
-              "" /*memberAvatar*/,
-              "" /*memberSkin*/,
-              "" /*memberLanguage*/,
-              " " /*memberFirstname*/,
-              " " /*memberLastname*/,
-              1 /*memberGender*/,
-              memberBirthday,
-              "" /*memberAddress*/,
-              "" /*memberCity*/,
-              "" /*memberState*/,
-              "" /*memberCountry*/,
-              "" /*memberPhone*/,
-              "" /*memberMobile*/,
-              "" /*memberFax*/,
-              "" /*memberCareer*/,
-              "" /*memberHomepage*/);
+      DAOFactory.getMemberDAO().create(memberName, memberPassword, memberFirstEmail, memberEmail,
+          memberEmailVisible, memberNameVisible, memberFirstIP, memberLastIP,
+          0 /* memberViewCount */, 0 /* memberPostCount */, memberCreationDate, memberModifiedDate,
+          memberExpireDate, memberPasswordExpireDate, now /* memberLastLogon */, memberOption,
+          memberStatus, memberActivateCode, "" /* memberTempPassword */, 0 /* memberMessageCount */,
+          memberMessageOption, memberPostsPerPage, 0 /* memberWarnCount */, 0 /* memberVoteCount */,
+          0 /* memberVoteTotalStars */, 0 /* memberRewardPoints */, "" /* memberTitle */,
+          0 /* memberTimeZone */, "" /* memberSignature */, "" /* memberAvatar */,
+          "" /* memberSkin */, "" /* memberLanguage */, " " /* memberFirstname */,
+          " " /* memberLastname */, 1 /* memberGender */, memberBirthday, "" /* memberAddress */,
+          "" /* memberCity */, "" /* memberState */, "" /* memberCountry */, "" /* memberPhone */,
+          "" /* memberMobile */, "" /* memberFax */, "" /* memberCareer */,
+          "" /* memberHomepage */);
     } catch (DuplicateKeyException ex) {
       if (ex.getMessage().indexOf("MemberEmail") >= 0) {
-        String localizedMessage =
-            MVNForumResourceBundle.getString(
-                locale,
-                "mvncore.exception.BadInputException.email_exists",
-                new Object[] {memberName, memberEmail});
+        String localizedMessage = MVNForumResourceBundle.getString(locale,
+            "mvncore.exception.BadInputException.email_exists",
+            new Object[] {memberName, memberEmail});
         throw new BadInputException(localizedMessage);
       } else if (ex.getMessage().indexOf("MemberName") >= 0) {
-        String localizedMessage =
-            MVNForumResourceBundle.getString(
-                locale,
-                "mvncore.exception.BadInputException.account_exists",
-                new Object[] {memberName});
+        String localizedMessage = MVNForumResourceBundle.getString(locale,
+            "mvncore.exception.BadInputException.account_exists", new Object[] {memberName});
         throw new BadInputException(localizedMessage);
       }
     }
@@ -305,57 +242,23 @@ public class MemberWebHandler {
     int folderStatus = 0;
     int folderOption = 0;
     int folderType = 0;
-    DAOFactory.getMessageFolderDAO()
-        .create(
-            MVNForumConstant.MESSAGE_FOLDER_INBOX,
-            memberID,
-            0 /*order*/,
-            folderStatus,
-            folderOption,
-            folderType,
-            now,
-            now);
-    DAOFactory.getMessageFolderDAO()
-        .create(
-            MVNForumConstant.MESSAGE_FOLDER_DRAFT,
-            memberID,
-            1 /*order*/,
-            folderStatus,
-            folderOption,
-            folderType,
-            now,
-            now);
-    DAOFactory.getMessageFolderDAO()
-        .create(
-            MVNForumConstant.MESSAGE_FOLDER_SENT,
-            memberID,
-            2 /*order*/,
-            folderStatus,
-            folderOption,
-            folderType,
-            now,
-            now);
-    DAOFactory.getMessageFolderDAO()
-        .create(
-            MVNForumConstant.MESSAGE_FOLDER_TRASH,
-            memberID,
-            3 /*order*/,
-            folderStatus,
-            folderOption,
-            folderType,
-            now,
-            now);
+    DAOFactory.getMessageFolderDAO().create(MVNForumConstant.MESSAGE_FOLDER_INBOX, memberID,
+        0 /* order */, folderStatus, folderOption, folderType, now, now);
+    DAOFactory.getMessageFolderDAO().create(MVNForumConstant.MESSAGE_FOLDER_DRAFT, memberID,
+        1 /* order */, folderStatus, folderOption, folderType, now, now);
+    DAOFactory.getMessageFolderDAO().create(MVNForumConstant.MESSAGE_FOLDER_SENT, memberID,
+        2 /* order */, folderStatus, folderOption, folderType, now, now);
+    DAOFactory.getMessageFolderDAO().create(MVNForumConstant.MESSAGE_FOLDER_TRASH, memberID,
+        3 /* order */, folderStatus, folderOption, folderType, now, now);
 
     // Add member to the lucene index
     MemberBean memberBean = null;
     try {
       memberBean = DAOFactory.getMemberDAO().getMember(memberID);
     } catch (ObjectNotFoundException ex) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale,
-              "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
-              new Object[] {new Integer(memberID)});
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
+          new Object[] {new Integer(memberID)});
       throw new ObjectNotFoundException(localizedMessage);
     }
     MemberIndexer.scheduleAddMemberTask(memberBean);
@@ -369,30 +272,21 @@ public class MemberWebHandler {
         SendMailUtil.sendActivationCodeEmail(memberID, serverName);
       } catch (Exception ex) {
         log.error("Cannot send mail after registration!", ex);
-        request.setAttribute(
-            "mvnforum.mail.failed", "Cannot send activation email after registration!");
+        request.setAttribute("mvnforum.mail.failed",
+            "Cannot send activation email after registration!");
         // @todo: save the error message to displayed later
       }
     }
 
-    String actionDesc =
-        MVNForumResourceBundle.getString(
-            MVNForumConfig.getEventLogLocale(),
-            "mvnforum.eventlog.desc.AddMemberProcess",
-            new Object[] {memberName});
-    eventLogService.logEvent(
-        onlineUser.getMemberName(),
-        request.getRemoteAddr(),
-        MVNForumConstant.EVENT_LOG_MAIN_MODULE,
-        MVNForumConstant.EVENT_LOG_SUB_MODULE_ADMIN,
-        "add member",
-        actionDesc,
-        EventLogService.MEDIUM);
+    String actionDesc = MVNForumResourceBundle.getString(MVNForumConfig.getEventLogLocale(),
+        "mvnforum.eventlog.desc.AddMemberProcess", new Object[] {memberName});
+    eventLogService.logEvent(onlineUser.getMemberName(), request.getRemoteAddr(),
+        MVNForumConstant.EVENT_LOG_MAIN_MODULE, MVNForumConstant.EVENT_LOG_SUB_MODULE_ADMIN,
+        "add member", actionDesc, EventLogService.MEDIUM);
   }
 
-  public void processUpdateMemberStatus(GenericRequest request)
-      throws BadInputException, ObjectNotFoundException, DatabaseException,
-          AuthenticationException {
+  public void processUpdateMemberStatus(GenericRequest request) throws BadInputException,
+      ObjectNotFoundException, DatabaseException, AuthenticationException {
 
     SecurityUtil.checkHttpReferer(request);
     SecurityUtil.checkSecurityTokenMethod(request);
@@ -411,11 +305,9 @@ public class MemberWebHandler {
     // now check if status is in the valid range
     if ((memberStatus != MemberBean.MEMBER_STATUS_ENABLE)
         && (memberStatus != MemberBean.MEMBER_STATUS_DISABLE)) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale,
-              "mvncore.exception.BadInputException.cannot_update_member_status.unknown_status",
-              new Object[] {new Integer(memberStatus)});
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "mvncore.exception.BadInputException.cannot_update_member_status.unknown_status",
+          new Object[] {new Integer(memberStatus)});
       throw new BadInputException(localizedMessage);
       // throw new BadInputException("Cannot update member's status to an unknown status = " +
       // memberStatus);
@@ -429,32 +321,22 @@ public class MemberWebHandler {
     try {
       DAOFactory.getMemberDAO().updateStatus(memberID, memberStatus);
     } catch (ObjectNotFoundException e) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale,
-              "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
-              new Object[] {new Integer(memberID)});
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
+          new Object[] {new Integer(memberID)});
       throw new ObjectNotFoundException(localizedMessage);
     }
 
-    String actionDesc =
-        MVNForumResourceBundle.getString(
-            MVNForumConfig.getEventLogLocale(),
-            "mvnforum.eventlog.desc.UpdateMemberStatus",
-            new Object[] {new Integer(memberID), new Integer(memberStatus)});
-    eventLogService.logEvent(
-        onlineUser.getMemberName(),
-        request.getRemoteAddr(),
-        MVNForumConstant.EVENT_LOG_MAIN_MODULE,
-        MVNForumConstant.EVENT_LOG_SUB_MODULE_ADMIN,
-        "update member status",
-        actionDesc,
-        EventLogService.MEDIUM);
+    String actionDesc = MVNForumResourceBundle.getString(MVNForumConfig.getEventLogLocale(),
+        "mvnforum.eventlog.desc.UpdateMemberStatus",
+        new Object[] {new Integer(memberID), new Integer(memberStatus)});
+    eventLogService.logEvent(onlineUser.getMemberName(), request.getRemoteAddr(),
+        MVNForumConstant.EVENT_LOG_MAIN_MODULE, MVNForumConstant.EVENT_LOG_SUB_MODULE_ADMIN,
+        "update member status", actionDesc, EventLogService.MEDIUM);
   }
 
-  public void prepareEdit(GenericRequest request)
-      throws BadInputException, ObjectNotFoundException, DatabaseException,
-          AuthenticationException {
+  public void prepareEdit(GenericRequest request) throws BadInputException, ObjectNotFoundException,
+      DatabaseException, AuthenticationException {
 
     OnlineUser onlineUser = onlineUserManager.getOnlineUser(request);
     MVNForumPermission permission = onlineUser.getPermission();
@@ -468,11 +350,9 @@ public class MemberWebHandler {
     try {
       memberBean = DAOFactory.getMemberDAO().getMember(memberID);
     } catch (ObjectNotFoundException e) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale,
-              "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
-              new Object[] {new Integer(memberID)});
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
+          new Object[] {new Integer(memberID)});
       throw new ObjectNotFoundException(localizedMessage);
     }
 
@@ -481,7 +361,7 @@ public class MemberWebHandler {
 
   public void processEdit(GenericRequest request, GenericResponse response)
       throws BadInputException, ObjectNotFoundException, DatabaseException,
-          AuthenticationException {
+      AuthenticationException {
 
     SecurityUtil.checkHttpPostMethod(request);
 
@@ -511,8 +391,8 @@ public class MemberWebHandler {
     int memberEmailVisible = memberBean.getMemberEmailVisible();
     int memberNameVisible = memberBean.getMemberNameVisible();
     int memberOption = 0; // GenericParamUtil.getParameterInt(request, "MemberOption");
-    int memberMessageOption =
-        0; // GenericParamUtil.getParameterInt(request, "MemberMessageOption");
+    int memberMessageOption = 0; // GenericParamUtil.getParameterInt(request,
+                                 // "MemberMessageOption");
     int memberPostsPerPage = memberBean.getMemberPostsPerPage();
     if (memberPostsPerPage < 5) {
       memberPostsPerPage = 5;
@@ -536,16 +416,14 @@ public class MemberWebHandler {
 
     // column(s) to update
     if (internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberEmailVisible())) {
-      memberEmailVisible =
-          GenericParamUtil.getParameterBoolean(request, "MemberEmailVisible")
-              ? MemberBean.MEMBER_EMAIL_VISIBLE
-              : MemberBean.MEMBER_EMAIL_INVISIBLE;
+      memberEmailVisible = GenericParamUtil.getParameterBoolean(request, "MemberEmailVisible")
+          ? MemberBean.MEMBER_EMAIL_VISIBLE
+          : MemberBean.MEMBER_EMAIL_INVISIBLE;
     }
     if (internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberNameVisible())) {
-      memberNameVisible =
-          GenericParamUtil.getParameterBoolean(request, "MemberNameVisible")
-              ? MemberBean.MEMBER_NAME_VISIBLE
-              : MemberBean.MEMBER_NAME_INVISIBLE;
+      memberNameVisible = GenericParamUtil.getParameterBoolean(request, "MemberNameVisible")
+          ? MemberBean.MEMBER_NAME_VISIBLE
+          : MemberBean.MEMBER_NAME_INVISIBLE;
     }
     if (internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberPostsPerPage())) {
       memberPostsPerPage = GenericParamUtil.getParameterInt(request, "MemberPostsPerPage");
@@ -561,23 +439,19 @@ public class MemberWebHandler {
     }
     if ((internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberFirstname()))
         && MVNForumConfig.getEnableShowFirstName()) {
-      memberFirstname =
-          GenericParamUtil.getParameterFilter(
-              request, "MemberFirstname", MVNForumConfig.isRequireRegisterFirstname());
+      memberFirstname = GenericParamUtil.getParameterFilter(request, "MemberFirstname",
+          MVNForumConfig.isRequireRegisterFirstname());
     }
     if ((internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberLastname()))
         && MVNForumConfig.getEnableShowLastName()) {
-      memberLastname =
-          GenericParamUtil.getParameterFilter(
-              request, "MemberLastname", MVNForumConfig.isRequireRegisterLastname());
+      memberLastname = GenericParamUtil.getParameterFilter(request, "MemberLastname",
+          MVNForumConfig.isRequireRegisterLastname());
     }
     if ((internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberGender()))
         && MVNForumConfig.getEnableShowGender()) {
       memberGender = GenericParamUtil.getParameterBoolean(request, "MemberGender") ? 1 : 0;
-      memberGender =
-          Integer.parseInt(
-              GenericParamUtil.getParameterFilter(
-                  request, "MemberGender", MVNForumConfig.isRequireRegisterGender()));
+      memberGender = Integer.parseInt(GenericParamUtil.getParameterFilter(request, "MemberGender",
+          MVNForumConfig.isRequireRegisterGender()));
       if (memberGender != 0 && memberGender != 1) {
         memberGender = 0;
       }
@@ -591,51 +465,43 @@ public class MemberWebHandler {
     }
     if ((internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberAddress()))
         && MVNForumConfig.getEnableShowAddress()) {
-      memberAddress =
-          GenericParamUtil.getParameterFilter(
-              request, "MemberAddress", MVNForumConfig.isRequireRegisterAddress());
+      memberAddress = GenericParamUtil.getParameterFilter(request, "MemberAddress",
+          MVNForumConfig.isRequireRegisterAddress());
     }
     if ((internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberCity()))
         && MVNForumConfig.getEnableShowCity()) {
-      memberCity =
-          GenericParamUtil.getParameterFilter(
-              request, "MemberCity", MVNForumConfig.isRequireRegisterCity());
+      memberCity = GenericParamUtil.getParameterFilter(request, "MemberCity",
+          MVNForumConfig.isRequireRegisterCity());
     }
     if ((internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberState()))
         && MVNForumConfig.getEnableShowState()) {
-      memberState =
-          GenericParamUtil.getParameterFilter(
-              request, "MemberState", MVNForumConfig.isRequireRegisterState());
+      memberState = GenericParamUtil.getParameterFilter(request, "MemberState",
+          MVNForumConfig.isRequireRegisterState());
     }
     if ((internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberCountry()))
         && MVNForumConfig.getEnableShowCountry()) {
-      memberCountry =
-          GenericParamUtil.getParameterFilter(
-              request, "MemberCountry", MVNForumConfig.isRequireRegisterCountry());
+      memberCountry = GenericParamUtil.getParameterFilter(request, "MemberCountry",
+          MVNForumConfig.isRequireRegisterCountry());
     }
     if ((internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberPhone()))
         && MVNForumConfig.getEnableShowPhone()) {
-      memberPhone =
-          GenericParamUtil.getParameterFilter(
-              request, "MemberPhone", MVNForumConfig.isRequireRegisterPhone());
+      memberPhone = GenericParamUtil.getParameterFilter(request, "MemberPhone",
+          MVNForumConfig.isRequireRegisterPhone());
     }
     if ((internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberMobile()))
         && MVNForumConfig.getEnableShowMobile()) {
-      memberMobile =
-          GenericParamUtil.getParameterFilter(
-              request, "MemberMobile", MVNForumConfig.isRequireRegisterMobile());
+      memberMobile = GenericParamUtil.getParameterFilter(request, "MemberMobile",
+          MVNForumConfig.isRequireRegisterMobile());
     }
     if ((internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberFax()))
         && MVNForumConfig.getEnableShowFax()) {
-      memberFax =
-          GenericParamUtil.getParameterFilter(
-              request, "MemberFax", MVNForumConfig.isRequireRegisterFax());
+      memberFax = GenericParamUtil.getParameterFilter(request, "MemberFax",
+          MVNForumConfig.isRequireRegisterFax());
     }
     if ((internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberCareer()))
         && MVNForumConfig.getEnableShowCareer()) {
-      memberCareer =
-          GenericParamUtil.getParameterFilter(
-              request, "MemberCareer", MVNForumConfig.isRequireRegisterCareer());
+      memberCareer = GenericParamUtil.getParameterFilter(request, "MemberCareer",
+          MVNForumConfig.isRequireRegisterCareer());
     }
     if ((internalUserDatabase || MemberMapping.isLocalField(mapping.getMemberHomepage()))
         && MVNForumConfig.getEnableShowHomepage()) {
@@ -646,54 +512,24 @@ public class MemberWebHandler {
     }
 
     try {
-      DAOFactory.getMemberDAO()
-          .update(
-              memberID, // primary key
-              memberEmailVisible,
-              memberNameVisible,
-              now /*memberModifiedDate*/,
-              memberOption,
-              memberStatus,
-              memberMessageOption,
-              memberPostsPerPage,
-              memberTimeZone,
-              memberSkin,
-              memberLanguage,
-              memberFirstname,
-              memberLastname,
-              memberGender,
-              memberBirthday,
-              memberAddress,
-              memberCity,
-              memberState,
-              memberCountry,
-              memberPhone,
-              memberMobile,
-              memberFax,
-              memberCareer,
-              memberHomepage);
+      DAOFactory.getMemberDAO().update(memberID, // primary key
+          memberEmailVisible, memberNameVisible, now /* memberModifiedDate */, memberOption,
+          memberStatus, memberMessageOption, memberPostsPerPage, memberTimeZone, memberSkin,
+          memberLanguage, memberFirstname, memberLastname, memberGender, memberBirthday,
+          memberAddress, memberCity, memberState, memberCountry, memberPhone, memberMobile,
+          memberFax, memberCareer, memberHomepage);
 
-      String actionDesc =
-          MVNForumResourceBundle.getString(
-              MVNForumConfig.getEventLogLocale(),
-              "mvnforum.eventlog.desc.UpdateMemberProcess",
-              new Object[] {new Integer(memberID)});
-      eventLogService.logEvent(
-          onlineUser.getMemberName(),
-          request.getRemoteAddr(),
-          MVNForumConstant.EVENT_LOG_MAIN_MODULE,
-          MVNForumConstant.EVENT_LOG_SUB_MODULE_ADMIN,
-          "update member",
-          actionDesc,
-          EventLogService.MEDIUM);
+      String actionDesc = MVNForumResourceBundle.getString(MVNForumConfig.getEventLogLocale(),
+          "mvnforum.eventlog.desc.UpdateMemberProcess", new Object[] {new Integer(memberID)});
+      eventLogService.logEvent(onlineUser.getMemberName(), request.getRemoteAddr(),
+          MVNForumConstant.EVENT_LOG_MAIN_MODULE, MVNForumConstant.EVENT_LOG_SUB_MODULE_ADMIN,
+          "update member", actionDesc, EventLogService.MEDIUM);
 
     } catch (ObjectNotFoundException ex) {
       Locale locale = I18nUtil.getLocaleInRequest(request);
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale,
-              "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
-              new Object[] {new Integer(memberID)});
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
+          new Object[] {new Integer(memberID)});
       throw new ObjectNotFoundException(localizedMessage);
     }
 
@@ -703,9 +539,8 @@ public class MemberWebHandler {
     // request.setAttribute("MemberBean", justEditedMemberBean);
   }
 
-  public void prepareView(GenericRequest request)
-      throws BadInputException, ObjectNotFoundException, DatabaseException,
-          AuthenticationException {
+  public void prepareView(GenericRequest request) throws BadInputException, ObjectNotFoundException,
+      DatabaseException, AuthenticationException {
 
     OnlineUser onlineUser = onlineUserManager.getOnlineUser(request);
     MVNForumPermission permission = onlineUser.getPermission();
@@ -730,11 +565,9 @@ public class MemberWebHandler {
       try {
         memberID = DAOFactory.getMemberDAO().getMemberIDFromMemberName(strMemberName);
       } catch (ObjectNotFoundException e) {
-        String localizedMessage =
-            MVNForumResourceBundle.getString(
-                locale,
-                "mvncore.exception.ObjectNotFoundException.membername_not_exists",
-                new Object[] {strMemberName});
+        String localizedMessage = MVNForumResourceBundle.getString(locale,
+            "mvncore.exception.ObjectNotFoundException.membername_not_exists",
+            new Object[] {strMemberName});
         throw new ObjectNotFoundException(localizedMessage);
       }
 
@@ -744,30 +577,25 @@ public class MemberWebHandler {
       try {
         memberBean = DAOFactory.getMemberDAO().getMember(memberID);
       } catch (ObjectNotFoundException e) {
-        throw new ObjectNotFoundException(
-            "Member with login id = "
-                + strMemberName
-                + " has been deleted externally (for example, in LDAP) but the numeric id ("
-                + memberID
-                + ") still in the database.");
+        throw new ObjectNotFoundException("Member with login id = " + strMemberName
+            + " has been deleted externally (for example, in LDAP) but the numeric id (" + memberID
+            + ") still in the database.");
       }
     } else if (strMemberEmail.length() > 0) {
-      String memberEmail =
-          GenericParamUtil.getParameterEmail(request, "memberemail"); // check for better security
+      String memberEmail = GenericParamUtil.getParameterEmail(request, "memberemail"); // check for
+                                                                                       // better
+                                                                                       // security
       try {
         memberID = DAOFactory.getMemberDAO().getMemberIDFromMemberEmail(memberEmail);
       } catch (ObjectNotFoundException e) {
-        String localizedMessage =
-            MVNForumResourceBundle.getString(
-                locale,
-                "mvncore.exception.ObjectNotFoundException.memberemail_not_exists",
-                new Object[] {memberEmail});
+        String localizedMessage = MVNForumResourceBundle.getString(locale,
+            "mvncore.exception.ObjectNotFoundException.memberemail_not_exists",
+            new Object[] {memberEmail});
         throw new ObjectNotFoundException(localizedMessage);
       }
     } else {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale, "mvncore.exception.BadInputException.cannot_get_member_info");
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "mvncore.exception.BadInputException.cannot_get_member_info");
       throw new BadInputException(localizedMessage);
       // throw new BadInputException("Cannot get the information to view member.");
     }
@@ -777,11 +605,9 @@ public class MemberWebHandler {
     try {
       StatisticsUtil.updateMemberStatistics(memberID);
     } catch (ObjectNotFoundException e) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale,
-              "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
-              new Object[] {new Integer(memberID)});
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
+          new Object[] {new Integer(memberID)});
       throw new ObjectNotFoundException(localizedMessage);
     }
 
@@ -796,26 +622,17 @@ public class MemberWebHandler {
     String fromMonth = GenericParamUtil.getParameter(request, "fromMonth", false);
     String fromYear = GenericParamUtil.getParameter(request, "fromYear", false);
 
-    if (!"".equals(toDay)
-        && !"".equals(toMonth)
-        && !"".equals(toYear)
-        && !"".equals(fromDay)
-        && !"".equals(fromMonth)
-        && !"".equals(fromYear)) {
-      Timestamp from =
-          new Timestamp(
-              GenericParamUtil.getParameterDate(request, "fromDay", "fromMonth", "fromYear")
-                  .getTime());
-      Timestamp to =
-          new Timestamp(
-              GenericParamUtil.getParameterDate(request, "toDay", "toMonth", "toYear").getTime());
+    if (!"".equals(toDay) && !"".equals(toMonth) && !"".equals(toYear) && !"".equals(fromDay)
+        && !"".equals(fromMonth) && !"".equals(fromYear)) {
+      Timestamp from = new Timestamp(
+          GenericParamUtil.getParameterDate(request, "fromDay", "fromMonth", "fromYear").getTime());
+      Timestamp to = new Timestamp(
+          GenericParamUtil.getParameterDate(request, "toDay", "toMonth", "toYear").getTime());
 
-      toMessageCount =
-          DAOFactory.getMessageStatisticsDAO()
-              .getNumberOfBeans_inToID_supportTimestamp(memberID, from, to);
-      fromMessageCount =
-          DAOFactory.getMessageStatisticsDAO()
-              .getNumberOfBeans_inFromID_supportTimestamp(memberID, from, to);
+      toMessageCount = DAOFactory.getMessageStatisticsDAO()
+          .getNumberOfBeans_inToID_supportTimestamp(memberID, from, to);
+      fromMessageCount = DAOFactory.getMessageStatisticsDAO()
+          .getNumberOfBeans_inFromID_supportTimestamp(memberID, from, to);
     } else {
       toMessageCount = DAOFactory.getMessageStatisticsDAO().getNumberOfBeans_inToID(memberID);
       fromMessageCount = DAOFactory.getMessageStatisticsDAO().getNumberOfBeans_inFromID(memberID);
@@ -826,11 +643,9 @@ public class MemberWebHandler {
         memberBean = DAOFactory.getMemberDAO().getMember(memberID);
       }
     } catch (ObjectNotFoundException e) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale,
-              "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
-              new Object[] {new Integer(memberID)});
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
+          new Object[] {new Integer(memberID)});
       throw new ObjectNotFoundException(localizedMessage);
     }
     int watchCount = DAOFactory.getWatchDAO().getNumberOfWatches_forMember(memberID);
@@ -850,7 +665,7 @@ public class MemberWebHandler {
 
   public void processUpdateMemberTitle(GenericRequest request, GenericResponse response)
       throws BadInputException, DatabaseException, ObjectNotFoundException,
-          AuthenticationException {
+      AuthenticationException {
 
     SecurityUtil.checkHttpPostMethod(request);
 
@@ -869,35 +684,25 @@ public class MemberWebHandler {
     try {
       DAOFactory.getMemberDAO().updateTitle(memberID, memberTitle);
     } catch (ObjectNotFoundException e) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale,
-              "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
-              new Object[] {new Integer(memberID)});
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
+          new Object[] {new Integer(memberID)});
       throw new ObjectNotFoundException(localizedMessage);
     }
 
-    String actionDesc =
-        MVNForumResourceBundle.getString(
-            MVNForumConfig.getEventLogLocale(),
-            "mvnforum.eventlog.desc.UpdateMemberTitle",
-            new Object[] {new Integer(memberID), memberTitle});
-    eventLogService.logEvent(
-        onlineUser.getMemberName(),
-        request.getRemoteAddr(),
-        MVNForumConstant.EVENT_LOG_MAIN_MODULE,
-        MVNForumConstant.EVENT_LOG_SUB_MODULE_ADMIN,
-        "update member title",
-        actionDesc,
-        EventLogService.MEDIUM);
+    String actionDesc = MVNForumResourceBundle.getString(MVNForumConfig.getEventLogLocale(),
+        "mvnforum.eventlog.desc.UpdateMemberTitle",
+        new Object[] {new Integer(memberID), memberTitle});
+    eventLogService.logEvent(onlineUser.getMemberName(), request.getRemoteAddr(),
+        MVNForumConstant.EVENT_LOG_MAIN_MODULE, MVNForumConstant.EVENT_LOG_SUB_MODULE_ADMIN,
+        "update member title", actionDesc, EventLogService.MEDIUM);
 
     // clear the member cache
     MemberCache.getInstance().clear();
   }
 
-  public void processResetMemberSignature(GenericRequest request)
-      throws BadInputException, DatabaseException, ObjectNotFoundException,
-          AuthenticationException {
+  public void processResetMemberSignature(GenericRequest request) throws BadInputException,
+      DatabaseException, ObjectNotFoundException, AuthenticationException {
 
     SecurityUtil.checkHttpReferer(request);
     SecurityUtil.checkSecurityTokenMethod(request);
@@ -911,34 +716,23 @@ public class MemberWebHandler {
     try {
       DAOFactory.getMemberDAO().updateSignature(memberID, "");
     } catch (ObjectNotFoundException e) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale,
-              "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
-              new Object[] {new Integer(memberID)});
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
+          new Object[] {new Integer(memberID)});
       throw new ObjectNotFoundException(localizedMessage);
     }
 
-    String actionDesc =
-        MVNForumResourceBundle.getString(
-            MVNForumConfig.getEventLogLocale(),
-            "mvnforum.eventlog.desc.ResetMemberSignature",
-            new Object[] {new Integer(memberID)});
-    eventLogService.logEvent(
-        onlineUser.getMemberName(),
-        request.getRemoteAddr(),
-        MVNForumConstant.EVENT_LOG_MAIN_MODULE,
-        MVNForumConstant.EVENT_LOG_SUB_MODULE_ADMIN,
-        "reset member signature",
-        actionDesc,
-        EventLogService.MEDIUM);
+    String actionDesc = MVNForumResourceBundle.getString(MVNForumConfig.getEventLogLocale(),
+        "mvnforum.eventlog.desc.ResetMemberSignature", new Object[] {new Integer(memberID)});
+    eventLogService.logEvent(onlineUser.getMemberName(), request.getRemoteAddr(),
+        MVNForumConstant.EVENT_LOG_MAIN_MODULE, MVNForumConstant.EVENT_LOG_SUB_MODULE_ADMIN,
+        "reset member signature", actionDesc, EventLogService.MEDIUM);
 
     request.setAttribute("MemberID", new Integer(memberID));
   }
 
-  public void processResetMemberAvatar(GenericRequest request)
-      throws BadInputException, DatabaseException, ObjectNotFoundException,
-          AuthenticationException {
+  public void processResetMemberAvatar(GenericRequest request) throws BadInputException,
+      DatabaseException, ObjectNotFoundException, AuthenticationException {
 
     SecurityUtil.checkHttpReferer(request);
     SecurityUtil.checkSecurityTokenMethod(request);
@@ -952,42 +746,31 @@ public class MemberWebHandler {
     try {
       DAOFactory.getMemberDAO().updateAvatar(memberID, "");
     } catch (ObjectNotFoundException e) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale,
-              "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
-              new Object[] {new Integer(memberID)});
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
+          new Object[] {new Integer(memberID)});
       throw new ObjectNotFoundException(localizedMessage);
     }
 
-    String actionDesc =
-        MVNForumResourceBundle.getString(
-            MVNForumConfig.getEventLogLocale(),
-            "mvnforum.eventlog.desc.ResetMemberAvatar",
-            new Object[] {new Integer(memberID)});
-    eventLogService.logEvent(
-        onlineUser.getMemberName(),
-        request.getRemoteAddr(),
-        MVNForumConstant.EVENT_LOG_MAIN_MODULE,
-        MVNForumConstant.EVENT_LOG_SUB_MODULE_ADMIN,
-        "reset member avatar",
-        actionDesc,
-        EventLogService.MEDIUM);
+    String actionDesc = MVNForumResourceBundle.getString(MVNForumConfig.getEventLogLocale(),
+        "mvnforum.eventlog.desc.ResetMemberAvatar", new Object[] {new Integer(memberID)});
+    eventLogService.logEvent(onlineUser.getMemberName(), request.getRemoteAddr(),
+        MVNForumConstant.EVENT_LOG_MAIN_MODULE, MVNForumConstant.EVENT_LOG_SUB_MODULE_ADMIN,
+        "reset member avatar", actionDesc, EventLogService.MEDIUM);
 
     request.setAttribute("MemberID", new Integer(memberID));
   }
 
-  public void processResetMemberActivation(GenericRequest request)
-      throws BadInputException, DatabaseException, ObjectNotFoundException,
-          AuthenticationException {
+  public void processResetMemberActivation(GenericRequest request) throws BadInputException,
+      DatabaseException, ObjectNotFoundException, AuthenticationException {
 
     SecurityUtil.checkHttpReferer(request);
     SecurityUtil.checkSecurityTokenMethod(request);
 
     OnlineUser onlineUser = onlineUserManager.getOnlineUser(request);
     MVNForumPermission permission = onlineUser.getPermission();
-    permission
-        .ensureCanModerateUser(); // TODO: should check if we need AdminSystem permission to do this
+    permission.ensureCanModerateUser(); // TODO: should check if we need AdminSystem permission to
+                                        // do this
     // action
 
     Locale locale = I18nUtil.getLocaleInRequest(request);
@@ -995,34 +778,23 @@ public class MemberWebHandler {
     try {
       DAOFactory.getMemberDAO().updateActivateCode(memberID, "");
     } catch (ObjectNotFoundException e) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale,
-              "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
-              new Object[] {new Integer(memberID)});
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
+          new Object[] {new Integer(memberID)});
       throw new ObjectNotFoundException(localizedMessage);
     }
 
-    String actionDesc =
-        MVNForumResourceBundle.getString(
-            MVNForumConfig.getEventLogLocale(),
-            "mvnforum.eventlog.desc.ResetMemberActivation",
-            new Object[] {new Integer(memberID)});
-    eventLogService.logEvent(
-        onlineUser.getMemberName(),
-        request.getRemoteAddr(),
-        MVNForumConstant.EVENT_LOG_MAIN_MODULE,
-        MVNForumConstant.EVENT_LOG_SUB_MODULE_ADMIN,
-        "reset member activation",
-        actionDesc,
-        EventLogService.MEDIUM);
+    String actionDesc = MVNForumResourceBundle.getString(MVNForumConfig.getEventLogLocale(),
+        "mvnforum.eventlog.desc.ResetMemberActivation", new Object[] {new Integer(memberID)});
+    eventLogService.logEvent(onlineUser.getMemberName(), request.getRemoteAddr(),
+        MVNForumConstant.EVENT_LOG_MAIN_MODULE, MVNForumConstant.EVENT_LOG_SUB_MODULE_ADMIN,
+        "reset member activation", actionDesc, EventLogService.MEDIUM);
 
     request.setAttribute("MemberID", new Integer(memberID));
   }
 
-  public void prepareDeleteMember(GenericRequest request)
-      throws BadInputException, DatabaseException, ObjectNotFoundException,
-          AuthenticationException {
+  public void prepareDeleteMember(GenericRequest request) throws BadInputException,
+      DatabaseException, ObjectNotFoundException, AuthenticationException {
 
     OnlineUser onlineUser = onlineUserManager.getOnlineUser(request);
     MVNForumPermission permission = onlineUser.getPermission();
@@ -1031,14 +803,12 @@ public class MemberWebHandler {
     Locale locale = I18nUtil.getLocaleInRequest(request);
 
     int memberID = GenericParamUtil.getParameterInt(request, "memberid");
-    if ((memberID == MVNForumConstant.MEMBER_ID_OF_ADMIN)
-        || (memberID == 0)
+    if ((memberID == MVNForumConstant.MEMBER_ID_OF_ADMIN) || (memberID == 0)
         || (memberID == onlineUser.getMemberID())
         || (memberID == MVNForumConstant.MEMBER_ID_OF_GUEST)) {
 
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale, "mvncore.exception.BadInputException.cannot_delete_admin_or_guest");
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "mvncore.exception.BadInputException.cannot_delete_admin_or_guest");
       throw new BadInputException(localizedMessage);
       // throw new BadInputException("Cannot delete default Admin and Guest users.");
     }
@@ -1047,20 +817,17 @@ public class MemberWebHandler {
     try {
       memberBean = DAOFactory.getMemberDAO().getMember(memberID);
     } catch (ObjectNotFoundException e) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale,
-              "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
-              new Object[] {new Integer(memberID)});
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
+          new Object[] {new Integer(memberID)});
       throw new ObjectNotFoundException(localizedMessage);
     }
 
     request.setAttribute("MemberBean", memberBean);
   }
 
-  public void processDeleteMember(GenericRequest request)
-      throws BadInputException, DatabaseException, ObjectNotFoundException,
-          AuthenticationException {
+  public void processDeleteMember(GenericRequest request) throws BadInputException,
+      DatabaseException, ObjectNotFoundException, AuthenticationException {
 
     SecurityUtil.checkHttpPostMethod(request);
 
@@ -1074,13 +841,11 @@ public class MemberWebHandler {
     MyUtil.ensureCorrectCurrentPassword(request);
 
     int memberID = GenericParamUtil.getParameterInt(request, "memberid");
-    if ((memberID == MVNForumConstant.MEMBER_ID_OF_ADMIN)
-        || (memberID == 0)
+    if ((memberID == MVNForumConstant.MEMBER_ID_OF_ADMIN) || (memberID == 0)
         || (memberID == onlineUser.getMemberID())
         || (memberID == MVNForumConstant.MEMBER_ID_OF_GUEST)) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale, "mvncore.exception.BadInputException.cannot_delete_admin_or_guest");
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "mvncore.exception.BadInputException.cannot_delete_admin_or_guest");
       throw new BadInputException(localizedMessage);
       // throw new BadInputException("Cannot delete default Admin and Guest users.");
     }
@@ -1092,29 +857,19 @@ public class MemberWebHandler {
     try {
       memberBean = DAOFactory.getMemberDAO().getMember(memberID);
     } catch (ObjectNotFoundException e) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale,
-              "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
-              new Object[] {new Integer(memberID)});
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
+          new Object[] {new Integer(memberID)});
       throw new ObjectNotFoundException(localizedMessage);
     }
 
-    MemberWebHandler.deleteMember(memberBean, deleteSentMessages, /*context*/ request, locale);
+    MemberWebHandler.deleteMember(memberBean, deleteSentMessages, /* context */ request, locale);
 
-    String actionDesc =
-        MVNForumResourceBundle.getString(
-            MVNForumConfig.getEventLogLocale(),
-            "mvnforum.eventlog.desc.DeleteMemberProcess",
-            new Object[] {new Integer(memberID)});
-    eventLogService.logEvent(
-        onlineUser.getMemberName(),
-        request.getRemoteAddr(),
-        MVNForumConstant.EVENT_LOG_MAIN_MODULE,
-        MVNForumConstant.EVENT_LOG_SUB_MODULE_ADMIN,
-        "delete member",
-        actionDesc,
-        EventLogService.HIGH);
+    String actionDesc = MVNForumResourceBundle.getString(MVNForumConfig.getEventLogLocale(),
+        "mvnforum.eventlog.desc.DeleteMemberProcess", new Object[] {new Integer(memberID)});
+    eventLogService.logEvent(onlineUser.getMemberName(), request.getRemoteAddr(),
+        MVNForumConstant.EVENT_LOG_MAIN_MODULE, MVNForumConstant.EVENT_LOG_SUB_MODULE_ADMIN,
+        "delete member", actionDesc, EventLogService.HIGH);
   }
 
   /** This method supports sorting base on many criteria */
@@ -1158,16 +913,13 @@ public class MemberWebHandler {
         totalMembers = DAOFactory.getMemberDAO().getNumberOfMembers();
       }
       if (offset > totalMembers) {
-        String localizedMessage =
-            MVNForumResourceBundle.getString(
-                locale, "mvncore.exception.BadInputException.offset_greater_than_total_rows");
+        String localizedMessage = MVNForumResourceBundle.getString(locale,
+            "mvncore.exception.BadInputException.offset_greater_than_total_rows");
         throw new BadInputException(localizedMessage);
         // throw new BadInputException("The offset is not allowed to be greater than total rows.");
       }
-      memberBeans =
-          DAOFactory.getMemberDAO()
-              .getMembers_withSortSupport_limit(
-                  offset, postsPerPage, sort, order, MemberDAO.ALL_MEMBER_STATUS);
+      memberBeans = DAOFactory.getMemberDAO().getMembers_withSortSupport_limit(offset, postsPerPage,
+          sort, order, MemberDAO.ALL_MEMBER_STATUS);
 
       if (DAOFactory.getMemberDAO().isSupportGetNumberOfMembers_inActivationStatus()) {
         activatedMembers = DAOFactory.getMemberDAO().getNumberOfMembers_inActivationStatus(true);
@@ -1181,15 +933,12 @@ public class MemberWebHandler {
       }
 
       if (DAOFactory.getMemberDAO().isSupportGetNumberOfMembers_inMemberStatus()) {
-        disabledMembers =
-            DAOFactory.getMemberDAO()
-                .getNumberOfMembers_inMemberStatus(MemberBean.MEMBER_STATUS_DISABLE);
-        enabledMembers =
-            DAOFactory.getMemberDAO()
-                .getNumberOfMembers_inMemberStatus(MemberBean.MEMBER_STATUS_ENABLE);
-        pendingMembers =
-            DAOFactory.getMemberDAO()
-                .getNumberOfMembers_inMemberStatus(MemberBean.MEMBER_STATUS_PENDING);
+        disabledMembers = DAOFactory.getMemberDAO()
+            .getNumberOfMembers_inMemberStatus(MemberBean.MEMBER_STATUS_DISABLE);
+        enabledMembers = DAOFactory.getMemberDAO()
+            .getNumberOfMembers_inMemberStatus(MemberBean.MEMBER_STATUS_ENABLE);
+        pendingMembers = DAOFactory.getMemberDAO()
+            .getNumberOfMembers_inMemberStatus(MemberBean.MEMBER_STATUS_PENDING);
         if ((disabledMembers + enabledMembers + pendingMembers) != totalMembers) {
           // please do not localize this
           throw new AssertionError(
@@ -1233,7 +982,7 @@ public class MemberWebHandler {
       // do nothing
     }
     Timestamp expiresoonDate =
-        DateUtil.getCurrentGMTTimestampExpiredDay(7 /*MVNForumConfig.getExpireSoonDate()*/);
+        DateUtil.getCurrentGMTTimestampExpiredDay(7 /* MVNForumConfig.getExpireSoonDate() */);
 
     int totalExpireMembers = DAOFactory.getMemberDAO().getNumberOfMembers_inExpire(expiresoonDate);
     if (offset > totalExpireMembers) {
@@ -1241,9 +990,8 @@ public class MemberWebHandler {
       throw new BadInputException("The offset is not allowed to be greater than total members.");
     }
 
-    Collection expireMemberBeans =
-        DAOFactory.getMemberDAO()
-            .getMembers_inExpire_limit(expiresoonDate, offset, postsPerPage, sort, order);
+    Collection expireMemberBeans = DAOFactory.getMemberDAO()
+        .getMembers_inExpire_limit(expiresoonDate, offset, postsPerPage, sort, order);
 
     request.setAttribute("TotalMembers", new Integer(totalExpireMembers));
     request.setAttribute("ExpireMemberBeans", expireMemberBeans);
@@ -1259,7 +1007,7 @@ public class MemberWebHandler {
 
     Locale locale = I18nUtil.getLocaleInRequest(request);
 
-    //      for sort and order stuff
+    // for sort and order stuff
     String sort = GenericParamUtil.getParameter(request, "sort");
     String order = GenericParamUtil.getParameter(request, "order");
     if (sort.length() == 0) {
@@ -1284,29 +1032,24 @@ public class MemberWebHandler {
     if (DAOFactory.getMemberDAO().isSupportGetMembers_withSortSupport_limit()
         && DAOFactory.getMemberDAO().isSupportGetNumberOfMembers_inMemberStatus()) {
 
-      pendingMembersCount =
-          DAOFactory.getMemberDAO()
-              .getNumberOfMembers_inMemberStatus(MemberBean.MEMBER_STATUS_PENDING);
+      pendingMembersCount = DAOFactory.getMemberDAO()
+          .getNumberOfMembers_inMemberStatus(MemberBean.MEMBER_STATUS_PENDING);
       if (offset > pendingMembersCount) {
-        String localizedMessage =
-            MVNForumResourceBundle.getString(
-                locale, "mvncore.exception.BadInputException.offset_greater_than_total_rows");
+        String localizedMessage = MVNForumResourceBundle.getString(locale,
+            "mvncore.exception.BadInputException.offset_greater_than_total_rows");
         throw new BadInputException(localizedMessage);
         // throw new BadInputException("The offset is not allowed to be greater than total rows.");
       }
-      pendingMemberBeans =
-          DAOFactory.getMemberDAO()
-              .getMembers_withSortSupport_limit(
-                  offset, postsPerPage, sort, order, MemberBean.MEMBER_STATUS_PENDING);
+      pendingMemberBeans = DAOFactory.getMemberDAO().getMembers_withSortSupport_limit(offset,
+          postsPerPage, sort, order, MemberBean.MEMBER_STATUS_PENDING);
     }
     request.setAttribute("PendingMemberBeans", pendingMemberBeans);
     request.setAttribute("PendingMembers", new Integer(pendingMembersCount));
     request.setAttribute("offset", new Integer(offset));
   }
 
-  public void processListPendingUsers(GenericRequest request)
-      throws DatabaseException, AuthenticationException, BadInputException, DatabaseException,
-          ObjectNotFoundException {
+  public void processListPendingUsers(GenericRequest request) throws DatabaseException,
+      AuthenticationException, BadInputException, DatabaseException, ObjectNotFoundException {
 
     SecurityUtil.checkHttpPostMethod(request);
 
@@ -1317,7 +1060,7 @@ public class MemberWebHandler {
     Locale locale = I18nUtil.getLocaleInRequest(request);
 
     String prefix = "listpendingaction_";
-    for (Enumeration enumeration = request.getParameterNames(); enumeration.hasMoreElements(); ) {
+    for (Enumeration enumeration = request.getParameterNames(); enumeration.hasMoreElements();) {
       String param = (String) enumeration.nextElement();
       if (param.startsWith(prefix)) {
         String actionValue = GenericParamUtil.getParameter(request, param, true);
@@ -1328,51 +1071,31 @@ public class MemberWebHandler {
           memberID = Integer.parseInt(strMemberID);
           memberBean = DAOFactory.getMemberDAO().getMember(memberID);
         } catch (ObjectNotFoundException ex) {
-          String localizedMessage =
-              MVNForumResourceBundle.getString(
-                  locale,
-                  "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
-                  new Object[] {new Integer(memberID)});
+          String localizedMessage = MVNForumResourceBundle.getString(locale,
+              "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
+              new Object[] {new Integer(memberID)});
           throw new ObjectNotFoundException(localizedMessage);
         } catch (NumberFormatException nfe) {
-          String localizedMessage =
-              MVNCoreResourceBundle.getString(
-                  locale,
-                  "mvncore.exception.BadInputException.cannot_parse",
-                  new Object[] {DisableHtmlTagFilter.filter(strMemberID), "int"});
+          String localizedMessage = MVNCoreResourceBundle.getString(locale,
+              "mvncore.exception.BadInputException.cannot_parse",
+              new Object[] {DisableHtmlTagFilter.filter(strMemberID), "int"});
           throw new BadInputException(localizedMessage);
         }
 
         if ("enable".equals(actionValue)) {
           DAOFactory.getMemberDAO().updateStatus(memberID, MemberBean.MEMBER_STATUS_ENABLE);
-          String actionDesc =
-              MVNForumResourceBundle.getString(
-                  MVNForumConfig.getEventLogLocale(),
-                  "mvnforum.eventlog.desc.EnableMemberProcess",
-                  new Object[] {new Integer(memberID)});
-          eventLogService.logEvent(
-              onlineUser.getMemberName(),
-              request.getRemoteAddr(),
-              MVNForumConstant.EVENT_LOG_MAIN_MODULE,
-              MVNForumConstant.EVENT_LOG_SUB_MODULE_ADMIN,
-              "enable pending member",
-              actionDesc,
-              EventLogService.MEDIUM);
+          String actionDesc = MVNForumResourceBundle.getString(MVNForumConfig.getEventLogLocale(),
+              "mvnforum.eventlog.desc.EnableMemberProcess", new Object[] {new Integer(memberID)});
+          eventLogService.logEvent(onlineUser.getMemberName(), request.getRemoteAddr(),
+              MVNForumConstant.EVENT_LOG_MAIN_MODULE, MVNForumConstant.EVENT_LOG_SUB_MODULE_ADMIN,
+              "enable pending member", actionDesc, EventLogService.MEDIUM);
         } else if ("delete".equals(actionValue)) {
           MemberWebHandler.deleteMember(memberBean, true, request, locale);
-          String actionDesc =
-              MVNForumResourceBundle.getString(
-                  MVNForumConfig.getEventLogLocale(),
-                  "mvnforum.eventlog.desc.DeleteMemberProcess",
-                  new Object[] {new Integer(memberID)});
-          eventLogService.logEvent(
-              onlineUser.getMemberName(),
-              request.getRemoteAddr(),
-              MVNForumConstant.EVENT_LOG_MAIN_MODULE,
-              MVNForumConstant.EVENT_LOG_SUB_MODULE_ADMIN,
-              "delete pending member",
-              actionDesc,
-              EventLogService.MEDIUM);
+          String actionDesc = MVNForumResourceBundle.getString(MVNForumConfig.getEventLogLocale(),
+              "mvnforum.eventlog.desc.DeleteMemberProcess", new Object[] {new Integer(memberID)});
+          eventLogService.logEvent(onlineUser.getMemberName(), request.getRemoteAddr(),
+              MVNForumConstant.EVENT_LOG_MAIN_MODULE, MVNForumConstant.EVENT_LOG_SUB_MODULE_ADMIN,
+              "delete pending member", actionDesc, EventLogService.MEDIUM);
         } else if ("ignore".equals(actionValue)) {
           // we do nothing here
         } else {
@@ -1383,9 +1106,8 @@ public class MemberWebHandler {
     request.setAttribute("Offset", GenericParamUtil.getParameter(request, "offset"));
   }
 
-  public void updateMemberExpireProcess(GenericRequest request)
-      throws DatabaseException, BadInputException, ObjectNotFoundException,
-          AuthenticationException {
+  public void updateMemberExpireProcess(GenericRequest request) throws DatabaseException,
+      BadInputException, ObjectNotFoundException, AuthenticationException {
 
     SecurityUtil.checkHttpPostMethod(request);
 
@@ -1420,11 +1142,9 @@ public class MemberWebHandler {
           DAOFactory.getMemberDAO().updateMember_expireDate(memberID, memberExpireDate);
         } catch (ObjectNotFoundException e) {
           Locale locale = I18nUtil.getLocaleInRequest(request);
-          String localizedMessage =
-              MVNForumResourceBundle.getString(
-                  locale,
-                  "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
-                  new Object[] {new Integer(memberID)});
+          String localizedMessage = MVNForumResourceBundle.getString(locale,
+              "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
+              new Object[] {new Integer(memberID)});
           throw new ObjectNotFoundException(localizedMessage);
         }
       }
@@ -1436,11 +1156,9 @@ public class MemberWebHandler {
           DAOFactory.getMemberDAO().updateStatus(memberID, MemberBean.MEMBER_STATUS_DISABLE);
         } catch (ObjectNotFoundException e) {
           Locale locale = I18nUtil.getLocaleInRequest(request);
-          String localizedMessage =
-              MVNForumResourceBundle.getString(
-                  locale,
-                  "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
-                  new Object[] {new Integer(memberID)});
+          String localizedMessage = MVNForumResourceBundle.getString(locale,
+              "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
+              new Object[] {new Integer(memberID)});
           throw new ObjectNotFoundException(localizedMessage);
         }
       }
@@ -1452,20 +1170,17 @@ public class MemberWebHandler {
           DAOFactory.getMemberDAO().updateStatus(memberID, MemberBean.MEMBER_STATUS_ENABLE);
         } catch (ObjectNotFoundException e) {
           Locale locale = I18nUtil.getLocaleInRequest(request);
-          String localizedMessage =
-              MVNForumResourceBundle.getString(
-                  locale,
-                  "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
-                  new Object[] {new Integer(memberID)});
+          String localizedMessage = MVNForumResourceBundle.getString(locale,
+              "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
+              new Object[] {new Integer(memberID)});
           throw new ObjectNotFoundException(localizedMessage);
         }
       }
     }
   }
 
-  public void processSearch(GenericRequest request)
-      throws BadInputException, IOException, DatabaseException, ObjectNotFoundException,
-          AuthenticationException {
+  public void processSearch(GenericRequest request) throws BadInputException, IOException,
+      DatabaseException, ObjectNotFoundException, AuthenticationException {
 
     if (DAOFactory.getMemberDAO().isSupportGetMembersFromIDRange() == false) {
       throw new IllegalArgumentException(
@@ -1482,10 +1197,8 @@ public class MemberWebHandler {
     String memberFirstNameKey = GenericParamUtil.getParameter(request, "firstname", false);
     String memberCountryKey = GenericParamUtil.getParameter(request, "country", false);
 
-    if ((memberNameKey.length() == 0)
-        && (memberEmailKey.length() == 0)
-        && (memberLastNameKey.length() == 0)
-        && (memberFirstNameKey.length() == 0)
+    if ((memberNameKey.length() == 0) && (memberEmailKey.length() == 0)
+        && (memberLastNameKey.length() == 0) && (memberFirstNameKey.length() == 0)
         && (memberCountryKey.length() == 0)) {
       return;
     }
@@ -1526,15 +1239,13 @@ public class MemberWebHandler {
       isNullKey = false;
     }
     if (isNullKey) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale, "mvncore.exception.BadInputException.cannot_search.key_is_null");
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "mvncore.exception.BadInputException.cannot_search.key_is_null");
       throw new BadInputException(localizedMessage);
     }
 
-    int searchDate =
-        GenericParamUtil.getParameterUnsignedInt(
-            request, "date", MemberSearchQuery.SEARCH_ANY_DATE);
+    int searchDate = GenericParamUtil.getParameterUnsignedInt(request, "date",
+        MemberSearchQuery.SEARCH_ANY_DATE);
     int searchBeforeAfter =
         GenericParamUtil.getParameterInt(request, "beforeafter", MemberSearchQuery.SEARCH_NEWER);
 
@@ -1562,9 +1273,8 @@ public class MemberWebHandler {
     Collection result = query.getMemberResult();
 
     if (offset > hitCount) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale, "mvncore.exception.BadInputException.offset_greater_than_total_rows");
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "mvncore.exception.BadInputException.offset_greater_than_total_rows");
       throw new BadInputException(localizedMessage);
     }
 
@@ -1599,7 +1309,7 @@ public class MemberWebHandler {
 
     Collection distinctAuthorizedGroups = DAOFactory.getGroupPermissionDAO().getDistinctGroups();
     Collection authorizedGroups = new ArrayList(distinctAuthorizedGroups.size());
-    for (Iterator iter = distinctAuthorizedGroups.iterator(); iter.hasNext(); ) {
+    for (Iterator iter = distinctAuthorizedGroups.iterator(); iter.hasNext();) {
       GroupPermissionBean item = (GroupPermissionBean) iter.next();
       GroupsBean groupBean = DAOFactory.getGroupsDAO().getGroup(item.getGroupID());
       authorizedGroups.add(groupBean);
@@ -1607,7 +1317,7 @@ public class MemberWebHandler {
 
     Collection distinctForumAuthorizedGroups = DAOFactory.getGroupForumDAO().getDistinctGroups();
     Collection forumAuthorizedGroups = new ArrayList(distinctForumAuthorizedGroups.size());
-    for (Iterator iter = distinctForumAuthorizedGroups.iterator(); iter.hasNext(); ) {
+    for (Iterator iter = distinctForumAuthorizedGroups.iterator(); iter.hasNext();) {
       GroupForumBean item = (GroupForumBean) iter.next();
       GroupsBean groupBean = DAOFactory.getGroupsDAO().getGroup(item.getGroupID());
       forumAuthorizedGroups.add(groupBean);
@@ -1619,9 +1329,8 @@ public class MemberWebHandler {
     request.setAttribute("ForumAuthorizedGroups", forumAuthorizedGroups);
   }
 
-  public void prepareViewPermission(GenericRequest request)
-      throws AuthenticationException, BadInputException, DatabaseException,
-          ObjectNotFoundException {
+  public void prepareViewPermission(GenericRequest request) throws AuthenticationException,
+      BadInputException, DatabaseException, ObjectNotFoundException {
     // Check here again.
     // SecurityUtil.checkHttpPostMethod(request);
 
@@ -1636,11 +1345,9 @@ public class MemberWebHandler {
       memberBean = DAOFactory.getMemberDAO().getMember(memberID);
     } catch (ObjectNotFoundException e) {
       Locale locale = I18nUtil.getLocaleInRequest(request);
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale,
-              "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
-              new Object[] {new Integer(memberID)});
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
+          new Object[] {new Integer(memberID)});
       throw new ObjectNotFoundException(localizedMessage);
     }
     MVNForumPermission thisPermission =
@@ -1658,9 +1365,8 @@ public class MemberWebHandler {
     request.setAttribute("Result", tree.build());
   }
 
-  public void prepareChangePassword(GenericRequest request)
-      throws DatabaseException, AuthenticationException, ObjectNotFoundException,
-          BadInputException {
+  public void prepareChangePassword(GenericRequest request) throws DatabaseException,
+      AuthenticationException, ObjectNotFoundException, BadInputException {
 
     OnlineUser onlineUser = onlineUserManager.getOnlineUser(request);
     MVNForumPermission permission = onlineUser.getPermission();
@@ -1668,9 +1374,8 @@ public class MemberWebHandler {
 
     Locale locale = I18nUtil.getLocaleInRequest(request);
     if (MVNForumConfig.getEnableAdminCanChangePassword() == false) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale, "java.lang.IllegalStateException.admin_can_change_password_is_disabled");
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "java.lang.IllegalStateException.admin_can_change_password_is_disabled");
       throw new IllegalStateException(localizedMessage);
       // throw new IllegalStateException("Admin Cannot change the user password. This feature is
       // disabled by administrator");
@@ -1678,29 +1383,25 @@ public class MemberWebHandler {
     int memberID = GenericParamUtil.getParameterInt(request, "memberid");
 
     if (memberID == MVNForumConstant.MEMBER_ID_OF_ADMIN) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale, "java.lang.AssertionError.cannot_change_root_password");
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "java.lang.AssertionError.cannot_change_root_password");
       throw new AssertionError(localizedMessage);
     }
     MemberBean memberBean = null;
     try {
       memberBean = DAOFactory.getMemberDAO().getMember(memberID);
     } catch (ObjectNotFoundException e) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale,
-              "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
-              new Object[] {new Integer(memberID)});
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
+          new Object[] {new Integer(memberID)});
       throw new ObjectNotFoundException(localizedMessage);
     }
 
     request.setAttribute("MemberBean", memberBean);
   }
 
-  public void processChangePassword(GenericRequest request)
-      throws DatabaseException, AuthenticationException, ObjectNotFoundException,
-          BadInputException {
+  public void processChangePassword(GenericRequest request) throws DatabaseException,
+      AuthenticationException, ObjectNotFoundException, BadInputException {
 
     SecurityUtil.checkHttpPostMethod(request);
 
@@ -1711,9 +1412,8 @@ public class MemberWebHandler {
     Locale locale = I18nUtil.getLocaleInRequest(request);
 
     if (MVNForumConfig.getEnableAdminCanChangePassword() == false) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale, "java.lang.IllegalStateException.admin_can_change_password_is_disabled");
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "java.lang.IllegalStateException.admin_can_change_password_is_disabled");
       throw new IllegalStateException(localizedMessage);
       // throw new IllegalStateException("Admin Cannot change the user password. This feature is
       // disabled by administrator");
@@ -1722,9 +1422,8 @@ public class MemberWebHandler {
     int memberID = GenericParamUtil.getParameterInt(request, "memberid");
 
     if (memberID == MVNForumConstant.MEMBER_ID_OF_ADMIN) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale, "java.lang.AssertionError.cannot_change_root_password");
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "java.lang.AssertionError.cannot_change_root_password");
       throw new AssertionError(localizedMessage);
     }
 
@@ -1735,9 +1434,8 @@ public class MemberWebHandler {
     String confirmword =
         GenericParamUtil.getParameterPassword(request, "MemberMatkhauConfirm", 3, 0);
     if (password.equals(confirmword) == false) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale, "mvncore.exception.BadInputException.confirmed_password_is_not_match");
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "mvncore.exception.BadInputException.confirmed_password_is_not_match");
       throw new BadInputException(localizedMessage);
       // throw new BadInputException("Password and confirmed password are not the same, please try
       // again.");
@@ -1752,25 +1450,17 @@ public class MemberWebHandler {
     try {
       DAOFactory.getMemberDAO().updatePassword(memberID, password, passwordExpireDate);
     } catch (ObjectNotFoundException e) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale,
-              "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
-              new Object[] {new Integer(memberID)});
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "mvncore.exception.ObjectNotFoundException.memberid_not_exists",
+          new Object[] {new Integer(memberID)});
       throw new ObjectNotFoundException(localizedMessage);
     }
 
-    String actionDesc =
-        MVNForumResourceBundle.getString(
-            MVNForumConfig.getEventLogLocale(), "mvnforum.eventlog.desc.ChangePasswordProcess");
-    eventLogService.logEvent(
-        onlineUser.getMemberName(),
-        request.getRemoteAddr(),
-        MVNForumConstant.EVENT_LOG_MAIN_MODULE,
-        MVNForumConstant.EVENT_LOG_SUB_MODULE_ADMIN,
-        "change password",
-        actionDesc,
-        EventLogService.MEDIUM);
+    String actionDesc = MVNForumResourceBundle.getString(MVNForumConfig.getEventLogLocale(),
+        "mvnforum.eventlog.desc.ChangePasswordProcess");
+    eventLogService.logEvent(onlineUser.getMemberName(), request.getRemoteAddr(),
+        MVNForumConstant.EVENT_LOG_MAIN_MODULE, MVNForumConstant.EVENT_LOG_SUB_MODULE_ADMIN,
+        "change password", actionDesc, EventLogService.MEDIUM);
 
     request.setAttribute("MemberID", new Integer(memberID));
   }
@@ -1794,7 +1484,7 @@ public class MemberWebHandler {
 
   public void processDeleteNonActivatedNoPostMembers(GenericRequest request)
       throws DatabaseException, ObjectNotFoundException, BadInputException,
-          AuthenticationException {
+      AuthenticationException {
 
     SecurityUtil.checkHttpPostMethod(request);
 
@@ -1817,7 +1507,7 @@ public class MemberWebHandler {
     Collection members = DAOFactory.getMemberDAO().getNonActivatedNoPostMembers(before);
 
     int deletedMembersCount = 0;
-    for (Iterator iterator = members.iterator(); iterator.hasNext(); ) {
+    for (Iterator iterator = members.iterator(); iterator.hasNext();) {
       MemberBean member = (MemberBean) iterator.next();
       if ((member.getMemberID() != 0) && (MyUtil.isRootAdminID(member.getMemberID()) == false)) {
         MemberWebHandler.deleteMember(member, deleteMessages, request, locale);
@@ -1826,34 +1516,24 @@ public class MemberWebHandler {
     }
     log.info("DeleteNonActivatedNoPostMembers: Deleted " + deletedMembersCount + " members");
 
-    String actionDesc =
-        MVNForumResourceBundle.getString(
-            MVNForumConfig.getEventLogLocale(),
-            "mvnforum.eventlog.desc.DeleteNonActivatedMembersProces",
-            new Object[] {members});
-    eventLogService.logEvent(
-        onlineUser.getMemberName(),
-        request.getRemoteAddr(),
-        MVNForumConstant.EVENT_LOG_MAIN_MODULE,
-        MVNForumConstant.EVENT_LOG_SUB_MODULE_ADMIN,
-        "delete nonactivated members",
-        actionDesc,
-        EventLogService.HIGH);
+    String actionDesc = MVNForumResourceBundle.getString(MVNForumConfig.getEventLogLocale(),
+        "mvnforum.eventlog.desc.DeleteNonActivatedMembersProces", new Object[] {members});
+    eventLogService.logEvent(onlineUser.getMemberName(), request.getRemoteAddr(),
+        MVNForumConstant.EVENT_LOG_MAIN_MODULE, MVNForumConstant.EVENT_LOG_SUB_MODULE_ADMIN,
+        "delete nonactivated members", actionDesc, EventLogService.HIGH);
 
     request.setAttribute("DeletedMembersCount", new Integer(deletedMembersCount));
   }
 
-  public static void deleteMember(
-      MemberBean memberBean, boolean deleteSentMessages, GenericRequest request, Locale locale)
+  public static void deleteMember(MemberBean memberBean, boolean deleteSentMessages,
+      GenericRequest request, Locale locale)
       throws DatabaseException, BadInputException, ObjectNotFoundException {
 
     int memberID = memberBean.getMemberID();
-    if ((memberID == MVNForumConstant.MEMBER_ID_OF_ADMIN)
-        || (memberID == 0)
+    if ((memberID == MVNForumConstant.MEMBER_ID_OF_ADMIN) || (memberID == 0)
         || (memberID == MVNForumConstant.MEMBER_ID_OF_GUEST)) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale, "mvncore.exception.BadInputException.cannot_delete_admin_or_guest");
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "mvncore.exception.BadInputException.cannot_delete_admin_or_guest");
       throw new BadInputException(localizedMessage);
       // throw new BadInputException("Cannot delete default Admin and Guest users.");
     }
@@ -1862,9 +1542,8 @@ public class MemberWebHandler {
     // Real checking in table post
     if ((memberBean.getMemberPostCount() > 0)
         || (DAOFactory.getPostDAO().getNumberOfPosts_inMember(memberID) > 0)) {
-      String localizedMessage =
-          MVNForumResourceBundle.getString(
-              locale, "mvncore.exception.BadInputException.cannot_delete_member_has_a_post");
+      String localizedMessage = MVNForumResourceBundle.getString(locale,
+          "mvncore.exception.BadInputException.cannot_delete_member_has_a_post");
       throw new BadInputException(localizedMessage);
       // throw new BadInputException("Cannot delete member that has posted at least one post.");
     }
@@ -1872,19 +1551,12 @@ public class MemberWebHandler {
     // first, we delete uploaded image if there is one
     String memberName = memberBean.getMemberName();
 
-    log.info(
-        "About to delete member with login = "
-            + memberName
-            + " and id = "
-            + memberID
-            + " with option deleteSentMessages = "
-            + deleteSentMessages);
+    log.info("About to delete member with login = " + memberName + " and id = " + memberID
+        + " with option deleteSentMessages = " + deleteSentMessages);
 
     // Try to delete in related table
-    boolean shouldDelete =
-        MvnForumServiceFactory.getMvnForumService()
-            .getMvnForumDatabaseService()
-            .deleteMember(memberBean, request);
+    boolean shouldDelete = MvnForumServiceFactory.getMvnForumService().getMvnForumDatabaseService()
+        .deleteMember(memberBean, request);
     if (shouldDelete == false) {
       return;
     }

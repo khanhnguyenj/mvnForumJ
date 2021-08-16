@@ -2,9 +2,10 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.huongdanjava</groupId>
+
+  <groupId>com.huongdanjava.mvnforum</groupId>
   <artifactId>mvnForumJ</artifactId>
-  <version>0.0.3</version>
+  <version>${global.version}</version>
   <packaging>pom</packaging>
 
   <modules>
@@ -14,24 +15,49 @@
     <module>db</module>
     <module>entities</module>
     <module>usecases</module>
+    <module>http</module>
   </modules>
 
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    
+    <global.version>0.0.4</global.version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>com.huongdanjava</groupId>
+        <groupId>com.huongdanjava.mvnforum</groupId>
         <artifactId>myvietnam</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.huongdanjava</groupId>
+        <groupId>com.huongdanjava.mvnforum</groupId>
+        <artifactId>entities</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.huongdanjava.mvnforum</groupId>
+        <artifactId>usecases</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.huongdanjava.mvnforum</groupId>
         <artifactId>security</artifactId>
         <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.huongdanjava.mvnforum</groupId>
+        <artifactId>http</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>javax</groupId>
+        <artifactId>javaee-api</artifactId>
+        <version>8.0</version>
+        <scope>provided</scope>
       </dependency>
 
       <dependency>
@@ -89,6 +115,17 @@
         <artifactId>lombok</artifactId>
         <version>1.18.20</version>
         <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.httpcomponents.client5</groupId>
+        <artifactId>httpclient5</artifactId>
+        <version>5.1</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>2.12.4</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
