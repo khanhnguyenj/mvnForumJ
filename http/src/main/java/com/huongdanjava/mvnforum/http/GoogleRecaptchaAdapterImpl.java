@@ -15,13 +15,13 @@ import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.message.BasicNameValuePair;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.huongdanjava.mvnforum.usecases.adapter.GoogleReCaptchaAdapter;
+import com.huongdanjava.mvnforum.usecases.adapter.GoogleRecaptchaAdapter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class GoogleReCaptchaAdapterImpl implements GoogleReCaptchaAdapter {
+public class GoogleRecaptchaAdapterImpl implements GoogleRecaptchaAdapter {
 
-  public static final String SITE_VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify";
+  private static final String SITE_VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify";
 
   @Override
   public boolean verify(String gRecaptchaResponse, String secretKey) throws IOException {

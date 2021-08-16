@@ -43,8 +43,8 @@ import java.util.Set;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.huongdanjava.mvnforum.http.GoogleReCaptchaAdapterImpl;
-import com.huongdanjava.mvnforum.usecases.adapter.GoogleReCaptchaAdapter;
+import com.huongdanjava.mvnforum.http.GoogleRecaptchaAdapterImpl;
+import com.huongdanjava.mvnforum.usecases.adapter.GoogleRecaptchaAdapter;
 import com.mvnforum.MVNForumConfig;
 import com.mvnforum.MVNForumConstant;
 import com.mvnforum.MVNForumGlobal;
@@ -434,10 +434,10 @@ public class OnlineUserImpl implements OnlineUser {
   public boolean validateCaptchaResponse(String gRecaptchaResponse) {
     String googleRecaptchaSecretKey = MVNForumConfig.getGoogleRecaptchaSecretKey();
 
-    GoogleReCaptchaAdapter googleReCaptchaAdapter = new GoogleReCaptchaAdapterImpl();
+    GoogleRecaptchaAdapter googleRecaptchaAdapter = new GoogleRecaptchaAdapterImpl();
 
     try {
-      return googleReCaptchaAdapter.verify(gRecaptchaResponse, googleRecaptchaSecretKey);
+      return googleRecaptchaAdapter.verify(gRecaptchaResponse, googleRecaptchaSecretKey);
     } catch (IOException e) {
       log.error(e.getMessage(), e);
       return false;
